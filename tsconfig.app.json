@@ -17,6 +17,7 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/assets/*": ["./src/assets/*"]
     },
+    "typeRoots": ["./node_modules/@types", "./src/types"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
