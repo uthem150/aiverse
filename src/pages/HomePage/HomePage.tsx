@@ -15,8 +15,11 @@ import Typography from '@/components/common/Typography/Typography';
 import Button from '@/components/common/Button/Button';
 import TestCard from '@/components/features/TestCard/TestCard';
 import { testCategories } from '@/data/tests';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   // 인기 테스트들 (참여자 수 기준 상위 6개)
   const popularTests = testCategories
     .flatMap(category => category.tests)
@@ -31,6 +34,14 @@ const HomePage = () => {
     .reduce((sum, test) => sum + (test.participantCount || 0), 0);
 
   const totalTests = testCategories.flatMap(category => category.tests).length;
+
+  const handleTestClick = (testId: string) => {
+    navigate(`/test/${testId}`);
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/tests/${categoryId}`);
+  };
 
   return (
     <StyledHomePage>
@@ -89,7 +100,11 @@ const HomePage = () => {
 
         <StyledCategoryGrid>
           {testCategories.map(category => (
-            <StyledCategoryCard key={category.id} color={category.color}>
+            <StyledCategoryCard
+              key={category.id}
+              color={category.color}
+              onClick={() => handleCategoryClick(category.id)}
+            >
               <StyledCategoryIcon>{category.icon}</StyledCategoryIcon>
               <Typography variant="h4">{category.name}</Typography>
               <Typography variant="body2" color="#6B7280">
@@ -103,7 +118,7 @@ const HomePage = () => {
         </StyledCategoryGrid>
       </StyledSection>
 
-      {/* Popular Tests */}
+      {/* Popular Tests - onClick 수정 */}
       <StyledSection>
         <StyledSectionHeader>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -117,16 +132,12 @@ const HomePage = () => {
 
         <StyledTestGrid>
           {popularTests.map(test => (
-            <TestCard
-              key={test.id}
-              test={test}
-              onClick={() => console.log(`Navigate to ${test.id}`)}
-            />
+            <TestCard key={test.id} test={test} onClick={() => handleTestClick(test.id)} />
           ))}
         </StyledTestGrid>
       </StyledSection>
 
-      {/* New Tests */}
+      {/* New Tests - onClick 수정 */}
       {newTests.length > 0 && (
         <StyledSection>
           <StyledSectionHeader>
@@ -138,11 +149,7 @@ const HomePage = () => {
 
           <StyledTestGrid>
             {newTests.map(test => (
-              <TestCard
-                key={test.id}
-                test={test}
-                onClick={() => console.log(`Navigate to ${test.id}`)}
-              />
+              <TestCard key={test.id} test={test} onClick={() => handleTestClick(test.id)} />
             ))}
           </StyledTestGrid>
         </StyledSection>
