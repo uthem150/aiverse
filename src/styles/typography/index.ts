@@ -38,60 +38,76 @@ export const LINE_HEIGHT = {
 export const TYPOGRAPHY = {
   // Headings
   h1: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE["5xl"],
     fontWeight: FONT_WEIGHT.bold,
     lineHeight: LINE_HEIGHT.tight,
     letterSpacing: "-0.025em",
   },
   h2: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE["4xl"],
     fontWeight: FONT_WEIGHT.bold,
     lineHeight: LINE_HEIGHT.tight,
     letterSpacing: "-0.025em",
   },
   h3: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE["3xl"],
     fontWeight: FONT_WEIGHT.semibold,
     lineHeight: LINE_HEIGHT.snug,
     letterSpacing: "-0.025em",
   },
   h4: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE["2xl"],
     fontWeight: FONT_WEIGHT.semibold,
     lineHeight: LINE_HEIGHT.snug,
+    letterSpacing: "normal",
   },
   h5: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.xl,
     fontWeight: FONT_WEIGHT.semibold,
     lineHeight: LINE_HEIGHT.snug,
+    letterSpacing: "normal",
   },
   h6: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.lg,
     fontWeight: FONT_WEIGHT.semibold,
     lineHeight: LINE_HEIGHT.snug,
+    letterSpacing: "normal",
   },
 
   // Body Text
   body1: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.base,
     fontWeight: FONT_WEIGHT.regular,
     lineHeight: LINE_HEIGHT.normal,
+    letterSpacing: "normal",
   },
   body2: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.sm,
     fontWeight: FONT_WEIGHT.regular,
     lineHeight: LINE_HEIGHT.normal,
+    letterSpacing: "normal",
   },
 
   // Small Text
   caption: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.xs,
     fontWeight: FONT_WEIGHT.regular,
     lineHeight: LINE_HEIGHT.normal,
+    letterSpacing: "normal",
   },
 
   // Button Text
   button: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.base,
     fontWeight: FONT_WEIGHT.medium,
     lineHeight: LINE_HEIGHT.none,
@@ -100,8 +116,12 @@ export const TYPOGRAPHY = {
 
   // Labels
   label: {
+    fontFamily: FONT_FAMILY.primary,
     fontSize: FONT_SIZE.sm,
     fontWeight: FONT_WEIGHT.medium,
     lineHeight: LINE_HEIGHT.normal,
+    letterSpacing: "normal",
   },
 } as const;
+
+export type TypographyVariant = keyof typeof TYPOGRAPHY;

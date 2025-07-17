@@ -10,7 +10,6 @@ interface ThemeState {
   useLowVision: boolean;
   toggleTheme: () => void;
   setDarkMode: (isDark: boolean) => void;
-  toggleLowVision: () => void;
 }
 
 export const useThemeStore = create<ThemeState>()(
@@ -42,19 +41,6 @@ export const useThemeStore = create<ThemeState>()(
           currentTheme: {
             ...newTheme,
             useLowVision: get().useLowVision,
-          },
-        });
-      },
-
-      toggleLowVision: () => {
-        const { useLowVision, currentTheme } = get();
-        const newUseLowVision = !useLowVision;
-
-        set({
-          useLowVision: newUseLowVision,
-          currentTheme: {
-            ...currentTheme,
-            useLowVision: newUseLowVision,
           },
         });
       },
