@@ -92,6 +92,7 @@ export const StyledCategoryTabs = styled.div`
   margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
   overflow-x: auto;
   padding-bottom: ${({ theme }) => (theme as Theme).spacing.xs};
+  overflow: visible;
 
   &::-webkit-scrollbar {
     height: 4px;
