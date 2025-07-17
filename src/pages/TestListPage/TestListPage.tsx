@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Search, Filter, TrendingUp, Clock, Users } from 'lucide-react';
+import { Search, Filter, TrendingUp, Clock } from 'lucide-react';
 import {
   StyledTestListPage,
   StyledHeader,
@@ -16,7 +16,6 @@ import {
 import Typography from '@/components/common/Typography/Typography';
 import TestCard from '@/components/features/TestCard/TestCard';
 import { testCategories } from '@/data/tests';
-import type { TestItem } from '@/types/test';
 
 const TestListPage = () => {
   const { category } = useParams();

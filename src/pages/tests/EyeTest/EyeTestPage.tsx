@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, Upload, RotateCcw, Zap, Eye } from 'lucide-react';
+import { RotateCcw, Zap, Eye } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
@@ -129,7 +129,10 @@ const EyeTestPage = () => {
     setIsLoading(true);
 
     try {
-      const modelURL = 'https://teachablemachine.withgoogle.com/models/jdyVHXvhx/';
+      const modelURL =
+        selectedGender === 'male'
+          ? 'https://teachablemachine.withgoogle.com/models/jdyVHXvhx/'
+          : 'https://teachablemachine.withgoogle.com/models/jdyVHXvhx/';
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
 
       const img = new Image();

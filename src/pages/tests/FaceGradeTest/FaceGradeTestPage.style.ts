@@ -7,11 +7,6 @@ const spinAnimation = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const pulseAnimation = keyframes`
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-`;
-
 export const StyledTestStep = styled.div`
   display: flex;
   flex-direction: column;
