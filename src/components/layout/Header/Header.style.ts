@@ -1,15 +1,13 @@
-import styled from "@emotion/styled";
-import type { Theme } from "@/styles/themes/types";
+import styled from '@emotion/styled';
+import type { Theme } from '@/styles/themes/types';
 
 export const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
-  background-color: ${({ theme }) =>
-    (theme as Theme).colors.background.elevated};
-  border-bottom: 1px solid
-    ${({ theme }) => (theme as Theme).colors.border.primary};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
+  border-bottom: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
   backdrop-filter: blur(10px);
   transition: all
     ${({ theme }) =>
@@ -44,8 +42,7 @@ export const StyledThemeButton = styled.button`
   width: 40px;
   height: 40px;
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
-  background-color: ${({ theme }) =>
-    (theme as Theme).colors.interactive.secondary};
+  background-color: ${({ theme }) => (theme as Theme).colors.interactive.secondary};
   color: ${({ theme }) => (theme as Theme).colors.text.primary};
   cursor: pointer;
   transition: all
@@ -53,12 +50,10 @@ export const StyledThemeButton = styled.button`
       `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
 
   &:hover {
-    background-color: ${({ theme }) =>
-      (theme as Theme).colors.interactive.secondaryHover};
+    background-color: ${({ theme }) => (theme as Theme).colors.interactive.secondaryHover};
   }
 
   &:active {
-    background-color: ${({ theme }) =>
-      (theme as Theme).colors.interactive.secondaryPressed};
+    background-color: ${({ theme }) => (theme as Theme).colors.interactive.secondaryPressed};
   }
 `;
