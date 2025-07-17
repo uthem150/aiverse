@@ -20,6 +20,17 @@ export const testCategories: TestCategory[] = [
         participantCount: 1200000,
       },
       {
+        id: 'face-grade-test',
+        title: '외모 등급 테스트',
+        description: 'AI가 분석하는 7단계 외모 등급 분석',
+        thumbnail: '/images/face-grade-test.jpg',
+        category: 'ai-analysis',
+        difficulty: 'easy',
+        estimatedTime: 3,
+        isHot: true,
+        participantCount: 980000,
+      },
+      {
         id: 'ai-face-beauty',
         title: 'AI 얼굴 분석',
         description: 'AI가 분석하는 얼굴 매력도와 특징',
