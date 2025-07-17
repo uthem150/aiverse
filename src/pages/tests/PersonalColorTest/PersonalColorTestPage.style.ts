@@ -7,51 +7,17 @@ const spinAnimation = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
+const shimmerAnimation = keyframes`
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+`;
+
 export const StyledTestStep = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => (theme as Theme).spacing.xl};
   text-align: center;
-`;
-
-export const StyledGenderSelector = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${({ theme }) => (theme as Theme).spacing.lg};
-  width: 100%;
-  max-width: 400px;
-`;
-
-interface GenderOptionProps {
-  selected: boolean;
-}
-
-export const StyledGenderOption = styled.div<GenderOptionProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: ${({ theme }) => (theme as Theme).spacing.md};
-  padding: ${({ theme }) => (theme as Theme).spacing.xl};
-  border: 2px solid ${({ theme }) => (theme as Theme).colors.border.primary};
-  border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
-  background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
-  cursor: pointer;
-  transition: all
-    ${({ theme }) =>
-      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-  .emoji {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  &:hover {
-    border-color: ${({ theme }) => (theme as Theme).colors.interactive.primary};
-    background-color: ${({ theme }) => (theme as Theme).colors.background.tertiary};
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
-  }
 `;
 
 export const StyledImageUpload = styled.div`
@@ -117,20 +83,100 @@ export const StyledResultSection = styled.div`
   width: 100%;
 `;
 
-export const StyledResultCard = styled.div`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+interface ResultCardProps {
+  color: string;
+}
+
+export const StyledResultCard = styled.div<ResultCardProps>`
+  background: linear-gradient(135deg, ${({ color }) => color} 0%, ${({ color }) => color}CC 100%);
   color: white;
   padding: ${({ theme }) => (theme as Theme).spacing['2xl']};
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   text-align: center;
   box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
-  min-width: 280px;
+  min-width: 320px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -200px;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: ${shimmerAnimation} 2s ease-in-out infinite;
+  }
+
+  .emoji {
+    font-size: 3rem;
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
+    position: relative;
+    z-index: 1;
+  }
 
   & > * {
     margin-bottom: ${({ theme }) => (theme as Theme).spacing.sm};
+    position: relative;
+    z-index: 1;
   }
 
   & > *:last-child {
     margin-bottom: 0;
   }
+`;
+
+export const StyledColorPalette = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  width: 100%;
+  max-width: 400px;
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: ${({ theme }) => (theme as Theme).spacing.sm};
+    width: 100%;
+  }
+`;
+
+interface ColorCardProps {
+  color: string;
+}
+
+export const StyledColorCard = styled.div<ColorCardProps>`
+  width: 60px;
+  height: 60px;
+  background-color: ${({ color }) => color};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
+  border: 2px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
+  }
+`;
+
+export const StyledHashtagSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  width: 100%;
+  max-width: 400px;
 `;

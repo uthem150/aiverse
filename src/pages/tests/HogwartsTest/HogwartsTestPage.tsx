@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, Upload, RotateCcw, Zap, Calendar } from 'lucide-react';
+import { Camera, Upload, RotateCcw, Zap, Crown } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
@@ -9,23 +9,23 @@ import {
   StyledImagePreview,
   StyledResultSection,
   StyledResultCard,
-  StyledGenderSelector,
-  StyledGenderOption,
   StyledLoadingAnimation,
-} from './FaceAgeTestPage.style';
+  StyledHouseInfo,
+  StyledMembersList,
+} from './HogwartsTestPage.style';
 
-interface AnalysisResult {
-  predictedAge: number;
+interface HogwartsResult {
+  house: string;
   confidence: number;
-  actualAge?: number;
+  description: string;
+  members: string;
   message: string;
 }
 
-const FaceAgeTestPage = () => {
-  const [step, setStep] = useState<'gender' | 'upload' | 'analysis' | 'result'>('gender');
-  const [selectedGender, setSelectedGender] = useState<'male' | 'female' | null>(null);
+const HogwartsTestPage = () => {
+  const [step, setStep] = useState<'upload' | 'analysis' | 'result'>('upload');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<HogwartsResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,9 +41,39 @@ const FaceAgeTestPage = () => {
     checkModels();
   }, []);
 
-  const handleGenderSelect = (gender: 'male' | 'female') => {
-    setSelectedGender(gender);
-    setStep('upload');
+  const houseInfo = {
+    그리핀도르: {
+      emoji: '🦁',
+      color: '#C41E3A',
+      bgColor: '#FFE4E1',
+      description: '"그 이름에 걸맞은 용기를 보여주는 아이들은 누구나 다 가르치도록 하세"',
+      members: '해리포터, 론 위즐리, 헤르미온느, 덤블도어, 맥고나걸, 네빌',
+      traits: '용기, 기사도, 대담함',
+    },
+    슬리데린: {
+      emoji: '🐍',
+      color: '#2A5D31',
+      bgColor: '#E8F5E8',
+      description: '"가장 순수한 혈통을 지닌 아이들만 가르치도록 하세"',
+      members: '스네이프, 말포이, 벨라트릭스 레스트레인지, 볼드모트',
+      traits: '야망, 교활함, 리더십',
+    },
+    레번클로: {
+      emoji: '🦅',
+      color: '#1F4E79',
+      bgColor: '#E1F0FF',
+      description: '"가장 똑똑한 아이들만 가르치도록 하세"',
+      members: '루나 러브굿, 초 챙, 플리트윅, 파드마 패틸',
+      traits: '지혜, 학습, 재치',
+    },
+    후플푸프: {
+      emoji: '🦡',
+      color: '#FFCC00',
+      bgColor: '#FFF8E1',
+      description: '"나는 그 아이들을 똑같이 가르칠걸세"',
+      members: '뉴트 스캐맨더, 케드릭 디고리, 토니 노트, 해나 애벗',
+      traits: '성실함, 인내, 충성심',
+    },
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +89,7 @@ const FaceAgeTestPage = () => {
   };
 
   const analyzeImage = async () => {
-    if (!selectedImage || !selectedGender || !isModelReady) {
+    if (!selectedImage || !isModelReady) {
       alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
@@ -67,12 +97,7 @@ const FaceAgeTestPage = () => {
     setIsLoading(true);
 
     try {
-      // 새로운 Teachable Machine 모델 URL
-      const modelURL =
-        selectedGender === 'male'
-          ? 'https://teachablemachine.withgoogle.com/models/7CDjd8eq7/'
-          : 'https://teachablemachine.withgoogle.com/models/ApSHRC75n/';
-
+      const modelURL = 'https://teachablemachine.withgoogle.com/models/ryKiwHvb7/';
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
 
       const img = new Image();
@@ -85,15 +110,16 @@ const FaceAgeTestPage = () => {
             (a: any, b: any) => b.probability - a.probability
           );
 
-          const predictedAge =
-            parseInt(sortedPredictions[0].className) || Math.floor(Math.random() * 30) + 20;
-          const confidence = Math.round(sortedPredictions[0].probability * 100);
+          const topPrediction = sortedPredictions[0];
+          const house = topPrediction.className;
+          const houseData = houseInfo[house as keyof typeof houseInfo] || houseInfo['그리핀도르'];
 
           setResult({
-            predictedAge,
-            confidence,
-            message: getAgeMessage(predictedAge),
-            actualAge: undefined,
+            house,
+            confidence: Math.round(topPrediction.probability * 100),
+            description: houseData.description,
+            members: houseData.members,
+            message: `${houseData.emoji} 당신은 ${house} 기숙사입니다!`,
           });
 
           setStep('result');
@@ -118,19 +144,8 @@ const FaceAgeTestPage = () => {
     }
   };
 
-  const getAgeMessage = (age: number): string => {
-    if (age < 20) return '10대의 풋풋함이 느껴지네요! 🌱';
-    if (age < 25) return '20대 초반의 청춘이 넘쳐나요! ✨';
-    if (age < 30) return '20대의 매력이 한창이네요! 💫';
-    if (age < 35) return '30대 초반의 성숙한 매력이 느껴져요! 🌟';
-    if (age < 40) return '30대의 안정감 있는 매력이네요! 👑';
-    if (age < 45) return '40대의 깊이 있는 매력이 돋보여요! 🔥';
-    return '연륜과 지혜가 묻어나는 모습이에요! 🌅';
-  };
-
   const resetTest = () => {
-    setStep('gender');
-    setSelectedGender(null);
+    setStep('upload');
     setSelectedImage(null);
     setResult(null);
     setIsLoading(false);
@@ -138,11 +153,11 @@ const FaceAgeTestPage = () => {
 
   const shareResult = () => {
     if (result) {
-      const text = `AI가 분석한 내 나이는 ${result.predictedAge}세! ${result.message}`;
+      const text = `${result.message} (신뢰도 ${result.confidence}%) 🏰`;
 
       if (navigator.share) {
         navigator.share({
-          title: 'AIverse 얼굴 나이 테스트',
+          title: 'AIverse 호그와트 기숙사 테스트',
           text,
           url: window.location.href,
         });
@@ -155,7 +170,10 @@ const FaceAgeTestPage = () => {
 
   if (!isModelReady) {
     return (
-      <TestContainer title="🤖 AI 얼굴 나이 테스트" description="AI 모델을 로드하는 중입니다...">
+      <TestContainer
+        title="🏰 AI 호그와트 기숙사 테스트"
+        description="AI 모델을 로드하는 중입니다..."
+      >
         <StyledLoadingAnimation>
           <div className="spinner" />
           <Typography variant="body1">AI 모델 로딩 중...</Typography>
@@ -166,45 +184,22 @@ const FaceAgeTestPage = () => {
 
   return (
     <TestContainer
-      title="🤖 AI 얼굴 나이 테스트"
-      description="AI가 당신의 얼굴을 분석해서 나이를 예측해드려요!"
+      title="🏰 AI 호그와트 기숙사 테스트"
+      description="AI가 당신에게 어울리는 호그와트 기숙사를 배정해드려요!"
       showShare={step === 'result'}
       onShare={shareResult}
     >
-      {step === 'gender' && (
-        <StyledTestStep>
-          <Typography variant="h4" align="center">
-            성별을 선택해주세요
-          </Typography>
-          <Typography variant="body2" align="center" color="#6B7280">
-            더 정확한 분석을 위해 성별을 선택해주세요
-          </Typography>
-
-          <StyledGenderSelector>
-            <StyledGenderOption selected={false} onClick={() => handleGenderSelect('female')}>
-              <div className="emoji">👩</div>
-              <Typography variant="h5">여성</Typography>
-            </StyledGenderOption>
-
-            <StyledGenderOption selected={false} onClick={() => handleGenderSelect('male')}>
-              <div className="emoji">👨</div>
-              <Typography variant="h5">남성</Typography>
-            </StyledGenderOption>
-          </StyledGenderSelector>
-        </StyledTestStep>
-      )}
-
       {step === 'upload' && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
             얼굴 사진을 업로드해주세요
           </Typography>
           <Typography variant="body2" align="center" color="#6B7280">
-            정면을 바라보는 선명한 사진일수록 정확한 분석이 가능해요
+            마법사의 기질을 분석하여 가장 어울리는 기숙사를 찾아드려요
           </Typography>
 
           <StyledImageUpload onClick={() => fileInputRef.current?.click()}>
-            <Calendar size={48} color="#6366F1" />
+            <Crown size={48} color="#6366F1" />
             <Typography variant="body1">사진 선택하기</Typography>
             <Typography variant="caption" color="#6B7280">
               JPG, PNG 파일만 가능 (최대 10MB)
@@ -245,16 +240,16 @@ const FaceAgeTestPage = () => {
               disabled={isLoading}
             >
               <Zap size={16} />
-              {isLoading ? 'AI 분석 중...' : '분석 시작'}
+              {isLoading ? '마법사 기질 분석 중...' : '분석 시작'}
             </Button>
           </div>
 
           {isLoading && (
             <StyledLoadingAnimation>
               <div className="spinner" />
-              <Typography variant="body1">AI가 열심히 분석 중입니다...</Typography>
+              <Typography variant="body1">분류모자가 당신을 분석 중입니다...</Typography>
               <Typography variant="caption" color="#6B7280">
-                잠시만 기다려주세요 ✨
+                잠시만 기다려주세요 🎩
               </Typography>
             </StyledLoadingAnimation>
           )}
@@ -264,19 +259,47 @@ const FaceAgeTestPage = () => {
       {step === 'result' && result && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
-            🎉 분석 완료!
+            🎩 분류모자의 판정!
           </Typography>
 
           <StyledResultSection>
-            <StyledResultCard>
-              <Typography variant="h1" color="#6366F1">
-                {result.predictedAge}세
+            <StyledResultCard
+              color={houseInfo[result.house as keyof typeof houseInfo]?.color || '#6366F1'}
+              bgColor={houseInfo[result.house as keyof typeof houseInfo]?.bgColor || '#F0F4FF'}
+            >
+              <div className="emoji">
+                {houseInfo[result.house as keyof typeof houseInfo]?.emoji || '🏰'}
+              </div>
+              <Typography variant="h2" color="white">
+                {result.house}
               </Typography>
-              <Typography variant="body1">{result.message}</Typography>
-              <Typography variant="caption" color="#6B7280">
+              <Typography variant="body1" color="white">
+                {result.description}
+              </Typography>
+              <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
               </Typography>
             </StyledResultCard>
+
+            <StyledHouseInfo
+              bgColor={houseInfo[result.house as keyof typeof houseInfo]?.bgColor || '#F0F4FF'}
+            >
+              <Typography variant="h6" align="center">
+                🏠 {result.house}의 특징
+              </Typography>
+              <Typography variant="body1" align="center">
+                {houseInfo[result.house as keyof typeof houseInfo]?.traits || '마법사의 기질'}
+              </Typography>
+            </StyledHouseInfo>
+
+            <StyledMembersList>
+              <Typography variant="h6" align="center">
+                🧙‍♂️ 같은 기숙사 동료들
+              </Typography>
+              <Typography variant="body1" color="#6B7280">
+                {result.members}
+              </Typography>
+            </StyledMembersList>
 
             {selectedImage && (
               <StyledImagePreview>
@@ -299,4 +322,4 @@ const FaceAgeTestPage = () => {
   );
 };
 
-export default FaceAgeTestPage;
+export default HogwartsTestPage;

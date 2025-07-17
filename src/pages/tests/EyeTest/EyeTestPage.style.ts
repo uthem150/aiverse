@@ -117,14 +117,23 @@ export const StyledResultSection = styled.div`
   width: 100%;
 `;
 
-export const StyledResultCard = styled.div`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+interface ResultCardProps {
+  color: string;
+}
+
+export const StyledResultCard = styled.div<ResultCardProps>`
+  background: linear-gradient(135deg, ${({ color }) => color} 0%, ${({ color }) => color}CC 100%);
   color: white;
   padding: ${({ theme }) => (theme as Theme).spacing['2xl']};
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   text-align: center;
   box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
   min-width: 280px;
+
+  .emoji {
+    font-size: 3rem;
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
+  }
 
   & > * {
     margin-bottom: ${({ theme }) => (theme as Theme).spacing.sm};
@@ -133,4 +142,22 @@ export const StyledResultCard = styled.div`
   & > *:last-child {
     margin-bottom: 0;
   }
+`;
+
+export const StyledCelebSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  width: 100%;
+`;
+
+export const StyledCelebCard = styled.div`
+  background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
+  padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
 `;

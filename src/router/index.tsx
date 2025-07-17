@@ -8,7 +8,9 @@ import FaceGradeTestPage from '@/pages/tests/FaceGradeTest/FaceGradeTestPage';
 // import MbtiJewelryPage from '@/pages/tests/MbtiJewelry/MbtiJewelryPage';
 // import MbtiStonePage from '@/pages/tests/MbtiStone/MbtiStonePage';
 // import MbtiStoryPage from '@/pages/tests/MbtiStory/MbtiStoryPage';
-// import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import EyeTestPage from '@/pages/tests/EyeTest/EyeTestPage';
+import PersonalColorTestPage from '@/pages/tests/PersonalColorTest/PersonalColorTestPage';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([
         path: 'test/face-grade-test',
         element: <FaceGradeTestPage />,
       },
+      {
+        path: 'test/eye-test',
+        element: <EyeTestPage />,
+      },
+      {
+        path: 'test/personal-color-test',
+        element: <PersonalColorTestPage />,
+      },
       // {
       //   path: 'test/mbti-pororo',
       //   element: <MbtiPoroloPage />,
@@ -51,10 +61,10 @@ export const router = createBrowserRouter([
       //   path: 'test/mbti-story-character',
       //   element: <MbtiStoryPage />,
       // },
-      // {
-      //   path: '*',
-      //   element: <NotFoundPage />,
-      // },
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
 ]);

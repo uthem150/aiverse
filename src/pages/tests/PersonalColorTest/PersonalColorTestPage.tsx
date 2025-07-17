@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, Upload, RotateCcw, Zap, Calendar } from 'lucide-react';
+import { Camera, Upload, RotateCcw, Zap, Palette } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
@@ -9,23 +9,25 @@ import {
   StyledImagePreview,
   StyledResultSection,
   StyledResultCard,
-  StyledGenderSelector,
-  StyledGenderOption,
   StyledLoadingAnimation,
-} from './FaceAgeTestPage.style';
+  StyledColorPalette,
+  StyledColorCard,
+  StyledHashtagSection,
+} from './PersonalColorTestPage.style';
 
-interface AnalysisResult {
-  predictedAge: number;
+interface PersonalColorResult {
+  colorType: string;
   confidence: number;
-  actualAge?: number;
+  description: string;
+  celebrities: string;
+  hashtags: string;
   message: string;
 }
 
-const FaceAgeTestPage = () => {
-  const [step, setStep] = useState<'gender' | 'upload' | 'analysis' | 'result'>('gender');
-  const [selectedGender, setSelectedGender] = useState<'male' | 'female' | null>(null);
+const PersonalColorTestPage = () => {
+  const [step, setStep] = useState<'upload' | 'analysis' | 'result'>('upload');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<PersonalColorResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,9 +43,43 @@ const FaceAgeTestPage = () => {
     checkModels();
   }, []);
 
-  const handleGenderSelect = (gender: 'male' | 'female') => {
-    setSelectedGender(gender);
-    setStep('upload');
+  const colorTypeInfo = {
+    봄웜톤: {
+      emoji: '🌸',
+      color: '#FF6B8A',
+      description:
+        '파스텔 톤이 잘 어울리는 봄 웜톤! 선명하면서 예쁜 눈동자와 아름다운 머릿결을 가지고 있으며, 사랑스러우면서 부드러운 이미지로 주변 사람들과 이성에게 인기가 많은 편입니다.',
+      celebrities: '수지, 박보영, 아이유, 정채연, 서현진',
+      hashtags: '#발랄한 #귀여운 #산뜻한',
+      colors: ['#FFE4E8', '#FFD4E4', '#FFC4D8', '#FFB4CC'],
+    },
+    여름쿨톤: {
+      emoji: '🌊',
+      color: '#4ECDC4',
+      description:
+        '청순함이 물씬 풍기는 여름 쿨톤! 깨끗한 피부와 얇고 부드러운 머릿결을 가지고 있으며, 청순하면서 차분한 이미지로 누구에게나 사랑받는 편입니다.',
+      celebrities: '김연아, 태연, 김태리, 이유비, 이영애, 다현',
+      hashtags: '#청순한 #시원한 #청량한',
+      colors: ['#E8F8FF', '#D4F4FF', '#C4F0FF', '#B4ECFF'],
+    },
+    가을웜톤: {
+      emoji: '🍂',
+      color: '#D4A574',
+      description:
+        '부드럽고 따뜻한 분위기가 느껴지는 가을 웜톤! 따뜻한 눈빛이 느껴지는 예쁜 눈을 가지고 있으며, 다정하고 부드러운 이미지로 많은 사람들이 편하게 다가가고 신뢰하는 특징을 가지고 있습니다.',
+      celebrities: '이성경, 공효진, 신민아, 박신혜, 정려원, 한효주',
+      hashtags: '#차분한 #따뜻한 #부드러운',
+      colors: ['#F4F0E8', '#E8DDD4', '#DCCAC4', '#D0B7B4'],
+    },
+    겨울쿨톤: {
+      emoji: '❄️',
+      color: '#1E3A8A',
+      description:
+        '분위기에서부터 멋짐이 풍기는 겨울 쿨톤! 흰 피부톤과 뚜렷한 이목구비를 가지고 있으며, 카리스마있고 세련된 이미지로 그 멋짐에 반한 많은 사람들의 인기를 가지는 특징을 가지고 있습니다.',
+      celebrities: '카리나, 현아, 선미, 청하, 김혜수, 화사',
+      hashtags: '#차가운 #섹시한 #매력적인',
+      colors: ['#F0F4FF', '#E0E8FF', '#D0DCFF', '#C0D0FF'],
+    },
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +95,7 @@ const FaceAgeTestPage = () => {
   };
 
   const analyzeImage = async () => {
-    if (!selectedImage || !selectedGender || !isModelReady) {
+    if (!selectedImage || !isModelReady) {
       alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
@@ -67,12 +103,7 @@ const FaceAgeTestPage = () => {
     setIsLoading(true);
 
     try {
-      // 새로운 Teachable Machine 모델 URL
-      const modelURL =
-        selectedGender === 'male'
-          ? 'https://teachablemachine.withgoogle.com/models/7CDjd8eq7/'
-          : 'https://teachablemachine.withgoogle.com/models/ApSHRC75n/';
-
+      const modelURL = 'https://teachablemachine.withgoogle.com/models/oUhDGTuyQ/';
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
 
       const img = new Image();
@@ -85,15 +116,18 @@ const FaceAgeTestPage = () => {
             (a: any, b: any) => b.probability - a.probability
           );
 
-          const predictedAge =
-            parseInt(sortedPredictions[0].className) || Math.floor(Math.random() * 30) + 20;
-          const confidence = Math.round(sortedPredictions[0].probability * 100);
+          const topPrediction = sortedPredictions[0];
+          const colorType = topPrediction.className;
+          const colorData =
+            colorTypeInfo[colorType as keyof typeof colorTypeInfo] || colorTypeInfo['봄웜톤'];
 
           setResult({
-            predictedAge,
-            confidence,
-            message: getAgeMessage(predictedAge),
-            actualAge: undefined,
+            colorType,
+            confidence: Math.round(topPrediction.probability * 100),
+            description: colorData.description,
+            celebrities: colorData.celebrities,
+            hashtags: colorData.hashtags,
+            message: `${colorData.emoji} 당신의 퍼스널 컬러는 ${colorType}입니다!`,
           });
 
           setStep('result');
@@ -118,19 +152,8 @@ const FaceAgeTestPage = () => {
     }
   };
 
-  const getAgeMessage = (age: number): string => {
-    if (age < 20) return '10대의 풋풋함이 느껴지네요! 🌱';
-    if (age < 25) return '20대 초반의 청춘이 넘쳐나요! ✨';
-    if (age < 30) return '20대의 매력이 한창이네요! 💫';
-    if (age < 35) return '30대 초반의 성숙한 매력이 느껴져요! 🌟';
-    if (age < 40) return '30대의 안정감 있는 매력이네요! 👑';
-    if (age < 45) return '40대의 깊이 있는 매력이 돋보여요! 🔥';
-    return '연륜과 지혜가 묻어나는 모습이에요! 🌅';
-  };
-
   const resetTest = () => {
-    setStep('gender');
-    setSelectedGender(null);
+    setStep('upload');
     setSelectedImage(null);
     setResult(null);
     setIsLoading(false);
@@ -138,11 +161,11 @@ const FaceAgeTestPage = () => {
 
   const shareResult = () => {
     if (result) {
-      const text = `AI가 분석한 내 나이는 ${result.predictedAge}세! ${result.message}`;
+      const text = `${result.message} (신뢰도 ${result.confidence}%)`;
 
       if (navigator.share) {
         navigator.share({
-          title: 'AIverse 얼굴 나이 테스트',
+          title: 'AIverse 퍼스널 컬러 테스트',
           text,
           url: window.location.href,
         });
@@ -155,7 +178,7 @@ const FaceAgeTestPage = () => {
 
   if (!isModelReady) {
     return (
-      <TestContainer title="🤖 AI 얼굴 나이 테스트" description="AI 모델을 로드하는 중입니다...">
+      <TestContainer title="🎨 AI 퍼스널 컬러 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
           <Typography variant="body1">AI 모델 로딩 중...</Typography>
@@ -166,45 +189,22 @@ const FaceAgeTestPage = () => {
 
   return (
     <TestContainer
-      title="🤖 AI 얼굴 나이 테스트"
-      description="AI가 당신의 얼굴을 분석해서 나이를 예측해드려요!"
+      title="🎨 AI 퍼스널 컬러 테스트"
+      description="AI가 당신에게 어울리는 퍼스널 컬러를 찾아드려요!"
       showShare={step === 'result'}
       onShare={shareResult}
     >
-      {step === 'gender' && (
-        <StyledTestStep>
-          <Typography variant="h4" align="center">
-            성별을 선택해주세요
-          </Typography>
-          <Typography variant="body2" align="center" color="#6B7280">
-            더 정확한 분석을 위해 성별을 선택해주세요
-          </Typography>
-
-          <StyledGenderSelector>
-            <StyledGenderOption selected={false} onClick={() => handleGenderSelect('female')}>
-              <div className="emoji">👩</div>
-              <Typography variant="h5">여성</Typography>
-            </StyledGenderOption>
-
-            <StyledGenderOption selected={false} onClick={() => handleGenderSelect('male')}>
-              <div className="emoji">👨</div>
-              <Typography variant="h5">남성</Typography>
-            </StyledGenderOption>
-          </StyledGenderSelector>
-        </StyledTestStep>
-      )}
-
       {step === 'upload' && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
-            얼굴 사진을 업로드해주세요
+            자연스러운 얼굴 사진을 업로드해주세요
           </Typography>
           <Typography variant="body2" align="center" color="#6B7280">
-            정면을 바라보는 선명한 사진일수록 정확한 분석이 가능해요
+            자연광에서 촬영한 메이크업 없는 사진이 가장 정확해요
           </Typography>
 
           <StyledImageUpload onClick={() => fileInputRef.current?.click()}>
-            <Calendar size={48} color="#6366F1" />
+            <Palette size={48} color="#6366F1" />
             <Typography variant="body1">사진 선택하기</Typography>
             <Typography variant="caption" color="#6B7280">
               JPG, PNG 파일만 가능 (최대 10MB)
@@ -245,16 +245,16 @@ const FaceAgeTestPage = () => {
               disabled={isLoading}
             >
               <Zap size={16} />
-              {isLoading ? 'AI 분석 중...' : '분석 시작'}
+              {isLoading ? '퍼스널 컬러 분석 중...' : '분석 시작'}
             </Button>
           </div>
 
           {isLoading && (
             <StyledLoadingAnimation>
               <div className="spinner" />
-              <Typography variant="body1">AI가 열심히 분석 중입니다...</Typography>
+              <Typography variant="body1">AI가 당신의 퍼스널 컬러를 분석 중입니다...</Typography>
               <Typography variant="caption" color="#6B7280">
-                잠시만 기다려주세요 ✨
+                잠시만 기다려주세요 🎨
               </Typography>
             </StyledLoadingAnimation>
           )}
@@ -264,19 +264,57 @@ const FaceAgeTestPage = () => {
       {step === 'result' && result && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
-            🎉 분석 완료!
+            🎉 퍼스널 컬러 분석 완료!
           </Typography>
 
           <StyledResultSection>
-            <StyledResultCard>
-              <Typography variant="h1" color="#6366F1">
-                {result.predictedAge}세
+            <StyledResultCard
+              color={
+                colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.color || '#6366F1'
+              }
+            >
+              <div className="emoji">
+                {colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.emoji || '🎨'}
+              </div>
+              <Typography variant="h2" color="white">
+                {result.colorType}
               </Typography>
-              <Typography variant="body1">{result.message}</Typography>
-              <Typography variant="caption" color="#6B7280">
+              <Typography variant="body1" color="white">
+                {result.description}
+              </Typography>
+              <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
               </Typography>
             </StyledResultCard>
+
+            <StyledColorPalette>
+              <Typography variant="h6" align="center">
+                💄 추천 컬러 팔레트
+              </Typography>
+              <div className="color-grid">
+                {colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.colors.map(
+                  (color, index) => (
+                    <StyledColorCard key={index} color={color} />
+                  )
+                )}
+              </div>
+            </StyledColorPalette>
+
+            <StyledHashtagSection>
+              <Typography variant="h6" align="center">
+                ✨ 당신의 이미지 키워드
+              </Typography>
+              <Typography variant="body1" color="#6366F1">
+                {result.hashtags}
+              </Typography>
+            </StyledHashtagSection>
+
+            <div style={{ textAlign: 'center', width: '100%' }}>
+              <Typography variant="h6">👑 같은 퍼스널 컬러 연예인들</Typography>
+              <Typography variant="body1" color="#6B7280">
+                {result.celebrities}
+              </Typography>
+            </div>
 
             {selectedImage && (
               <StyledImagePreview>
@@ -299,4 +337,4 @@ const FaceAgeTestPage = () => {
   );
 };
 
-export default FaceAgeTestPage;
+export default PersonalColorTestPage;

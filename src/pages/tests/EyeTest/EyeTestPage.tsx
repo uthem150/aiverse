@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, Upload, RotateCcw, Zap, Calendar } from 'lucide-react';
+import { Camera, Upload, RotateCcw, Zap, Eye } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
@@ -12,20 +12,23 @@ import {
   StyledGenderSelector,
   StyledGenderOption,
   StyledLoadingAnimation,
-} from './FaceAgeTestPage.style';
+  StyledCelebSection,
+  StyledCelebCard,
+} from './EyeTestPage.style';
 
-interface AnalysisResult {
-  predictedAge: number;
+interface EyeAnalysisResult {
+  eyeType: string;
   confidence: number;
-  actualAge?: number;
+  description: string;
+  celebrities: string;
   message: string;
 }
 
-const FaceAgeTestPage = () => {
+const EyeTestPage = () => {
   const [step, setStep] = useState<'gender' | 'upload' | 'analysis' | 'result'>('gender');
   const [selectedGender, setSelectedGender] = useState<'male' | 'female' | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<EyeAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +43,65 @@ const FaceAgeTestPage = () => {
     };
     checkModels();
   }, []);
+
+  const eyeTypeInfo = {
+    봉황안: {
+      emoji: '🦅',
+      color: '#8B5CF6',
+      description:
+        "눈 관상 중에서도 최고로 꼽는 봉황안. 봉황안에 대한 특징은 단 한 문장으로 끝납니다. '불가능이란 없다.'",
+      celebrities: '부처님, 세종대왕, 유승호, 이순신, 소지섭, 마크 주커버그, 빌게이츠, 워렌버핏',
+    },
+    용안: {
+      emoji: '🐉',
+      color: '#6366F1',
+      description:
+        '봉황안과 마찬가지로 눈 관상중 최고 등급의 관상중 하나로, 용안을 갖춘 자는 일국의 제왕이나 황후가 될 가능성이 높았다고 합니다.',
+      celebrities: '김연아, 트와이스 다현, 블랙핑크 제니',
+    },
+    호안: {
+      emoji: '🐅',
+      color: '#06B6D4',
+      description:
+        '온화하고, 기품이 있으며, 강직한 성격에 정의감 있는 타입입니다. 부와 명예를 누릴 가능성이 높습니다.',
+      celebrities: '강동원, 방탄소년단 진, 티아라 지연, 주원',
+    },
+    공작안: {
+      emoji: '🦚',
+      color: '#10B981',
+      description:
+        '현명하고 사리판단에 밝은 성격으로, 부부가 화목하고, 이름을 드날리거나 가업이 흥할 눈이라고 합니다.',
+      celebrities: '한예슬, 임보라',
+    },
+    사자눈: {
+      emoji: '🦁',
+      color: '#F59E0B',
+      description:
+        '지혜롭고 호탕한 성격을 가지며, 사람들이 많이 따르는 리더형의 기질을 가진 눈입니다. 일찍 출세하지만 자만심에 주의해야 합니다.',
+      celebrities: '고수, 장동건',
+    },
+    소눈: {
+      emoji: '🐄',
+      color: '#EF4444',
+      description:
+        '인자한 성품에 인내심이 강하고 부지런한 성격입니다. 재물을 많이 가지게 되며, 긴 수명을 가지고 오래 부를 누린다고 합니다.',
+      celebrities: '박보영, 트와이스 쯔위',
+    },
+    거북이눈: {
+      emoji: '🐢',
+      color: '#6B7280',
+      description:
+        '둥근 눈 위에 눈꺼풀이 여러겹 겹쳐있는 형태로, 느긋하고 고고한 성품을 가집니다. 건강한 신체로 장수하고 행복한 삶을 영위합니다.',
+      celebrities: '원빈, 장혁',
+    },
+    학눈: {
+      emoji: '🦢',
+      color: '#EC4899',
+      description:
+        '보통 크기의 눈에 또렷한 눈동자를 보입니다. 청렴하고, 큰 포부를 가지며, 주변에 대한 선망도 높은 편입니다.',
+      celebrities: '수지, 수애, 허지웅',
+    },
+  };
 
   const handleGenderSelect = (gender: 'male' | 'female') => {
     setSelectedGender(gender);
@@ -59,7 +121,7 @@ const FaceAgeTestPage = () => {
   };
 
   const analyzeImage = async () => {
-    if (!selectedImage || !selectedGender || !isModelReady) {
+    if (!selectedImage || !isModelReady) {
       alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
@@ -67,12 +129,7 @@ const FaceAgeTestPage = () => {
     setIsLoading(true);
 
     try {
-      // 새로운 Teachable Machine 모델 URL
-      const modelURL =
-        selectedGender === 'male'
-          ? 'https://teachablemachine.withgoogle.com/models/7CDjd8eq7/'
-          : 'https://teachablemachine.withgoogle.com/models/ApSHRC75n/';
-
+      const modelURL = 'https://teachablemachine.withgoogle.com/models/jdyVHXvhx/';
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
 
       const img = new Image();
@@ -85,15 +142,16 @@ const FaceAgeTestPage = () => {
             (a: any, b: any) => b.probability - a.probability
           );
 
-          const predictedAge =
-            parseInt(sortedPredictions[0].className) || Math.floor(Math.random() * 30) + 20;
-          const confidence = Math.round(sortedPredictions[0].probability * 100);
+          const topPrediction = sortedPredictions[0];
+          const eyeType = topPrediction.className;
+          const eyeData = eyeTypeInfo[eyeType as keyof typeof eyeTypeInfo] || eyeTypeInfo['학눈'];
 
           setResult({
-            predictedAge,
-            confidence,
-            message: getAgeMessage(predictedAge),
-            actualAge: undefined,
+            eyeType,
+            confidence: Math.round(topPrediction.probability * 100),
+            description: eyeData.description,
+            celebrities: eyeData.celebrities,
+            message: `${eyeData.emoji} 당신의 눈은 ${eyeType}입니다!`,
           });
 
           setStep('result');
@@ -118,16 +176,6 @@ const FaceAgeTestPage = () => {
     }
   };
 
-  const getAgeMessage = (age: number): string => {
-    if (age < 20) return '10대의 풋풋함이 느껴지네요! 🌱';
-    if (age < 25) return '20대 초반의 청춘이 넘쳐나요! ✨';
-    if (age < 30) return '20대의 매력이 한창이네요! 💫';
-    if (age < 35) return '30대 초반의 성숙한 매력이 느껴져요! 🌟';
-    if (age < 40) return '30대의 안정감 있는 매력이네요! 👑';
-    if (age < 45) return '40대의 깊이 있는 매력이 돋보여요! 🔥';
-    return '연륜과 지혜가 묻어나는 모습이에요! 🌅';
-  };
-
   const resetTest = () => {
     setStep('gender');
     setSelectedGender(null);
@@ -138,11 +186,11 @@ const FaceAgeTestPage = () => {
 
   const shareResult = () => {
     if (result) {
-      const text = `AI가 분석한 내 나이는 ${result.predictedAge}세! ${result.message}`;
+      const text = `${result.message} (신뢰도 ${result.confidence}%)`;
 
       if (navigator.share) {
         navigator.share({
-          title: 'AIverse 얼굴 나이 테스트',
+          title: 'AIverse 눈 관상 테스트',
           text,
           url: window.location.href,
         });
@@ -155,7 +203,7 @@ const FaceAgeTestPage = () => {
 
   if (!isModelReady) {
     return (
-      <TestContainer title="🤖 AI 얼굴 나이 테스트" description="AI 모델을 로드하는 중입니다...">
+      <TestContainer title="👁️ AI 눈 관상 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
           <Typography variant="body1">AI 모델 로딩 중...</Typography>
@@ -166,8 +214,8 @@ const FaceAgeTestPage = () => {
 
   return (
     <TestContainer
-      title="🤖 AI 얼굴 나이 테스트"
-      description="AI가 당신의 얼굴을 분석해서 나이를 예측해드려요!"
+      title="👁️ AI 눈 관상 테스트"
+      description="AI가 당신의 눈을 분석해서 관상을 알려드려요!"
       showShare={step === 'result'}
       onShare={shareResult}
     >
@@ -197,14 +245,14 @@ const FaceAgeTestPage = () => {
       {step === 'upload' && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
-            얼굴 사진을 업로드해주세요
+            눈이 잘 보이는 사진을 업로드해주세요
           </Typography>
           <Typography variant="body2" align="center" color="#6B7280">
-            정면을 바라보는 선명한 사진일수록 정확한 분석이 가능해요
+            정면을 바라보고 눈이 선명하게 보이는 사진일수록 정확해요
           </Typography>
 
           <StyledImageUpload onClick={() => fileInputRef.current?.click()}>
-            <Calendar size={48} color="#6366F1" />
+            <Eye size={48} color="#6366F1" />
             <Typography variant="body1">사진 선택하기</Typography>
             <Typography variant="caption" color="#6B7280">
               JPG, PNG 파일만 가능 (최대 10MB)
@@ -245,16 +293,16 @@ const FaceAgeTestPage = () => {
               disabled={isLoading}
             >
               <Zap size={16} />
-              {isLoading ? 'AI 분석 중...' : '분석 시작'}
+              {isLoading ? '관상 분석 중...' : '분석 시작'}
             </Button>
           </div>
 
           {isLoading && (
             <StyledLoadingAnimation>
               <div className="spinner" />
-              <Typography variant="body1">AI가 열심히 분석 중입니다...</Typography>
+              <Typography variant="body1">AI가 당신의 눈을 자세히 분석 중입니다...</Typography>
               <Typography variant="caption" color="#6B7280">
-                잠시만 기다려주세요 ✨
+                잠시만 기다려주세요 👁️
               </Typography>
             </StyledLoadingAnimation>
           )}
@@ -264,19 +312,35 @@ const FaceAgeTestPage = () => {
       {step === 'result' && result && (
         <StyledTestStep>
           <Typography variant="h4" align="center">
-            🎉 분석 완료!
+            🎉 관상 분석 완료!
           </Typography>
 
           <StyledResultSection>
-            <StyledResultCard>
-              <Typography variant="h1" color="#6366F1">
-                {result.predictedAge}세
+            <StyledResultCard
+              color={eyeTypeInfo[result.eyeType as keyof typeof eyeTypeInfo]?.color || '#6366F1'}
+            >
+              <div className="emoji">
+                {eyeTypeInfo[result.eyeType as keyof typeof eyeTypeInfo]?.emoji || '👁️'}
+              </div>
+              <Typography variant="h2" color="white">
+                {result.eyeType}
               </Typography>
-              <Typography variant="body1">{result.message}</Typography>
-              <Typography variant="caption" color="#6B7280">
+              <Typography variant="body1" color="white">
+                {result.description}
+              </Typography>
+              <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
               </Typography>
             </StyledResultCard>
+
+            <StyledCelebSection>
+              <Typography variant="h5" align="center">
+                👑 같은 눈을 가진 유명인들
+              </Typography>
+              <StyledCelebCard>
+                <Typography variant="body1">{result.celebrities}</Typography>
+              </StyledCelebCard>
+            </StyledCelebSection>
 
             {selectedImage && (
               <StyledImagePreview>
@@ -299,4 +363,4 @@ const FaceAgeTestPage = () => {
   );
 };
 
-export default FaceAgeTestPage;
+export default EyeTestPage;
