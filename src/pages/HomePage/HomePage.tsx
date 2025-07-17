@@ -1,57 +1,152 @@
+import { ArrowRight, TrendingUp } from 'lucide-react';
 import {
   StyledHomePage,
+  StyledHeroSection,
   StyledSection,
-  StyledGrid,
-  StyledCard,
-} from "./HomePage.style";
-import Typography from "@/components/common/Typography/Typography";
-import Button from "@/components/common/Button/Button";
+  StyledCategoryGrid,
+  StyledCategoryCard,
+  StyledCategoryIcon,
+  StyledTestGrid,
+  StyledSectionHeader,
+  StyledStatsCard,
+  StyledStatsGrid,
+} from './HomePage.style';
+import Typography from '@/components/common/Typography/Typography';
+import Button from '@/components/common/Button/Button';
+import TestCard from '@/components/features/TestCard/TestCard';
+import { testCategories } from '@/data/tests';
 
 const HomePage = () => {
+  // 인기 테스트들 (참여자 수 기준 상위 6개)
+  const popularTests = testCategories
+    .flatMap(category => category.tests)
+    .sort((a, b) => (b.participantCount || 0) - (a.participantCount || 0))
+    .slice(0, 6);
+
+  // 새로운 테스트들
+  const newTests = testCategories.flatMap(category => category.tests).filter(test => test.isNew);
+
+  const totalParticipants = testCategories
+    .flatMap(category => category.tests)
+    .reduce((sum, test) => sum + (test.participantCount || 0), 0);
+
+  const totalTests = testCategories.flatMap(category => category.tests).length;
+
   return (
     <StyledHomePage>
-      <StyledSection>
+      {/* Hero Section */}
+      <StyledHeroSection>
         <Typography variant="h1" align="center">
-          AIverse에 오신 것을 환영합니다
+          🤖 AIverse에 오신 것을 환영합니다
         </Typography>
         <Typography variant="body1" align="center" color="#6B7280">
-          AI의 모든 것을 체험하고 발견하는 공간
+          AI의 모든 것을 체험하고 발견하는 공간 • 전 세계 {Math.floor(totalParticipants / 10000)}만
+          명이 참여한 테스트들
         </Typography>
-      </StyledSection>
+        <Button variant="primary" size="large">
+          지금 시작하기 <ArrowRight size={20} />
+        </Button>
+      </StyledHeroSection>
 
+      {/* Stats Section */}
       <StyledSection>
-        <Typography variant="h2" align="center">
-          디자인 시스템 테스트
-        </Typography>
-
-        <StyledGrid>
-          <StyledCard>
-            <Typography variant="h3">타이포그래피</Typography>
-            <Typography variant="h4">Heading 4</Typography>
-            <Typography variant="h5">Heading 5</Typography>
-            <Typography variant="h6">Heading 6</Typography>
-            <Typography variant="body1">Body 1 텍스트입니다.</Typography>
-            <Typography variant="body2">Body 2 텍스트입니다.</Typography>
-            <Typography variant="caption">Caption 텍스트입니다.</Typography>
-          </StyledCard>
-
-          <StyledCard>
-            <Typography variant="h3">버튼</Typography>
-            <Button variant="primary" size="large">
-              Primary Button
-            </Button>
-            <Button variant="secondary" size="medium">
-              Secondary Button
-            </Button>
-            <Button variant="outlined" size="small">
-              Outlined Button
-            </Button>
-            <Button variant="primary" fullWidth>
-              Full Width Button
-            </Button>
-          </StyledCard>
-        </StyledGrid>
+        <StyledStatsGrid>
+          <StyledStatsCard>
+            <Typography variant="h3" color="#6366F1">
+              {Math.floor(totalParticipants / 10000)}만+
+            </Typography>
+            <Typography variant="body2" color="#6B7280">
+              총 참여자 수
+            </Typography>
+          </StyledStatsCard>
+          <StyledStatsCard>
+            <Typography variant="h3" color="#8B5CF6">
+              {totalTests}개
+            </Typography>
+            <Typography variant="body2" color="#6B7280">
+              다양한 테스트
+            </Typography>
+          </StyledStatsCard>
+          <StyledStatsCard>
+            <Typography variant="h3" color="#06B6D4">
+              4개
+            </Typography>
+            <Typography variant="body2" color="#6B7280">
+              테스트 카테고리
+            </Typography>
+          </StyledStatsCard>
+        </StyledStatsGrid>
       </StyledSection>
+
+      {/* Categories Section */}
+      <StyledSection>
+        <StyledSectionHeader>
+          <Typography variant="h2">테스트 카테고리</Typography>
+          <Typography variant="body1" color="#6B7280">
+            원하는 카테고리를 선택해서 테스트를 시작해보세요
+          </Typography>
+        </StyledSectionHeader>
+
+        <StyledCategoryGrid>
+          {testCategories.map(category => (
+            <StyledCategoryCard key={category.id} color={category.color}>
+              <StyledCategoryIcon>{category.icon}</StyledCategoryIcon>
+              <Typography variant="h4">{category.name}</Typography>
+              <Typography variant="body2" color="#6B7280">
+                {category.description}
+              </Typography>
+              <Typography variant="caption" color="#6B7280">
+                {category.tests.length}개 테스트
+              </Typography>
+            </StyledCategoryCard>
+          ))}
+        </StyledCategoryGrid>
+      </StyledSection>
+
+      {/* Popular Tests */}
+      <StyledSection>
+        <StyledSectionHeader>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <TrendingUp size={24} color="#EF4444" />
+            <Typography variant="h2">인기 테스트</Typography>
+          </div>
+          <Typography variant="body1" color="#6B7280">
+            가장 많은 사람들이 참여한 인기 테스트들입니다
+          </Typography>
+        </StyledSectionHeader>
+
+        <StyledTestGrid>
+          {popularTests.map(test => (
+            <TestCard
+              key={test.id}
+              test={test}
+              onClick={() => console.log(`Navigate to ${test.id}`)}
+            />
+          ))}
+        </StyledTestGrid>
+      </StyledSection>
+
+      {/* New Tests */}
+      {newTests.length > 0 && (
+        <StyledSection>
+          <StyledSectionHeader>
+            <Typography variant="h2">🆕 새로운 테스트</Typography>
+            <Typography variant="body1" color="#6B7280">
+              최근에 추가된 따끈따끈한 새 테스트들
+            </Typography>
+          </StyledSectionHeader>
+
+          <StyledTestGrid>
+            {newTests.map(test => (
+              <TestCard
+                key={test.id}
+                test={test}
+                onClick={() => console.log(`Navigate to ${test.id}`)}
+              />
+            ))}
+          </StyledTestGrid>
+        </StyledSection>
+      )}
     </StyledHomePage>
   );
 };
