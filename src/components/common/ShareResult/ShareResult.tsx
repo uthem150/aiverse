@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Share2, Download, Copy, MessageCircle, X, Loader } from 'lucide-react';
+import { Share2, Download, Copy, MessageCircle, X, Loader, Gamepad2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import {
   StyledShareResult,
   StyledShareButton,
@@ -34,7 +35,8 @@ const ShareResult = ({
   onClose,
 }: ShareResultProps) => {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const [isGenerating, setIsGenerating] = useState(true); // 처음에 자동 생성
+  const [isGenerating, setIsGenerating] = useState(true);
+  const navigate = useNavigate();
 
   // 컴포넌트가 마운트되면 자동으로 이미지 생성
   useEffect(() => {
@@ -138,8 +140,11 @@ const ShareResult = ({
     alert('결과가 복사되었습니다!');
   };
 
-  const regenerateImage = async () => {
-    await generateImage();
+  const goToOtherTests = () => {
+    // 현재 테스트와 다른 테스트들을 추천
+    // 우선 테스트 목록 페이지로 이동
+    navigate('/tests');
+    onClose(); // 공유 모달 닫기
   };
 
   return (
@@ -193,9 +198,9 @@ const ShareResult = ({
           <span>링크 복사</span>
         </StyledShareButton>
 
-        <StyledShareButton onClick={regenerateImage} disabled={isGenerating}>
-          <Loader size={20} />
-          <span>다시 생성</span>
+        <StyledShareButton onClick={goToOtherTests} disabled={isGenerating}>
+          <Gamepad2 size={20} />
+          <span>다른 테스트</span>
         </StyledShareButton>
       </StyledShareGrid>
     </StyledShareResult>
