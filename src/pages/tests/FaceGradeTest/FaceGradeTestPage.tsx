@@ -16,6 +16,7 @@ import {
   StyledGradeItem,
   StyledLoadingAnimation,
 } from './FaceGradeTestPage.style';
+import ShareResult from '@/components/common/ShareResult/ShareResult';
 
 interface GradeResult {
   className: string;
@@ -38,6 +39,7 @@ const FaceGradeTestPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showShareResult, setShowShareResult] = useState(false);
 
   // TensorFlow.js 모델 로드 확인
   useEffect(() => {
@@ -192,20 +194,11 @@ const FaceGradeTestPage = () => {
   };
 
   const shareResult = () => {
-    if (result) {
-      const text = `${result.description} (신뢰도 ${result.confidence}%)`;
+    setShowShareResult(true);
+  };
 
-      if (navigator.share) {
-        navigator.share({
-          title: 'AIverse 외모 등급 테스트',
-          text,
-          url: window.location.href,
-        });
-      } else {
-        navigator.clipboard.writeText(`${text} ${window.location.href}`);
-        alert('결과가 복사되었습니다!');
-      }
-    }
+  const closeShareResult = () => {
+    setShowShareResult(false);
   };
 
   // 모델이 로드되지 않았을 때 로딩 표시
@@ -253,7 +246,6 @@ const FaceGradeTestPage = () => {
           </StyledGenderSelector>
         </StyledTestStep>
       )}
-
       {/* Image Upload */}
       {step === 'upload' && (
         <StyledTestStep>
@@ -281,7 +273,6 @@ const FaceGradeTestPage = () => {
           />
         </StyledTestStep>
       )}
-
       {/* Analysis */}
       {step === 'analysis' && (
         <StyledTestStep>
@@ -322,7 +313,6 @@ const FaceGradeTestPage = () => {
           )}
         </StyledTestStep>
       )}
-
       {/* Results */}
       {step === 'result' && result && (
         <StyledTestStep>
@@ -384,6 +374,22 @@ const FaceGradeTestPage = () => {
               결과 공유하기
             </Button>
           </div>
+          {/* 공유 결과 컴포넌트 - 조건부 렌더링 */}
+          {showShareResult && (
+            <ShareResult
+              testTitle="AI 외모 등급 테스트"
+              result={result.topGrade}
+              description={result.message}
+              confidence={result.confidence}
+              userImage={selectedImage || undefined}
+              backgroundColor="#8B5CF6"
+              emoji={
+                gradeInfo[result.topGrade.replace(/\s/g, '') as keyof typeof gradeInfo]?.emoji ||
+                '✨'
+              }
+              onClose={closeShareResult}
+            />
+          )}
         </StyledTestStep>
       )}
     </TestContainer>
