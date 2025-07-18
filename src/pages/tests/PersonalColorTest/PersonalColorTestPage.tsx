@@ -14,6 +14,7 @@ import {
   StyledColorCard,
   StyledHashtagSection,
 } from './PersonalColorTestPage.style';
+import ShareResult from '@/components/common/ShareResult/ShareResult';
 
 interface PersonalColorResult {
   colorType: string;
@@ -30,6 +31,7 @@ const PersonalColorTestPage = () => {
   const [result, setResult] = useState<PersonalColorResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -160,20 +162,11 @@ const PersonalColorTestPage = () => {
   };
 
   const shareResult = () => {
-    if (result) {
-      const text = `${result.message} (신뢰도 ${result.confidence}%)`;
+    setShowShareResult(true);
+  };
 
-      if (navigator.share) {
-        navigator.share({
-          title: 'AIverse 퍼스널 컬러 테스트',
-          text,
-          url: window.location.href,
-        });
-      } else {
-        navigator.clipboard.writeText(`${text} ${window.location.href}`);
-        alert('결과가 복사되었습니다!');
-      }
-    }
+  const closeShareResult = () => {
+    setShowShareResult(false);
   };
 
   if (!isModelReady) {
@@ -331,6 +324,21 @@ const PersonalColorTestPage = () => {
               결과 공유하기
             </Button>
           </div>
+
+          {showShareResult && (
+            <ShareResult
+              testTitle="AI 퍼스널 컬러 테스트"
+              result={result.colorType}
+              description={result.message}
+              confidence={result.confidence}
+              userImage={selectedImage || undefined}
+              backgroundColor={
+                colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.color || '#6366F1'
+              }
+              emoji={colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.emoji || '🎨'}
+              onClose={closeShareResult}
+            />
+          )}
         </StyledTestStep>
       )}
     </TestContainer>

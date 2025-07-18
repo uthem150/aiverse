@@ -15,6 +15,7 @@ import {
   StyledCelebSection,
   StyledCelebCard,
 } from './EyeTestPage.style';
+import ShareResult from '@/components/common/ShareResult/ShareResult';
 
 interface EyeAnalysisResult {
   eyeType: string;
@@ -31,6 +32,7 @@ const EyeTestPage = () => {
   const [result, setResult] = useState<EyeAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -188,20 +190,11 @@ const EyeTestPage = () => {
   };
 
   const shareResult = () => {
-    if (result) {
-      const text = `${result.message} (신뢰도 ${result.confidence}%)`;
+    setShowShareResult(true);
+  };
 
-      if (navigator.share) {
-        navigator.share({
-          title: 'AIverse 눈 관상 테스트',
-          text,
-          url: window.location.href,
-        });
-      } else {
-        navigator.clipboard.writeText(`${text} ${window.location.href}`);
-        alert('결과가 복사되었습니다!');
-      }
-    }
+  const closeShareResult = () => {
+    setShowShareResult(false);
   };
 
   if (!isModelReady) {
@@ -360,6 +353,21 @@ const EyeTestPage = () => {
               결과 공유하기
             </Button>
           </div>
+
+          {showShareResult && (
+            <ShareResult
+              testTitle="AI 눈 관상 테스트"
+              result={result.eyeType}
+              description={result.description}
+              confidence={result.confidence}
+              userImage={selectedImage || undefined}
+              backgroundColor={
+                eyeTypeInfo[result.eyeType as keyof typeof eyeTypeInfo]?.color || '#6366F1'
+              }
+              emoji={eyeTypeInfo[result.eyeType as keyof typeof eyeTypeInfo]?.emoji || '👁️'}
+              onClose={closeShareResult}
+            />
+          )}
         </StyledTestStep>
       )}
     </TestContainer>

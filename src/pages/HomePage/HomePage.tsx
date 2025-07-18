@@ -54,7 +54,7 @@ const HomePage = () => {
           AI의 모든 것을 체험하고 발견하는 공간 • 전 세계 {Math.floor(totalParticipants / 10000)}만
           명이 참여한 테스트들
         </Typography>
-        <Button variant="primary" size="large">
+        <Button variant="primary" size="large" onClick={() => navigate(`/tests`)}>
           지금 시작하기 <ArrowRight size={20} />
         </Button>
       </StyledHeroSection>

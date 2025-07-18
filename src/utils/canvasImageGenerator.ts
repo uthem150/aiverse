@@ -167,7 +167,7 @@ export class ResultImageGenerator {
     // 이모지
     this.ctx.font = '48px Arial';
     this.ctx.textAlign = 'center';
-    this.ctx.fillText(emoji, this.canvas.width / 2, 350);
+    this.ctx.fillText(emoji, this.canvas.width / 2, 360);
 
     // 결과 텍스트
     this.ctx.fillStyle = color;

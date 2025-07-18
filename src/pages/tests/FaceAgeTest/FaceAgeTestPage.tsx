@@ -13,6 +13,7 @@ import {
   StyledGenderOption,
   StyledLoadingAnimation,
 } from './FaceAgeTestPage.style';
+import ShareResult from '@/components/common/ShareResult/ShareResult';
 
 interface AnalysisResult {
   predictedAge: number;
@@ -28,6 +29,7 @@ const FaceAgeTestPage = () => {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -67,7 +69,6 @@ const FaceAgeTestPage = () => {
     setIsLoading(true);
 
     try {
-      // 새로운 Teachable Machine 모델 URL
       const modelURL =
         selectedGender === 'male'
           ? 'https://teachablemachine.withgoogle.com/models/7CDjd8eq7/'
@@ -137,20 +138,11 @@ const FaceAgeTestPage = () => {
   };
 
   const shareResult = () => {
-    if (result) {
-      const text = `AI가 분석한 내 나이는 ${result.predictedAge}세! ${result.message}`;
+    setShowShareResult(true);
+  };
 
-      if (navigator.share) {
-        navigator.share({
-          title: 'AIverse 얼굴 나이 테스트',
-          text,
-          url: window.location.href,
-        });
-      } else {
-        navigator.clipboard.writeText(`${text} ${window.location.href}`);
-        alert('결과가 복사되었습니다!');
-      }
-    }
+  const closeShareResult = () => {
+    setShowShareResult(false);
   };
 
   if (!isModelReady) {
@@ -293,6 +285,19 @@ const FaceAgeTestPage = () => {
               결과 공유하기
             </Button>
           </div>
+
+          {showShareResult && (
+            <ShareResult
+              testTitle="AI 얼굴 나이 테스트"
+              result={`${result.predictedAge}세`}
+              description={result.message}
+              confidence={result.confidence}
+              userImage={selectedImage || undefined}
+              backgroundColor="#6366F1"
+              emoji="📆"
+              onClose={closeShareResult}
+            />
+          )}
         </StyledTestStep>
       )}
     </TestContainer>
