@@ -390,9 +390,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#000080', // Navy
       traits: ['논리적', '객관적', '분석적', '정보 수집', '신중함', '효율성 추구'],
       compatibility: {
-        best: ['leader-decider', 'experience-based-pragmatist'],
+        best: ['주도적 결정가형', '경험 기반 실용주의형'],
         good: [],
-        avoid: ['intuitive-quick-decider', 'emotional-responsive'],
+        avoid: ['직관적 즉흥형', '감성 반응형'],
       },
       recommendations: {
         tips: [
@@ -413,9 +413,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['직관적', '빠른 판단', '유연함', '즉흥적', '본능적', '기회 포착'],
       compatibility: {
-        best: ['risk-taker-innovator', 'emotional-responsive'],
+        best: ['위험 감수 혁신가형', '감성 반응형'],
         good: [],
-        avoid: ['analytical-strategist', 'planner-organizer'],
+        avoid: ['분석적 전략가형', '계획 실행형'], // 'planner-organizer'는 원본 데이터에 없지만, 맥락상 추가 가능
       },
       recommendations: {
         tips: [
@@ -436,9 +436,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['협력적', '경청', '조화 추구', '공감 능력', '관계 중시', '갈등 회피'],
       compatibility: {
-        best: ['emotional-responsive', 'procrastinating-avoider'],
+        best: ['감성 반응형', '지연 회피형'],
         good: [],
-        avoid: ['leader-decider', 'risk-taker-innovator'],
+        avoid: ['주도적 결정가형', '위험 감수 혁신가형'],
       },
       recommendations: {
         tips: [
@@ -459,9 +459,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['회피적', '두려움', '부담감', '완벽주의', '수동적', '우유부단'],
       compatibility: {
-        best: ['consensus-seeker', 'emotional-responsive'],
+        best: ['합의 추구형', '감성 반응형'],
         good: [],
-        avoid: ['leader-decider', 'risk-taker-innovator'],
+        avoid: ['주도적 결정가형', '위험 감수 혁신가형'],
       },
       recommendations: {
         tips: [
@@ -482,9 +482,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#4169E1', // Royal Blue
       traits: ['리더십', '결단력', '주도적', '자신감', '책임감', '추진력'],
       compatibility: {
-        best: ['analytical-strategist', 'risk-taker-innovator'],
+        best: ['분석적 전략가형', '위험 감수 혁신가형'],
         good: [],
-        avoid: ['consensus-seeker', 'procrastinating-avoider'],
+        avoid: ['합의 추구형', '지연 회피형'],
       },
       recommendations: {
         tips: [
@@ -505,9 +505,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#2F4F4F', // Dark Slate Gray
       traits: ['실용적', '경험 중시', '현실적', '안정 추구', '효율성', '보수적'],
       compatibility: {
-        best: ['analytical-strategist', 'leader-decider'],
+        best: ['분석적 전략가형', '주도적 결정가형'],
         good: [],
-        avoid: ['intuitive-quick-decider', 'risk-taker-innovator'],
+        avoid: ['직관적 즉흥형', '위험 감수 혁신가형'],
       },
       recommendations: {
         tips: [
@@ -528,9 +528,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['감성적', '공감적', '마음 중시', '민감함', '인간적', '관계 지향'],
       compatibility: {
-        best: ['intuitive-quick-decider', 'consensus-seeker'],
+        best: ['직관적 즉흥형', '합의 추구형'],
         good: [],
-        avoid: ['analytical-strategist', 'experience-based-pragmatist'],
+        avoid: ['분석적 전략가형', '경험 기반 실용주의형'],
       },
       recommendations: {
         tips: [
@@ -551,9 +551,9 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       color: '#8B008B', // Dark Magenta
       traits: ['도전적', '혁신적', '위험 감수', '개척자', '성장 지향', '변화 추구'],
       compatibility: {
-        best: ['leader-decider', 'intuitive-quick-decider'],
+        best: ['주도적 결정가형', '직관적 즉흥형'],
         good: [],
-        avoid: ['procrastinating-avoider', 'experience-based-pragmatist'],
+        avoid: ['지연 회피형', '경험 기반 실용주의형'],
       },
       recommendations: {
         tips: [

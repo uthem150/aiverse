@@ -517,9 +517,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['계획적', '신중함', '정보 중시', '효율적', '안정 추구', '현실적'],
       compatibility: {
-        best: ['friend-facilitator', 'app-navigator'],
-        good: ['patient-observer'],
-        avoid: ['serendipitous-romantic', 'social-explorer'],
+        best: ['친구 주선형', '앱 탐색형'],
+        good: ['인내심 관찰형'],
+        avoid: ['우연한 만남형', '사교 활동형'],
       },
       recommendations: {
         activities: [
@@ -544,9 +544,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['운명론적', '낭만적', '자연스러움 추구', '즉흥적', '개방적', '감성적'],
       compatibility: {
-        best: ['social-explorer', 'direct-approach-seeker'],
-        good: ['hobby-networker'],
-        avoid: ['calculated-introducer', 'app-navigator'],
+        best: ['사교 활동형', '적극적 대시형'],
+        good: ['취미/네트워크형'],
+        avoid: ['계획된 소개팅형', '앱 탐색형'],
       },
       recommendations: {
         activities: [
@@ -572,9 +572,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['공통 관심사 중시', '사교적', '적응력 좋음', '유대감 형성', '협력적', '활동적'],
       compatibility: {
-        best: ['social-explorer', 'friend-facilitator'],
-        good: ['serendipitous-romantic', 'patient-observer'],
-        avoid: ['calculated-introducer', 'direct-approach-seeker'],
+        best: ['사교 활동형', '친구 주선형'],
+        good: ['우연한 만남형', '인내심 관찰형'],
+        avoid: ['계획된 소개팅형', '적극적 대시형'],
       },
       recommendations: {
         activities: [
@@ -600,9 +600,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#7B68EE', // Medium Slate Blue
       traits: ['효율적', '탐색적', '적극적', '정보 활용', '기술 친화적', '개방적'],
       compatibility: {
-        best: ['calculated-introducer', 'direct-approach-seeker'],
-        good: ['hobby-networker'],
-        avoid: ['serendipitous-romantic', 'patient-observer'],
+        best: ['계획된 소개팅형', '적극적 대시형'],
+        good: ['취미/네트워크형'],
+        avoid: ['우연한 만남형', '인내심 관찰형'],
       },
       recommendations: {
         activities: [
@@ -627,9 +627,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['신뢰 지향', '안정 추구', '인맥 활용', '편안함 선호', '배려심', '사회적'],
       compatibility: {
-        best: ['calculated-introducer', 'hobby-networker'],
-        good: ['social-explorer'],
-        avoid: ['serendipitous-romantic', 'direct-approach-seeker'],
+        best: ['계획된 소개팅형', '취미/네트워크형'],
+        good: ['사교 활동형'],
+        avoid: ['우연한 만남형', '적극적 대시형'],
       },
       recommendations: {
         activities: ['친구들에게 소개팅 부탁하기', '더블 데이트', '친구들과 함께하는 모임'],
@@ -650,9 +650,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#FFEB3B', // Yellow
       traits: ['사교적', '활동적', '개방적', '에너지 넘침', '네트워킹', '친화력'],
       compatibility: {
-        best: ['serendipitous-romantic', 'direct-approach-seeker'],
-        good: ['hobby-networker', 'friend-facilitator'],
-        avoid: ['calculated-introducer', 'patient-observer'],
+        best: ['우연한 만남형', '적극적 대시형'],
+        good: ['취미/네트워크형', '친구 주선형'],
+        avoid: ['계획된 소개팅형', '인내심 관찰형'],
       },
       recommendations: {
         activities: [
@@ -678,9 +678,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#FF69B4', // Hot Pink
       traits: ['적극적', '자신감', '솔직함', '주도적', '결단력', '추진력'],
       compatibility: {
-        best: ['patient-observer', 'app-navigator'],
-        good: ['serendipitous-romantic', 'social-explorer'],
-        avoid: ['calculated-introducer', 'friend-facilitator'],
+        best: ['인내심 관찰형', '앱 탐색형'],
+        good: ['우연한 만남형', '사교 활동형'],
+        avoid: ['계획된 소개팅형', '친구 주선형'],
       },
       recommendations: {
         activities: [
@@ -705,9 +705,9 @@ export const datingMethodTestData: PersonalityTestData = {
       color: '#708090', // Slate Gray
       traits: ['신중함', '관찰력', '인내심', '내향적', '분석적', '조심성'],
       compatibility: {
-        best: ['direct-approach-seeker', 'calculated-introducer'],
-        good: ['hobby-networker', 'app-navigator'],
-        avoid: ['serendipitous-romantic', 'social-explorer'],
+        best: ['적극적 대시형', '계획된 소개팅형'],
+        good: ['취미/네트워크형', '앱 탐색형'],
+        avoid: ['우연한 만남형', '사교 활동형'],
       },
       recommendations: {
         activities: [

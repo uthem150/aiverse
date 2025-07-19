@@ -510,9 +510,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['이성적', '논리적', '분석적', '문제 해결 지향', '객관적', '자기 성찰'],
       compatibility: {
-        best: ['self-growth-focus', 'practical-resetter'],
-        good: ['internal-contemplator'],
-        avoid: ['emotional-expresser', 'distraction-seeker'], // 감정적 표현이나 회피형과는 서로 이해하기 어려울 수 있음
+        best: ['자기 성장형', '현실적 재정비형'],
+        good: ['내면 숙고형'],
+        avoid: ['감정적 표현형', '몰두/회피형'], // 감정적 표현이나 회피형과는 서로 이해하기 어려울 수 있음
       },
       recommendations: {
         activities: [
@@ -537,9 +537,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['솔직함', '감성적', '외향적', '감정 표현 풍부', '충동적', '개방적'],
       compatibility: {
-        best: ['social-supporter', 'optimistic-mover-on'],
-        good: ['distraction-seeker'],
-        avoid: ['analytical-processor', 'internal-contemplator'], // 이성적이거나 내향적인 유형과는 감정 교류가 어려울 수 있음
+        best: ['사회적 지지형', '낙천적 극복형'],
+        good: ['몰두/회피형'],
+        avoid: ['분석적 처리형', '내면 숙고형'], // 이성적이거나 내향적인 유형과는 감정 교류가 어려울 수 있음
       },
       recommendations: {
         activities: [
@@ -565,9 +565,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['활동적', '낙천적', '현실 회피', '즉흥적', '새로운 경험 추구', '활발함'],
       compatibility: {
-        best: ['optimistic-mover-on', 'social-supporter'],
-        good: ['emotional-expresser'],
-        avoid: ['analytical-processor', 'internal-contemplator'], // 깊은 성찰이나 분석을 요하는 유형과는 잘 맞지 않을 수 있음
+        best: ['낙천적 극복형', '사회적 지지형'],
+        good: ['감정적 표현형'],
+        avoid: ['분석적 처리형', '내면 숙고형'], // 깊은 성찰이나 분석을 요하는 유형과는 잘 맞지 않을 수 있음
       },
       recommendations: {
         activities: ['새로운 운동 시작', '여행 가기', '새로운 동호회 가입', '친구들과 약속 잡기'],
@@ -589,9 +589,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#2E8B57', // SeaGreen
       traits: ['성장 지향', '긍정적', '주도적', '책임감', '자기 개발', '회복 탄력성'],
       compatibility: {
-        best: ['analytical-processor', 'practical-resetter'],
-        good: ['internal-contemplator', 'optimistic-mover-on'],
-        avoid: ['emotional-expresser', 'distraction-seeker'], // 감정적 해소나 즉각적인 즐거움 추구 유형과는 방향이 다를 수 있음
+        best: ['분석적 처리형', '현실적 재정비형'],
+        good: ['내면 숙고형', '낙천적 극복형'],
+        avoid: ['감정적 표현형', '몰두/회피형'], // 감정적 해소나 즉각적인 즐거움 추구 유형과는 방향이 다를 수 있음
       },
       recommendations: {
         activities: ['자기계발 서적 읽기', '새로운 기술 배우기', '멘토링 받기', '명상과 요가'],
@@ -613,9 +613,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['사교적', '의존적 (긍정적)', '친화력', '감정 공유', '지지 추구', '개방적'],
       compatibility: {
-        best: ['emotional-expresser', 'distraction-seeker'],
-        good: ['optimistic-mover-on'],
-        avoid: ['internal-contemplator', 'analytical-processor'], // 혼자만의 시간이 중요한 유형과는 다소 충돌할 수 있음
+        best: ['감정적 표현형', '몰두/회피형'],
+        good: ['낙천적 극복형'],
+        avoid: ['내면 숙고형', '분석적 처리형'], // 혼자만의 시간이 중요한 유형과는 다소 충돌할 수 있음
       },
       recommendations: {
         activities: [
@@ -641,9 +641,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#708090', // Slate Gray
       traits: ['현실적', '실용적', '계획적', '자립심', '책임감', '침착함'],
       compatibility: {
-        best: ['analytical-processor', 'self-growth-focus'],
-        good: ['internal-contemplator', 'optimistic-mover-on'],
-        avoid: ['emotional-expresser', 'distraction-seeker'], // 감정적 혼란이나 즉흥적인 행동을 보이는 유형과는 잘 맞지 않을 수 있음
+        best: ['분석적 처리형', '자기 성장형'],
+        good: ['내면 숙고형', '낙천적 극복형'],
+        avoid: ['감정적 표현형', '몰두/회피형'], // 감정적 혼란이나 즉흥적인 행동을 보이는 유형과는 잘 맞지 않을 수 있음
       },
       recommendations: {
         activities: [
@@ -669,9 +669,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#DDA0DD', // Plum
       traits: ['내향적', '사려 깊음', '성찰적', '조용함', '신중함', '감성적'],
       compatibility: {
-        best: ['analytical-processor', 'self-growth-focus'],
-        good: ['practical-resetter', 'empathetic-listener'],
-        avoid: ['emotional-expresser', 'social-supporter', 'distraction-seeker'], // 너무 외향적이거나 즉흥적인 유형과는 이해가 어려울 수 있음
+        best: ['분석적 처리형', '자기 성장형'],
+        good: ['현실적 재정비형', '공감적 경청형'], // '공감적 경청형'은 기존 데이터에 없어서 임의로 추가했습니다.
+        avoid: ['감정적 표현형', '사회적 지지형', '몰두/회피형'], // 너무 외향적이거나 즉흥적인 유형과는 이해가 어려울 수 있음
       },
       recommendations: {
         activities: ['일기 쓰기', '명상', '조용한 산책', '음악 감상'],
@@ -692,9 +692,9 @@ export const breakupCopingTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['낙천적', '긍정적', '빠른 회복', '미래 지향적', '활동적', '개방적'],
       compatibility: {
-        best: ['distraction-seeker', 'social-supporter'],
-        good: ['self-growth-focus', 'practical-resetter'],
-        avoid: ['emotional-expresser', 'internal-contemplator'], // 감정의 깊은 해소를 원하는 유형과는 다소 거리감이 있을 수 있음
+        best: ['몰두/회피형', '사회적 지지형'],
+        good: ['자기 성장형', '현실적 재정비형'],
+        avoid: ['감정적 표현형', '내면 숙고형'], // 감정의 깊은 해소를 원하는 유형과는 다소 거리감이 있을 수 있음
       },
       recommendations: {
         activities: ['새로운 사람들과의 만남', '여행 계획', '버킷리스트 작성 및 실행', '운동'],

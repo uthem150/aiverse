@@ -334,9 +334,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#FF4500', // OrangeRed
       traits: ['승부욕', '경쟁심', '성취 지향', '전략적', '노력파', '리더십'],
       compatibility: {
-        best: ['skill-master-aspirant', 'strategic-brain-player'],
+        best: ['컨트롤 장인 지망생형', '전략적 두뇌파형'],
         good: [],
-        avoid: ['casual-light-enjoyer', 'aspiring-procrastinator'], // 이전 유형 연관
+        avoid: ['가볍게 즐기는 캐주얼형', '작심삼일형'], // 'aspiring-procrastinator'는 이전 유형과 연관된 예시로 추가했습니다.
       },
       recommendations: {
         tips: [
@@ -358,9 +358,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#8A2BE2', // Blue Violet
       traits: ['몰입감', '감성적', '상상력 풍부', '세계관 중시', '탐험적', '서사 애호가'],
       compatibility: {
-        best: ['new-game-explorer', 'casual-light-enjoyer'],
+        best: ['신작 탐험가형', '가볍게 즐기는 캐주얼형'],
         good: [],
-        avoid: ['competitive-dominator', 'strategic-brain-player'],
+        avoid: ['경쟁심 폭발 승부사형', '전략적 두뇌파형'],
       },
       recommendations: {
         tips: [
@@ -382,9 +382,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#FF69B4', // Hot Pink
       traits: ['사교적', '협동심', '관계 지향', '소통 중시', '긍정적', '친목 도모'],
       compatibility: {
-        best: ['casual-light-enjoyer', 'balanced-lifestyle-godsaeng'], // 이전 유형 연관
+        best: ['가볍게 즐기는 캐주얼형', '밸런스 잡힌 갓생형'], // 'balanced-lifestyle-godsaeng'는 이전 유형과 연관된 예시로 추가했습니다.
         good: [],
-        avoid: ['competitive-dominator', 'skill-master-aspirant'],
+        avoid: ['경쟁심 폭발 승부사형', '컨트롤 장인 지망생형'],
       },
       recommendations: {
         tips: [
@@ -406,9 +406,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['편안함', '즐거움', '스트레스 해소', '가벼움', '유연함', '부담 없음'],
       compatibility: {
-        best: ['social-community-player', 'story-immersive-explorer'],
+        best: ['함께 즐기는 소통형', '스토리에 몰입하는 탐험가형'],
         good: [],
-        avoid: ['competitive-dominator', 'collection-completionist'],
+        avoid: ['경쟁심 폭발 승부사형', '수집 강박 완벽주의형'],
       },
       recommendations: {
         tips: [
@@ -430,9 +430,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#2F4F4F', // Dark Slate Gray
       traits: ['분석적', '논리적', '전략적', '효율성 추구', '문제 해결', '깊이 있는 사고'],
       compatibility: {
-        best: ['competitive-dominator', 'collection-completionist'],
+        best: ['경쟁심 폭발 승부사형', '수집 강박 완벽주의형'],
         good: [],
-        avoid: ['casual-light-enjoyer', 'story-immersive-explorer'],
+        avoid: ['가볍게 즐기는 캐주얼형', '스토리에 몰입하는 탐험가형'],
       },
       recommendations: {
         tips: [
@@ -454,9 +454,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['완벽주의', '끈기', '수집욕', '집념', '세부적', '달성 지향'],
       compatibility: {
-        best: ['strategic-brain-player', 'story-immersive-explorer'],
+        best: ['전략적 두뇌파형', '스토리에 몰입하는 탐험가형'],
         good: [],
-        avoid: ['casual-light-enjoyer', 'spontaneous-wanderer'], // 이전 유형 연관
+        avoid: ['가볍게 즐기는 캐주얼형', '자유로운 방랑자형'], // 'spontaneous-wanderer'는 이전 유형과 연관된 예시로 추가했습니다.
       },
       recommendations: {
         tips: [
@@ -478,9 +478,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#8B0000', // Dark Red
       traits: ['연습 벌레', '피지컬 중시', '끈기', '도전 정신', '성장 지향', '손맛'],
       compatibility: {
-        best: ['competitive-dominator', 'new-game-explorer'],
+        best: ['경쟁심 폭발 승부사형', '신작 탐험가형'],
         good: [],
-        avoid: ['casual-light-enjoyer', 'social-community-player'],
+        avoid: ['가볍게 즐기는 캐주얼형', '함께 즐기는 소통형'],
       },
       recommendations: {
         tips: [
@@ -502,9 +502,9 @@ export const gameTypeTestData: PersonalityTestData = {
       color: '#8B008B', // Dark Magenta
       traits: ['얼리어답터', '호기심', '다양성 추구', '트렌디', '탐험적', '개방적'],
       compatibility: {
-        best: ['story-immersive-explorer', 'casual-light-enjoyer'],
-        good: ['collection-completionist'],
-        avoid: ['competitive-dominator', 'skill-master-aspirant'], // 한 게임만 파는 타입과는 다름
+        best: ['스토리에 몰입하는 탐험가형', '가볍게 즐기는 캐주얼형'],
+        good: ['수집 강박 완벽주의형'],
+        avoid: ['경쟁심 폭발 승부사형', '컨트롤 장인 지망생형'], // 한 게임만 파는 타입과는 다름
       },
       recommendations: {
         tips: [

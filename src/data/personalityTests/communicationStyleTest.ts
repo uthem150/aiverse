@@ -513,9 +513,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['솔직함', '명확함', '단호함', '직설적', '오픈 마인드', '문제 해결 지향'],
       compatibility: {
-        best: ['empathetic-listener', 'active-engager'],
-        good: ['logical-solver'],
-        avoid: ['harmonious-avoider', 'passive-responder'],
+        best: ['공감적 경청형', '적극적 참여형'],
+        good: ['논리적 해결형'],
+        avoid: ['조화 지향 회피형', '수동적 반응형'],
       },
       recommendations: {
         activities: ['솔직한 대화 시간 갖기', '감정 카드 사용하기', '정기적인 커플 회의'],
@@ -537,9 +537,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['공감능력', '경청', '배려심', '온화함', '이해심', '지지적'],
       compatibility: {
-        best: ['direct-expresser', 'logical-solver'],
-        good: ['thoughtful-contemplator', 'harmonious-avoider'],
-        avoid: ['humorous-mediator', 'active-engager'], // Overly direct or dominant types might be challenging
+        best: ['직설적 표현형', '논리적 해결형'],
+        good: ['신중한 숙고형', '조화 지향 회피형'],
+        avoid: ['유머러스 중재형', '적극적 참여형'], // Overly direct or dominant types might be challenging
       },
       recommendations: {
         activities: [
@@ -565,9 +565,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['논리적', '합리적', '분석적', '효율적', '문제 해결 지향', '객관적'],
       compatibility: {
-        best: ['empathetic-listener', 'thoughtful-contemplator'],
-        good: ['direct-expresser', 'active-engager'],
-        avoid: ['humorous-mediator', 'harmonious-avoider'], // Those who avoid direct discussion or rely on humor for conflict
+        best: ['공감적 경청형', '신중한 숙고형'],
+        good: ['직설적 표현형', '적극적 참여형'],
+        avoid: ['유머러스 중재형', '조화 지향 회피형'], // Those who avoid direct discussion or rely on humor for conflict
       },
       recommendations: {
         activities: ['토론 동아리', '퍼즐 게임', '체계적인 계획 세우기', '함께 공부하기'],
@@ -589,9 +589,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#D8BFD8', // Thistle
       traits: ['조화 지향', '갈등 회피', '배려심', '눈치 빠름', '수동적', '내향적'],
       compatibility: {
-        best: ['direct-expresser', 'active-engager'],
-        good: ['empathetic-listener', 'passive-responder'],
-        avoid: ['logical-solver', 'humorous-mediator'], // Those who demand directness or might not take hidden feelings seriously
+        best: ['직설적 표현형', '적극적 참여형'],
+        good: ['공감적 경청형', '수동적 반응형'],
+        avoid: ['논리적 해결형', '유머러스 중재형'], // Those who demand directness or might not take hidden feelings seriously
       },
       recommendations: {
         activities: ['편안한 분위기에서 솔직한 대화 연습', '갈등 관리 워크숍', '감정 표현 연습'],
@@ -613,9 +613,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#FFEB3B', // Yellow
       traits: ['유머러스', '재치', '긍정적', '친화력', '분위기 메이커', '낙천적'],
       compatibility: {
-        best: ['thoughtful-contemplator', 'logical-solver'],
-        good: ['active-engager', 'direct-expresser'],
-        avoid: ['harmonious-avoider', 'empathetic-listener'], // May find humor insensitive in serious moments
+        best: ['신중한 숙고형', '논리적 해결형'],
+        good: ['적극적 참여형', '직설적 표현형'],
+        avoid: ['조화 지향 회피형', '공감적 경청형'], // May find humor insensitive in serious moments
       },
       recommendations: {
         activities: ['코미디 쇼 관람', '함께 게임하기', '서로에게 웃음 주기 챌린지'],
@@ -637,9 +637,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['신중함', '사려 깊음', '논리적', '내향적', '분석적', '조용함'],
       compatibility: {
-        best: ['humorous-mediator', 'active-engager'],
-        good: ['logical-solver', 'empathetic-listener'],
-        avoid: ['direct-expresser', 'passive-responder'], // May be frustrated by bluntness or lack of initiative
+        best: ['유머러스 중재형', '적극적 참여형'],
+        good: ['논리적 해결형', '공감적 경청형'],
+        avoid: ['직설적 표현형', '수동적 반응형'], // May be frustrated by bluntness or lack of initiative
       },
       recommendations: {
         activities: ['일기 쓰기', '독서', '명상', '혼자만의 시간 갖기'],
@@ -661,9 +661,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['적극적', '활발함', '주도적', '에너지 넘침', '솔직함', '개방적'],
       compatibility: {
-        best: ['passive-responder', 'thoughtful-contemplator'],
-        good: ['direct-expresser', 'humorous-mediator'],
-        avoid: ['harmonious-avoider', 'logical-solver'], // May struggle with those who avoid conflict or too much analytical thought
+        best: ['수동적 반응형', '신중한 숙고형'],
+        good: ['직설적 표현형', '유머러스 중재형'],
+        avoid: ['조화 지향 회피형', '논리적 해결형'], // May struggle with those who avoid conflict or too much analytical thought
       },
       recommendations: {
         activities: ['그룹 스터디', '토론 모임', '커플 액티비티', '새로운 장소 탐험'],
@@ -685,9 +685,9 @@ export const communicationStyleTestData: PersonalityTestData = {
       color: '#BDB76B', // Dark Khaki
       traits: ['수동적', '내향적', '조용함', '경청', '관찰력', '배려심'],
       compatibility: {
-        best: ['active-engager', 'direct-expresser'],
-        good: ['thoughtful-contemplator', 'harmonious-avoider'],
-        avoid: ['humorous-mediator', 'logical-solver'], // May feel pushed by humor or too much analysis
+        best: ['적극적 참여형', '직설적 표현형'],
+        good: ['신중한 숙고형', '조화 지향 회피형'],
+        avoid: ['유머러스 중재형', '논리적 해결형'], // May feel pushed by humor or too much analysis
       },
       recommendations: {
         activities: [

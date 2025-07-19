@@ -389,9 +389,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#FF4500', // OrangeRed
       traits: ['도전적', '모험심', '스릴 추구', '개척 정신', '성장 지향', '활동적'],
       compatibility: {
-        best: ['spontaneous-wanderer', 'nature-lover'],
+        best: ['🗺️ 즉흥 자유로운 영혼형', '🌳 자연 친화형'],
         good: [],
-        avoid: ['relaxing-healer', 'planner-organizer'],
+        avoid: ['💆 휴식 힐링형', '📝 계획 완벽주의형'],
       },
       recommendations: {
         destinations: [
@@ -418,9 +418,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['휴식 지향', '여유로움', '재충전', '평화로움', '스트레스 해소', '편안함'],
       compatibility: {
-        best: ['nature-lover', 'planner-organizer'],
+        best: ['🌳 자연 친화형', '📝 계획 완벽주의형'],
         good: [],
-        avoid: ['adventurous-explorer', 'spontaneous-wanderer'],
+        avoid: ['🧗 모험 탐험가형', '🗺️ 즉흥 자유로운 영혼형'],
       },
       recommendations: {
         destinations: [
@@ -447,9 +447,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['학구적', '역사 애호가', '문화 체험', '지적 호기심', '탐구적', '꼼꼼함'],
       compatibility: {
-        best: ['planner-organizer', 'documentary-intellectual'], // 이전 유형 연관
+        best: ['📝 계획 완벽주의형', '다큐멘터리 지성형'], // 이전 유형 연관
         good: [],
-        avoid: ['spontaneous-wanderer', 'adventurous-explorer'],
+        avoid: ['🗺️ 즉흥 자유로운 영혼형', '🧗 모험 탐험가형'],
       },
       recommendations: {
         destinations: ['프랑스 파리', '영국 런던', '터키 이스탄불', '한국 경주'],
@@ -471,9 +471,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['세련됨', '활동적', '다채로움', '쇼핑 선호', '맛집 탐방', '트렌디'],
       compatibility: {
-        best: ['foodie-traveler', 'planner-organizer'],
+        best: ['🍜 미식 탐험가형', '📝 계획 완벽주의형'],
         good: [],
-        avoid: ['nature-lover', 'relaxing-healer'],
+        avoid: ['🌳 자연 친화형', '💆 휴식 힐링형'],
       },
       recommendations: {
         destinations: [
@@ -500,9 +500,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['미식가', '탐험적', '호기심', '오감 만족', '문화 이해', '경험 중시'],
       compatibility: {
-        best: ['city-tour-enjoyer', 'spontaneous-wanderer'],
+        best: ['🏙️ 도시 투어 만끽형', '🗺️ 즉흥 자유로운 영혼형'],
         good: [],
-        avoid: ['nature-lover', 'adventurous-explorer'], // 활동 중심보다 먹는 것에 집중
+        avoid: ['🌳 자연 친화형', '🧗 모험 탐험가형'], // 활동 중심보다 먹는 것에 집중
       },
       recommendations: {
         destinations: [
@@ -528,9 +528,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#228B22', // Forest Green
       traits: ['자연 지향', '평화로움', '사색적', '친환경적', '활동적 (자연 내)', '자유로움'],
       compatibility: {
-        best: ['relaxing-healer', 'adventurous-explorer'],
+        best: ['💆 휴식 힐링형', '🧗 모험 탐험가형'],
         good: [],
-        avoid: ['city-tour-enjoyer', 'foodie-traveler'],
+        avoid: ['🏙️ 도시 투어 만끽형', '🍜 미식 탐험가형'],
       },
       recommendations: {
         destinations: [
@@ -557,9 +557,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#8B008B', // Dark Magenta
       traits: ['즉흥적', '자유로움', '개방적', '유연함', '우연 추구', '새로운 경험'],
       compatibility: {
-        best: ['adventurous-explorer', 'foodie-traveler'],
+        best: ['🧗 모험 탐험가형', '🍜 미식 탐험가형'],
         good: [],
-        avoid: ['planner-organizer', 'cultural-deep-diver'],
+        avoid: ['📝 계획 완벽주의형', '🏛️ 문화 심층 탐구형'],
       },
       recommendations: {
         destinations: [
@@ -586,9 +586,9 @@ export const travelStyleTestData: PersonalityTestData = {
       color: '#4169E1', // Royal Blue
       traits: ['계획적', '꼼꼼함', '조직적', '정보 수집', '효율성 중시', '준비성'],
       compatibility: {
-        best: ['cultural-deep-diver', 'city-tour-enjoyer'],
-        good: ['relaxing-healer'],
-        avoid: ['spontaneous-wanderer', 'adventurous-explorer'],
+        best: ['🏛️ 문화 심층 탐구형', '🏙️ 도시 투어 만끽형'],
+        good: ['💆 휴식 힐링형'],
+        avoid: ['🗺️ 즉흥 자유로운 영혼형', '🧗 모험 탐험가형'],
       },
       recommendations: {
         destinations: [

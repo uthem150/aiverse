@@ -510,9 +510,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#4682B4', // Steel Blue
       traits: ['합리적', '논리적', '분석적', '효율 추구', '미래 지향적', '투명성 중시'],
       compatibility: {
-        best: ['responsible-manager', 'value-seeker'],
-        good: ['flexible-balancer'],
-        avoid: ['splurge-lover', 'generous-spender'],
+        best: ['책임감 있는 관리형', '가치 추구형'],
+        good: ['유연한 균형형'],
+        avoid: ['충동적 지출형', '아낌없이 주는형'],
       },
       recommendations: {
         activities: ['가계부 함께 작성하기', '재테크 스터디', '합리적인 소비 계획 세우기'],
@@ -534,9 +534,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#DC143C', // Crimson
       traits: ['너그러움', '배려심', '관대함', '희생적', '감성적', '베푸는 즐거움'],
       compatibility: {
-        best: ['penny-pincher', 'responsible-manager'],
-        good: ['splurge-lover'],
-        avoid: ['rational-investor', 'value-seeker'],
+        best: ['절약형', '책임감 있는 관리형'],
+        good: ['충동적 지출형'],
+        avoid: ['합리적 투자형', '가치 추구형'],
       },
       recommendations: {
         activities: [
@@ -562,9 +562,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#32CD32', // Lime Green
       traits: ['절약 정신', '검소함', '미래 지향적', '계획적', '신중함', '안정 추구'],
       compatibility: {
-        best: ['generous-spender', 'responsible-manager'],
-        good: ['rational-investor'],
-        avoid: ['splurge-lover', 'experience-investor'],
+        best: ['아낌없이 주는형', '책임감 있는 관리형'],
+        good: ['합리적 투자형'],
+        avoid: ['충동적 지출형', '경험 투자형'],
       },
       recommendations: {
         activities: [
@@ -590,9 +590,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['경험 중시', '추억 생성', '즐거움 지향', '활동적', '개방적', '가치 지향'],
       compatibility: {
-        best: ['value-seeker', 'flexible-balancer'],
-        good: ['splurge-lover'],
-        avoid: ['penny-pincher', 'rational-investor'],
+        best: ['가치 추구형', '유연한 균형형'],
+        good: ['충동적 지출형'],
+        avoid: ['절약형', '합리적 투자형'],
       },
       recommendations: {
         activities: [
@@ -619,9 +619,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['책임감', '계획적', '체계적', '투명성', '안정 추구', '합리적'],
       compatibility: {
-        best: ['rational-investor', 'penny-pincher'],
-        good: ['flexible-balancer'],
-        avoid: ['splurge-lover', 'generous-spender'],
+        best: ['합리적 투자형', '절약형'],
+        good: ['유연한 균형형'],
+        avoid: ['충동적 지출형', '아낌없이 주는형'],
       },
       recommendations: {
         activities: [
@@ -647,9 +647,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['유연함', '융통성', '조화 추구', '배려심', '개방적', '조정자'],
       compatibility: {
-        best: ['generous-spender', 'splurge-lover'],
-        good: ['responsible-manager', 'experience-investor'],
-        avoid: ['penny-pincher', 'rational-investor'],
+        best: ['아낌없이 주는형', '충동적 지출형'],
+        good: ['책임감 있는 관리형', '경험 투자형'],
+        avoid: ['절약형', '합리적 투자형'],
       },
       recommendations: {
         activities: [
@@ -675,9 +675,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#FFC0CB', // Pink
       traits: ['충동적', '즉흥적', '현재 지향', '즐거움 추구', '낙천적', '낭비벽'],
       compatibility: {
-        best: ['generous-spender', 'flexible-balancer'],
-        good: ['experience-investor'],
-        avoid: ['penny-pincher', 'responsible-manager', 'rational-investor'],
+        best: ['아낌없이 주는형', '유연한 균형형'],
+        good: ['경험 투자형'],
+        avoid: ['절약형', '책임감 있는 관리형', '합리적 투자형'],
       },
       recommendations: {
         activities: [
@@ -704,9 +704,9 @@ export const spendingStyleTestData: PersonalityTestData = {
       color: '#9370DB', // Medium Purple
       traits: ['가치 지향', '의미 부여', '감성적', '정성', '성장 추구', '현명함'],
       compatibility: {
-        best: ['rational-investor', 'experience-investor'],
-        good: ['flexible-balancer'],
-        avoid: ['splurge-lover', 'penny-pincher'],
+        best: ['합리적 투자형', '경험 투자형'],
+        good: ['유연한 균형형'],
+        avoid: ['충동적 지출형', '절약형'],
       },
       recommendations: {
         activities: [

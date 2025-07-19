@@ -330,9 +330,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#A52A2A', // Brown
       traits: ['모험심', '서사 추구', '몰입형', '탐험가', '영웅심', '인내심'],
       compatibility: {
-        best: ['deep-lore-investigator', 'fast-paced-action-master'],
+        best: ['📜 심층 세계관 탐구자형', '💥 피지컬 폭발 액션 마스터형'],
         good: [],
-        avoid: ['relaxing-healing-farmer', 'casual-light-enjoyer'],
+        avoid: ['🥕 힐링 가득 편안한 농부형', '캐주얼 라이트 즐겜형'],
       },
       recommendations: {
         games: [
@@ -366,9 +366,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#4682B4', // Steel Blue
       traits: ['전략적', '논리적', '분석적', '효율성', '계획적', '지적 호기심'],
       compatibility: {
-        best: ['fast-paced-action-master', 'creative-builder-dreamer'],
+        best: ['💥 피지컬 폭발 액션 마스터형', '🏗️ 자유로운 창조자형'],
         good: [],
-        avoid: ['relaxing-healing-farmer', 'social-multiplayer-pro'],
+        avoid: ['🥕 힐링 가득 편안한 농부형', '🤝 함께하는 멀티플레이 전문가형'],
       },
       recommendations: {
         games: [
@@ -396,9 +396,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['힐링', '편안함', '여유로움', '평화로움', '스트레스 해소', '창의적 (꾸미기)'],
       compatibility: {
-        best: ['creative-builder-dreamer', 'indie-gem-explorer'],
+        best: ['🏗️ 자유로운 창조자형', '🕹️ 숨겨진 인디 명작 탐험가형'],
         good: [],
-        avoid: ['fast-paced-action-master', 'strategic-mind-master'],
+        avoid: ['💥 피지컬 폭발 액션 마스터형', '🧠 치밀한 전략의 대가형'],
       },
       recommendations: {
         games: [
@@ -429,9 +429,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['피지컬', '반응 속도', '정교함', '도전적', '성취욕', '손맛'],
       compatibility: {
-        best: ['strategic-mind-master', 'social-multiplayer-pro'],
+        best: ['🧠 치밀한 전략의 대가형', '🤝 함께하는 멀티플레이 전문가형'],
         good: [],
-        avoid: ['relaxing-healing-farmer', 'deep-lore-investigator'],
+        avoid: ['🥕 힐링 가득 편안한 농부형', '📜 심층 세계관 탐구자형'],
       },
       recommendations: {
         games: [
@@ -459,9 +459,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['사교적', '협동심', '소통 중시', '관계 지향', '유쾌함', '팀워크'],
       compatibility: {
-        best: ['fast-paced-action-master', 'creative-builder-dreamer'],
+        best: ['💥 피지컬 폭발 액션 마스터형', '🏗️ 자유로운 창조자형'],
         good: [],
-        avoid: ['deep-lore-investigator', 'single-player-enthusiast'], // 단독 플레이 선호 유형과 반대
+        avoid: ['📜 심층 세계관 탐구자형', '싱글 플레이어 열정형'], // 단독 플레이 선호 유형과 반대
       },
       recommendations: {
         games: [
@@ -495,9 +495,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#8B008B', // Dark Magenta
       traits: ['독창성', '호기심', '실험 정신', '탐험적', '개방적', '다양성 추구'],
       compatibility: {
-        best: ['creative-builder-dreamer', 'relaxing-healing-farmer'],
+        best: ['🏗️ 자유로운 창조자형', '🥕 힐링 가득 편안한 농부형'],
         good: [],
-        avoid: ['fast-paced-action-master', 'competitive-dominator'],
+        avoid: ['💥 피지컬 폭발 액션 마스터형', '경쟁 지배형'],
       },
       recommendations: {
         games: [
@@ -528,9 +528,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#556B2F', // Dark Olive Green
       traits: ['지적 호기심', '탐구적', '분석적', '세부적', '끈기', '세계관 중시'],
       compatibility: {
-        best: ['epic-adventure-seeker', 'strategic-mind-master'],
+        best: ['🗡️ 장대한 모험의 서사시형', '🧠 치밀한 전략의 대가형'],
         good: [],
-        avoid: ['fast-paced-action-master', 'casual-light-enjoyer'],
+        avoid: ['💥 피지컬 폭발 액션 마스터형', '캐주얼 라이트 즐겜형'],
       },
       recommendations: {
         games: [
@@ -564,9 +564,9 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
       color: '#DAA520', // Goldenrod
       traits: ['창의적', '자유로움', '설계', '구현력', '꿈', '꾸미기'],
       compatibility: {
-        best: ['relaxing-healing-farmer', 'indie-gem-explorer'],
-        good: ['strategic-mind-master'],
-        avoid: ['fast-paced-action-master', 'competitive-dominator'],
+        best: ['🥕 힐링 가득 편안한 농부형', '🕹️ 숨겨진 인디 명작 탐험가형'],
+        good: ['🧠 치밀한 전략의 대가형'],
+        avoid: ['💥 피지컬 폭발 액션 마스터형', '경쟁 지배형'],
       },
       recommendations: {
         games: [

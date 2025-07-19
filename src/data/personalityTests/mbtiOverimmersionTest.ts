@@ -330,9 +330,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#FF4500', // OrangeRed
       traits: ['맹목적 신뢰', '확신', '단순화', '열정적', '명확성 추구', '공감'],
       compatibility: {
-        best: ['mbti-enforcer', 'mbti-salesperson'],
+        best: ['📢 MBTI 강요형', '🗣️ MBTI 영업사원형'],
         good: [],
-        avoid: ['mbti-skeptic', 'mbti-avoider'],
+        avoid: ['🤔 MBTI 합리적 의심형', '🚫 MBTI 회피형'],
       },
       recommendations: {
         tips: [
@@ -354,9 +354,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#4169E1', // Royal Blue
       traits: ['적극적', '분류욕', '확인 본능', '지배적', '호기심', '강요'],
       compatibility: {
-        best: ['mbti-blind-believer', 'mbti-psychic'],
+        best: ['💯 MBTI 맹신론자형', '🔮 MBTI 궁예형'],
         good: [],
-        avoid: ['mbti-avoider', 'mbti-skeptic'],
+        avoid: ['🚫 MBTI 회피형', '🤔 MBTI 합리적 의심형'],
       },
       recommendations: {
         tips: [
@@ -378,9 +378,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#9932CC', // Dark Orchid
       traits: ['직관적', '분석적', '촉', '통찰력', '관찰력', '예리함'],
       compatibility: {
-        best: ['mbti-analyst', 'mbti-chameleon'],
+        best: ['🔬 MBTI 분석가형', '🌱 MBTI 카멜레온형'],
         good: [],
-        avoid: ['mbti-avoider', 'mbti-skeptic'],
+        avoid: ['🚫 MBTI 회피형', '🤔 MBTI 합리적 의심형'],
       },
       recommendations: {
         tips: [
@@ -402,9 +402,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['합리적', '비판적 사고', '논리적', '회의적', '유연함', '관찰자'],
       compatibility: {
-        best: ['mbti-avoider', 'mbti-analyst'],
+        best: ['🚫 MBTI 회피형', '🔬 MBTI 분석가형'],
         good: [],
-        avoid: ['mbti-blind-believer', 'mbti-enforcer'],
+        avoid: ['💯 MBTI 맹신론자형', '📢 MBTI 강요형'],
       },
       recommendations: {
         tips: [
@@ -426,9 +426,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['정보 공유', '적극적', '사교적', '수다스러움', '지식 나눔', '관심 유도'],
       compatibility: {
-        best: ['mbti-blind-believer', 'mbti-enforcer'],
+        best: ['💯 MBTI 맹신론자형', '📢 MBTI 강요형'],
         good: [],
-        avoid: ['mbti-avoider', 'mbti-skeptic'],
+        avoid: ['🚫 MBTI 회피형', '🤔 MBTI 합리적 의심형'],
       },
       recommendations: {
         tips: [
@@ -436,7 +436,7 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
           'MBTI 외에도 흥미로운 다른 대화 주제를 찾아보는 것도 좋아요.',
           '가끔은 자신의 MBTI 지식을 테스트해보는 것도 재미있을 거예요.',
         ],
-        hashtags: ['#MBTI영업', '#MBTI지식인', '#MBTI전도사', '#MBTI과몰입'],
+        hashtags: ['#MBTI영업', '##MBTI지식인', '#MBTI전도사', '#MBTI과몰입'],
       },
     },
     {
@@ -450,9 +450,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['유연함', '적응력', '비밀스러움', '배려', '친화적', '모호함'],
       compatibility: {
-        best: ['mbti-psychic', 'mbti-skeptic'],
+        best: ['🔮 MBTI 궁예형', '🤔 MBTI 합리적 의심형'],
         good: [],
-        avoid: ['mbti-blind-believer', 'mbti-enforcer'],
+        avoid: ['💯 MBTI 맹신론자형', '📢 MBTI 강요형'],
       },
       recommendations: {
         tips: [
@@ -474,9 +474,9 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       color: '#808080', // Gray (result type for skepticism/avoidance)
       traits: ['무관심', '개성 중시', '비규정적', '자유로움', '비밀스러움', '독립적'],
       compatibility: {
-        best: ['mbti-skeptic', 'mbti-analyst'],
+        best: ['🤔 MBTI 합리적 의심형', '🔬 MBTI 분석가형'],
         good: [],
-        avoid: ['mbti-blind-believer', 'mbti-enforcer', 'mbti-salesperson'],
+        avoid: ['💯 MBTI 맹신론자형', '📢 MBTI 강요형', '🗣️ MBTI 영업사원형'],
       },
       recommendations: {
         tips: [
@@ -493,14 +493,14 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
       description:
         '당신은 MBTI의 유형별 특징, 기능론, 심화 이론까지 파고드는 것을 즐기는 전문적인 MBTI 분석가입니다.',
       detailedDescription:
-        '단순히 자신의 유형 특징을 아는 것을 넘어, MBTI의 이론적 배경과 각 지표의 의미, 기능론(Fi, Te 등)까지 깊이 있게 탐구합니다. MBTI를 통해 사람의 행동 패턴을 이해하고, 심리적인 분석을 하는 것을 즐깁니다. 잘못된 MBTI 정보에 대해서는 정확하게 짚어줍니다.',
+        '단순히 자신의 유형 특징을 아는 것을 넘어, MBTI의 이론적 배경과 각 지표의 의미, 기능론(Fi, Te 등)까지 깊이 있게 탐구합니다. MBTI를 통해 사람의 행동 패턴을 이해하고, 심리적인 분석을 하는 것을 즐깁s니다. 잘못된 MBTI 정보에 대해서는 정확하게 짚어줍니다.',
       emoji: '🔬',
       color: '#2F4F4F', // Dark Slate Gray
       traits: ['분석적', '논리적', '탐구적', '심층적', '정확성 추구', '학구열'],
       compatibility: {
-        best: ['mbti-psychic', 'mbti-skeptic'],
+        best: ['🔮 MBTI 궁예형', '🤔 MBTI 합리적 의심형'],
         good: [],
-        avoid: ['mbti-blind-believer', 'mbti-avoider'],
+        avoid: ['💯 MBTI 맹신론자형', '🚫 MBTI 회피형'],
       },
       recommendations: {
         tips: [

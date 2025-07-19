@@ -510,9 +510,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#FF4500', // OrangeRed
       traits: ['솔직함', '직접적', '즉각적 해결', '단호함', '투명성 중시', '문제 직면'],
       compatibility: {
-        best: ['problem-solver', 'emotional-expresser'],
-        good: ['logical-negotiator'],
-        avoid: ['silent-withdrawer', 'peace-maker'],
+        best: ['문제 해결 주도형', '감정 표현형'],
+        good: ['논리적 협상가형'],
+        avoid: ['침묵 회피형', '평화주의형'],
       },
       recommendations: {
         activities: ['감정 조절 연습', '상대방의 입장 이해하기', '말하기 전 한 번 더 생각하기'],
@@ -533,9 +533,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['평화 지향', '온화함', '양보적', '순응적', '관계 중시', '갈등 회피'],
       compatibility: {
-        best: ['humor-diffuser', 'compromise-seeker'],
-        good: ['logical-negotiator'],
-        avoid: ['direct-confronter', 'emotional-expresser'],
+        best: ['유머 완화형', '타협 추구형'],
+        good: ['논리적 협상가형'],
+        avoid: ['직진 해결사형', '감정 표현형'],
       },
       recommendations: {
         activities: ['자신의 의견 표현 연습', '갈등 대처법 학습', '불만 쌓아두지 않고 대화 시도'],
@@ -556,9 +556,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['논리적', '합리적', '분석적', '객관적', '이성적', '문제 해결 중심'],
       compatibility: {
-        best: ['problem-solver', 'direct-confronter'],
-        good: ['compromise-seeker'],
-        avoid: ['emotional-expresser', 'humor-diffuser'],
+        best: ['문제 해결 주도형', '직진 해결사형'],
+        good: ['타협 추구형'],
+        avoid: ['감정 표현형', '유머 완화형'],
       },
       recommendations: {
         activities: ['공감 능력 키우기', '감정 표현 연습', '상대방의 비언어적 표현 이해하기'],
@@ -580,9 +580,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#FFB6C1', // Light Pink
       traits: ['감정적', '솔직함', '표현력', '공감 욕구', '투명성', '개방적'],
       compatibility: {
-        best: ['direct-confronter', 'humor-diffuser'],
-        good: ['problem-solver'],
-        avoid: ['silent-withdrawer', 'logical-negotiator'],
+        best: ['직진 해결사형', '유머 완화형'],
+        good: ['문제 해결 주도형'],
+        avoid: ['침묵 회피형', '논리적 협상가형'],
       },
       recommendations: {
         activities: ['감정 조절 기술 습득', '차분하게 감정 전달하는 연습', '연인의 감정 읽기'],
@@ -603,9 +603,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#708090', // Slate Gray
       traits: ['회피적', '내향적', '침묵 선호', '갈등 기피', '사색적', '감정 소모 싫어함'],
       compatibility: {
-        best: ['peace-maker', 'logical-negotiator'],
-        good: ['compromise-seeker'],
-        avoid: ['direct-confronter', 'emotional-expresser'],
+        best: ['평화주의형', '논리적 협상가형'],
+        good: ['타협 추구형'],
+        avoid: ['직진 해결사형', '감정 표현형'],
       },
       recommendations: {
         activities: [
@@ -631,9 +631,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['타협적', '유연함', '조화 추구', '개방적', '경청', '협력적'],
       compatibility: {
-        best: ['logical-negotiator', 'peace-maker'],
-        good: ['humor-diffuser'],
-        avoid: ['direct-confronter', 'problem-solver'],
+        best: ['논리적 협상가형', '평화주의형'],
+        good: ['유머 완화형'],
+        avoid: ['직진 해결사형', '문제 해결 주도형'],
       },
       recommendations: {
         activities: [
@@ -658,9 +658,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['유머러스', '낙천적', '재치', '분위기 전환', '긍정적', '애교'],
       compatibility: {
-        best: ['emotional-expresser', 'compromise-seeker'],
-        good: ['peace-maker'],
-        avoid: ['logical-negotiator', 'silent-withdrawer'],
+        best: ['감정 표현형', '타협 추구형'],
+        good: ['평화주의형'],
+        avoid: ['논리적 협상가형', '침묵 회피형'],
       },
       recommendations: {
         activities: [
@@ -686,9 +686,9 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#4CAF50', // Green
       traits: ['문제 해결 중심', '분석적', '효율적', '미래 지향적', '실용적', '주도적'],
       compatibility: {
-        best: ['direct-confronter', 'logical-negotiator'],
-        good: ['emotional-expresser'],
-        avoid: ['silent-withdrawer', 'humor-diffuser'],
+        best: ['직진 해결사형', '논리적 협상가형'],
+        good: ['감정 표현형'],
+        avoid: ['침묵 회피형', '유머 완화형'],
       },
       recommendations: {
         activities: ['공감 능력 향상', '연인의 의견 경청 연습', '해결책 제시 전 충분한 대화'],

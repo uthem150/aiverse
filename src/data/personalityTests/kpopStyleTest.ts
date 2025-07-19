@@ -501,7 +501,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['NewJeans', 'TWICE'],
         good: ['IVE', 'Stray Kids'],
-        avoid: ['aespa'],
+        // avoid: ['aespa'],
       },
       recommendations: {
         activities: ['콘서트 관람', '사회봉사 활동', '언어 공부', '음악 작업'],
@@ -526,7 +526,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['ITZY', 'IVE'],
         good: ['aespa', 'Stray Kids'],
-        avoid: ['NewJeans'],
+        // avoid: ['NewJeans'],
       },
       recommendations: {
         activities: ['패션쇼/전시 관람', '댄스 클래스', '포토 촬영', '새로운 스타일링 시도'],
@@ -551,7 +551,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['NewJeans', 'IVE'],
         good: ['BTS'],
-        avoid: ['Stray Kids'],
+        // avoid: ['Stray Kids'],
       },
       recommendations: {
         activities: ['팬미팅/콘서트 참여', 'VLOG 촬영', '단체 게임', '친구들과 추억 만들기'],
@@ -576,7 +576,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['aespa', 'ITZY'],
         good: ['BLACKPINK', 'BTS'],
-        avoid: ['TWICE'],
+        // avoid: ['TWICE'],
       },
       recommendations: {
         activities: ['작곡/작사 배우기', '힙합 댄스', '음악 페스티벌', '새로운 음악 장르 탐색'],
@@ -601,7 +601,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['BLACKPINK', 'Stray Kids'],
         good: ['aespa', 'IVE'],
-        avoid: ['NewJeans'],
+        // avoid: ['NewJeans'],
       },
       recommendations: {
         activities: [
@@ -631,7 +631,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['Stray Kids', 'ITZY'],
         good: ['BLACKPINK', 'IVE'],
-        avoid: ['BTS'],
+        // avoid: ['BTS'],
       },
       recommendations: {
         activities: [
@@ -661,7 +661,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['BTS', 'TWICE'],
         good: ['IVE'],
-        avoid: ['BLACKPINK'],
+        // avoid: ['BLACKPINK'],
       },
       recommendations: {
         activities: [
@@ -691,7 +691,7 @@ export const kpopStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['BLACKPINK', 'TWICE'],
         good: ['BTS', 'NewJeans', 'ITZY', 'aespa'],
-        avoid: ['Stray Kids'],
+        // avoid: ['Stray Kids'],
       },
       recommendations: {
         activities: [

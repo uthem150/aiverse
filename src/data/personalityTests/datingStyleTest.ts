@@ -510,9 +510,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['모험심', '도전적', '활동적', '호기심 많음', '개방적', '추억 지향'],
       compatibility: {
-        best: ['spontaneous-adventurer', 'foodie-explorer'],
-        good: ['social-butterfly'],
-        avoid: ['comfort-seeker', 'private-lover'],
+        best: ['즉흥적 모험가형', '미식 탐험가형'],
+        good: ['사교적 나비형'],
+        avoid: ['편안함 추구형', '오붓함 선호형'],
       },
       recommendations: {
         activities: ['이색 스포츠 체험', '테마파크 방문', '즉흥 여행 떠나기', '새로운 맛집 탐방'],
@@ -533,9 +533,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['편안함 중시', '안정적', '여유로움', '내향적', '조용함', '집중력'],
       compatibility: {
-        best: ['private-lover', 'romantic-planner'],
-        good: ['cultural-enthusiast'],
-        avoid: ['experience-explorer', 'spontaneous-adventurer'],
+        best: ['오붓함 선호형', '로맨틱 계획형'],
+        good: ['문화 예술 애호가형'],
+        avoid: ['경험 탐험가형', '즉흥적 모험가형'],
       },
       recommendations: {
         activities: [
@@ -562,9 +562,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#FFB6C1', // Light Pink
       traits: ['로맨틱', '계획적', '섬세함', '정성', '감동 추구', '이벤트 선호'],
       compatibility: {
-        best: ['cultural-enthusiast', 'comfort-seeker'],
-        good: ['foodie-explorer'],
-        avoid: ['spontaneous-adventurer', 'social-butterfly'],
+        best: ['문화 예술 애호가형', '편안함 추구형'],
+        good: ['미식 탐험가형'],
+        avoid: ['즉흥적 모험가형', '사교적 나비형'],
       },
       recommendations: {
         activities: [
@@ -590,9 +590,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['즉흥적', '자유분방', '개방적', '유연함', '낙천적', '모험심'],
       compatibility: {
-        best: ['experience-explorer', 'foodie-explorer'],
-        good: ['social-butterfly'],
-        avoid: ['romantic-planner', 'private-lover'],
+        best: ['경험 탐험가형', '미식 탐험가형'],
+        good: ['사교적 나비형'],
+        avoid: ['로맨틱 계획형', '오붓함 선호형'],
       },
       recommendations: {
         activities: [
@@ -618,9 +618,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['사교적', '활발함', '개방적', '친화력', '인싸 기질', '군중 즐김'],
       compatibility: {
-        best: ['foodie-explorer', 'experience-explorer'],
-        good: ['spontaneous-adventurer'],
-        avoid: ['private-lover', 'comfort-seeker'],
+        best: ['미식 탐험가형', '경험 탐험가형'],
+        good: ['즉흥적 모험가형'],
+        avoid: ['오붓함 선호형', '편안함 추구형'],
       },
       recommendations: {
         activities: [
@@ -647,9 +647,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#708090', // Slate Gray
       traits: ['내향적', '친밀도 중시', '오붓함 선호', '사생활 보호', '조용함', '깊은 대화 선호'],
       compatibility: {
-        best: ['comfort-seeker', 'romantic-planner'],
-        good: ['cultural-enthusiast'],
-        avoid: ['social-butterfly', 'spontaneous-adventurer'],
+        best: ['편안함 추구형', '로맨틱 계획형'],
+        good: ['문화 예술 애호가형'],
+        avoid: ['사교적 나비형', '즉흥적 모험가형'],
       },
       recommendations: {
         activities: [
@@ -676,9 +676,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#FFC0CB', // Pink
       traits: ['미식가', '탐험적', '맛 추구', '즐거움 지향', '생활력', '공유 욕구'],
       compatibility: {
-        best: ['experience-explorer', 'spontaneous-adventurer'],
-        good: ['social-butterfly'],
-        avoid: ['cultural-enthusiast', 'private-lover'],
+        best: ['경험 탐험가형', '즉흥적 모험가형'],
+        good: ['사교적 나비형'],
+        avoid: ['문화 예술 애호가형', '오붓함 선호형'],
       },
       recommendations: {
         activities: [
@@ -704,9 +704,9 @@ export const datingStyleTestData: PersonalityTestData = {
       color: '#800080', // Purple
       traits: ['교양적', '지적 호기심', '감성적', '심미안', '성장 지향', '차분함'],
       compatibility: {
-        best: ['romantic-planner', 'comfort-seeker'],
-        good: ['private-lover'],
-        avoid: ['foodie-explorer', 'spontaneous-adventurer'],
+        best: ['로맨틱 계획형', '편안함 추구형'],
+        good: ['오붓함 선호형'],
+        avoid: ['미식 탐험가형', '즉흥적 모험가형'],
       },
       recommendations: {
         activities: [

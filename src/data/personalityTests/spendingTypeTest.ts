@@ -330,9 +330,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['자기 만족', '쾌락 추구', '과감함', '현재 지향', '긍정적', '자신감'],
       compatibility: {
-        best: ['experience-collector', 'impulse-buyer'],
+        best: ['✈️ 경험 우선 투자형', '🌪️ 즉흥적 충동구매형'],
         good: [],
-        avoid: ['minimal-saver', 'planner-budgeter'],
+        avoid: ['🔒 극단적 절약형', '📝 계획적 예산형'],
       },
       recommendations: {
         tips: [
@@ -354,9 +354,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#008000', // Green
       traits: ['절약', '계획적', '미래 지향', '끈기', '합리적', '궁상맞음 (장점)'],
       compatibility: {
-        best: ['planner-budgeter', 'value-seeker'],
+        best: ['📝 계획적 예산형', '⚖️ 가성비/가심비 추구형'],
         good: [],
-        avoid: ['flex-pleaser', 'impulse-buyer'],
+        avoid: ['✨ 플렉스 만족형', '🌪️ 즉흥적 충동구매형'],
       },
       recommendations: {
         tips: [
@@ -378,9 +378,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#4682B4', // Steel Blue
       traits: ['합리적', '정보 탐색', '실용적', '가치 지향', '꼼꼼함', '영리함'],
       compatibility: {
-        best: ['planner-budgeter', 'meaning-out-consumer'],
+        best: ['📝 계획적 예산형', '💚 가치소비 미닝아웃형'],
         good: [],
-        avoid: ['impulse-buyer', 'late-night-shopper'],
+        avoid: ['🌪️ 즉흥적 충동구매형', '🌙 밤샘 쇼핑형'],
       },
       recommendations: {
         tips: [
@@ -402,9 +402,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['충동적', '즉흥적', '감정적', '빠른 실행', '후회', '단순함'],
       compatibility: {
-        best: ['flex-pleaser', 'late-night-shopper'],
+        best: ['✨ 플렉스 만족형', '🌙 밤샘 쇼핑형'],
         good: [],
-        avoid: ['minimal-saver', 'planner-budgeter'],
+        avoid: ['🔒 극단적 절약형', '📝 계획적 예산형'],
       },
       recommendations: {
         tips: [
@@ -426,9 +426,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#1E90FF', // DodgerBlue
       traits: ['경험 중시', '모험심', '추억 지향', '외향적', '자기 계발', 'SNS 활동'],
       compatibility: {
-        best: ['flex-pleaser', 'meaning-out-consumer'],
+        best: ['✨ 플렉스 만족형', '💚 가치소비 미닝아웃형'],
         good: [],
-        avoid: ['minimal-saver', 'impulse-buyer'],
+        avoid: ['🔒 극단적 절약형', '🌪️ 즉흥적 충동구매형'],
       },
       recommendations: {
         tips: [
@@ -450,9 +450,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#8A2BE2', // BlueViolet
       traits: ['계획적', '꼼꼼함', '자기 통제', '재정 관리', '안정 추구', '분석적'],
       compatibility: {
-        best: ['minimal-saver', 'value-seeker'],
+        best: ['🔒 극단적 절약형', '⚖️ 가성비/가심비 추구형'],
         good: [],
-        avoid: ['impulse-buyer', 'flex-pleaser'],
+        avoid: ['🌪️ 즉흥적 충동구매형', '✨ 플렉스 만족형'],
       },
       recommendations: {
         tips: [
@@ -474,9 +474,9 @@ export const spendingTypeTestData: PersonalityTestData = {
       color: '#228B22', // ForestGreen
       traits: ['가치 지향', '신념', '사회적 책임', '친환경적', '윤리적', '자부심'],
       compatibility: {
-        best: ['experience-collector', 'value-seeker'],
+        best: ['✈️ 경험 우선 투자형', '⚖️ 가성비/가심비 추구형'],
         good: [],
-        avoid: ['impulse-buyer', 'late-night-shopper'],
+        avoid: ['🌪️ 즉흥적 충동구매형', '🌙 밤샘 쇼핑형'],
       },
       recommendations: {
         tips: [
@@ -505,9 +505,9 @@ export const spendingTypeTestData: PersonalityTestData = {
         '새벽 감성',
       ],
       compatibility: {
-        best: ['impulse-buyer', 'flex-pleaser'],
+        best: ['🌪️ 즉흥적 충동구매형', '✨ 플렉스 만족형'],
         good: [],
-        avoid: ['minimal-saver', 'planner-budgeter'],
+        avoid: ['🔒 극단적 절약형', '📝 계획적 예산형'],
       },
       recommendations: {
         tips: [

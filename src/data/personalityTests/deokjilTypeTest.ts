@@ -332,9 +332,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#90EE90', // LightGreen
       traits: ['가벼움', '유연함', '부담 없음', '스트레스 회피', '다양한 관심사', '일상 지향'],
       compatibility: {
-        best: ['trend-hopper', 'stealth-fan'],
+        best: ['유행 따라가는 철새 덕후', '숨어서 덕질하는 샤이 덕후'],
         good: [],
-        avoid: ['financial-supporter', 'community-leader'],
+        avoid: ['재력 서포터형 덕후', '커뮤니티 운영/총대형 덕후'],
       },
       recommendations: {
         tips: [
@@ -356,9 +356,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#FFB6C1', // LightPink
       traits: ['수집욕', '소유 지향', '물품 애착', '충동구매', '사랑 표현', '꼼꼼함 (컬렉션 관리)'],
       compatibility: {
-        best: ['financial-supporter', 'content-creator'],
+        best: ['재력 서포터형 덕후', '콘텐츠 생산형 덕후'],
         good: [],
-        avoid: ['light-enjoyer', 'stealth-fan'],
+        avoid: ['라이트 덕후 (일상 즐기는 형)', '숨어서 덕질하는 샤이 덕후'],
       },
       recommendations: {
         tips: [
@@ -380,9 +380,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#ADD8E6', // LightBlue
       traits: ['창의적', '생산적', '섬세함', '영향력 추구', '재능 발휘', '끈기'],
       compatibility: {
-        best: ['deep-researcher', 'community-leader'],
+        best: ['심층 탐구형 덕후 (TMI 분석가)', '커뮤니티 운영/총대형 덕후'],
         good: [],
-        avoid: ['light-enjoyer', 'trend-hopper'],
+        avoid: ['라이트 덕후 (일상 즐기는 형)', '유행 따라가는 철새 덕후'],
       },
       recommendations: {
         tips: [
@@ -404,9 +404,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#FFDEAD', // NavajoWhite (slightly yellow)
       traits: ['리더십', '추진력', '소통 능력', '조직적', '적극적', '책임감'],
       compatibility: {
-        best: ['financial-supporter', 'deep-researcher'],
+        best: ['재력 서포터형 덕후', '심층 탐구형 덕후 (TMI 분석가)'],
         good: [],
-        avoid: ['stealth-fan', 'light-enjoyer'],
+        avoid: ['숨어서 덕질하는 샤이 덕후', '라이트 덕후 (일상 즐기는 형)'],
       },
       recommendations: {
         tips: [
@@ -428,9 +428,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#B0C4DE', // LightSteelBlue
       traits: ['분석적', '논리적', '탐구적', '기록의 달인', '정보 지향', '끈기'],
       compatibility: {
-        best: ['content-creator', 'community-leader'],
+        best: ['콘텐츠 생산형 덕후', '커뮤니티 운영/총대형 덕후'],
         good: [],
-        avoid: ['trend-hopper', 'light-enjoyer'],
+        avoid: ['유행 따라가는 철새 덕후', '라이트 덕후 (일상 즐기는 형)'],
       },
       recommendations: {
         tips: [
@@ -452,9 +452,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#DAA520', // Goldenrod
       traits: ['통 큼', '과감함', '헌신적', '지원적', '뿌듯함', '현실적 (재정능력 고려)'],
       compatibility: {
-        best: ['merch-collector', 'community-leader'],
+        best: ['굿즈 수집형 덕후', '커뮤니티 운영/총대형 덕후'],
         good: [],
-        avoid: ['light-enjoyer', 'stealth-fan'],
+        avoid: ['라이트 덕후 (일상 즐기는 형)', '숨어서 덕질하는 샤이 덕후'],
       },
       recommendations: {
         tips: [
@@ -476,9 +476,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#D3D3D3', // LightGray
       traits: ['내향적', '조용함', '자기 만족', '비공개적', '꾸준함', '소극적'],
       compatibility: {
-        best: ['light-enjoyer', 'loyal-one-pick'],
+        best: ['라이트 덕후 (일상 즐기는 형)', '한 우물 파는 장수형 덕후'],
         good: [],
-        avoid: ['community-leader', 'experience-chaser'],
+        avoid: ['커뮤니티 운영/총대형 덕후', '직접 참여형 덕후 (현장러)'],
       },
       recommendations: {
         tips: [
@@ -500,9 +500,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['활동적', '외향적', '경험 중시', '현장감', '적극적', '도전적'],
       compatibility: {
-        best: ['community-leader', 'financial-supporter'],
+        best: ['커뮤니티 운영/총대형 덕후', '재력 서포터형 덕후'],
         good: [],
-        avoid: ['stealth-fan', 'light-enjoyer'],
+        avoid: ['숨어서 덕질하는 샤이 덕후', '라이트 덕후 (일상 즐기는 형)'],
       },
       recommendations: {
         tips: [
@@ -524,9 +524,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#FFFF00', // Yellow
       traits: ['트렌디', '호기심 많음', '변화 추구', '싫증 잘 느낌', '유연함', '폭넓은 관심사'],
       compatibility: {
-        best: ['light-enjoyer'],
+        best: ['라이트 덕후 (일상 즐기는 형)'],
         good: [],
-        avoid: ['loyal-one-pick', 'deep-researcher'],
+        avoid: ['한 우물 파는 장수형 덕후', '심층 탐구형 덕후 (TMI 분석가)'],
       },
       recommendations: {
         tips: [
@@ -548,9 +548,9 @@ export const deokjilTypeTestData: PersonalityTestData = {
       color: '#DC143C', // Crimson
       traits: ['꾸준함', '의리', '헌신적', '변함없음', '깊은 사랑', '자부심'],
       compatibility: {
-        best: ['financial-supporter', 'deep-researcher'],
+        best: ['재력 서포터형 덕후', '심층 탐구형 덕후 (TMI 분석가)'],
         good: [],
-        avoid: ['trend-hopper', 'light-enjoyer'],
+        avoid: ['유행 따라가는 철새 덕후', '라이트 덕후 (일상 즐기는 형)'],
       },
       recommendations: {
         tips: [

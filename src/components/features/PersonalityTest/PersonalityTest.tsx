@@ -176,29 +176,40 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             </div>
 
-            <div className="section">
-              <Typography variant="h5">💕 궁합</Typography>
-              <div className="compatibility">
-                <div className="compat-item">
-                  <Typography variant="body2" color="#10B981">
-                    최고 궁합:
-                  </Typography>
-                  <span>{result.compatibility.best.join(', ')}</span>
-                </div>
-                <div className="compat-item">
-                  <Typography variant="body2" color="#F59E0B">
-                    좋은 궁합:
-                  </Typography>
-                  <span>{result.compatibility.good.join(', ')}</span>
-                </div>
-                <div className="compat-item">
-                  <Typography variant="body2" color="#EF4444">
-                    피해야 할:
-                  </Typography>
-                  <span>{result.compatibility.avoid.join(', ')}</span>
+            {result.compatibility && (
+              <div className="section">
+                <Typography variant="h5">💕 궁합</Typography>
+                <div className="compatibility">
+                  {Array.isArray(result.compatibility.best) &&
+                    result.compatibility.best.length > 0 && (
+                      <div className="compat-item">
+                        <Typography variant="body2" color="#10B981">
+                          최고 궁합:
+                        </Typography>
+                        <span>{result.compatibility.best.join(', ')}</span>
+                      </div>
+                    )}
+                  {Array.isArray(result.compatibility.good) &&
+                    result.compatibility.good.length > 0 && (
+                      <div className="compat-item">
+                        <Typography variant="body2" color="#F59E0B">
+                          좋은 궁합:
+                        </Typography>
+                        <span>{result.compatibility.good.join(', ')}</span>
+                      </div>
+                    )}
+                  {Array.isArray(result.compatibility.avoid) &&
+                    result.compatibility.avoid.length > 0 && (
+                      <div className="compat-item">
+                        <Typography variant="body2" color="#EF4444">
+                          피해야 할:
+                        </Typography>
+                        <span>{result.compatibility.avoid.join(', ')}</span>
+                      </div>
+                    )}
                 </div>
               </div>
-            </div>
+            )}
 
             {/* 게임 추천 섹션 */}
             {result.recommendations.games && result.recommendations.games.length > 0 && (

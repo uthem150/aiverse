@@ -390,9 +390,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#DC143C', // Crimson
       traits: ['긴장감 선호', '스릴 추구', '액션 중시', '역동적', '몰입감', '흥분'],
       compatibility: {
-        best: ['horror-mystery-seeker', 'fantasy-sci-fi-explorer'],
+        best: ['👻 공포/미스터리 추적자', '🌌 판타지/SF 탐험가'],
         good: [],
-        avoid: ['romantic-comedy-lover', 'drama-melodrama-aficionado'],
+        avoid: ['💖 로맨틱 코미디 애호가', '🎭 드라마/멜로 통달자'],
       },
       recommendations: {
         movies: [
@@ -419,9 +419,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#FFC0CB', // Pink
       traits: ['감성적', '긍정적', '로맨스 선호', '유머 감각', '따뜻함', '행복 추구'],
       compatibility: {
-        best: ['drama-melodrama-aficionado', 'animation-fantasy-dreamer'],
+        best: ['🎭 드라마/멜로 통달자', '🧚 애니메이션/환상 동화형'],
         good: [],
-        avoid: ['action-thriller-addict', 'horror-mystery-seeker'],
+        avoid: ['💥 액션/스릴러 매니아', '👻 공포/미스터리 추적자'],
       },
       recommendations: {
         movies: [
@@ -455,9 +455,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
         '탐험적',
       ],
       compatibility: {
-        best: ['animation-fantasy-dreamer', 'action-thriller-addict'],
+        best: ['🧚 애니메이션/환상 동화형', '💥 액션/스릴러 매니아'],
         good: [],
-        avoid: ['documentary-intellectual', 'indie-art-film-connoisseur'],
+        avoid: ['🧐 다큐멘터리 지식인', '🖼️ 독립/예술 영화 감별사'],
       },
       recommendations: {
         movies: [
@@ -484,9 +484,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#4682B4', // Steel Blue
       traits: ['감성적', '공감 능력', '스토리 중시', '여운', '인생 철학', '인간 관계'],
       compatibility: {
-        best: ['romantic-comedy-lover', 'documentary-intellectual'],
-        good: ['indie-art-film-connoisseur'],
-        avoid: ['action-thriller-addict', 'horror-mystery-seeker'],
+        best: ['💖 로맨틱 코미디 애호가', '🧐 다큐멘터리 지식인'],
+        good: ['🖼️ 독립/예술 영화 감별사'],
+        avoid: ['💥 액션/스릴러 매니아', '👻 공포/미스터리 추적자'],
       },
       recommendations: {
         movies: [
@@ -514,9 +514,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#2F4F4F', // Dark Slate Gray
       traits: ['학구적', '지적 호기심', '정보 습득', '현실 기반', '비판적 사고', '성장 추구'],
       compatibility: {
-        best: ['indie-art-film-connoisseur'],
-        good: ['drama-melodrama-aficionado'],
-        avoid: ['romantic-comedy-lover'],
+        best: ['🖼️ 독립/예술 영화 감별사'],
+        good: ['🎭 드라마/멜로 통달자'],
+        avoid: ['💖 로맨틱 코미디 애호가'],
       },
       recommendations: {
         movies: [
@@ -543,9 +543,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#FFDAB9', // Peach Puff
       traits: ['상상력', '동심', '아름다운 시각', '따뜻함', '순수함', '위로'],
       compatibility: {
-        best: ['fantasy-sci-fi-explorer', 'romantic-comedy-lover'],
-        good: ['drama-melodrama-aficionado'],
-        avoid: ['horror-mystery-seeker', 'documentary-intellectual'],
+        best: ['🌌 판타지/SF 탐험가', '💖 로맨틱 코미디 애호가'],
+        good: ['🎭 드라마/멜로 통달자'],
+        avoid: ['👻 공포/미스터리 추적자', '🧐 다큐멘터리 지식인'],
       },
       recommendations: {
         movies: [
@@ -572,9 +572,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#4B0082', // Indigo
       traits: ['스릴 추구', '긴장감', '미스터리 선호', '추리력', '반전', '대담함'],
       compatibility: {
-        best: ['action-thriller-addict'],
+        best: ['💥 액션/스릴러 매니아'],
         good: [],
-        avoid: ['romantic-comedy-lover', 'animation-fantasy-dreamer'],
+        avoid: ['💖 로맨틱 코미디 애호가', '🧚 애니메이션/환상 동화형'],
       },
       recommendations: {
         movies: [
@@ -601,9 +601,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#8B4513', // Saddle Brown
       traits: ['예술적 감각', '독창성 추구', '철학적', '미학적', '심층적 사고', '다양성 존중'],
       compatibility: {
-        best: ['documentary-intellectual', 'drama-melodrama-aficionado'],
+        best: ['🧐 다큐멘터리 지식인', '🎭 드라마/멜로 통달자'],
         good: [],
-        avoid: ['action-thriller-addict', 'romantic-comedy-lover'],
+        avoid: ['💥 액션/스릴러 매니아', '💖 로맨틱 코미디 애호가'],
       },
       recommendations: {
         movies: [

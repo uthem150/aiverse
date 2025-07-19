@@ -510,9 +510,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['이성적', '논리적', '분석적', '문제 해결 지향', '객관적', '침착함'],
       compatibility: {
-        best: ['future-oriented-solver', 'dominant-assertor'],
-        good: ['third-party-seeker'],
-        avoid: ['emotional-expresser', 'self-blaming-withdrawer'],
+        best: ['미래 지향적 해결형', '지배적 주장형'],
+        good: ['제3자 조언형'],
+        avoid: ['감정적 분출형', '자책/철회형'],
       },
       recommendations: {
         activities: [
@@ -537,9 +537,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['감성적', '솔직함', '충동적', '표현적', '극단적', '외향적'],
       compatibility: {
-        best: ['harmonious-conciliator', 'self-blaming-withdrawer'],
-        good: ['third-party-seeker'],
-        avoid: ['analytical-resolver', 'avoidance-seeker'],
+        best: ['조화 추구형', '자책/철회형'],
+        good: ['제3자 조언형'],
+        avoid: ['분석적 해결형', '회피형'],
       },
       recommendations: {
         activities: ['감정 조절 훈련', '일기 쓰기 (감정 해소)', '안정적인 환경에서 대화하기'],
@@ -560,9 +560,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['회피적', '수동적', '갈등 기피', '소극적', '내향적', '평화주의'],
       compatibility: {
-        best: ['dominant-assertor', 'future-oriented-solver'],
-        good: ['harmonious-conciliator'],
-        avoid: ['emotional-expresser', 'analytical-resolver'],
+        best: ['지배적 주장형', '미래 지향적 해결형'],
+        good: ['조화 추구형'],
+        avoid: ['감정적 분출형', '분석적 해결형'],
       },
       recommendations: {
         activities: [
@@ -588,9 +588,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['조화 지향', '양보적', '온화함', '배려심', '갈등 기피', '화합적'],
       compatibility: {
-        best: ['emotional-expresser', 'dominant-assertor'],
-        good: ['avoidance-seeker', 'self-blaming-withdrawer'],
-        avoid: ['analytical-resolver', 'future-oriented-solver'],
+        best: ['감정적 분출형', '지배적 주장형'],
+        good: ['회피형', '자책/철회형'],
+        avoid: ['분석적 해결형', '미래 지향적 해결형'],
       },
       recommendations: {
         activities: [
@@ -615,9 +615,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#FF69B4', // Hot Pink
       traits: ['단호함', '주도적', '강력한 주장', '설득력', '리더십', '자기중심적'],
       compatibility: {
-        best: ['avoidance-seeker', 'harmonious-conciliator'],
-        good: ['analytical-resolver'],
-        avoid: ['emotional-expresser', 'self-blaming-withdrawer'],
+        best: ['회피형', '조화 추구형'],
+        good: ['분석적 해결형'],
+        avoid: ['감정적 분출형', '자책/철회형'],
       },
       recommendations: {
         activities: ['경청하는 연습', '상대방의 입장 생각하기', '공격적이지 않은 대화법 배우기'],
@@ -639,9 +639,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#DDA0DD', // Plum
       traits: ['자책적', '위축됨', '희생적', '소극적', '순종적', '감성적'],
       compatibility: {
-        best: ['dominant-assertor', 'emotional-expresser'],
-        good: ['harmonious-conciliator'],
-        avoid: ['analytical-resolver', 'future-oriented-solver'],
+        best: ['지배적 주장형', '감정적 분출형'],
+        good: ['조화 추구형'],
+        avoid: ['분석적 해결형', '미래 지향적 해결형'],
       },
       recommendations: {
         activities: ['자존감 높이는 연습', '자신을 긍정적으로 생각하기', '자기 주장 연습'],
@@ -662,9 +662,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['개방적', '의존적 (긍정적)', '소통 지향', '지지 추구', '사회적', '조언 선호'],
       compatibility: {
-        best: ['analytical-resolver', 'emotional-expresser'],
-        good: ['harmonious-conciliator'],
-        avoid: ['avoidance-seeker', 'private-keeper'], // 사생활 보호형과는 상극
+        best: ['분석적 해결형', '감정적 분출형'],
+        good: ['조화 추구형'],
+        avoid: ['회피형', '사생활 보호형'], // 사생활 보호형은 기존 데이터에 없어서 임의로 추가했습니다.
       },
       recommendations: {
         activities: [
@@ -689,9 +689,9 @@ export const conflictCopingTestData: PersonalityTestData = {
       color: '#2E8B57', // SeaGreen
       traits: ['미래 지향적', '건설적', '합리적', '성장 지향', '문제 해결 지향', '현실적'],
       compatibility: {
-        best: ['analytical-resolver', 'avoidance-seeker'],
-        good: ['dominant-assertor', 'third-party-seeker'],
-        avoid: ['emotional-expresser', 'self-blaming-withdrawer'],
+        best: ['분석적 해결형', '회피형'],
+        good: ['지배적 주장형', '제3자 조언형'],
+        avoid: ['감정적 분출형', '자책/철회형'],
       },
       recommendations: {
         activities: [

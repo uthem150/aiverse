@@ -66,7 +66,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
         {
           id: 'q2_c',
           text: '그냥 그때그때 하고 싶은 것을 하는 게 가장 효율적이야!',
-          emoji: '✨', 
+          emoji: '✨',
           scores: { 'aspiring-procrastinator': 2, 'balanced-lifestyle-godsaeng': 1 },
         },
         {
@@ -150,7 +150,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
         {
           id: 'q5_b',
           text: '와, 멋지다... (잠시 감탄 후 다시 내 할 일을 한다)',
-          emoji: '🤩', 
+          emoji: '🤩',
           scores: { 'balanced-lifestyle-godsaeng': 2, 'aspiring-procrastinator': 1 },
         },
         {
@@ -330,9 +330,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['성실함', '계획적', '주도적', '생산성', '자기관리', '새벽형'],
       compatibility: {
-        best: ['productivity-hacker', 'challenge-mania-godsaeng'],
+        best: ['생산성 해커형', '챌린지 마니아 갓생러'],
         good: [],
-        avoid: ['aspiring-procrastinator', 'self-care-master'],
+        avoid: ['갓생 지향 게으름뱅이', '자기관리 마스터'],
       },
       recommendations: {
         tips: [
@@ -354,9 +354,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#4169E1', // Royal Blue
       traits: ['효율적', '체계적', '계획적', '성과 지향', '합리적', '생산성'],
       compatibility: {
-        best: ['miracle-morning-pioneer', 'learning-growth-addict'],
+        best: ['미라클 모닝 개척자', '학습 성장 중독자'],
         good: [],
-        avoid: ['aspiring-procrastinator', 'self-care-master'], // 'emotional-responsive' 대신 'self-care-master'로 변경 (기존 유형에 맞춰 조정)
+        avoid: ['갓생 지향 게으름뱅이', '자기관리 마스터'],
       },
       recommendations: {
         tips: [
@@ -378,9 +378,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['웰빙 지향', '건강 중시', '휴식', '균형', '스트레스 관리', '긍정적'],
       compatibility: {
-        best: ['balanced-lifestyle-godsaeng', 'learning-growth-addict'], // 'emotional-responsive' 대신 'learning-growth-addict'로 변경 (기존 유형에 맞춰 조정)
+        best: ['균형 잡힌 갓생러', '학습 성장 중독자'],
         good: [],
-        avoid: ['productivity-hacker', 'challenge-mania-godsa-eng'],
+        avoid: ['생산성 해커형', '챌린지 마니아 갓생러'],
       },
       recommendations: {
         tips: [
@@ -402,9 +402,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#FFEA00', // Yellow
       traits: ['현명한 소비', '재테크 관심', '미래 지향', '정보 분석', '경제적 독립', '끈기'],
       compatibility: {
-        best: ['learning-growth-addict', 'productivity-hacker'],
+        best: ['학습 성장 중독자', '생산성 해커형'],
         good: [],
-        avoid: ['aspiring-procrastinator', 'self-care-master'], // 'spontaneous-wanderer' 대신 'self-care-master'로 변경 (기존 유형에 맞춰 조정)
+        avoid: ['갓생 지향 게으름뱅이', '자기관리 마스터'],
       },
       recommendations: {
         tips: [
@@ -426,9 +426,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#8B4513', // Saddle Brown
       traits: ['학구열', '성장 지향', '지적 호기심', '자기계발', '끈기', '개방적'],
       compatibility: {
-        best: ['productivity-hacker', 'challenge-mania-godsaeng'],
-        good: ['financial-savvy-godsaeng'],
-        avoid: ['aspiring-procrastinator', 'balanced-lifestyle-godsaeng'], // 'relaxing-healer' 대신 'balanced-lifestyle-godsaeng'로 변경 (기존 유형에 맞춰 조정)
+        best: ['생산성 해커형', '챌린지 마니아 갓생러'],
+        good: ['재테크 갓생러'],
+        avoid: ['갓생 지향 게으름뱅이', '균형 잡힌 갓생러'],
       },
       recommendations: {
         tips: [
@@ -450,9 +450,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['균형 감각', '현명함', '지속가능성', '번아웃 방지', '자기 이해', '유연함'],
       compatibility: {
-        best: ['self-care-master', 'miracle-morning-pioneer'],
+        best: ['자기관리 마스터', '미라클 모닝 개척자'],
         good: [],
-        avoid: ['productivity-hacker', 'challenge-mania-godsaeng'],
+        avoid: ['생산성 해커형', '챌린지 마니아 갓생러'],
       },
       recommendations: {
         tips: [
@@ -474,9 +474,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['지향성', '열망', '게으름', '시작의 어려움', '공감 능력', '유머러스함'],
       compatibility: {
-        best: ['balanced-lifestyle-godsaeng', 'self-care-master'], // 'emotional-responsive', 'consensus-seeker' 대신 기존 유형에 맞춰 조정
-        good: ['balanced-lifestyle-godsaeng'],
-        avoid: ['miracle-morning-pioneer', 'productivity-hacker'],
+        best: ['균형 잡힌 갓생러', '자기관리 마스터'],
+        good: ['균형 잡힌 갓생러'], // 'good'에 중복되는 항목이 있어 하나로 줄이거나 다른 유형 추가 고려
+        avoid: ['미라클 모닝 개척자', '생산성 해커형'],
       },
       recommendations: {
         tips: [
@@ -498,9 +498,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#FF4500', // OrangeRed
       traits: ['도전적', '성취욕', '인증 중독', '동기 부여', '외향적', '계획적'],
       compatibility: {
-        best: ['miracle-morning-pioneer', 'learning-growth-addict'],
-        good: ['productivity-hacker'],
-        avoid: ['aspiring-procrastinator', 'self-care-master'],
+        best: ['미라클 모닝 개척자', '학습 성장 중독자'],
+        good: ['생산성 해커형'],
+        avoid: ['갓생 지향 게으름뱅이', '자기관리 마스터'],
       },
       recommendations: {
         tips: [

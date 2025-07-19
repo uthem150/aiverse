@@ -509,9 +509,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#FF6347', // Tomato
       traits: ['적극적', '열정적', '주도적', '솔직함', '외향적', '긍정적'],
       compatibility: {
-        best: ['careful-observer', 'private-keeper'],
-        good: ['affectionate-giver', 'present-enjoyer'],
-        avoid: ['independent-maintainer', 'future-planner'],
+        best: ['신중한 관찰형', '사생활 보호형'],
+        good: ['애정 표현형', '현재 즐김형'],
+        avoid: ['독립 유지형', '미래 계획형'],
       },
       recommendations: {
         activities: [
@@ -536,9 +536,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['신중함', '관찰력', '분석적', '내향적', '조심성', '침착함'],
       compatibility: {
-        best: ['enthusiastic-initiator', 'affectionate-giver'],
-        good: ['future-planner', 'private-keeper'],
-        avoid: ['present-enjoyer', 'social-sharer'],
+        best: ['열정적인 시작형', '애정 표현형'],
+        good: ['미래 계획형', '사생활 보호형'],
+        avoid: ['현재 즐김형', '사회적 공유형'],
       },
       recommendations: {
         activities: [
@@ -564,9 +564,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#FFB6C1', // Light Pink
       traits: ['애정 표현 풍부', '헌신적', '감성적', '다정함', '의존적 (긍정적)', '외향적'],
       compatibility: {
-        best: ['independent-maintainer', 'careful-observer'],
-        good: ['enthusiastic-initiator', 'present-enjoyer'],
-        avoid: ['private-keeper', 'future-planner'],
+        best: ['독립 유지형', '신중한 관찰형'],
+        good: ['열정적인 시작형', '현재 즐김형'],
+        avoid: ['사생활 보호형', '미래 계획형'],
       },
       recommendations: {
         activities: ['손편지 써주기', '기념일 이벤트 정성껏 준비하기', '서로에게 칭찬 많이 해주기'],
@@ -587,9 +587,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['독립적', '자율성 중시', '개인주의적', '담백함', '안정 추구', '현실적'],
       compatibility: {
-        best: ['affectionate-giver', 'enthusiastic-initiator'],
-        good: ['private-keeper', 'present-enjoyer'],
-        avoid: ['social-sharer', 'future-planner'],
+        best: ['애정 표현형', '열정적인 시작형'],
+        good: ['사생활 보호형', '현재 즐김형'],
+        avoid: ['사회적 공유형', '미래 계획형'],
       },
       recommendations: {
         activities: [
@@ -614,9 +614,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['미래 지향적', '계획적', '신중함', '현실적', '책임감', '논리적'],
       compatibility: {
-        best: ['present-enjoyer', 'independent-maintainer'],
-        good: ['careful-observer', 'private-keeper'],
-        avoid: ['enthusiastic-initiator', 'social-sharer'],
+        best: ['현재 즐김형', '독립 유지형'],
+        good: ['신중한 관찰형', '사생활 보호형'],
+        avoid: ['열정적인 시작형', '사회적 공유형'],
       },
       recommendations: {
         activities: [
@@ -641,9 +641,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['현재 지향적', '낙천적', '긍정적', '즐거움 추구', '즉흥적', '활발함'],
       compatibility: {
-        best: ['future-planner', 'careful-observer'],
-        good: ['enthusiastic-initiator', 'affectionate-giver'],
-        avoid: ['private-keeper', 'independent-maintainer'],
+        best: ['미래 계획형', '신중한 관찰형'],
+        good: ['열정적인 시작형', '애정 표현형'],
+        avoid: ['사생활 보호형', '독립 유지형'],
       },
       recommendations: {
         activities: ['맛집 탐방', '여행 (즉흥적인 여행)', '다양한 이벤트 즐기기', '함께 게임하기'],
@@ -664,9 +664,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['사교적', '개방적', '소통 지향', '외향적', '공유 욕구', '친화력'],
       compatibility: {
-        best: ['private-keeper', 'independent-maintainer'],
-        good: ['enthusiastic-initiator', 'present-enjoyer'],
-        avoid: ['careful-observer', 'future-planner'],
+        best: ['사생활 보호형', '독립 유지형'],
+        good: ['열정적인 시작형', '현재 즐김형'],
+        avoid: ['신중한 관찰형', '미래 계획형'],
       },
       recommendations: {
         activities: [
@@ -691,9 +691,9 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
       color: '#708090', // Slate Gray
       traits: ['사생활 중시', '내향적', '신중함', '비밀 유지', '경계심', '독립적'],
       compatibility: {
-        best: ['social-sharer', 'affectionate-giver'],
-        good: ['independent-maintainer', 'careful-observer'],
-        avoid: ['enthusiastic-initiator', 'present-enjoyer'],
+        best: ['사회적 공유형', '애정 표현형'],
+        good: ['독립 유지형', '신중한 관찰형'],
+        avoid: ['열정적인 시작형', '현재 즐김형'],
       },
       recommendations: {
         activities: [

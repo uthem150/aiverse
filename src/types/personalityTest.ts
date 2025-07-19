@@ -20,10 +20,10 @@ export interface TestResult {
   emoji: string;
   color: string;
   traits: string[];
-  compatibility: {
-    best: string[];
-    good: string[];
-    avoid: string[];
+  compatibility?: {
+    best?: string[];
+    good?: string[];
+    avoid?: string[];
   };
   recommendations: {
     activities?: string[];

@@ -510,9 +510,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#B0C4DE', // Light Steel Blue
       traits: ['섬세함', '사려 깊음', '탐색적', '노력파', '배려심', '진심'],
       compatibility: {
-        best: ['practical-giver', 'memory-maker'],
-        good: ['handmade-artist', 'luxury-seeker'],
-        avoid: ['spontaneous-giver'],
+        best: ['실용성 중시형', '추억 소환형'],
+        good: ['정성 가득 수제형', '럭셔리 추구형'],
+        avoid: ['즉흥적 선물형'],
       },
       recommendations: {
         activities: [
@@ -537,9 +537,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['창의적', '이벤트 선호', '즐거움 추구', '과감함', '외향적', '계획적'],
       compatibility: {
-        best: ['experience-creator', 'spontaneous-giver'],
-        good: ['luxury-seeker'],
-        avoid: ['practical-giver', 'thoughtful-researcher'],
+        best: ['경험 중시형', '즉흥적 선물형'],
+        good: ['럭셔리 추구형'],
+        avoid: ['실용성 중시형', '사려 깊은 탐색형'],
       },
       recommendations: {
         activities: [
@@ -564,9 +564,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#90EE90', // Light Green
       traits: ['실용적', '합리적', '효율적', '세심함', '현실적', '경제적'],
       compatibility: {
-        best: ['thoughtful-researcher', 'luxury-seeker'],
-        good: ['spontaneous-giver'],
-        avoid: ['surprise-master', 'handmade-artist'],
+        best: ['사려 깊은 탐색형', '럭셔리 추구형'],
+        good: ['즉흥적 선물형'],
+        avoid: ['서프라이즈 장인형', '정성 가득 수제형'],
       },
       recommendations: {
         activities: [
@@ -592,9 +592,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#FFEB3B', // Yellow
       traits: ['경험 지향', '추억 생성', '활동적', '창의적', '감성적', '즐거움 추구'],
       compatibility: {
-        best: ['surprise-master', 'memory-maker'],
-        good: ['spontaneous-giver'],
-        avoid: ['practical-giver', 'luxury-seeker'],
+        best: ['서프라이즈 장인형', '추억 소환형'],
+        good: ['즉흥적 선물형'],
+        avoid: ['실용성 중시형', '럭셔리 추구형'],
       },
       recommendations: {
         activities: [
@@ -621,9 +621,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#DDA0DD', // Plum
       traits: ['감성적', '추억 중시', '의미 부여', '섬세함', '정성', '로맨틱'],
       compatibility: {
-        best: ['thoughtful-researcher', 'handmade-artist'],
-        good: ['experience-creator'],
-        avoid: ['practical-giver', 'spontaneous-giver'],
+        best: ['사려 깊은 탐색형', '정성 가득 수제형'],
+        good: ['경험 중시형'],
+        avoid: ['실용성 중시형', '즉흥적 선물형'],
       },
       recommendations: {
         activities: [
@@ -650,9 +650,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#FFD700', // Gold
       traits: ['고급 지향', '과시적 (긍정적)', '품질 중시', '경제력 과시', '트렌디함', '가치 중시'],
       compatibility: {
-        best: ['practical-giver', 'thoughtful-researcher'],
-        good: ['surprise-master'],
-        avoid: ['handmade-artist', 'spontaneous-giver'],
+        best: ['실용성 중시형', '사려 깊은 탐색형'],
+        good: ['서프라이즈 장인형'],
+        avoid: ['정성 가득 수제형', '즉흥적 선물형'],
       },
       recommendations: {
         activities: [
@@ -678,9 +678,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#FFA07A', // Light Salmon
       traits: ['정성', '예술적', '창의적', '수공예 선호', '노력파', '진심'],
       compatibility: {
-        best: ['memory-maker', 'thoughtful-researcher'],
-        good: ['experience-creator'],
-        avoid: ['luxury-seeker', 'practical-giver'],
+        best: ['추억 소환형', '사려 깊은 탐색형'],
+        good: ['경험 중시형'],
+        avoid: ['럭셔리 추구형', '실용성 중시형'],
       },
       recommendations: {
         activities: [
@@ -707,9 +707,9 @@ export const giftGivingStyleTestData: PersonalityTestData = {
       color: '#FFC0CB', // Pink
       traits: ['즉흥적', '충동적', '자유분방', '단순함', '기분파', '넉넉함'],
       compatibility: {
-        best: ['surprise-master', 'experience-creator'],
-        good: ['practical-giver'],
-        avoid: ['thoughtful-researcher', 'memory-maker', 'luxury-seeker'],
+        best: ['서프라이즈 장인형', '경험 중시형'],
+        good: ['실용성 중시형'],
+        avoid: ['사려 깊은 탐색형', '추억 소환형', '럭셔리 추구형'],
       },
       recommendations: {
         activities: [
