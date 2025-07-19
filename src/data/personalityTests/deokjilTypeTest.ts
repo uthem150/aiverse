@@ -176,7 +176,7 @@ export const deokjilTypeTestData: PersonalityTestData = {
         {
           id: 'q6_a',
           text: '최신 활동 위주로 가볍게 즐긴다.',
-          emoji: ' superficial',
+          emoji: '🤩',
           scores: { 'light-enjoyer': 3, 'trend-hopper': 2 },
         },
         {

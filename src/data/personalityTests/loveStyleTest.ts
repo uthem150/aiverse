@@ -344,7 +344,7 @@ export const loveStyleTestData: PersonalityTestData = {
         {
           id: 'q12_a',
           text: '설렘 가득, 표현도 적극적',
-          emoji: ' fluttering',
+          emoji: '💖',
           scores: { puppy: 3, fox: 2, bird: 1 },
         },
         {
@@ -356,7 +356,7 @@ export const loveStyleTestData: PersonalityTestData = {
         {
           id: 'q12_c',
           text: '쑥스러움이 많아 수줍어한다',
-          emoji: ' blushed',
+          emoji: '😳',
           scores: { rabbit: 3, deer: 2 },
         },
         {
@@ -392,7 +392,7 @@ export const loveStyleTestData: PersonalityTestData = {
         {
           id: 'q13_d',
           text: '상대방의 행동을 믿고 신뢰한다',
-          emoji: ' trustworthy',
+          emoji: '😊',
           scores: { bear: 3, deer: 2, wolf: 1 },
         },
       ],

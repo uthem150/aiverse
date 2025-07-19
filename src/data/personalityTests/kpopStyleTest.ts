@@ -122,7 +122,7 @@ export const kpopStyleTestData: PersonalityTestData = {
         {
           id: 'q4_d',
           text: '감성적이고 서정적인 R&B',
-          emoji: ' soulful',
+          emoji: '🎶',
           scores: { bts: 3, newjeans: 2, ive: 2 },
         },
       ],
@@ -320,7 +320,7 @@ export const kpopStyleTestData: PersonalityTestData = {
         {
           id: 'q11_b',
           text: '굿즈 수집 및 덕질 용품 DIY',
-          emoji: '굿즈',
+          emoji: '🛍️',
           scores: { twice: 2, newjeans: 2, ive: 2 },
         },
         {

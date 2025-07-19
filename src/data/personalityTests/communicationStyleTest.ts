@@ -76,7 +76,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q2_d',
           text: '큰 틀만 잡고 세부적인 것은 상대방에게 맡기는 편이다.',
-          emoji: ' laissez-faire',
+          emoji: '🧘', // Corrected emoji
           scores: { 'humorous-mediator': 2, 'passive-responder': 2, 'harmonious-avoider': 1 },
         },
       ],
@@ -124,7 +124,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q4_b',
           text: '상대방이 먼저 말을 시작할 때까지 기다린다.',
-          emoji: ' चुप्पी',
+          emoji: '🤫', // Corrected emoji
           scores: { 'passive-responder': 3, 'thoughtful-contemplator': 2 },
         },
         {
@@ -298,7 +298,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q10_a',
           text: '진정성과 솔직함',
-          emoji: ' truthful',
+          emoji: '✨', // Corrected emoji
           scores: { 'direct-expresser': 3, 'active-engager': 2 },
         },
         {
@@ -364,7 +364,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q12_b',
           text: '상대방이 배우는 것을 조용히 지켜보고 필요할 때만 돕는다.',
-          emoji: ' observing',
+          emoji: '👀', // Corrected emoji
           scores: { 'passive-responder': 3, 'thoughtful-contemplator': 2 },
         },
         {
@@ -424,13 +424,13 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q14_b',
           text: '갈등을 피하기 위해 내 의견을 유보하거나 상대에게 맞춘다.',
-          emoji: ' conciliatory',
+          emoji: '🤝', // Corrected emoji
           scores: { 'harmonious-avoider': 3, 'passive-responder': 2 },
         },
         {
           id: 'q14_c',
           text: '논리적으로 논쟁하며 서로의 관점을 이해하려 한다.',
-          emoji: ' debating',
+          emoji: '🤔', // Corrected emoji
           scores: { 'logical-solver': 3, 'thoughtful-contemplator': 2 },
         },
         {
@@ -448,7 +448,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q15_a',
           text: '솔직하지 못하고 빙빙 돌려 말하는 것',
-          emoji: ' roundabout',
+          emoji: '🌀', // Corrected emoji
           scores: { 'direct-expresser': 3, 'active-engager': 2 },
         },
         {
@@ -460,7 +460,7 @@ export const communicationStyleTestData: PersonalityTestData = {
         {
           id: 'q15_c',
           text: '비논리적이고 비효율적인 논쟁이 지속되는 것',
-          emoji: ' illogical',
+          emoji: '🤯', // Corrected emoji
           scores: { 'logical-solver': 3, 'thoughtful-contemplator': 2 },
         },
         {

@@ -102,7 +102,7 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '너무 깊은 이야기보다 편안하고 가벼운 대화를 나누는 것.',
-          emoji: ' casual',
+          emoji: '😌',
           scores: { 'independent-maintainer': 2, 'private-keeper': 1 },
         },
       ],
@@ -114,7 +114,7 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q4_a',
           text: '바로 연락해서 보고 싶다고 표현하거나 만나러 간다.',
-          emoji: '🏃',
+          emoji: '🏃‍♀️',
           scores: { 'enthusiastic-initiator': 3, 'affectionate-giver': 3 },
         },
         {
@@ -162,7 +162,7 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q5_d',
           text: '자연스럽게 알게 되면 괜찮지만, 내가 먼저 말하지는 않는다.',
-          emoji: ' indifferent',
+          emoji: '🚶‍♀️',
           scores: { 'present-enjoyer': 2, 'private-keeper': 1 },
         },
       ],
@@ -216,7 +216,7 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q7_c',
           text: '아직은 잘 모르겠다. 더 알아가면서 생각해보고 싶다.',
-          emoji: '🤷',
+          emoji: '🤷‍♀️',
           scores: { 'careful-observer': 2, 'private-keeper': 1 },
         },
         {
@@ -270,13 +270,13 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '연애를 해도 내 일상은 크게 변하지 않는다.',
-          emoji: ' unaffected',
+          emoji: '🧘‍♀️',
           scores: { 'independent-maintainer': 3, 'private-keeper': 2 },
         },
         {
           id: 'q9_c',
           text: '연애도 중요하지만, 자기계발 등 개인적인 시간도 중요하게 생각한다.',
-          emoji: '🧘',
+          emoji: '📚',
           scores: { 'future-planner': 2, 'careful-observer': 1 },
         },
         {
@@ -330,7 +330,7 @@ export const earlyRelationshipBehaviorTestData: PersonalityTestData = {
         {
           id: 'q11_b',
           text: '상대방이 원하면 맞춰주지만, 굳이 내가 먼저 나서지는 않는다.',
-          emoji: '🤷',
+          emoji: '🤷‍♀️',
           scores: { 'independent-maintainer': 2, 'private-keeper': 1 },
         },
         {

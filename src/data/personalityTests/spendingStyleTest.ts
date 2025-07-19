@@ -24,13 +24,13 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q1_a',
           text: '매번 정확히 더치페이하는 것이 깔끔하다.',
-          emoji: ' precise',
+          emoji: '📏',
           scores: { 'rational-investor': 3, 'responsible-manager': 2 },
         },
         {
           id: 'q1_b',
           text: '주로 내가 부담한다. 연인을 위해 쓰는 돈은 아깝지 않다.',
-          emoji: ' generosity',
+          emoji: '💝',
           scores: { 'generous-spender': 3, 'splurge-lover': 1 },
         },
         {
@@ -90,7 +90,7 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q3_b',
           text: '여행하는 동안 아낌없이 쓰고, 비용은 나중에 생각한다.',
-          emoji: ' free',
+          emoji: '😎',
           scores: { 'splurge-lover': 3, 'generous-spender': 2 },
         },
         {
@@ -102,7 +102,7 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '경험에 집중하여 비싸더라도 좋은 곳에서 숙박하거나 특별한 액티비티를 즐긴다.',
-          emoji: ' immersive',
+          emoji: '🤩',
           scores: { 'experience-investor': 3, 'value-seeker': 2 },
         },
       ],
@@ -120,7 +120,7 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q4_b',
           text: '사고 싶으면 사야지! 혹시 부족하면 내가 보태줄 수도 있다.',
-          emoji: ' generosity',
+          emoji: '🎁',
           scores: { 'generous-spender': 3, 'splurge-lover': 1 },
         },
         {
@@ -150,13 +150,13 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q5_b',
           text: '연인과 즐거운 시간이었으니 괜찮다고 생각한다.',
-          emoji: ' relaxed',
+          emoji: '😌',
           scores: { 'generous-spender': 2, 'splurge-lover': 3 },
         },
         {
           id: 'q5_c',
           text: '조금 아깝지만, 어쩔 수 없지 하고 넘어간다.',
-          emoji: ' shrug',
+          emoji: '🤷‍♀️',
           scores: { 'flexible-balancer': 3, 'experience-investor': 1 },
         },
         {
@@ -180,13 +180,13 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q6_b',
           text: '크게 신경 쓰지 않고, 때가 되면 모아지겠지 하는 편이다.',
-          emoji: ' chill',
+          emoji: '🧘‍♀️',
           scores: { 'splurge-lover': 2, 'flexible-balancer': 1 },
         },
         {
           id: 'q6_c',
           text: '꼭 필요한 지출 외에는 최대한 절약하려 노력한다.',
-          emoji: ' save',
+          emoji: '🏦',
           scores: { 'penny-pincher': 3, 'value-seeker': 1 },
         },
         {
@@ -246,7 +246,7 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q8_c',
           text: '아껴서 모아야 하는 중요한 자원.',
-          emoji: ' saver',
+          emoji: '🏦',
           scores: { 'penny-pincher': 3, 'responsible-manager': 1 },
         },
         {
@@ -270,13 +270,13 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '굳이 그럴 필요는 없다고 생각한다. 각자 관리하는 것이 편하다.',
-          emoji: '🙅',
+          emoji: '🙅‍♀️',
           scores: { 'penny-pincher': 2, 'splurge-lover': 1 }, // 이기적이지 않은 점수
         },
         {
           id: 'q9_c',
           text: '연인이 원한다면 해볼 수 있다. 유연하게 생각한다.',
-          emoji: '🤸',
+          emoji: '🤸‍♀️',
           scores: { 'flexible-balancer': 3 },
         },
         {
@@ -330,13 +330,13 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q11_b',
           text: '미래는 아직 먼 이야기. 현재를 즐기는 것이 더 중요하다.',
-          emoji: ' enjoy',
+          emoji: '🎉',
           scores: { 'splurge-lover': 3, 'flexible-balancer': 2 },
         },
         {
           id: 'q11_c',
           text: '최대한 절약하고 불필요한 지출을 줄여 미래를 대비한다.',
-          emoji: ' save',
+          emoji: '💰',
           scores: { 'penny-pincher': 3 },
         },
         {
@@ -360,19 +360,19 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q12_b',
           text: '아낌없이 베풀고 싶다. 사랑하는 사람이 행복하면 나도 좋다.',
-          emoji: ' generosity',
+          emoji: '💖',
           scores: { 'generous-spender': 3 },
         },
         {
           id: 'q12_c',
           text: '내 것과 연인의 것을 명확히 구분하는 편이다.',
-          emoji: ' boundary',
+          emoji: '🚧',
           scores: { 'penny-pincher': 3 },
         },
         {
           id: 'q12_d',
           text: '돕는다면 나중에 돌려받을 것을 어느 정도 생각한다.',
-          emoji: ' calculate',
+          emoji: '🧮',
           scores: { 'value-seeker': 1, 'rational-investor': 1 }, // 이타적이지 않음
         },
       ],
@@ -420,19 +420,19 @@ export const spendingStyleTestData: PersonalityTestData = {
         {
           id: 'q14_b',
           text: '연인이 사고 싶은 것이 있다면 흔쾌히 사준다.',
-          emoji: ' generosity',
+          emoji: '🛍️',
           scores: { 'generous-spender': 3, 'splurge-lover': 2 },
         },
         {
           id: 'q14_c',
           text: '세일이나 할인 등 저렴하게 살 수 있는 방법을 모색한다.',
-          emoji: ' save',
+          emoji: '🏷️',
           scores: { 'penny-pincher': 3 },
         },
         {
           id: 'q14_d',
           text: '즉흥적으로 마음에 드는 것이 있으면 구매하는 편이다.',
-          emoji: ' impulse',
+          emoji: '😎',
           scores: { 'splurge-lover': 3, 'flexible-balancer': 1 },
         },
       ],

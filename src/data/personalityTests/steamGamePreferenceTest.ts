@@ -222,7 +222,7 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
         {
           id: 'q7_d',
           text: '새로운 세상을 창조하거나, 멸망을 막을 방법을 강구한다.',
-          emoji: ' rebuild',
+          emoji: '🔄',
           scores: { 'creative-builder-dreamer': 3, 'strategic-mind-master': 2 },
         },
       ],
@@ -270,7 +270,7 @@ export const steamGamePreferenceTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '숨겨진 유적을 탐사하고, 전설적인 보물을 찾아 떠난다.',
-          emoji: ' relic',
+          emoji: '🏺',
           scores: { 'epic-adventure-seeker': 3, 'deep-lore-investigator': 2 },
         },
         {

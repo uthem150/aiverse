@@ -96,7 +96,7 @@ export const gameTypeTestData: PersonalityTestData = {
         {
           id: 'q3_c',
           text: '열심히 노가다하여 나만의 방식으로 캐릭터를 성장시킨다.',
-          emoji: ' grinding',
+          emoji: '⚒️',
           scores: { 'skill-master-aspirant': 3 },
         },
         {
@@ -190,7 +190,7 @@ export const gameTypeTestData: PersonalityTestData = {
         {
           id: 'q6_c',
           text: '친구들과 함께 월드를 탐험하며 수다 떠는 것이 최고!',
-          emoji: ' chatting',
+          emoji: '💬',
           scores: { 'social-community-player': 3, 'casual-light-enjoyer': 1 },
         },
         {
@@ -256,7 +256,7 @@ export const gameTypeTestData: PersonalityTestData = {
         {
           id: 'q8_d',
           text: '일단 플레이해보고, 바뀐 점들을 직접 체감한다.',
-          emoji: ' experimentation',
+          emoji: '🧪',
           scores: { 'skill-master-aspirant': 2, 'story-immersive-explorer': 1 },
         },
       ],
@@ -274,7 +274,7 @@ export const gameTypeTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '푹 쉬면서 다른 취미를 즐기거나 새로운 콘텐츠를 찾아본다.',
-          emoji: ' relaxing',
+          emoji: '🧘',
           scores: { 'casual-light-enjoyer': 3, 'new-game-explorer': 2 },
         },
         {
@@ -286,7 +286,7 @@ export const gameTypeTestData: PersonalityTestData = {
         {
           id: 'q9_d',
           text: '다음 게임이나 즐길 거리를 탐색하거나, 게임 외의 자기계발을 한다.',
-          emoji: '🔍',
+          emoji: '💡',
           scores: { 'new-game-explorer': 3, 'strategic-brain-player': 2 },
         },
       ],

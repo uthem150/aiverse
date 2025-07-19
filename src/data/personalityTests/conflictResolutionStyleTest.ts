@@ -42,7 +42,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q1_d',
           text: '기분이 좋지 않음을 바로 티낸다.',
-          emoji: '😑',
+          emoji: '😠',
           scores: { 'emotional-expresser': 3, 'humor-diffuser': 1 },
         },
       ],
@@ -72,7 +72,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q2_d',
           text: '내 감정을 솔직하게 표현하고 연인이 이를 알아주는 것.',
-          emoji: '😭',
+          emoji: '😢',
           scores: { 'emotional-expresser': 3, 'humor-diffuser': 1 },
         },
       ],
@@ -102,7 +102,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '"아, 진짜 왜 싸운 거야? ㅋㅋ 우리 바보 같아."',
-          emoji: '🤣',
+          emoji: '😂',
           scores: { 'humor-diffuser': 3, 'peace-maker': 1 },
         },
       ],
@@ -114,13 +114,13 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q4_a',
           text: '아니오, 최대한 빨리 대화해서 풀려고 한다.',
-          emoji: '🏃',
+          emoji: '🏃‍♀️',
           scores: { 'direct-confronter': 3, 'problem-solver': 2 },
         },
         {
           id: 'q4_b',
           text: '네, 감정을 가라앉히고 다시 생각할 시간이 필요하다.',
-          emoji: '🧘',
+          emoji: '🧘‍♀️',
           scores: { 'silent-withdrawer': 3, 'logical-negotiator': 2 },
         },
         {
@@ -144,7 +144,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q5_a',
           text: '문제의 핵심을 이야기하지 않고 감정적으로만 대응하는 것.',
-          emoji: '😡',
+          emoji: '😠',
           scores: { 'logical-negotiator': 3, 'problem-solver': 2 },
         },
         {
@@ -156,13 +156,13 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q5_c',
           text: '한쪽만 일방적으로 희생하거나 양보하는 것.',
-          emoji: ' unequal',
+          emoji: '💔',
           scores: { 'compromise-seeker': 3, 'peace-maker': 1 },
         },
         {
           id: 'q5_d',
           text: '침묵하거나 연락을 끊고 잠수 타는 것.',
-          emoji: ' silent',
+          emoji: '📵',
           scores: { 'direct-confronter': 2, 'emotional-expresser': 2 }, // 본인이 이렇게 행동할 수 있지만 비효율적이라고 생각할 수 있음.
         },
       ],
@@ -192,7 +192,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q6_d',
           text: '간접적으로 티를 내거나, 농담처럼 이야기한다.',
-          emoji: '😜',
+          emoji: '😏',
           scores: { 'humor-diffuser': 3, 'compromise-seeker': 1 },
         },
       ],
@@ -222,7 +222,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q7_d',
           text: '내가 너무 감정적이어서 시간이 오래 걸리기도 한다.',
-          emoji: '😭',
+          emoji: '😥',
           scores: { 'emotional-expresser': 3, 'humor-diffuser': 1 },
         },
       ],
@@ -240,19 +240,19 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q8_b',
           text: '감정적으로만 나오고 논리적인 대화가 안 될 때.',
-          emoji: '😡',
+          emoji: '😤',
           scores: { 'logical-negotiator': 3, 'problem-solver': 2 },
         },
         {
           id: 'q8_c',
           text: '자신의 잘못을 인정하지 않고 남 탓만 할 때.',
-          emoji: ' blame',
+          emoji: ' 🙅‍♀️',
           scores: { 'compromise-seeker': 2, 'peace-maker': 1 },
         },
         {
           id: 'q8_d',
           text: '나의 감정을 무시하거나 비웃을 때.',
-          emoji: '😤',
+          emoji: '😒',
           scores: { 'emotional-expresser': 2, 'humor-diffuser': 1 },
         },
       ],
@@ -282,7 +282,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q9_d',
           text: '장난을 치거나 가벼운 분위기로 먼저 다가간다.',
-          emoji: '🤪',
+          emoji: ' 🤪',
           scores: { 'humor-diffuser': 3, 'compromise-seeker': 1 },
         },
       ],
@@ -300,7 +300,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q10_b',
           text: '서로의 감정과 서운했던 부분.',
-          emoji: '❤️',
+          emoji: '❤️‍🩹',
           scores: { 'emotional-expresser': 3, 'peace-maker': 2 },
         },
         {
@@ -312,7 +312,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q10_d',
           text: '결과적으로 싸우게 된 상황 자체.',
-          emoji: '🤷',
+          emoji: '🤔',
           scores: { 'silent-withdrawer': 1, 'compromise-seeker': 1 },
         },
       ],
@@ -366,7 +366,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q12_c',
           text: '가끔 가볍게 이야기할 때도 있다.',
-          emoji: ' casual',
+          emoji: ' 😀',
           scores: { 'compromise-seeker': 2, 'peace-maker': 1 },
         },
         {
@@ -384,7 +384,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q13_a',
           text: '왜 같은 문제로 또 싸우는지 원인을 깊게 파고든다.',
-          emoji: '🧠',
+          emoji: '🤔', // Changed from 🧠 to 🤔 for deep thinking/questioning
           scores: { 'logical-negotiator': 3, 'problem-solver': 3 },
         },
         {
@@ -426,13 +426,13 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q14_c',
           text: '서로에 대해 더 이해하게 된 뿌듯함.',
-          emoji: '🫂',
+          emoji: '💖',
           scores: { 'logical-negotiator': 2, 'compromise-seeker': 3 },
         },
         {
           id: 'q14_d',
           text: '화해해서 기쁘고 연인에게 더 애정이 샘솟는다.',
-          emoji: '💖',
+          emoji: '🥰',
           scores: { 'emotional-expresser': 3, 'humor-diffuser': 2 },
         },
       ],
@@ -444,25 +444,25 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q15_a',
           text: '문제 해결 능력과 합리적인 사고 방식.',
-          emoji: '🧠',
+          emoji: '💡',
           scores: { 'logical-negotiator': 3, 'problem-solver': 3 },
         },
         {
           id: 'q15_b',
           text: '서로의 다름을 인정하고 이해하는 방법.',
-          emoji: '🫂',
+          emoji: '🤝',
           scores: { 'compromise-seeker': 3, 'peace-maker': 2 },
         },
         {
           id: 'q15_c',
           text: '감정 표현의 중요성과 솔직함.',
-          emoji: '💬',
+          emoji: '🗣️',
           scores: { 'emotional-expresser': 3, 'direct-confronter': 2 },
         },
         {
           id: 'q15_d',
           text: '싸움이 관계에 미치는 부정적인 영향을 줄이는 법.',
-          emoji: '🧘',
+          emoji: '🧘‍♀️',
           scores: { 'silent-withdrawer': 2, 'humor-diffuser': 1 },
         },
       ],
@@ -474,13 +474,13 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q16_a',
           text: '논리적으로 문제를 분석하고 명확한 해결책을 찾는 것.',
-          emoji: '📈',
+          emoji: '📝',
           scores: { 'logical-negotiator': 3, 'problem-solver': 3 },
         },
         {
           id: 'q16_b',
           text: '서로 먼저 사과하고 더 이상 다투지 않는 것.',
-          emoji: '🕊️',
+          emoji: '🙏',
           scores: { 'peace-maker': 3, 'silent-withdrawer': 2 },
         },
         {
@@ -492,7 +492,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         {
           id: 'q16_d',
           text: '유머나 애교로 분위기를 풀고 자연스럽게 화해하는 것.',
-          emoji: '🤪',
+          emoji: '🤣',
           scores: { 'humor-diffuser': 3, 'compromise-seeker': 2 },
         },
       ],
@@ -533,8 +533,8 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       color: '#ADD8E6', // Light Blue
       traits: ['평화 지향', '온화함', '양보적', '순응적', '관계 중시', '갈등 회피'],
       compatibility: {
-        best: ['generous-spender', 'direct-confronter'], // 이전 유형과 겹치지 않게 조절
-        good: ['compromise-seeker'],
+        best: ['humor-diffuser', 'compromise-seeker'],
+        good: ['logical-negotiator'],
         avoid: ['direct-confronter', 'emotional-expresser'],
       },
       recommendations: {
@@ -576,7 +576,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
         '당신은 연인과 다툼이 생겼을 때, 자신의 감정을 솔직하고 때로는 격하게 표현합니다.',
       detailedDescription:
         '서운함, 분노, 슬픔 등 **자신의 감정을 숨기지 않고 바로 표출하는 편**입니다. 연인이 자신의 감정을 알아주고 공감해 주기를 바라며, 감정을 충분히 해소해야 문제가 해결된다고 생각합니다. 이러한 솔직함은 관계를 투명하게 만들지만, 때로는 감정적인 싸움으로 번지거나, 연인이 당신의 감정 표출에 압도당할 수 있습니다.',
-      emoji: '😭',
+      emoji: '😢',
       color: '#FFB6C1', // Light Pink
       traits: ['감정적', '솔직함', '표현력', '공감 욕구', '투명성', '개방적'],
       compatibility: {
@@ -654,7 +654,7 @@ export const conflictResolutionStyleTestData: PersonalityTestData = {
       description: '당신은 연인과의 다툼이 생기면 유머나 애교를 사용하여 분위기를 전환하려 합니다.',
       detailedDescription:
         '심각한 분위기를 싫어하고, **재치 있는 농담이나 애교 섞인 행동으로 연인의 화를 풀어주려** 노력합니다. 갈등 상황 자체를 가볍게 여기고, 유쾌한 방식으로 문제를 해결하려 합니다. 이러한 방식은 긴장감을 완화하고 관계를 부드럽게 만들지만, 때로는 연인이 자신의 감정을 무시당한다고 느끼거나, 문제가 제대로 해결되지 않고 넘어갈 수 있습니다.',
-      emoji: '🤪',
+      emoji: '😂',
       color: '#FFD700', // Gold
       traits: ['유머러스', '낙천적', '재치', '분위기 전환', '긍정적', '애교'],
       compatibility: {

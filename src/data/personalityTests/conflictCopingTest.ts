@@ -66,7 +66,7 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q2_c',
           text: '싸움이 더 커지지 않고 빨리 끝내는 것.',
-          emoji: ' quick',
+          emoji: '💨',
           scores: { 'avoidance-seeker': 3, 'harmonious-conciliator': 2 },
         },
         {
@@ -84,7 +84,7 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q3_a',
           text: '논리적으로 따지고 들며 평소보다 날카로워진다.',
-          emoji: ' sharp',
+          emoji: '🔪',
           scores: { 'analytical-resolver': 3, 'dominant-assertor': 2 },
         },
         {
@@ -126,7 +126,7 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q4_c',
           text: '이 다툼은 빨리 잊고 싶다. 아무 일 없었던 것처럼.',
-          emoji: ' eraser',
+          emoji: '💨',
           scores: { 'avoidance-seeker': 3, 'harmonious-conciliator': 1 },
         },
         {
@@ -174,19 +174,19 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q6_a',
           text: '끈기 있게 설득하고 논쟁을 이어간다.',
-          emoji: ' argument',
+          emoji: '🗣️',
           scores: { 'dominant-assertor': 3, 'analytical-resolver': 2 },
         },
         {
           id: 'q6_b',
           text: '너무 힘들어서 지치고 포기하고 싶어진다.',
-          emoji: ' exhausted',
+          emoji: '😫',
           scores: { 'emotional-expresser': 2, 'self-blaming-withdrawer': 3 },
         },
         {
           id: 'q6_c',
           text: '일단 대화를 중단하고 시간을 가지려 한다.',
-          emoji: ' pausa',
+          emoji: '⏸️',
           scores: { 'avoidance-seeker': 3, 'harmonious-conciliator': 1 },
         },
         {
@@ -270,7 +270,7 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '감정 소모가 너무 커서 힘들고 지친다.',
-          emoji: ' exhausted',
+          emoji: '😫',
           scores: { 'emotional-expresser': 2, 'self-blaming-withdrawer': 3 },
         },
         {
@@ -294,7 +294,7 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q10_a',
           text: '끈기 있게 설득하고 논리적으로 증명하려 한다.',
-          emoji: ' argument',
+          emoji: '🗣️',
           scores: { 'analytical-resolver': 3, 'dominant-assertor': 3 },
         },
         {
@@ -342,8 +342,8 @@ export const conflictCopingTestData: PersonalityTestData = {
         {
           id: 'q11_d',
           text: '내가 모든 것을 양보하고 희생해야 하는 상황.',
-          emoji: ' sacrificial',
-          scores: { 'dominant-assertor': 2, 'independent-maintainer': 1 }, // 이전에 독립 유지형이 있었으므로 재활용
+          emoji: '🍀',
+          scores: { 'dominant-assertor': 2 },
         },
       ],
     },
@@ -415,7 +415,7 @@ export const conflictCopingTestData: PersonalityTestData = {
           id: 'q14_a',
           text: '거의 이야기하지 않는다. 우리 둘만의 문제라고 생각한다.',
           emoji: '🔒',
-          scores: { 'private-keeper': 2, 'avoidance-seeker': 1 }, // 기존 유형 재활용
+          scores: { 'avoidance-seeker': 1 },
         },
         {
           id: 'q14_b',
@@ -433,7 +433,7 @@ export const conflictCopingTestData: PersonalityTestData = {
           id: 'q14_d',
           text: '이야기하기보다 혼자 조용히 생각하는 것을 선호한다.',
           emoji: '🤔',
-          scores: { 'self-blaming-withdrawer': 2, 'private-keeper': 3 },
+          scores: { 'self-blaming-withdrawer': 2 },
         },
       ],
     },

@@ -102,7 +102,7 @@ export const breakupCopingTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '그냥 둔다. 나중에 필요하면 볼 수도 있다고 생각한다.',
-          emoji: ' archives',
+          emoji: '🗄️',
           scores: { 'analytical-processor': 2, 'internal-contemplator': 1 },
         },
       ],
@@ -252,7 +252,7 @@ export const breakupCopingTestData: PersonalityTestData = {
         {
           id: 'q8_d',
           text: '괜찮다고 말하면서도 사실은 다른 것에 정신을 팔려 한다.',
-          emoji: ' busy',
+          emoji: '🏃‍♀️💨',
           scores: { 'distraction-seeker': 3, 'optimistic-mover-on': 2 },
         },
       ],
@@ -432,7 +432,7 @@ export const breakupCopingTestData: PersonalityTestData = {
         {
           id: 'q14_d',
           text: '크게 변한 것은 없고, 그저 한 번의 경험일 뿐이다.',
-          emoji: ' nonchalant',
+          emoji: '😐',
           scores: { 'practical-resetter': 3, 'distraction-seeker': 1 },
         },
       ],
@@ -462,7 +462,7 @@ export const breakupCopingTestData: PersonalityTestData = {
         {
           id: 'q15_d',
           text: '쿨하게 받지만, 미련은 보이지 않으려 한다.',
-          emoji: ' 😎',
+          emoji: '😎',
           scores: { 'distraction-seeker': 2, 'optimistic-mover-on': 2, 'social-supporter': 1 },
         },
       ],
@@ -480,7 +480,7 @@ export const breakupCopingTestData: PersonalityTestData = {
         {
           id: 'q16_b',
           text: '감정을 솔직하게 드러내고 해소할 수 있는 공간',
-          emoji: ' venting',
+          emoji: '🗣️',
           scores: { 'emotional-expresser': 3, 'social-supporter': 3 },
         },
         {

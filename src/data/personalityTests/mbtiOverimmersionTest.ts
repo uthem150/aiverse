@@ -72,7 +72,7 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
         {
           id: 'q2_d',
           text: '상대방의 MBTI에 맞춰 대처 방법을 바꾼다. (화해를 위한 전략)',
-          emoji: ' Chameleon',
+          emoji: '🦎',
           scores: { 'mbti-chameleon': 3, 'mbti-salesperson': 1 },
         },
       ],
@@ -126,7 +126,7 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
         {
           id: 'q4_c',
           text: 'MBTI에 얽매이기보다, 개개인의 강점과 약점을 파악하려 노력한다.',
-          emoji: ' impartial',
+          emoji: '⚖️',
           scores: { 'mbti-skeptic': 3, 'mbti-avoider': 1 },
         },
         {
@@ -174,7 +174,7 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
         {
           id: 'q6_a',
           text: '속으로 궁합을 재보고, 그 유형에 맞춰 대화 방식을 조절한다.',
-          emoji: ' Compatibility',
+          emoji: '💞',
           scores: { 'mbti-chameleon': 3, 'mbti-psychic': 2 },
         },
         {
@@ -216,7 +216,7 @@ export const mbtiOverimmersionTestData: PersonalityTestData = {
         {
           id: 'q7_c',
           text: '그냥 성격 유형 테스트 같은 건데 재미로만 보면 돼~',
-          emoji: ' shrug',
+          emoji: '🤷',
           scores: { 'mbti-skeptic': 3, 'mbti-avoider': 1 },
         },
         {

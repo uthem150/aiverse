@@ -42,7 +42,7 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q1_d',
           text: '즉흥적으로 그때그때 하고 싶은 것을 결정한다.',
-          emoji: ' unplanned',
+          emoji: '🤩',
           scores: { 'spontaneous-adventurer': 3, 'foodie-explorer': 1 },
         },
       ],
@@ -90,20 +90,20 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q3_b',
           text: '약간 신경 쓰이지만, 내색하지 않고 데이트에 집중한다.',
-          emoji: ' poker_face',
+          emoji: '😐',
           scores: { 'private-lover': 2, 'cultural-enthusiast': 1 },
         },
         {
           id: 'q3_c',
           text: '살짝 질투심이 생겨서 애정을 더 표현하거나 관심을 돌리려 한다.',
-          emoji: ' jealousy',
+          emoji: ' 😠',
           scores: { 'romantic-planner': 2, 'social-butterfly': 1 },
         },
         {
           id: 'q3_d',
           text: '직접적으로 이야기하며 솔직하게 불쾌함을 표현한다.',
           emoji: '🗣️',
-          scores: { 'experience-explorer': 1, 'foodie-explorer': 1 }, // 직접적인 반응에 대한 점수는 낮음
+          scores: { 'experience-explorer': 1, 'foodie-explorer': 1 },
         },
       ],
     },
@@ -144,26 +144,26 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q5_a',
           text: '활동적이고 편안하면서도 스타일리시한 옷.',
-          emoji: ' casual',
+          emoji: '👟',
           scores: { 'experience-explorer': 2, 'spontaneous-adventurer': 2 },
         },
         {
           id: 'q5_b',
           text: '꾸민 듯 안 꾸민 듯, 자연스럽고 편안한 옷.',
-          emoji: ' comfy',
+          emoji: '👕',
           scores: { 'comfort-seeker': 3, 'private-lover': 2 },
         },
         {
           id: 'q5_c',
           text: '데이트 장소와 분위기에 맞춰 신경 써서 고른 옷.',
-          emoji: ' classy',
+          emoji: '👗',
           scores: { 'romantic-planner': 3, 'cultural-enthusiast': 2, 'foodie-explorer': 1 },
         },
         {
           id: 'q5_d',
           text: '평소 입는 대로 편하게 입는다. 옷보다는 즐거움이 중요.',
-          emoji: ' indifferent',
-          scores: { 'spontaneous-adventurer': 1, 'social-butterfly': 1 }, // 복장 점수 낮음
+          emoji: ' 🤷‍♀️',
+          scores: { 'spontaneous-adventurer': 1, 'social-butterfly': 1 },
         },
       ],
     },
@@ -186,7 +186,7 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q6_c',
           text: '로맨틱한 순간이나 예쁜 배경에서만 몇 장 찍는다.',
-          emoji: ' aesthetic',
+          emoji: '✨',
           scores: { 'romantic-planner': 3, 'cultural-enthusiast': 2 },
         },
         {
@@ -216,7 +216,7 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q7_c',
           text: '계획이 틀어져서 아쉽지만, 침착하게 상황을 해결하려 한다.',
-          emoji: ' calm',
+          emoji: '🧘‍♀️',
           scores: { 'romantic-planner': 2, 'cultural-enthusiast': 1 },
         },
         {
@@ -265,7 +265,7 @@ export const datingStyleTestData: PersonalityTestData = {
           id: 'q9_a',
           text: '맛집 검색이나 길 찾기 등 필요한 경우에만 사용한다.',
           emoji: '📱',
-          scores: { 'practical-giver': 1, 'foodie-explorer': 2 }, // 기존 유형과 연관지음
+          scores: { 'foodie-explorer': 2, 'experience-explorer': 1 },
         },
         {
           id: 'q9_b',
@@ -282,7 +282,7 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q9_d',
           text: '딱히 신경 쓰지 않는다. 필요한 건 그때그때 찾아본다.',
-          emoji: ' indifferent',
+          emoji: '🤷‍♀️',
           scores: { 'spontaneous-adventurer': 2, 'cultural-enthusiast': 1 },
         },
       ],
@@ -307,7 +307,7 @@ export const datingStyleTestData: PersonalityTestData = {
           id: 'q10_c',
           text: '가끔은 좋지만, 너무 자주 만나는 것은 부담스럽다.',
           emoji: '⚖️',
-          scores: { 'romantic-planner': 1, 'foodie-explorer': 1 }, // 조화 추구와 연관
+          scores: { 'romantic-planner': 1, 'foodie-explorer': 1 },
         },
         {
           id: 'q10_d',
@@ -361,7 +361,7 @@ export const datingStyleTestData: PersonalityTestData = {
           id: 'q12_b',
           text: '내가 계획한 데이트라면 내가 주로 부담한다.',
           emoji: '💵',
-          scores: { 'romantic-planner': 2, 'luxury-seeker': 1 }, // 기존 유형 재활용
+          scores: { 'romantic-planner': 2, 'foodie-explorer': 1 }, // 'luxury-seeker' 대신 적절한 유형으로 대체
         },
         {
           id: 'q12_c',
@@ -426,13 +426,13 @@ export const datingStyleTestData: PersonalityTestData = {
         {
           id: 'q14_c',
           text: '아주 특별하거나 예쁜 사진만 가끔 올린다.',
-          emoji: ' aesthetic',
+          emoji: '✨', // 'aesthetic' -> ✨
           scores: { 'romantic-planner': 2, 'cultural-enthusiast': 2 },
         },
         {
           id: 'q14_d',
           text: '즉흥적으로 마음에 드는 사진이 있으면 올린다.',
-          emoji: ' spontaneous',
+          emoji: '🌠',
           scores: { 'spontaneous-adventurer': 2, 'foodie-explorer': 1 },
         },
       ],

@@ -42,9 +42,15 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         },
         {
           id: 'q1_c',
-          text: '상황에 따라 다르게 행동한다',
-          emoji: '🤔',
-          scores: { enfj: 2, infj: 2, entj: 2, intj: 2, esfj: 2, isfj: 2, estj: 2, istj: 2 }, // Added for balanced scoring
+          text: '상황을 지켜보다가 자연스럽게 어울린다',
+          emoji: '👀',
+          scores: { enfj: 2, infj: 2, entj: 2, intj: 2, esfj: 2, isfj: 2, estj: 2, istj: 2 },
+        },
+        {
+          id: 'q1_d',
+          text: '친한 사람들과 주로 대화한다',
+          emoji: '🤝',
+          scores: { infp: 1, intp: 1, isfp: 1, istp: 1, isfj: 1, istj: 1 },
         },
       ],
     },
@@ -68,7 +74,13 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
           id: 'q2_c',
           text: '시간을 두고 천천히 대화로 풀어감',
           emoji: '⏰',
-          scores: { infp: 2, infj: 2, intp: 2, intj: 2, isfp: 2, isfj: 2, istp: 2, istj: 2 }, // Added for balanced scoring
+          scores: { infp: 2, infj: 2, intp: 2, intj: 2, isfp: 2, isfj: 2, istp: 2, istj: 2 },
+        },
+        {
+          id: 'q2_d',
+          text: '일단 회피하고 나중에 생각한다',
+          emoji: '💨',
+          scores: { esfp: 1, estp: 1, enfp: 1, entp: 1 },
         },
       ],
     },
@@ -121,7 +133,7 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         {
           id: 'q4_c',
           text: '즉흥적으로 그때그때 결정한다',
-          emoji: ' spontaneity',
+          emoji: '🎵',
           scores: { entp: 3, esfp: 3, estp: 3, enfp: 3 },
         },
         {
@@ -217,7 +229,7 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         {
           id: 'q7_d',
           text: '내 감이 이끄는 대로 자유롭게 해본다',
-          emoji: ' intuitively',
+          emoji: '🎶',
           scores: { infp: 3, isfp: 3, infj: 2 },
         },
       ],
@@ -235,7 +247,7 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         {
           id: 'q8_b',
           text: '일상의 구체적인 경험과 사실',
-          emoji: ' factual',
+          emoji: '🔭',
           scores: { esfp: 3, estp: 3, isfp: 2, istp: 2 },
         },
         {
@@ -265,13 +277,13 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         {
           id: 'q9_b',
           text: '큰 틀만 잡고 즉흥적으로 다닌다',
-          emoji: ' spontaneous',
+          emoji: '🤸',
           scores: { enfp: 3, entp: 3, esfp: 3, estp: 3 },
         },
         {
           id: 'q9_c',
           text: '가고 싶은 곳만 정하고 나머지는 현지에서 결정',
-          emoji: ' explorative',
+          emoji: '🪄',
           scores: { infp: 2, isfp: 2, istp: 2 },
         },
         {
@@ -385,7 +397,7 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
         {
           id: 'q13_b',
           text: '상대방의 특징을 살린 센스 있는 별명',
-          emoji: ' witty',
+          emoji: '💡',
           scores: { entp: 3, estp: 3, intp: 2, istp: 2 },
         },
         {
@@ -880,7 +892,7 @@ export const mbtiCompatibilityTestData: PersonalityTestData = {
           '자신의 감정을 조금 더 표현하세요',
           '변화에 대한 두려움을 극복해보세요',
         ],
-        celebrities: ['이휘재', '성시경', '이민기', '윤도현'],
+        celebrities: ['성시경', '이민기', '윤도현'],
       },
     },
   ],

@@ -84,7 +84,7 @@ export const spendingTypeTestData: PersonalityTestData = {
         {
           id: 'q3_a',
           text: '괜찮아! 어차피 인생은 한 번인데 뭐~',
-          emoji: ' YOLO',
+          emoji: '💸',
           scores: { 'flex-pleaser': 3, 'impulse-buyer': 1 },
         },
         {
@@ -114,7 +114,7 @@ export const spendingTypeTestData: PersonalityTestData = {
         {
           id: 'q4_a',
           text: '할인 쿠폰, 배달팁 무료 등 혜택이 가장 많은 곳.',
-          emoji: '💸',
+          emoji: '💰',
           scores: { 'value-seeker': 3, 'minimal-saver': 1 },
         },
         {
@@ -132,7 +132,7 @@ export const spendingTypeTestData: PersonalityTestData = {
         {
           id: 'q4_d',
           text: '오늘은 배달시키면 안 되는데... 고민하다 결국 시킨다.',
-          emoji: ' guilty',
+          emoji: '😥',
           scores: { 'late-night-shopper': 2, 'planner-budgeter': 1 },
         },
       ],
@@ -150,7 +150,7 @@ export const spendingTypeTestData: PersonalityTestData = {
         {
           id: 'q5_b',
           text: '세일이어도 필요 없으면 안 산다. 득템 기회는 다음에.',
-          emoji: '🙅',
+          emoji: '🙅‍♀️',
           scores: { 'minimal-saver': 3, 'planner-budgeter': 2 },
         },
         {
@@ -252,7 +252,7 @@ export const spendingTypeTestData: PersonalityTestData = {
         {
           id: 'q8_d',
           text: '이번 달은 어떤 경험을 했고, 어떤 가치를 소비했는지 돌아본다.',
-          emoji: '✨',
+          emoji: '🤔',
           scores: { 'experience-collector': 2, 'meaning-out-consumer': 3 },
         },
       ],

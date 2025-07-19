@@ -25,7 +25,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
           id: 'q1_a',
           text: '모든 정보를 수집하고 장단점을 꼼꼼히 분석한다.',
           emoji: '🔍',
-          scores: { 'analytical-strategist': 3, 'planner-organizer': 1 }, // 이전 유형 연관
+          scores: { 'analytical-strategist': 3, 'planner-organizer': 1 },
         },
         {
           id: 'q1_b',
@@ -42,7 +42,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q1_d',
           text: '일단 미뤄두고, 나중에 다시 생각해보자고 한다.',
-          emoji: ' postponing',
+          emoji: '🚧',
           scores: { 'procrastinating-avoider': 3 },
         },
       ],
@@ -144,19 +144,19 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q5_a',
           text: '충분히 생각하지 않고 섣불리 결정했던 것.',
-          emoji: ' hasty',
+          emoji: '🤦‍♀️',
           scores: { 'analytical-strategist': 2, 'procrastinating-avoider': 1 },
         },
         {
           id: 'q5_b',
           text: '다른 사람들의 의견에 너무 휘둘려 내린 결정.',
-          emoji: ' puppet',
+          emoji: '🤷‍♀️',
           scores: { 'leader-decider': 2, 'consensus-seeker': 1 },
         },
         {
           id: 'q5_c',
           text: '두려움 때문에 아무 결정도 내리지 못하고 기회를 놓친 것.',
-          emoji: ' scared',
+          emoji: '😨',
           scores: { 'risk-taker-innovator': 2, 'procrastinating-avoider': 3 },
         },
         {
@@ -186,13 +186,13 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q6_c',
           text: '아무에게도 조언을 구하지 않고 혼자 결정한다.',
-          emoji: ' solitare',
+          emoji: '👤',
           scores: { 'leader-decider': 3, 'intuitive-quick-decider': 1 },
         },
         {
           id: 'q6_d',
           text: '다양한 사람들의 의견을 종합적으로 들어본다.',
-          emoji: ' listen',
+          emoji: '👂',
           scores: { 'consensus-seeker': 3, 'procrastinating-avoider': 1 },
         },
       ],
@@ -210,19 +210,19 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q7_b',
           text: '내 직감이나 감정을 무시하고 내린 결정.',
-          emoji: ' blind',
+          emoji: '🙈',
           scores: { 'intuitive-quick-decider': 3, 'emotional-responsive': 3 },
         },
         {
           id: 'q7_c',
           text: '모두가 만족하지 못하고 갈등이 생기는 결정.',
-          emoji: ' argument',
+          emoji: '💢',
           scores: { 'consensus-seeker': 3, 'procrastinating-avoider': 1 },
         },
         {
           id: 'q7_d',
           text: '새로운 시도나 도전을 하지 않고 안주하려 했던 결정.',
-          emoji: ' safety',
+          emoji: '🛋️',
           scores: { 'risk-taker-innovator': 3, 'leader-decider': 2 },
         },
       ],
@@ -252,7 +252,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q8_d',
           text: '직접 몸으로 부딪히며 얻는 생생한 경험.',
-          emoji: ' action',
+          emoji: '🏃‍♀️',
           scores: { 'experience-based-pragmatist': 3, 'risk-taker-innovator': 2 },
         },
       ],
@@ -282,7 +282,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q9_d',
           text: '내 경험상 이런 제안은 보통 이렇더라, 하고 판단한다.',
-          emoji: ' wisdom',
+          emoji: '🦉',
           scores: { 'experience-based-pragmatist': 3 },
         },
       ],
@@ -372,7 +372,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
         {
           id: 'q12_d',
           text: '변화를 두려워하지 않고 새로운 길을 개척하는 용기.',
-          emoji: ' boldly',
+          emoji: '🦁',
           scores: { 'risk-taker-innovator': 3, 'leader-decider': 3 },
         },
       ],
@@ -415,7 +415,7 @@ export const decisionMakingStyleTestData: PersonalityTestData = {
       compatibility: {
         best: ['risk-taker-innovator', 'emotional-responsive'],
         good: [],
-        avoid: ['analytical-strategist', 'planner-organizer'], // 이전 유형 연관
+        avoid: ['analytical-strategist', 'planner-organizer'],
       },
       recommendations: {
         tips: [

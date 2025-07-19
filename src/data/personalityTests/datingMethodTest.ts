@@ -30,7 +30,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q1_b',
           text: '우연히 마주치거나 예상치 못한 상황에서 자연스럽게 만나는 것',
-          emoji: ' serendipity',
+          emoji: '🍀',
           scores: { 'serendipitous-romantic': 3, 'social-explorer': 2 },
         },
         {
@@ -102,7 +102,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '효율적인 방법으로 많은 사람을 만나고 싶다.',
-          emoji: ' efficiency',
+          emoji: '⏱️',
           scores: { 'app-navigator': 3, 'calculated-introducer': 1 },
         },
       ],
@@ -114,7 +114,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q4_a',
           text: '미리 준비한 질문이나 대화 주제로 분위기를 띄우려 한다.',
-          emoji: '💬',
+          emoji: '🗣️',
           scores: { 'calculated-introducer': 3, 'friend-facilitator': 2 },
         },
         {
@@ -216,7 +216,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q7_c',
           text: '어느 정도는 있지만, 만나면서 맞춰갈 수 있어요.',
-          emoji: ' flexible',
+          emoji: '🙌',
           scores: { 'hobby-networker': 2, 'social-explorer': 3, 'friend-facilitator': 1 },
         },
         {
@@ -250,7 +250,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q8_c',
           text: '친구에게 하소연하거나 조언을 구한다.',
-          emoji: '🗣️',
+          emoji: '💬',
           scores: { 'friend-facilitator': 3, 'hobby-networker': 2 },
         },
         {
@@ -310,7 +310,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q10_c',
           text: '친구가 말해주는 최소한의 정보면 충분하다.',
-          emoji: '💬',
+          emoji: '🗣️',
           scores: { 'friend-facilitator': 3, 'hobby-networker': 2 },
         },
         {
@@ -393,8 +393,8 @@ export const datingMethodTestData: PersonalityTestData = {
         },
         {
           id: 'q13_b',
-          text: '우연한 만남 후 자연스럽게 발전하는 관계',
-          emoji: ' serendipity',
+          text: '운명처럼 다가오는 우연한 만남',
+          emoji: '🍀',
           scores: { 'serendipitous-romantic': 3, 'social-explorer': 2 },
         },
         {
@@ -434,7 +434,7 @@ export const datingMethodTestData: PersonalityTestData = {
         {
           id: 'q14_c',
           text: '어느 정도는 괜찮지만, 목적이 있는 대화는 어렵다.',
-          emoji: ' conversationalist',
+          emoji: '💬',
           scores: { 'hobby-networker': 2, 'friend-facilitator': 1 },
         },
         {

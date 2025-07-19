@@ -102,7 +102,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         {
           id: 'q3_d',
           text: '그 세계관에 빠져들어 다음 편이나 관련 작품을 찾아본다.',
-          emoji: ' погружение',
+          emoji: '📖',
           scores: { 'fantasy-sci-fi-explorer': 3, 'animation-fantasy-dreamer': 3 },
         },
       ],
@@ -156,7 +156,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         {
           id: 'q5_c',
           text: '신비롭고 몽환적인 뉴에이지나 실험적인 전자음악.',
-          emoji: ' ethereal',
+          emoji: '🔮',
           scores: { 'fantasy-sci-fi-explorer': 3, 'animation-fantasy-dreamer': 3 },
         },
         {
@@ -175,7 +175,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
           id: 'q6_a',
           text: '개연성, 연출력 등 객관적인 완성도.',
           emoji: '📏',
-          scores: { 'logical-negotiator': 1, 'action-thriller-addict': 1 }, // 이전 유형 연관
+          scores: { 'action-thriller-addict': 1 },
         },
         {
           id: 'q6_b',
@@ -247,7 +247,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
           id: 'q8_c',
           text: '감독의 의도나 복선을 찾아보려 한다.',
           emoji: '🧐',
-          scores: { 'logical-negotiator': 2, 'documentary-intellectual': 2 },
+          scores: { 'documentary-intellectual': 2 }, // 'logical-negotiator' 제거
         },
         {
           id: 'q8_d',
@@ -282,7 +282,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         {
           id: 'q9_d',
           text: '사람들과 함께 반응하며 볼 수 있는 공개 상영회.',
-          emoji: ' communal',
+          emoji: '🎉',
           scores: { 'romantic-comedy-lover': 1, 'action-thriller-addict': 1 },
         },
       ],
@@ -301,7 +301,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
           id: 'q10_b',
           text: '리뷰나 평점을 꼼꼼히 확인하고 신중하게 고른다.',
           emoji: '🔍',
-          scores: { 'logical-negotiator': 2, 'drama-melodrama-aficionado': 2 },
+          scores: { 'drama-melodrama-aficionado': 2 },
         },
         {
           id: 'q10_c',
@@ -312,7 +312,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         {
           id: 'q10_d',
           text: '추천 알고리즘, 친구 추천 또는 우연히 발견한 작품.',
-          emoji: ' serendipity',
+          emoji: '✨',
           scores: { 'horror-mystery-seeker': 2, 'indie-art-film-connoisseur': 2 },
         },
       ],
@@ -514,9 +514,9 @@ export const moviePreferenceTestData: PersonalityTestData = {
       color: '#2F4F4F', // Dark Slate Gray
       traits: ['학구적', '지적 호기심', '정보 습득', '현실 기반', '비판적 사고', '성장 추구'],
       compatibility: {
-        best: ['indie-art-film-connoisseur', 'logical-negotiator'],
+        best: ['indie-art-film-connoisseur'],
         good: ['drama-melodrama-aficionado'],
-        avoid: ['splurge-lover', 'romantic-comedy-lover'], // 이전 유형 연관
+        avoid: ['romantic-comedy-lover'],
       },
       recommendations: {
         movies: [
@@ -573,7 +573,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
       traits: ['스릴 추구', '긴장감', '미스터리 선호', '추리력', '반전', '대담함'],
       compatibility: {
         best: ['action-thriller-addict'],
-        good: ['logical-negotiator'],
+        good: [],
         avoid: ['romantic-comedy-lover', 'animation-fantasy-dreamer'],
       },
       recommendations: {

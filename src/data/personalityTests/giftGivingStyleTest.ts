@@ -66,7 +66,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q2_c',
           text: '실생활에 유용하게 쓰일 수 있는가.',
-          emoji: ' practical',
+          emoji: '🎁', // 'practical' 텍스트를 이모지로 변경
           scores: { 'practical-giver': 3, 'luxury-seeker': 1 },
         },
         {
@@ -90,13 +90,13 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q3_b',
           text: '연인이 예상치 못한 순간, 깜짝 선물로.',
-          emoji: ' surprise',
+          emoji: '🫢',
           scores: { 'surprise-master': 3, 'spontaneous-giver': 2 },
         },
         {
           id: 'q3_c',
           text: '꼭 기념일이 아니더라도, 문득 주고 싶을 때.',
-          emoji: ' spontaneous',
+          emoji: '💫',
           scores: { 'spontaneous-giver': 3, 'experience-creator': 1 },
         },
         {
@@ -126,7 +126,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q4_c',
           text: '두고두고 쓸 수 있는 실용적이고 내구성 있는 선물.',
-          emoji: ' robust',
+          emoji: '💪',
           scores: { 'practical-giver': 3, 'luxury-seeker': 2 },
         },
         {
@@ -150,7 +150,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q5_b',
           text: '깔끔하게 하는 정도면 충분하다.',
-          emoji: ' neat',
+          emoji: '✨',
           scores: { 'practical-giver': 2, 'spontaneous-giver': 1 },
         },
         {
@@ -276,7 +276,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q9_c',
           text: '"이거 네 거야. 잘 써."',
-          emoji: ' blunt',
+          emoji: '😎',
           scores: { 'spontaneous-giver': 3, 'practical-giver': 1 },
         },
         {
@@ -300,7 +300,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q10_b',
           text: '예상치 못한 순간에 주는 서프라이즈 선물.',
-          emoji: ' surprise',
+          emoji: '😲',
           scores: { 'surprise-master': 3, 'spontaneous-giver': 2 },
         },
         {
@@ -336,7 +336,7 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q11_c',
           text: '즉흥적으로 다른 선물을 준비하거나 만회할 기회를 엿본다.',
-          emoji: ' spontaneous',
+          emoji: '💡',
           scores: { 'spontaneous-giver': 3, 'experience-creator': 2 },
         },
         {
@@ -396,13 +396,13 @@ export const giftGivingStyleTestData: PersonalityTestData = {
         {
           id: 'q13_c',
           text: '특별한 감정은 없다. 당연한 결과라고 생각한다.',
-          emoji: ' indifferent',
+          emoji: '😌',
           scores: { 'spontaneous-giver': 1, 'luxury-seeker': 1 },
         },
         {
           id: 'q13_d',
           text: '선물과 함께했던 추억이 떠올라 행복하다.',
-          emoji: ' nostalgia',
+          emoji: '🥰',
           scores: { 'memory-maker': 3, 'experience-creator': 3 },
         },
       ],

@@ -66,7 +66,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
         {
           id: 'q2_c',
           text: '그냥 그때그때 하고 싶은 것을 하는 게 가장 효율적이야!',
-          emoji: ' freestyle',
+          emoji: '✨', 
           scores: { 'aspiring-procrastinator': 2, 'balanced-lifestyle-godsaeng': 1 },
         },
         {
@@ -150,7 +150,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
         {
           id: 'q5_b',
           text: '와, 멋지다... (잠시 감탄 후 다시 내 할 일을 한다)',
-          emoji: ' admiring',
+          emoji: '🤩', 
           scores: { 'balanced-lifestyle-godsaeng': 2, 'aspiring-procrastinator': 1 },
         },
         {
@@ -162,7 +162,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
         {
           id: 'q5_d',
           text: '진짜 갓생인지, 꾸밈없는 현실인지 의심부터 한다.',
-          emoji: ' skeptical',
+          emoji: '🤨',
           scores: { 'aspiring-procrastinator': 1, 'self-care-master': 1 },
         },
       ],
@@ -356,7 +356,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
       compatibility: {
         best: ['miracle-morning-pioneer', 'learning-growth-addict'],
         good: [],
-        avoid: ['aspiring-procrastinator', 'emotional-responsive'], // 이전 유형 연관
+        avoid: ['aspiring-procrastinator', 'self-care-master'], // 'emotional-responsive' 대신 'self-care-master'로 변경 (기존 유형에 맞춰 조정)
       },
       recommendations: {
         tips: [
@@ -378,9 +378,9 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#98FB98', // Pale Green
       traits: ['웰빙 지향', '건강 중시', '휴식', '균형', '스트레스 관리', '긍정적'],
       compatibility: {
-        best: ['balanced-lifestyle-godsaeng', 'emotional-responsive'],
+        best: ['balanced-lifestyle-godsaeng', 'learning-growth-addict'], // 'emotional-responsive' 대신 'learning-growth-addict'로 변경 (기존 유형에 맞춰 조정)
         good: [],
-        avoid: ['productivity-hacker', 'challenge-mania-godsaeng'],
+        avoid: ['productivity-hacker', 'challenge-mania-godsa-eng'],
       },
       recommendations: {
         tips: [
@@ -404,7 +404,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
       compatibility: {
         best: ['learning-growth-addict', 'productivity-hacker'],
         good: [],
-        avoid: ['aspiring-procrastinator', 'spontaneous-wanderer'], // 이전 유형 연관
+        avoid: ['aspiring-procrastinator', 'self-care-master'], // 'spontaneous-wanderer' 대신 'self-care-master'로 변경 (기존 유형에 맞춰 조정)
       },
       recommendations: {
         tips: [
@@ -428,7 +428,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
       compatibility: {
         best: ['productivity-hacker', 'challenge-mania-godsaeng'],
         good: ['financial-savvy-godsaeng'],
-        avoid: ['aspiring-procrastinator', 'relaxing-healer'], // 이전 유형 연관
+        avoid: ['aspiring-procrastinator', 'balanced-lifestyle-godsaeng'], // 'relaxing-healer' 대신 'balanced-lifestyle-godsaeng'로 변경 (기존 유형에 맞춰 조정)
       },
       recommendations: {
         tips: [
@@ -474,7 +474,7 @@ export const godsaengTypeTestData: PersonalityTestData = {
       color: '#808080', // Gray
       traits: ['지향성', '열망', '게으름', '시작의 어려움', '공감 능력', '유머러스함'],
       compatibility: {
-        best: ['emotional-responsive', 'consensus-seeker'], // 이전 유형 연관
+        best: ['balanced-lifestyle-godsaeng', 'self-care-master'], // 'emotional-responsive', 'consensus-seeker' 대신 기존 유형에 맞춰 조정
         good: ['balanced-lifestyle-godsaeng'],
         avoid: ['miracle-morning-pioneer', 'productivity-hacker'],
       },

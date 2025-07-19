@@ -114,7 +114,7 @@ export const travelStyleTestData: PersonalityTestData = {
         {
           id: 'q4_a',
           text: '당황스럽지만, 침착하게 해결 방안을 모색한다.',
-          emoji: ' calmly',
+          emoji: '😌',
           scores: { 'planner-organizer': 2, 'adventurous-explorer': 1 },
         },
         {
@@ -234,7 +234,7 @@ export const travelStyleTestData: PersonalityTestData = {
         {
           id: 'q8_a',
           text: '아무 계획 없이 걷다가 우연히 발견한 멋진 풍경.',
-          emoji: ' serendipity',
+          emoji: '🏞️',
           scores: { 'spontaneous-wanderer': 3, 'nature-lover': 2 },
         },
         {
@@ -252,7 +252,7 @@ export const travelStyleTestData: PersonalityTestData = {
         {
           id: 'q8_d',
           text: '힘든 도전 끝에 정상에 오르거나 목표를 달성한 순간.',
-          emoji: ' summit',
+          emoji: '🧗‍♂️',
           scores: { 'adventurous-explorer': 3, 'nature-lover': 2 },
         },
       ],

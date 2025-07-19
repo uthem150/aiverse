@@ -299,7 +299,7 @@ export const idealTypeTestData: PersonalityTestData = {
         {
           id: 'q10_b',
           text: '발길 닿는 대로 자유롭게 다니는 즉흥 여행',
-          emoji: ' spontaneity',
+          emoji: '🧭',
           scores: { free_spirit: 3, adventurer: 2, artist: 1 },
         },
         {
