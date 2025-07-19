@@ -5,6 +5,18 @@ export const StyledTestListPage = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: ${({ theme }) => (theme as Theme).spacing.lg};
+
+  @media (max-width: 1024px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 ${({ theme }) => (theme as Theme).spacing.md};
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => (theme as Theme).spacing.sm};
+  }
 `;
 
 export const StyledHeader = styled.div`
@@ -88,23 +100,26 @@ export const StyledFilterButton = styled.button<FilterButtonProps>`
 
 export const StyledCategoryTabs = styled.div`
   display: flex;
+  flex-direction: row;
   gap: ${({ theme }) => (theme as Theme).spacing.sm};
   margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
   overflow-x: auto;
   padding-bottom: ${({ theme }) => (theme as Theme).spacing.xs};
-  overflow: visible;
+  white-space: nowrap;
+
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-    height: 4px;
+    display: none;
   }
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => (theme as Theme).colors.border.secondary};
-    border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
+  > * {
+    scroll-snap-align: start;
   }
 `;
 
@@ -113,6 +128,7 @@ interface CategoryTabProps {
 }
 
 export const StyledCategoryTab = styled.button<CategoryTabProps>`
+  margin: 0.2rem;
   padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.lg}`};
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
   border: none;

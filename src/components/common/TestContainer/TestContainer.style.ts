@@ -5,6 +5,14 @@ export const StyledTestContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: ${({ theme }) => (theme as Theme).spacing.lg};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.sm};
+  }
 `;
 
 export const StyledTestHeader = styled.div`
@@ -64,4 +72,12 @@ export const StyledTestContent = styled.div`
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   padding: ${({ theme }) => (theme as Theme).spacing['2xl']};
   box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
 `;

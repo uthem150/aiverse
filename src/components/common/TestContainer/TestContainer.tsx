@@ -43,7 +43,7 @@ const TestContainer = ({
           )}
         </StyledTestActions>
 
-        <Typography variant="h2" align="center">
+        <Typography variant="h2" align="center" responsive>
           {title}
         </Typography>
         {description && (

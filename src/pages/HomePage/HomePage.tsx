@@ -47,7 +47,7 @@ const HomePage = () => {
     <StyledHomePage>
       {/* Hero Section */}
       <StyledHeroSection>
-        <Typography variant="h1" align="center">
+        <Typography variant="h1" align="center" responsive>
           🤖 AIverse에 오신 것을 환영합니다
         </Typography>
         <Typography variant="body1" align="center" color="#6B7280">

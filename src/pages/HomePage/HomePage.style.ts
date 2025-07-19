@@ -4,6 +4,19 @@ import type { Theme } from '@/styles/themes/types';
 export const StyledHomePage = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 ${({ theme }) => (theme as Theme).spacing.xl};
+
+  @media (max-width: 1024px) {
+    padding: 0 ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 ${({ theme }) => (theme as Theme).spacing.md};
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => (theme as Theme).spacing.sm};
+  }
 `;
 
 export const StyledHeroSection = styled.section`

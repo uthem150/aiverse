@@ -18,6 +18,14 @@ export const StyledShareResult = styled.div`
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   margin-top: ${({ theme }) => (theme as Theme).spacing.xl};
   box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
 `;
 
 export const StyledHeader = styled.div`
@@ -86,7 +94,7 @@ export const StyledShareGrid = styled.div`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 

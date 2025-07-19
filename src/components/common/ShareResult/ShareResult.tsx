@@ -175,32 +175,44 @@ const ShareResult = ({
       <StyledShareGrid>
         <StyledShareButton onClick={() => shareToSocial('kakao')} disabled={isGenerating}>
           <MessageCircle size={20} />
-          <span>카카오톡</span>
+          <Typography variant="button" responsive align="center">
+            카카오톡
+          </Typography>
         </StyledShareButton>
 
         <StyledShareButton onClick={() => shareToSocial('facebook')} disabled={isGenerating}>
           <Share2 size={20} />
-          <span>페이스북</span>
+          <Typography variant="button" responsive align="center">
+            페이스북
+          </Typography>
         </StyledShareButton>
 
         <StyledShareButton onClick={() => shareToSocial('twitter')} disabled={isGenerating}>
           <Share2 size={20} />
-          <span>트위터</span>
+          <Typography variant="button" responsive align="center">
+            트위터
+          </Typography>
         </StyledShareButton>
 
         <StyledShareButton onClick={downloadImage} disabled={isGenerating || !generatedImage}>
           <Download size={20} />
-          <span>이미지 저장</span>
+          <Typography variant="button" responsive align="center">
+            이미지 저장
+          </Typography>
         </StyledShareButton>
 
         <StyledShareButton onClick={copyToClipboard} disabled={isGenerating}>
           <Copy size={20} />
-          <span>링크 복사</span>
+          <Typography variant="button" responsive align="center">
+            링크 복사
+          </Typography>
         </StyledShareButton>
 
         <StyledShareButton onClick={goToOtherTests} disabled={isGenerating}>
           <Gamepad2 size={20} />
-          <span>다른 테스트</span>
+          <Typography variant="button" responsive align="center">
+            다른 테스트
+          </Typography>
         </StyledShareButton>
       </StyledShareGrid>
     </StyledShareResult>

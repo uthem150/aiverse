@@ -1,12 +1,13 @@
-import styled from "@emotion/styled";
-import { TYPOGRAPHY } from "@/styles/typography";
-import type { TypographyVariant } from "@/styles/typography";
-import type { Theme } from "@/styles/themes/types";
+import styled from '@emotion/styled';
+import { TYPOGRAPHY } from '@/styles/typography';
+import type { TypographyVariant } from '@/styles/typography';
+import type { Theme } from '@/styles/themes/types';
 
 interface StyledTypographyProps {
   variant: TypographyVariant;
   color?: string;
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right';
+  responsive?: boolean;
 }
 
 export const StyledTypography = styled.div<StyledTypographyProps>`
@@ -22,4 +23,16 @@ export const StyledTypography = styled.div<StyledTypographyProps>`
   transition: color
     ${({ theme }) =>
       `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  ${({ responsive, variant }) =>
+    responsive &&
+    `
+    @media (max-width: 768px) {
+      font-size: calc(${TYPOGRAPHY[variant].fontSize} * 0.875);
+    }
+
+    @media (max-width: 480px) {
+      font-size: calc(${TYPOGRAPHY[variant].fontSize} * 0.75);
+    }
+  `}
 `;

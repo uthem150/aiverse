@@ -144,6 +144,7 @@ export const StyledColorPalette = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: ${({ theme }) => (theme as Theme).spacing.sm};
     width: 100%;
+    place-items: center;
   }
 `;
 
@@ -154,6 +155,17 @@ interface ColorCardProps {
 export const StyledColorCard = styled.div<ColorCardProps>`
   width: 60px;
   height: 60px;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
+
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+  }
+
   background-color: ${({ color }) => color};
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
   border: 2px solid ${({ theme }) => (theme as Theme).colors.border.primary};
@@ -163,7 +175,7 @@ export const StyledColorCard = styled.div<ColorCardProps>`
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
   }
 `;
