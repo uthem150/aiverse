@@ -92,7 +92,8 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
 
     const finalResult = testData.results.find(r => r.id === topResultType);
     if (finalResult) {
-      const resultWithPercentage = {
+      const resultWithPercentage: TestResult = {
+        // TestResult 타입으로 명시
         ...finalResult,
         percentage: Math.round((topScore / totalPossibleScore) * 100),
       };
@@ -197,18 +198,43 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             </div>
 
-            <div className="section">
-              <Typography variant="h5">🎯 추천사항</Typography>
-              <div className="recommendations">
-                {result.recommendations.activities.map((activity, index) => (
-                  <div key={index} className="recommendation-item">
-                    • {activity}
-                  </div>
-                ))}
+            {/* 추천사항 섹션 (activities와 tips는 이제 선택적 속성으로 변경되었으므로 조건부 렌더링 필수) */}
+            {(result.recommendations.activities && result.recommendations.activities.length > 0) ||
+            (result.recommendations.tips && result.recommendations.tips.length > 0) ? (
+              <div className="section">
+                <Typography variant="h5">🎯 추천사항</Typography>
+                <div className="recommendations">
+                  {result.recommendations.activities &&
+                    result.recommendations.activities.map((activity, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {activity}
+                      </div>
+                    ))}
+                  {result.recommendations.tips &&
+                    result.recommendations.tips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            {result.recommendations.kpopGroups && (
+            {/* 새로운 추천 필드들을 조건부 렌더링 */}
+            {result.recommendations.hashtags && result.recommendations.hashtags.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">#️⃣ 추천 해시태그</Typography>
+                <div className="tags-grid">
+                  {result.recommendations.hashtags.map((tag, index) => (
+                    <span key={index} className="tag">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.kpopGroups && result.recommendations.kpopGroups.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🎵 추천 K-pop 그룹</Typography>
                 <div className="kpop-groups">
@@ -221,26 +247,217 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
-            {result.recommendations.celebrities && (
-              <div className="section">
-                <Typography variant="h5">👑 닮은 연예인</Typography>
-                <div className="celebrities">
-                  {result.recommendations.celebrities.map((celeb, index) => (
-                    <span key={index} className="celeb-tag">
-                      {celeb}
-                    </span>
-                  ))}
+            {result.recommendations.celebrities &&
+              result.recommendations.celebrities.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">👑 닮은 연예인</Typography>
+                  <div className="celebrities">
+                    {result.recommendations.celebrities.map((celeb, index) => (
+                      <span key={index} className="celeb-tag">
+                        {celeb}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {result.recommendations.ottContent && (
+            {result.recommendations.ottContent && result.recommendations.ottContent.length > 0 && (
               <div className="section">
                 <Typography variant="h5">📺 추천 콘텐츠</Typography>
                 <div className="recommendations">
                   {result.recommendations.ottContent.map((content, index) => (
                     <div key={index} className="recommendation-item">
                       • {content}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.movies && result.recommendations.movies.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🎬 추천 영화</Typography>
+                <div className="recommendations">
+                  {result.recommendations.movies.map((movie, index) => (
+                    <div key={index} className="recommendation-item">
+                      • {movie}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.destinations &&
+              result.recommendations.destinations.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">✈️ 추천 여행지</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.destinations.map((destination, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {destination}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.gameGenres && result.recommendations.gameGenres.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🎮 추천 게임 장르</Typography>
+                <div className="tags-grid">
+                  {result.recommendations.gameGenres.map((genre, index) => (
+                    <span key={index} className="tag">
+                      {genre}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.communicationTips &&
+              result.recommendations.communicationTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">🗣️ 대화 스킬 UP 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.communicationTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.conflictStrategies &&
+              result.recommendations.conflictStrategies.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">🤝 갈등 해결 전략</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.conflictStrategies.map((strategy, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {strategy}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.datingTips && result.recommendations.datingTips.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">❤️‍🔥 데이팅 팁</Typography>
+                <div className="recommendations">
+                  {result.recommendations.datingTips.map((tip, index) => (
+                    <div key={index} className="recommendation-item">
+                      • {tip}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.decisionMakingTips &&
+              result.recommendations.decisionMakingTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">💡 현명한 결정 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.decisionMakingTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.relationshipTips &&
+              result.recommendations.relationshipTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">💞 관계 발전 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.relationshipTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.giftIdeas && result.recommendations.giftIdeas.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🎁 추천 선물 아이디어</Typography>
+                <div className="recommendations">
+                  {result.recommendations.giftIdeas.map((idea, index) => (
+                    <div key={index} className="recommendation-item">
+                      • {idea}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.burnoutTips &&
+              result.recommendations.burnoutTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">🔥 번아웃 극복 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.burnoutTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.spendingTips &&
+              result.recommendations.spendingTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">💰 현명한 소비 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.spendingTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.godsaengTips &&
+              result.recommendations.godsaengTips.length > 0 && (
+                <div className="section">
+                  <Typography variant="h5">👑 갓생 위한 팁</Typography>
+                  <div className="recommendations">
+                    {result.recommendations.godsaengTips.map((tip, index) => (
+                      <div key={index} className="recommendation-item">
+                        • {tip}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {result.recommendations.mbtiTips && result.recommendations.mbtiTips.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🧐 MBTI 활용 팁</Typography>
+                <div className="recommendations">
+                  {result.recommendations.mbtiTips.map((tip, index) => (
+                    <div key={index} className="recommendation-item">
+                      • {tip}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {result.recommendations.travelTips && result.recommendations.travelTips.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🗺️ 여행 꿀팁</Typography>
+                <div className="recommendations">
+                  {result.recommendations.travelTips.map((tip, index) => (
+                    <div key={index} className="recommendation-item">
+                      • {tip}
                     </div>
                   ))}
                 </div>

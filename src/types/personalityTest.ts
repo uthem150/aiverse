@@ -26,11 +26,27 @@ export interface TestResult {
     avoid: string[];
   };
   recommendations: {
-    activities: string[];
-    tips: string[];
+    activities?: string[];
+    tips?: string[];
     celebrities?: string[];
-    kpopGroups?: string[]; // K-pop 테스트용
-    ottContent?: string[]; // OTT 테스트용
+    kpopGroups?: string[];
+    ottContent?: string[];
+    hashtags?: string[];
+    movies?: string[];
+    destinations?: string[];
+    gameGenres?: string[];
+    communicationTips?: string[];
+    conflictStrategies?: string[];
+    datingTips?: string[];
+    decisionMakingTips?: string[];
+    relationshipTips?: string[];
+    giftIdeas?: string[];
+    burnoutTips?: string[];
+    spendingTips?: string[];
+    godsaengTips?: string[];
+    mbtiTips?: string[];
+    travelTips?: string[];
+    games?: { name: string; url: string }[];
   };
   percentage?: number; // 계산된 매칭 퍼센트
 }
