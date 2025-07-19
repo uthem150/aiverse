@@ -505,7 +505,7 @@ export const communicationStyleTestData: PersonalityTestData = {
   results: [
     {
       id: 'direct-expresser',
-      title: '직설적 표현형 (Straightforward Communicator)',
+      title: '직설적 표현형',
       description: '당신은 솔직하고 명확하게 자신의 생각과 감정을 표현하는 것을 선호합니다.',
       detailedDescription:
         '돌려 말하는 것을 싫어하고, 오해를 줄이기 위해 직설적으로 소통하는 것을 중요하게 생각합니다. 갈등 상황에서도 문제를 회피하기보다 직접적으로 대화하여 해결하려 노력합니다. 때로는 상대방이 부담을 느끼거나 상처를 받을 수 있으니 어조와 타이밍에 유의하는 것이 좋습니다.',
@@ -524,12 +524,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '때로는 상대방이 먼저 말할 기회를 주세요.',
           '너무 일방적으로 몰아붙이지 않도록 주의하세요.',
         ],
-        celebrities: ['이효리', '김구라', '박명수', '서장훈'],
+        // celebrities: ['이효리', '김구라', '박명수', '서장훈'],
       },
     },
     {
       id: 'empathetic-listener',
-      title: '공감적 경청형 (Empathetic Listener)',
+      title: '공감적 경청형',
       description: '당신은 상대방의 감정에 깊이 공감하고 경청하는 것을 중요하게 생각합니다.',
       detailedDescription:
         '연인의 이야기를 주의 깊게 듣고 감정을 이해하려 노력하며, 따뜻한 위로와 지지를 보내줍니다. 갈등 상황에서도 상대방의 마음을 먼저 헤아리려 하며, 조화롭고 부드러운 소통을 선호합니다. 때로는 자신의 의견을 충분히 표현하지 못할 수 있습니다.',
@@ -552,12 +552,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '때로는 단호하게 거절하는 연습도 필요해요.',
           '남의 감정에 너무 휘둘리지 않도록 주의하세요.',
         ],
-        celebrities: ['아이유', '유재석', '박보영', '강다니엘'],
+        // celebrities: ['아이유', '유재석', '박보영', '강다니엘'],
       },
     },
     {
       id: 'logical-solver',
-      title: '논리적 해결형 (Logical Problem Solver)',
+      title: '논리적 해결형',
       description: '당신은 논리적이고 합리적인 방식으로 문제를 해결하려 합니다.',
       detailedDescription:
         '감정적인 접근보다는 문제의 본질을 분석하고 효율적인 해결책을 찾는 데 집중합니다. 대화 시에도 명확한 사실과 근거를 중요하게 생각하며, 불필요한 감정 소모를 싫어합니다. 때로는 상대방이 당신을 차갑거나 공감 능력이 부족하다고 느낄 수 있습니다.',
@@ -576,12 +576,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '모든 문제를 논리적으로만 접근하려 하지 마세요.',
           '때로는 유머나 편안한 분위기를 조성하는 것도 중요해요.',
         ],
-        celebrities: ['RM (BTS)', '김태희', '류준열', '이찬혁'],
+        // celebrities: ['RM (BTS)', '김태희', '류준열', '이찬혁'],
       },
     },
     {
       id: 'harmonious-avoider',
-      title: '조화 지향 회피형 (Harmony-Seeking Avoider)',
+      title: '조화 지향 회피형',
       description: '당신은 관계의 조화를 최우선으로 여기며, 갈등을 회피하려는 경향이 있습니다.',
       detailedDescription:
         '불편한 대화나 갈등 상황을 극도로 싫어하며, 상대방의 기분을 상하게 하지 않으려 노력합니다. 자신의 의견을 솔직하게 표현하기보다 맞춰주거나 침묵하는 경우가 많습니다. 이로 인해 불만이 쌓이거나 상대방이 당신의 진짜 속마음을 알기 어려워할 수 있습니다.',
@@ -600,12 +600,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '갈등을 회피하기보다 건강하게 해결하는 방법을 배우세요.',
           '상대방이 당신의 침묵을 오해할 수 있음을 인지하세요.',
         ],
-        celebrities: ['아이유', '정형돈', '김고은', '백현 (EXO)'],
+        // celebrities: ['아이유', '정형돈', '김고은', '백현 (EXO)'],
       },
     },
     {
       id: 'humorous-mediator',
-      title: '유머러스 중재형 (Humorous Mediator)',
+      title: '유머러스 중재형',
       description: '당신은 유머와 재치로 분위기를 부드럽게 만들고 갈등을 완화시키는 데 능숙합니다.',
       detailedDescription:
         '대화에 재미를 더하고 싶어하며, 갈등 상황에서도 유머를 사용하여 긴장을 풀어주려 합니다. 긍정적인 에너지로 연인과의 관계를 활기차게 만듭니다. 하지만 때로는 진지한 상황에서 가볍게 보이거나, 문제의 본질을 회피한다는 오해를 살 수 있습니다.',
@@ -624,12 +624,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '때로는 상대방의 감정에 깊이 공감하는 연습도 필요해요.',
           '문제의 본질을 회피하지 않고 직시하는 용기를 가지세요.',
         ],
-        celebrities: ['딘딘', '이수근', '양세형', '제시'],
+        // celebrities: ['딘딘', '이수근', '양세형', '제시'],
       },
     },
     {
       id: 'thoughtful-contemplator',
-      title: '신중한 숙고형 (Thoughtful Contemplator)',
+      title: '신중한 숙고형',
       description: '당신은 대화 전 충분히 생각하고 신중하게 표현하는 것을 선호합니다.',
       detailedDescription:
         '말하기 전에 깊이 생각하고, 자신의 의견을 정리하는 데 시간이 필요합니다. 섣부른 판단이나 감정적인 반응을 피하며, 논리적이고 조리 있게 말하려 노력합니다. 이 때문에 대화의 흐름이 느리거나, 상대방이 당신의 속마음을 파악하기 어렵다고 느낄 수 있습니다.',
@@ -648,12 +648,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '너무 많은 생각을 하기보다 즉각적으로 반응하는 연습을 하세요.',
           '상대방이 기다릴 수 있다는 점을 인지하고 조율하세요.',
         ],
-        celebrities: ['진 (BTS)', '성시경', '조승우', '나영석PD'],
+        // celebrities: ['진 (BTS)', '성시경', '조승우', '나영석PD'],
       },
     },
     {
       id: 'active-engager',
-      title: '적극적 참여형 (Active Engager)',
+      title: '적극적 참여형',
       description: '당신은 대화에 적극적으로 참여하고 에너지를 불어넣는 스타일입니다.',
       detailedDescription:
         '대화를 주도하거나 활발하게 반응하며 분위기를 이끌어갑니다. 새로운 주제를 제시하거나 질문을 많이 던져 대화를 풍성하게 만들고 싶어합니다. 때로는 상대방이 대화에 압도당하거나, 당신이 너무 말이 많다고 느낄 수 있습니다.',
@@ -672,12 +672,12 @@ export const communicationStyleTestData: PersonalityTestData = {
           '때로는 듣는 것이 말하는 것보다 중요합니다.',
           '상대방이 지쳐하지 않도록 대화의 강도를 조절하세요.',
         ],
-        celebrities: ['제이홉 (BTS)', '노홍철', '강다니엘', '붐'],
+        // celebrities: ['제이홉 (BTS)', '노홍철', '강다니엘', '붐'],
       },
     },
     {
       id: 'passive-responder',
-      title: '수동적 반응형 (Passive Responder)',
+      title: '수동적 반응형',
       description: '당신은 연애 소통에서 주로 상대방의 주도에 따라 반응하는 편입니다.',
       detailedDescription:
         '자신이 먼저 대화를 시작하거나 의견을 적극적으로 내세우기보다, 상대방이 말하면 반응하고 질문에 답하는 것을 선호합니다. 갈등 상황에서도 먼저 나서기보다 상대방의 반응을 기다립니다. 이 때문에 상대방이 당신의 관심이나 열정을 의심할 수 있습니다.',
@@ -700,7 +700,7 @@ export const communicationStyleTestData: PersonalityTestData = {
           '때로는 먼저 대화를 시작하는 용기를 가지세요.',
           '상대방이 지루해하지 않도록 적절한 반응을 보여주세요.',
         ],
-        celebrities: ['RM (BTS)', '김연아', '지드래곤', '정은채'], // RM has diverse aspects
+        // celebrities: ['RM (BTS)', '김연아', '지드래곤', '정은채'], // RM has diverse aspects
       },
     },
   ],

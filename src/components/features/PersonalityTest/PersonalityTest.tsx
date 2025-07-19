@@ -79,7 +79,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
       } else {
         goToNextQuestion();
       }
-    }, 300);
+    }, 100);
   };
 
   const calculateResult = (scores: Record<string, number>) => {
@@ -93,7 +93,6 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
     const finalResult = testData.results.find(r => r.id === topResultType);
     if (finalResult) {
       const resultWithPercentage: TestResult = {
-        // TestResult 타입으로 명시
         ...finalResult,
         percentage: Math.round((topScore / totalPossibleScore) * 100),
       };
@@ -118,7 +117,6 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
         ...prev,
         currentQuestionIndex: prev.currentQuestionIndex - 1,
       }));
-      // 점수는 변경하지 않음 (이미 답변된 것들은 유지)
     }
   };
 
@@ -144,23 +142,27 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
         <StyledResultDisplay>
           <div className="result-header">
             <div className="emoji">{result.emoji}</div>
-            <Typography variant="h2" align="center" color={result.color}>
+            <Typography variant="h2" align="center" color={result.color} responsive>
               {result.title}
             </Typography>
             <Typography variant="body1" align="center">
               {result.description}
             </Typography>
-            {result.percentage && (
+            {/* {result.percentage && (
               <Typography variant="h4" align="center" color={result.color}>
                 매칭도: {result.percentage}%
               </Typography>
-            )}
+            )} */}
           </div>
 
           <div className="result-content">
             <div className="section">
-              <Typography variant="h5">📝 상세 분석</Typography>
-              <Typography variant="body1">{result.detailedDescription}</Typography>
+              <Typography variant="h5" responsive>
+                📝 상세 분석
+              </Typography>
+              <Typography variant="body1" responsive>
+                {result.detailedDescription}
+              </Typography>
             </div>
 
             <div className="section">
@@ -198,9 +200,40 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             </div>
 
-            {/* 추천사항 섹션 (activities와 tips는 이제 선택적 속성으로 변경되었으므로 조건부 렌더링 필수) */}
-            {(result.recommendations.activities && result.recommendations.activities.length > 0) ||
-            (result.recommendations.tips && result.recommendations.tips.length > 0) ? (
+            {/* 게임 추천 섹션 */}
+            {result.recommendations.games && result.recommendations.games.length > 0 && (
+              <div className="section">
+                <Typography variant="h5">🎮 추천 게임</Typography>
+                <div className="games-grid">
+                  {result.recommendations.games.map((game, index) => (
+                    <a
+                      key={index}
+                      href={game.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="game-card"
+                    >
+                      <div className="game-info">
+                        <div className="game-name">{game.name}</div>
+                        <div className="game-platform">
+                          {game.url.includes('steam')
+                            ? 'Steam'
+                            : game.url.includes('epic')
+                              ? 'Epic Games'
+                              : game.url.includes('nintendo')
+                                ? 'Nintendo'
+                                : '공식 사이트'}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 추천사항 섹션 */}
+            {((result.recommendations.activities && result.recommendations.activities.length > 0) ||
+              (result.recommendations.tips && result.recommendations.tips.length > 0)) && (
               <div className="section">
                 <Typography variant="h5">🎯 추천사항</Typography>
                 <div className="recommendations">
@@ -218,9 +251,9 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                     ))}
                 </div>
               </div>
-            ) : null}
+            )}
 
-            {/* 새로운 추천 필드들을 조건부 렌더링 */}
+            {/* 해시태그 섹션 */}
             {result.recommendations.hashtags && result.recommendations.hashtags.length > 0 && (
               <div className="section">
                 <Typography variant="h5">#️⃣ 추천 해시태그</Typography>
@@ -234,6 +267,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* K-pop 그룹 섹션 */}
             {result.recommendations.kpopGroups && result.recommendations.kpopGroups.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🎵 추천 K-pop 그룹</Typography>
@@ -247,6 +281,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 연예인 섹션 */}
             {result.recommendations.celebrities &&
               result.recommendations.celebrities.length > 0 && (
                 <div className="section">
@@ -261,6 +296,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* OTT 콘텐츠 섹션 */}
             {result.recommendations.ottContent && result.recommendations.ottContent.length > 0 && (
               <div className="section">
                 <Typography variant="h5">📺 추천 콘텐츠</Typography>
@@ -274,6 +310,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 영화 추천 섹션 */}
             {result.recommendations.movies && result.recommendations.movies.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🎬 추천 영화</Typography>
@@ -287,6 +324,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 여행지 추천 섹션 */}
             {result.recommendations.destinations &&
               result.recommendations.destinations.length > 0 && (
                 <div className="section">
@@ -301,6 +339,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 게임 장르 섹션 */}
             {result.recommendations.gameGenres && result.recommendations.gameGenres.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🎮 추천 게임 장르</Typography>
@@ -314,6 +353,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 소통 팁 섹션 */}
             {result.recommendations.communicationTips &&
               result.recommendations.communicationTips.length > 0 && (
                 <div className="section">
@@ -328,6 +368,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 갈등 해결 전략 섹션 */}
             {result.recommendations.conflictStrategies &&
               result.recommendations.conflictStrategies.length > 0 && (
                 <div className="section">
@@ -342,6 +383,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 데이팅 팁 섹션 */}
             {result.recommendations.datingTips && result.recommendations.datingTips.length > 0 && (
               <div className="section">
                 <Typography variant="h5">❤️‍🔥 데이팅 팁</Typography>
@@ -355,6 +397,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 의사결정 팁 섹션 */}
             {result.recommendations.decisionMakingTips &&
               result.recommendations.decisionMakingTips.length > 0 && (
                 <div className="section">
@@ -369,6 +412,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 관계 발전 팁 섹션 */}
             {result.recommendations.relationshipTips &&
               result.recommendations.relationshipTips.length > 0 && (
                 <div className="section">
@@ -383,6 +427,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 선물 아이디어 섹션 */}
             {result.recommendations.giftIdeas && result.recommendations.giftIdeas.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🎁 추천 선물 아이디어</Typography>
@@ -396,6 +441,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 번아웃 극복 팁 섹션 */}
             {result.recommendations.burnoutTips &&
               result.recommendations.burnoutTips.length > 0 && (
                 <div className="section">
@@ -410,6 +456,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 소비 팁 섹션 */}
             {result.recommendations.spendingTips &&
               result.recommendations.spendingTips.length > 0 && (
                 <div className="section">
@@ -424,6 +471,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* 갓생 팁 섹션 */}
             {result.recommendations.godsaengTips &&
               result.recommendations.godsaengTips.length > 0 && (
                 <div className="section">
@@ -438,6 +486,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 </div>
               )}
 
+            {/* MBTI 활용 팁 섹션 */}
             {result.recommendations.mbtiTips && result.recommendations.mbtiTips.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🧐 MBTI 활용 팁</Typography>
@@ -451,6 +500,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               </div>
             )}
 
+            {/* 여행 팁 섹션 */}
             {result.recommendations.travelTips && result.recommendations.travelTips.length > 0 && (
               <div className="section">
                 <Typography variant="h5">🗺️ 여행 꿀팁</Typography>
