@@ -271,7 +271,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 <div className="tags-grid">
                   {result.recommendations.hashtags.map((tag, index) => (
                     <span key={index} className="tag">
-                      #{tag}
+                      {tag}
                     </span>
                   ))}
                 </div>
