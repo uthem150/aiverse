@@ -42,6 +42,7 @@ import MoviePreferenceTestPage from '@/pages/tests/PersonalityTest/MoviePreferen
 import SteamGamePreferenceTestPage from '@/pages/tests/PersonalityTest/SteamGamePreferenceTest/SteamGamePreferenceTestPage'; // 추가
 
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import TetoEgneBasicTestPage from '@/pages/tests/TetoEgenTest/TetoEgneBasicTest/TetoEgneTestBasicPage';
 
 export const router = createBrowserRouter([
   {
@@ -101,66 +102,72 @@ export const router = createBrowserRouter([
         element: <MbtiCompatibilityTestPage />,
       },
       {
-        path: 'test/breakup-coping-test', // 추가
+        path: 'test/breakup-coping-test',
         element: <BreakupCopingTestPage />,
       },
       {
-        path: 'test/communication-style-test', // 추가
+        path: 'test/communication-style-test',
         element: <CommunicationStyleTestPage />,
       },
       {
-        path: 'test/conflict-coping-test', // 추가
+        path: 'test/conflict-coping-test',
         element: <ConflictCopingTestPage />,
       },
       {
-        path: 'test/conflict-resolution-style-test', // 추가
+        path: 'test/conflict-resolution-style-test',
         element: <ConflictResolutionStyleTestPage />,
       },
       {
-        path: 'test/dating-method-test', // 추가
+        path: 'test/dating-method-test',
         element: <DatingMethodTestPage />,
       },
       {
-        path: 'test/dating-style-test', // 추가
+        path: 'test/dating-style-test',
         element: <DatingStyleTestPage />,
       },
       {
-        path: 'test/decision-making-style-test', // 추가
+        path: 'test/decision-making-style-test',
         element: <DecisionMakingStyleTestPage />,
       },
       {
-        path: 'test/early-relationship-behavior-test', // 추가
+        path: 'test/early-relationship-behavior-test',
         element: <EarlyRelationshipBehaviorTestPage />,
       },
       {
-        path: 'test/gift-giving-style-test', // 추가
+        path: 'test/gift-giving-style-test',
         element: <GiftGivingStyleTestPage />,
       },
 
       // MZ 라이프스타일 테스트들
       {
-        path: 'test/burnout-level-test', // 추가
+        path: 'test/burnout-level-test',
         element: <BurnoutLevelTestPage />,
       },
       {
-        path: 'test/spending-type-test', // 추가
+        path: 'test/spending-type-test',
         element: <SpendingTypeTestPage />,
       },
       {
-        path: 'test/godsaeng-type-test', // 추가
+        path: 'test/godsaeng-type-test',
         element: <GodsaengTypeTestPage />,
       },
       {
-        path: 'test/mbti-overimmersion-test', // 추가
+        path: 'test/mbti-overimmersion-test',
         element: <MbtiOverimmersionTestPage />,
       },
       {
-        path: 'test/spending-style-test', // 추가
+        path: 'test/spending-style-test',
         element: <SpendingStyleTestPage />,
       },
       {
-        path: 'test/travel-style-test', // 추가
+        path: 'test/travel-style-test',
         element: <TravelStyleTestPage />,
+      },
+
+      // 테토/에겐 테스트
+      {
+        path: 'test/teto-egne-basic-test',
+        element: <TetoEgneBasicTestPage />,
       },
 
       // 엔터테인먼트 테스트들
@@ -173,19 +180,19 @@ export const router = createBrowserRouter([
         element: <OttPreferenceTestPage />,
       },
       {
-        path: 'test/deokjil-type-test', // 추가
+        path: 'test/deokjil-type-test',
         element: <DeokjilTypeTestPage />,
       },
       {
-        path: 'test/game-type-test', // 추가
+        path: 'test/game-type-test',
         element: <GameTypeTestPage />,
       },
       {
-        path: 'test/movie-preference-test', // 추가
+        path: 'test/movie-preference-test',
         element: <MoviePreferenceTestPage />,
       },
       {
-        path: 'test/steam-game-preference-test', // 추가
+        path: 'test/steam-game-preference-test',
         element: <SteamGamePreferenceTestPage />,
       },
       {

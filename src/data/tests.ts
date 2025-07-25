@@ -93,7 +93,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 156000,
       },
       {
-        id: 'breakup-coping-test', // 추가
+        id: 'breakup-coping-test',
         title: '나의 이별 대처법 테스트',
         description: '이별 후 당신은 어떤 모습인가요? 나의 이별 극복 유형은?',
         thumbnail: '/images/breakup-coping-test.jpg',
@@ -104,7 +104,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 22000,
       },
       {
-        id: 'communication-style-test', // 추가
+        id: 'communication-style-test',
         title: '나의 대화 스타일 테스트',
         description: '친구, 연인, 직장 동료! 당신의 소통 방식은?',
         thumbnail: '/images/communication-style-test.jpg',
@@ -114,7 +114,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 35000,
       },
       {
-        id: 'conflict-coping-test', // 추가
+        id: 'conflict-coping-test',
         title: '나의 갈등 대처 유형 테스트',
         description: '갈등 상황에서 당신은 어떻게 반응하나요? 나의 갈등 해결 유형은?',
         thumbnail: '/images/conflict-coping-test.jpg',
@@ -124,7 +124,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 28000,
       },
       {
-        id: 'conflict-resolution-style-test', // 추가
+        id: 'conflict-resolution-style-test',
         title: '나의 연애 갈등 해결 스타일 테스트',
         description: '연인과의 싸움, 당신은 어떻게 풀어나가나요?',
         thumbnail: '/images/conflict-resolution-style-test.jpg',
@@ -134,7 +134,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 20000,
       },
       {
-        id: 'dating-method-test', // 추가
+        id: 'dating-method-test',
         title: '나의 데이팅 앱 사용 유형 테스트',
         description: '데이팅 앱에서 당신은 어떤 스타일로 상대를 탐색하나요?',
         thumbnail: '/images/dating-method-test.jpg',
@@ -144,7 +144,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 15000,
       },
       {
-        id: 'dating-style-test', // 추가
+        id: 'dating-style-test',
         title: '나의 데이팅 스타일 테스트',
         description: '썸부터 연애까지, 당신의 데이팅 방식은?',
         thumbnail: '/images/dating-style-test.jpg',
@@ -154,7 +154,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 30000,
       },
       {
-        id: 'decision-making-style-test', // 추가
+        id: 'decision-making-style-test',
         title: '나의 의사결정 스타일 테스트',
         description: '중요한 선택의 순간, 당신은 어떻게 결정하나요?',
         thumbnail: '/images/decision-making-style-test.jpg',
@@ -164,7 +164,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 25000,
       },
       {
-        id: 'early-relationship-behavior-test', // 추가
+        id: 'early-relationship-behavior-test',
         title: '초반 연애 행동 유형 테스트',
         description: '연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형은?',
         thumbnail: '/images/early-relationship-behavior-test.jpg',
@@ -174,7 +174,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 18000,
       },
       {
-        id: 'gift-giving-style-test', // 추가
+        id: 'gift-giving-style-test',
         title: '나의 선물 증정 스타일 테스트',
         description: '선물을 고르고 주는 방식에서 드러나는 당신의 성향은?',
         thumbnail: '/images/gift-giving-style-test.jpg',
@@ -182,6 +182,27 @@ export const testCategories: TestCategory[] = [
         difficulty: 'medium',
         estimatedTime: 5,
         participantCount: 12000,
+      },
+    ],
+  },
+  {
+    id: 'teto-egne-tests',
+    name: '테토에겐 테스트',
+    description: '호르몬 성향으로 분석하는 다양한 라이프스타일 테스트',
+    icon: '🧬',
+    color: '#FF6B35',
+    tests: [
+      {
+        id: 'teto-egne-basic-test',
+        title: '기본 테토에겐 호르몬 테스트',
+        description: '6개 영역별 테스토스테론과 에스트로겐 성향 종합 분석',
+        thumbnail: '/images/teto-egne-basic.jpg',
+        category: 'teto-egne-tests',
+        difficulty: 'medium',
+        estimatedTime: 7,
+        isNew: true,
+        isHot: true,
+        participantCount: 89000,
       },
     ],
   },
@@ -227,7 +248,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 150000,
       },
       {
-        id: 'mbti-overimmersion-test', // 추가
+        id: 'mbti-overimmersion-test',
         title: 'MBTI 과몰입 테스트',
         description: 'MBTI에 얼마나 진심이세요? 당신의 MBTI 과몰입 정도는?',
         thumbnail: '/images/mbti-overimmersion-test.jpg',
@@ -238,7 +259,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 90000,
       },
       {
-        id: 'spending-style-test', // 추가
+        id: 'spending-style-test',
         title: '나의 소비 심리 테스트',
         description: '지갑을 열게 만드는 당신의 소비 심리 분석!',
         thumbnail: '/images/spending-style-test.jpg',
@@ -248,7 +269,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 75000,
       },
       {
-        id: 'travel-style-test', // 추가
+        id: 'travel-style-test',
         title: '나의 여행 스타일 테스트',
         description: '계획형? 즉흥형? 당신의 여행 스타일은?',
         thumbnail: '/images/travel-style-test.jpg',
