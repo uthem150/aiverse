@@ -44,6 +44,29 @@ const TestCard = ({ test, onClick }: TestCardProps) => {
     setImageLoading(false);
   };
 
+  const getBadgeByPriority = () => {
+    // HOT이 더 중요하므로 우선 표시
+    if (test.isHot) {
+      return (
+        <StyledTestBadge type="hot">
+          <Star size={12} />
+          {test.isNew ? 'HOT & NEW' : 'HOT'}
+        </StyledTestBadge>
+      );
+    }
+
+    if (test.isNew) {
+      return (
+        <StyledTestBadge type="new">
+          <Zap size={12} />
+          NEW
+        </StyledTestBadge>
+      );
+    }
+
+    return null;
+  };
+
   // 썸네일이 없거나 이미지 로드 실패시 기본 썸네일 사용
   const shouldShowDefaultThumbnail = !test.thumbnail || imageError;
 
@@ -82,18 +105,7 @@ const TestCard = ({ test, onClick }: TestCardProps) => {
           </div>
         )}
 
-        {test.isNew && (
-          <StyledTestBadge type="new">
-            <Zap size={12} />
-            NEW
-          </StyledTestBadge>
-        )}
-        {test.isHot && (
-          <StyledTestBadge type="hot">
-            <Star size={12} />
-            HOT
-          </StyledTestBadge>
-        )}
+        {getBadgeByPriority()}
       </StyledTestImage>
 
       <StyledTestInfo>
