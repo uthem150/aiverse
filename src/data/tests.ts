@@ -194,7 +194,7 @@ export const testCategories: TestCategory[] = [
     tests: [
       {
         id: 'teto-egne-basic-test',
-        title: '기본 테토에겐 호르몬 테스트',
+        title: '🧬 테토에겐 호르몬 테스트',
         description: '6개 영역별 테스토스테론과 에스트로겐 성향 종합 분석',
         thumbnail: '/images/teto-egne-basic.jpg',
         category: 'teto-egne-tests',
@@ -203,6 +203,19 @@ export const testCategories: TestCategory[] = [
         isNew: true,
         isHot: true,
         participantCount: 89000,
+      },
+      {
+        id: 'teto-egne-mz-test',
+        title: '🔍 MZ력 테스트: 당신의 테토에겐 지수는?',
+        description:
+          '디지털 라이프와 가치관을 통해 알아보는 당신의 테스토스테론 & 에스트로겐 성향 분석.',
+        thumbnail: '/images/teto-egne-mz.jpg',
+        category: 'teto-egne-tests',
+        difficulty: 'easy',
+        estimatedTime: 5,
+        isNew: true,
+        isHot: false,
+        participantCount: 1200,
       },
     ],
   },
@@ -350,7 +363,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 1000000,
       },
       {
-        id: 'game-type-test', // 추가
+        id: 'game-type-test',
         title: '나의 게임 유형 테스트',
         description: '콘솔? 모바일? 당신은 어떤 게임 스타일?',
         thumbnail: '/images/game-type-test.jpg',
@@ -360,7 +373,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 40000,
       },
       {
-        id: 'movie-preference-test', // 추가
+        id: 'movie-preference-test',
         title: '나의 영화 취향 테스트',
         description: '액션? 로맨스? 당신의 숨겨진 영화 취향은?',
         thumbnail: '/images/movie-preference-test.jpg',
@@ -370,7 +383,7 @@ export const testCategories: TestCategory[] = [
         participantCount: 55000,
       },
       {
-        id: 'steam-game-preference-test', // 추가
+        id: 'steam-game-preference-test',
         title: '스팀 게임 취향 테스트',
         description: '스팀 게임 취향으로 알아보는 나의 성향은?',
         thumbnail: '/images/steam-game-preference-test.jpg',
