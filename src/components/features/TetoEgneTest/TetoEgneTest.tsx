@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, RotateCcw, Zap } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Zap } from 'lucide-react';
 import {
   StyledTetoEgneTest,
   StyledGenderSelector,
