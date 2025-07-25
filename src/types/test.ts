@@ -11,7 +11,7 @@ export interface TestItem {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
+  thumbnail?: string; // 없으면 기본 썸네일로 처리하기 위해 optional
   category: string;
   difficulty: 'easy' | 'medium' | 'hard';
   estimatedTime: number; // minutes

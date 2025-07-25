@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Clock, Users, Star, Zap } from 'lucide-react';
 import {
   StyledTestCard,
@@ -8,6 +9,8 @@ import {
   StyledTestStats,
 } from './TestCard.style';
 import Typography from '@/components/common/Typography/Typography';
+import DefaultThumbnail from '@/components/common/DefaultThumbnail/DefaultThumbnail';
+import { testCategories } from '@/data/tests';
 import type { TestItem } from '@/types/test';
 
 interface TestCardProps {
@@ -16,6 +19,9 @@ interface TestCardProps {
 }
 
 const TestCard = ({ test, onClick }: TestCardProps) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
   const formatParticipantCount = (count: number) => {
     if (count >= 1000000) {
       return `${Math.floor(count / 100000) / 10}M`;
@@ -26,10 +32,56 @@ const TestCard = ({ test, onClick }: TestCardProps) => {
     return count.toString();
   };
 
+  // 테스트가 속한 카테고리 정보 찾기
+  const category = testCategories.find(cat => cat.id === test.category);
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  // 썸네일이 없거나 이미지 로드 실패시 기본 썸네일 사용
+  const shouldShowDefaultThumbnail = !test.thumbnail || imageError;
+
   return (
     <StyledTestCard onClick={onClick}>
       <StyledTestImage>
-        <img src={test.thumbnail} alt={test.title} />
+        {shouldShowDefaultThumbnail ? (
+          <DefaultThumbnail test={test} category={category} />
+        ) : (
+          <img
+            src={test.thumbnail}
+            alt={test.title}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{
+              display: imageLoading ? 'none' : 'block',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+
+        {/* 이미지 로딩 중일 때 기본 썸네일 표시 */}
+        {imageLoading && test.thumbnail && !imageError && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <DefaultThumbnail test={test} category={category} />
+          </div>
+        )}
+
         {test.isNew && (
           <StyledTestBadge type="new">
             <Zap size={12} />
