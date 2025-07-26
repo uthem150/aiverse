@@ -46,6 +46,8 @@ import TetoEgneBasicTestPage from '@/pages/tests/TetoEgenTest/TetoEgneBasicTest/
 import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEgneMzTestPage';
 
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import DomesticTravelStyleTestPage from '@/pages/tests/PersonalityTest/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
+import OverseasTravelStyleTestPage from '@/pages/tests/PersonalityTest/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
 
 export const router = createBrowserRouter([
   {
@@ -162,9 +164,19 @@ export const router = createBrowserRouter([
         path: 'test/spending-style-test',
         element: <SpendingStyleTestPage />,
       },
+
+      // 여행지 추천 테스트
       {
         path: 'test/travel-style-test',
         element: <TravelStyleTestPage />,
+      },
+      {
+        path: 'test/overseas-travel-style-test',
+        element: <OverseasTravelStyleTestPage />,
+      },
+      {
+        path: 'test/domestic-travel-style-test',
+        element: <DomesticTravelStyleTestPage />,
       },
 
       // 테토/에겐 테스트
