@@ -15,6 +15,10 @@ export const overseasTravelStyleTestData: PersonalityTestData = {
     'serene-nature-seeker', // 평온한 자연 신봉자형
     'gourmet-connoisseur', // 미식 감정가형
     'activity-master', // 액티비티 마스터형
+    'social-butterfly', // 사교적인 여행가형
+    'budget-traveler', // 가성비 탐험가형
+    'spiritual-seeker', // 영적 탐구자형
+    'family-oriented', // 가족 중심형
   ],
   questions: [
     {
@@ -162,8 +166,342 @@ export const overseasTravelStyleTestData: PersonalityTestData = {
         {
           id: 'q5_d',
           text: '액티비티 활동 모습을 담은 영상이나 전문 장비.',
-          emoji: ' GoPro',
+          emoji: '📹',
           scores: { 'activity-master': 3, 'exotic-adventurer': 1 },
+        },
+      ],
+    },
+    {
+      id: 'q6',
+      question: '여행 숙소는 어떤 스타일이 좋은가요?',
+      options: [
+        {
+          id: 'q6_a',
+          text: '지역 문화와 현지인의 삶을 엿볼 수 있는 게스트하우스나 에어비앤비.',
+          emoji: '🏡',
+          scores: { 'exotic-adventurer': 2, 'budget-traveler': 3, 'social-butterfly': 2 },
+        },
+        {
+          id: 'q6_b',
+          text: '오션뷰, 인피니티 풀 등 최고급 시설을 갖춘 럭셔리 호텔/리조트.',
+          emoji: '🏨',
+          scores: { 'luxury-trendsetter': 3, 'serene-nature-seeker': 1 },
+        },
+        {
+          id: 'q6_c',
+          text: '도심에 위치하여 접근성이 좋고 트렌디한 부티크 호텔.',
+          emoji: '🏢',
+          scores: { 'urban-explorer': 3, 'romantic-artist': 1 },
+        },
+        {
+          id: 'q6_d',
+          text: '자연 속에 위치한 친환경 리조트나 글램핑 시설.',
+          emoji: '🏕️',
+          scores: { 'serene-nature-seeker': 3, 'activity-master': 1 },
+        },
+      ],
+    },
+    {
+      id: 'q7',
+      question: '여행 계획을 세울 때 당신의 주된 방식은?',
+      options: [
+        {
+          id: 'q7_a',
+          text: '철저하게 모든 일정을 미리 짜고 동선을 최적화한다.',
+          emoji: '🗓️',
+          scores: { 'historical-intellectual': 2, 'luxury-trendsetter': 1, 'family-oriented': 2 },
+        },
+        {
+          id: 'q7_b',
+          text: '큰 틀만 잡아두고 현지에서 즉흥적으로 결정하는 편이다.',
+          emoji: '😁',
+          scores: { 'exotic-adventurer': 3, 'activity-master': 2, 'budget-traveler': 1 },
+        },
+        {
+          id: 'q7_c',
+          text: '맛집과 카페, 쇼핑 리스트 위주로 계획을 세운다.',
+          emoji: '📝',
+          scores: { 'gourmet-connoisseur': 3, 'urban-explorer': 2 },
+        },
+        {
+          id: 'q7_d',
+          text: '동행자와 충분히 상의하여 모두가 만족할 만한 계획을 세운다.',
+          emoji: '🤝',
+          scores: { 'social-butterfly': 3, 'family-oriented': 3 },
+        },
+      ],
+    },
+    {
+      id: 'q8',
+      question: '여행 동반자와의 관계는?',
+      options: [
+        {
+          id: 'q8_a',
+          text: '사랑하는 연인 또는 배우자와의 로맨틱한 여행.',
+          emoji: '❤️',
+          scores: { 'romantic-artist': 3, 'luxury-trendsetter': 1 },
+        },
+        {
+          id: 'q8_b',
+          text: '가족들과 함께하는 편안하고 즐거운 여행.',
+          emoji: '👨‍👩‍👧‍👦',
+          scores: { 'family-oriented': 3, 'serene-nature-seeker': 2 },
+        },
+        {
+          id: 'q8_c',
+          text: '새로운 사람들과의 만남을 기대하며 떠나는 여행.',
+          emoji: '🧑‍🤝‍🧑',
+          scores: { 'social-butterfly': 3, 'exotic-adventurer': 1, 'budget-traveler': 1 },
+        },
+        {
+          id: 'q8_d',
+          text: '혼자 떠나 온전히 자신에게 집중하는 여행.',
+          emoji: '🚶‍♀️',
+          scores: {
+            'spiritual-seeker': 3,
+            'historical-intellectual': 1,
+            'serene-nature-seeker': 1,
+          },
+        },
+      ],
+    },
+    {
+      id: 'q9',
+      question: '여행 중 예상치 못한 상황이 발생했을 때 당신의 대처는?',
+      options: [
+        {
+          id: 'q9_a',
+          text: '침착하게 상황을 분석하고 해결책을 찾아 나선다.',
+          emoji: '💡',
+          scores: { 'historical-intellectual': 2, 'luxury-trendsetter': 1 },
+        },
+        {
+          id: 'q9_b',
+          text: '오히려 재미있는 경험이라 생각하고 유연하게 대처한다.',
+          emoji: '😄',
+          scores: { 'exotic-adventurer': 3, 'activity-master': 2, 'budget-traveler': 2 },
+        },
+        {
+          id: 'q9_c',
+          text: '여행사에 연락하거나 동행자에게 도움을 요청한다.',
+          emoji: '📞',
+          scores: { 'family-oriented': 2, 'social-butterfly': 1 },
+        },
+        {
+          id: 'q9_d',
+          text: '잠시 쉬어가며 마음을 다스리고 평정심을 찾는다.',
+          emoji: '🧘‍♀️',
+          scores: { 'serene-nature-seeker': 3, 'spiritual-seeker': 2 },
+        },
+      ],
+    },
+    {
+      id: 'q10',
+      question: '여행 예산은 어느 정도가 적당하다고 생각하나요?',
+      options: [
+        {
+          id: 'q10_a',
+          text: '최고의 경험을 위해 아낌없이 투자하는 편이다.',
+          emoji: '💰',
+          scores: { 'luxury-trendsetter': 3, 'gourmet-connoisseur': 2 },
+        },
+        {
+          id: 'q10_b',
+          text: '가성비를 중요하게 생각하며 합리적인 선에서 지출한다.',
+          emoji: '💵',
+          scores: { 'budget-traveler': 3, 'urban-explorer': 1 },
+        },
+        {
+          id: 'q10_c',
+          text: '경험이 더 중요하므로 예산보다는 만족도에 초점을 맞춘다.',
+          emoji: '✨',
+          scores: { 'romantic-artist': 2, 'exotic-adventurer': 1, 'activity-master': 1 },
+        },
+        {
+          id: 'q10_d',
+          text: '필요한 만큼만 쓰고 아껴서 다음 여행을 기약한다.',
+          emoji: '🏦',
+          scores: { 'budget-traveler': 2, 'historical-intellectual': 1 },
+        },
+      ],
+    },
+    {
+      id: 'q11',
+      question: '여행 중 가장 하고 싶은 활동은 무엇인가요?',
+      options: [
+        {
+          id: 'q11_a',
+          text: '현지 시장에서 흥정하고 물건을 구매하는 재미.',
+          emoji: '🛍️',
+          scores: { 'budget-traveler': 2, 'urban-explorer': 2, 'exotic-adventurer': 1 },
+        },
+        {
+          id: 'q11_b',
+          text: '유명 랜드마크 앞에서 기념사진을 찍는 것.',
+          emoji: '📸',
+          scores: { 'luxury-trendsetter': 1, 'urban-explorer': 1, 'social-butterfly': 1 },
+        },
+        {
+          id: 'q11_c',
+          text: '현지인들과 소통하며 문화를 배우는 것.',
+          emoji: '🗣️',
+          scores: { 'social-butterfly': 3, 'exotic-adventurer': 2, 'spiritual-seeker': 1 },
+        },
+        {
+          id: 'q11_d',
+          text: '명상이나 요가 등 내면의 평화를 찾는 활동.',
+          emoji: '🧘',
+          scores: { 'spiritual-seeker': 3, 'serene-nature-seeker': 2 },
+        },
+      ],
+    },
+    {
+      id: 'q12',
+      question: '해외 여행 후 가장 남는 것은 무엇이라고 생각하나요?',
+      options: [
+        {
+          id: 'q12_a',
+          text: '인생에 큰 영감을 준 깨달음과 성장.',
+          emoji: '✨',
+          scores: { 'spiritual-seeker': 3, 'historical-intellectual': 2, 'romantic-artist': 1 },
+        },
+        {
+          id: 'q12_b',
+          text: '오랫동안 기억될 추억이 담긴 사진과 영상.',
+          emoji: '🖼️',
+          scores: { 'social-butterfly': 2, 'family-oriented': 2, 'luxury-trendsetter': 1 },
+        },
+        {
+          id: 'q12_c',
+          text: '다음에 또 가고 싶게 만드는 특별한 경험.',
+          emoji: '🤩',
+          scores: { 'activity-master': 2, 'exotic-adventurer': 2, 'gourmet-connoisseur': 1 },
+        },
+        {
+          id: 'q12_d',
+          text: '새로운 사람들과 쌓은 소중한 인연.',
+          emoji: '🤝',
+          scores: { 'social-butterfly': 3, 'budget-traveler': 1 },
+        },
+      ],
+    },
+    {
+      id: 'q13',
+      question: '여행 중 불편함은 어느 정도 감수할 수 있나요?',
+      options: [
+        {
+          id: 'q13_a',
+          text: '어떤 불편함이든 기꺼이 감수하며 새로운 경험을 한다.',
+          emoji: '🧘',
+          scores: { 'exotic-adventurer': 3, 'budget-traveler': 3, 'activity-master': 2 },
+        },
+        {
+          id: 'q13_b',
+          text: '최소한의 편의는 중요하며, 너무 불편하면 힘들다.',
+          emoji: '😌',
+          scores: { 'urban-explorer': 2, 'romantic-artist': 1 },
+        },
+        {
+          id: 'q13_c',
+          text: '절대 불편해서는 안 된다. 모든 것이 완벽해야 한다.',
+          emoji: '🙅‍♀️',
+          scores: { 'luxury-trendsetter': 3, 'gourmet-connoisseur': 2 },
+        },
+        {
+          id: 'q13_d',
+          text: '가족이나 동반자가 불편하지 않다면 괜찮다.',
+          emoji: '🫠',
+          scores: { 'family-oriented': 3, 'social-butterfly': 2 },
+        },
+      ],
+    },
+    {
+      id: 'q14',
+      question: '여행지를 선택할 때 가장 중요하게 고려하는 요소는?',
+      options: [
+        {
+          id: 'q14_a',
+          text: '현지 문화와 역사를 깊이 있게 탐구할 수 있는 곳.',
+          emoji: '📜',
+          scores: { 'historical-intellectual': 3, 'spiritual-seeker': 1 },
+        },
+        {
+          id: 'q14_b',
+          text: '아름다운 자연경관 속에서 힐링할 수 있는 곳.',
+          emoji: '🏞️',
+          scores: { 'serene-nature-seeker': 3, 'romantic-artist': 2 },
+        },
+        {
+          id: 'q14_c',
+          text: '다양한 액티비티와 즐길 거리가 풍부한 곳.',
+          emoji: '🎉',
+          scores: { 'activity-master': 3, 'exotic-adventurer': 2 },
+        },
+        {
+          id: 'q14_d',
+          text: '유명하거나 SNS에서 핫한 트렌디한 도시.',
+          emoji: '😎',
+          scores: { 'urban-explorer': 3, 'luxury-trendsetter': 2 },
+        },
+      ],
+    },
+    {
+      id: 'q15',
+      question: '여행 전 준비물 체크리스트는 어떻게 관리하나요?',
+      options: [
+        {
+          id: 'q15_a',
+          text: '꼼꼼하게 리스트를 만들어 빠짐없이 준비한다.',
+          emoji: '✔️',
+          scores: { 'historical-intellectual': 1, 'family-oriented': 2, 'luxury-trendsetter': 1 },
+        },
+        {
+          id: 'q15_b',
+          text: '필요한 것만 대충 챙기고 현지에서 구매한다.',
+          emoji: '🤷‍♀️',
+          scores: { 'budget-traveler': 2, 'exotic-adventurer': 1 },
+        },
+        {
+          id: 'q15_c',
+          text: '패션 아이템과 사진을 위한 소품 위주로 챙긴다.',
+          emoji: '👗',
+          scores: { 'romantic-artist': 2, 'urban-explorer': 1, 'luxury-trendsetter': 1 },
+        },
+        {
+          id: 'q15_d',
+          text: '간단한 개인 물품 외에는 현지에서 조달하는 것을 선호한다.',
+          emoji: '🛍️',
+          scores: { 'activity-master': 1, 'spiritual-seeker': 1 },
+        },
+      ],
+    },
+    {
+      id: 'q16',
+      question: '여행 중 가장 중요하게 생각하는 소통 방식은?',
+      options: [
+        {
+          id: 'q16_a',
+          text: '현지 언어를 배워 직접 대화하는 것을 즐긴다.',
+          emoji: '🗣️',
+          scores: { 'social-butterfly': 3, 'exotic-adventurer': 2 },
+        },
+        {
+          id: 'q16_b',
+          text: '번역기나 바디랭귀지를 활용하여 소통한다.',
+          emoji: '😝',
+          scores: { 'budget-traveler': 1, 'activity-master': 1 },
+        },
+        {
+          id: 'q16_c',
+          text: '필요할 때만 최소한의 소통을 한다.',
+          emoji: '😂',
+          scores: { 'serene-nature-seeker': 2, 'spiritual-seeker': 2 },
+        },
+        {
+          id: 'q16_d',
+          text: '주로 동반자와 대화하며 정보를 공유한다.',
+          emoji: '😌',
+          scores: { 'family-oriented': 3, 'social-butterfly': 2 },
         },
       ],
     },
@@ -382,6 +720,115 @@ export const overseasTravelStyleTestData: PersonalityTestData = {
           '액티비티 예약은 날씨의 영향을 많이 받으니 여러 대안을 준비해두세요.',
           '안전이 최우선! 반드시 검증된 업체를 이용하고 안전 수칙을 준수하세요.',
           '여행자 보험 가입 시, 즐길 액티비티가 보장 항목에 포함되는지 확인하세요.',
+        ],
+      },
+    },
+    {
+      id: 'social-butterfly',
+      title: '🧑‍🤝‍🧑 사교적인 여행가형',
+      description: '새로운 사람들과 어울리며 즐거운 추억을 만드는 당신!',
+      detailedDescription:
+        '여행은 새로운 인연을 만들고 다양한 문화를 경험하는 기회라고 생각합니다. 현지인과의 교류, 게스트하우스에서의 만남, 동호회 활동 등을 통해 사람들과 어울리며 즐거움을 찾습니다. 당신의 여행은 언제나 웃음꽃이 피어납니다.',
+      emoji: '🧑‍🤝‍🧑',
+      color: '#4682B4', // Steel Blue
+      traits: ['사교적', '친화력', '개방적', '적극적', '즐거움 추구'],
+      compatibility: {
+        best: ['🏞️ 이국적인 모험가형', '💰 가성비 탐험가형'],
+        avoid: ['🧘 영적 탐구자형'],
+      },
+      recommendations: {
+        destinations: [
+          '스페인 바르셀로나 (타파스 투어, 밤문화)',
+          '태국 치앙마이 (쿠킹 클래스, 나이트 바자)',
+          '아일랜드 더블린 (펍 투어, 현지 페스티벌)',
+          '남미 배낭여행 코스 (다양한 국적의 여행자들과 교류)',
+        ],
+        travelTips: [
+          '언어 교환 앱이나 현지 소셜 모임에 참여해 보세요.',
+          '게스트하우스나 호스텔에 머물며 다른 여행자들과 교류 기회를 만드세요.',
+          '현지 시장이나 축제에 참여하여 활기찬 분위기를 느껴보세요.',
+        ],
+      },
+    },
+    {
+      id: 'budget-traveler',
+      title: '💰 가성비 탐험가형',
+      description: '합리적인 예산으로 최고의 경험을 추구하는 스마트한 당신!',
+      detailedDescription:
+        '적은 비용으로도 알찬 여행을 즐기는 데 탁월한 능력을 가졌습니다. 저가 항공권, 가성비 좋은 숙소, 현지 대중교통 이용 등 스마트한 소비를 통해 여행의 만족도를 높입니다. 당신의 여행은 실속과 재미를 동시에 잡는 현명한 선택입니다.',
+      emoji: '💰',
+      color: '#808000', // Olive
+      traits: ['합리적', '실속형', '정보력', '자립적', '계획적'],
+      compatibility: {
+        best: ['🧑‍🤝‍🧑 사교적인 여행가형', '🏞️ 이국적인 모험가형'],
+        avoid: ['🥂 럭셔리 트렌드세터형'],
+      },
+      recommendations: {
+        destinations: [
+          '베트남 다낭/호이안 (저렴한 물가, 풍부한 볼거리)',
+          '태국 방콕 (다양한 길거리 음식, 저렴한 쇼핑)',
+          '동유럽 주요 도시 (물가가 저렴하고 문화유산 풍부)',
+          '대만 타이베이 (야시장, 대중교통 발달)',
+        ],
+        travelTips: [
+          '항공권은 미리 예약하고, 특가 프로모션을 활용하세요.',
+          '현지 대중교통 앱을 활용하여 교통비를 절약하세요.',
+          '무료 입장 가능한 박물관이나 공원 위주로 일정을 계획해 보세요.',
+          '현지 시장에서 식재료를 구매하여 직접 요리해 보는 것도 좋습니다.',
+        ],
+      },
+    },
+    {
+      id: 'spiritual-seeker',
+      title: '🧘 영적 탐구자형',
+      description: '고요함 속에서 자신을 돌아보고 내면의 성장을 추구하는 당신!',
+      detailedDescription:
+        '여행을 통해 내면의 평화와 영적인 깨달음을 얻고자 합니다. 명상, 요가, 사찰 방문, 자연 속에서의 사색 등 심신을 정화하고 자신을 성찰하는 시간을 중요하게 생각합니다. 당신의 여행은 진정한 힐링이자 성장의 시간입니다.',
+      emoji: '🧘',
+      color: '#8A2BE2', // Blue Violet
+      traits: ['내성적', '사색적', '평온함 추구', '정신적 성장', '명상적'],
+      compatibility: {
+        best: ['🌲 평온한 자연 신봉자형', '🏛️ 역사 지식 탐험가형'],
+        avoid: ['🧑‍🤝‍🧑 사교적인 여행가형', '🧗 액티비티 마스터형'],
+      },
+      recommendations: {
+        destinations: [
+          '인도 리시케시 (요가, 명상 아쉬람)',
+          '일본 교토 (사찰 순례, 젠 가든)',
+          '네팔 룸비니 (붓다 탄생지, 불교 유적)',
+          '티베트 라싸 (포탈라궁, 불교 문화)',
+        ],
+        travelTips: [
+          '휴대폰 사용을 자제하고 자연과 교감하는 시간을 충분히 가지세요.',
+          '명상이나 요가 클래스에 참여하여 심신을 단련해 보세요.',
+          '조용한 사찰이나 자연 속에서 충분한 사색의 시간을 가지세요.',
+        ],
+      },
+    },
+    {
+      id: 'family-oriented',
+      title: '👨‍👩‍👧‍👦 가족 중심형',
+      description: '사랑하는 가족과 함께 소중한 추억을 만들어가는 당신!',
+      detailedDescription:
+        '여행은 가족과 함께하는 즐거운 시간이어야 한다고 생각합니다. 아이들을 위한 시설, 안전한 환경, 모두가 만족할 만한 활동 등을 중요하게 고려하며, 가족 모두가 행복할 수 있는 여행을 계획하고 실행합니다. 당신의 여행은 언제나 가족의 미소로 가득합니다.',
+      emoji: '👨‍👩‍👧‍👦',
+      color: '#FF6347', // Tomato
+      traits: ['가족애', '배려심', '계획적', '안전 중시', '즐거움 추구'],
+      compatibility: {
+        best: ['🌲 평온한 자연 신봉자형', '🥂 럭셔리 트렌드세터형'],
+        avoid: ['🏞️ 이국적인 모험가형', '💰 가성비 탐험가형'],
+      },
+      recommendations: {
+        destinations: [
+          '미국 올랜도 (디즈니월드, 유니버셜 스튜디오)',
+          '태국 푸켓 (리조트, 해변 액티비티, 키즈 클럽)',
+          '괌 (온화한 기후, 안전한 해변, 쇼핑)',
+          '싱가포르 (유니버셜 스튜디오, 가든스 바이 더 베이)',
+        ],
+        travelTips: [
+          '아이들의 연령과 취향에 맞는 활동을 미리 계획하세요.',
+          '안전을 위해 여행자 보험 가입과 비상 연락망을 확인하세요.',
+          '유모차 대여, 키즈 메뉴 등 가족 편의 시설 정보를 미리 파악하세요.',
         ],
       },
     },
