@@ -1,3 +1,5 @@
+// src/styles/GlobalStyles.tsx
+
 import { css, Global } from "@emotion/react";
 import { useTheme } from "@emotion/react";
 import type { Theme } from "@/styles/themes/types";
@@ -9,8 +11,14 @@ const GlobalStyles = () => {
   return (
     <Global
       styles={css`
+        /* 🎯 기본 설정 + 윈도우 이모지 우선 적용 */
         * {
           box-sizing: border-box;
+          font-family: ${FONT_FAMILY.primary}, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+          
+          /* 스크롤바 스타일 */
+          scrollbar-width: thin;
+          scrollbar-color: ${theme.colors.border.secondary} transparent;
         }
 
         html {
@@ -23,7 +31,6 @@ const GlobalStyles = () => {
         body {
           margin: 0;
           padding: 0;
-          font-family: ${FONT_FAMILY.primary};
           font-weight: 400;
           color: ${theme.colors.text.primary};
           background-color: ${theme.colors.background.primary};
@@ -58,11 +65,17 @@ const GlobalStyles = () => {
           font-size: inherit;
         }
 
-        * {
-          scrollbar-width: thin;
-          scrollbar-color: ${theme.colors.border.secondary} transparent;
+        /* 🎯 이모지 전용 스타일 */
+        .emoji, 
+        [data-emoji],
+        .emoji-icon {
+          font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif !important;
+          font-feature-settings: "cmap", "liga", "clig", "kern";
+          text-rendering: optimizeLegibility;
+          line-height: 1;
         }
 
+        /* 웹킷 스크롤바 스타일 */
         *::-webkit-scrollbar {
           width: 8px;
         }
