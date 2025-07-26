@@ -322,13 +322,13 @@ const FaceGradeTestPage = () => {
 
           <StyledResultSection>
             <StyledResultCard>
-              <Typography variant="h2" color="#6366F1">
+              <Typography variant="h2" color="#efefff">
                 {result.topGrade}
               </Typography>
               <Typography variant="body1">{result.message}</Typography>
-              <Typography variant="caption" color="#6B7280">
+              {/* <Typography variant="caption" color="#6B7280">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             <Typography variant="h5" align="center">
@@ -380,7 +380,7 @@ const FaceGradeTestPage = () => {
               testTitle="AI 외모 등급 테스트"
               result={result.topGrade}
               description={result.message}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor="#8B5CF6"
               emoji={

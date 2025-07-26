@@ -275,9 +275,9 @@ const PersonalColorTestPage = () => {
               <Typography variant="body1" color="white">
                 {result.description}
               </Typography>
-              <Typography variant="caption" color="rgba(255,255,255,0.8)">
+              {/* <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             <StyledColorPalette>
@@ -330,7 +330,7 @@ const PersonalColorTestPage = () => {
               testTitle="AI 퍼스널 컬러 테스트"
               result={result.colorType}
               description={result.message}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor={
                 colorTypeInfo[result.colorType as keyof typeof colorTypeInfo]?.color || '#6366F1'

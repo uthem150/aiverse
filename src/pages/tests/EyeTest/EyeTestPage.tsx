@@ -321,12 +321,12 @@ const EyeTestPage = () => {
               <Typography variant="h2" color="white">
                 {result.eyeType}
               </Typography>
-              <Typography variant="body1" color="white">
+              <Typography variant="body1" color="">
                 {result.description}
               </Typography>
-              <Typography variant="caption" color="rgba(255,255,255,0.8)">
+              {/* <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             <StyledCelebSection>
@@ -359,7 +359,7 @@ const EyeTestPage = () => {
               testTitle="AI 눈 관상 테스트"
               result={result.eyeType}
               description={result.description}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor={
                 eyeTypeInfo[result.eyeType as keyof typeof eyeTypeInfo]?.color || '#6366F1'

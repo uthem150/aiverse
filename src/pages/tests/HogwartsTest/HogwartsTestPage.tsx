@@ -269,9 +269,9 @@ const HogwartsTestPage = () => {
               <Typography variant="body1" color="white">
                 {result.description}
               </Typography>
-              <Typography variant="caption" color="rgba(255,255,255,0.8)">
+              {/* <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             <StyledHouseInfo
@@ -315,7 +315,7 @@ const HogwartsTestPage = () => {
               testTitle="AI 호그와트 기숙사 테스트"
               result={result.house}
               description={result.message}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor={
                 houseInfo[result.house as keyof typeof houseInfo]?.color || '#6366F1'

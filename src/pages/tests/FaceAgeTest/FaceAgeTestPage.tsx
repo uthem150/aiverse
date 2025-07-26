@@ -261,13 +261,13 @@ const FaceAgeTestPage = () => {
 
           <StyledResultSection>
             <StyledResultCard>
-              <Typography variant="h1" color="#6366F1">
+              <Typography variant="h2" color="#efefff">
                 {result.predictedAge}세
               </Typography>
               <Typography variant="body1">{result.message}</Typography>
-              <Typography variant="caption" color="#6B7280">
+              {/* <Typography variant="caption" color="#6B7280">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             {selectedImage && (
@@ -291,7 +291,7 @@ const FaceAgeTestPage = () => {
               testTitle="AI 얼굴 나이 테스트"
               result={`${result.predictedAge}세`}
               description={result.message}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor="#6366F1"
               emoji="📆"

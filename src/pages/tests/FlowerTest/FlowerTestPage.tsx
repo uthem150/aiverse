@@ -319,9 +319,9 @@ const FlowerTestPage = () => {
               <Typography variant="body1" color="white">
                 {result.description}
               </Typography>
-              <Typography variant="caption" color="rgba(255,255,255,0.8)">
+              {/* <Typography variant="caption" color="rgba(255,255,255,0.8)">
                 신뢰도: {result.confidence}%
-              </Typography>
+              </Typography> */}
             </StyledResultCard>
 
             <StyledFlowerInfo>
@@ -363,7 +363,7 @@ const FlowerTestPage = () => {
               testTitle="AI 나와 닮은 꽃 찾기"
               result={result.flowerType}
               description={result.message}
-              confidence={result.confidence}
+              // confidence={result.confidence}
               userImage={selectedImage || undefined}
               backgroundColor={
                 flowerInfo[result.flowerType as keyof typeof flowerInfo]?.color || '#6366F1'
