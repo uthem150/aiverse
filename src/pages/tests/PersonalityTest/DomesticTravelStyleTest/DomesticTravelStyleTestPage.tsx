@@ -1,15 +1,15 @@
-import TestContainer from '@/components/common/TestContainer/TestContainer';
+import PersonalityTestContainer from '@/components/common/PersonalityTestContainer/PersonalityTestContainer';
 import PersonalityTest from '@/components/features/PersonalityTest/PersonalityTest';
 import { domesticTravelStyleTestData } from '@/data/personalityTests/domesticTravelStyleTest';
 
 const DomesticTravelStyleTestPage = () => {
   return (
-    <TestContainer
+    <PersonalityTestContainer
       title={domesticTravelStyleTestData.title}
       description={domesticTravelStyleTestData.description}
     >
       <PersonalityTest testData={domesticTravelStyleTestData} />
-    </TestContainer>
+    </PersonalityTestContainer>
   );
 };
 

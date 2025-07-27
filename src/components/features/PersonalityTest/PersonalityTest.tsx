@@ -565,7 +565,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
       </StyledProgressBar>
 
       {/* Debug Info (개발 환경에서만 표시) */}
-      {showDebugInfo && (
+      {/* {showDebugInfo && (
         <div
           style={{
             padding: '8px',
@@ -579,11 +579,11 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
           <div>Scores: {JSON.stringify(progress.scores)}</div>
           <div>Answers: {JSON.stringify(progress.answers)}</div>
         </div>
-      )}
+      )} */}
 
       {/* Question Card */}
       <StyledQuestionCard>
-        <Typography variant="h4" align="center">
+        <Typography responsive variant="h4" align="center">
           Q{progress.currentQuestionIndex + 1}. {currentQuestion?.question}
         </Typography>
 
@@ -595,7 +595,9 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
               onClick={() => handleOptionSelect(option.id)}
             >
               {option.emoji && <span className="emoji">{option.emoji}</span>}
-              <Typography variant="body1">{option.text}</Typography>
+              <Typography responsive variant="body1">
+                {option.text}
+              </Typography>
             </StyledOption>
           ))}
         </StyledOptionsGrid>

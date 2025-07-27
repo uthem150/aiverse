@@ -19,6 +19,14 @@ export const StyledTestHeader = styled.div`
   text-align: center;
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
 `;
 
 export const StyledTestActions = styled.div`
@@ -78,6 +86,6 @@ export const StyledTestContent = styled.div`
   }
 
   @media (max-width: 480px) {
-    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+    padding: ${({ theme }) => (theme as Theme).spacing.sm};
   }
 `;

@@ -1,15 +1,15 @@
-import TestContainer from '@/components/common/TestContainer/TestContainer';
+import PersonalityTestContainer from '@/components/common/PersonalityTestContainer/PersonalityTestContainer';
 import PersonalityTest from '@/components/features/PersonalityTest/PersonalityTest';
 import { steamGamePreferenceTestData } from '@/data/personalityTests/steamGamePreferenceTest';
 
 const SteamGamePreferenceTestPage = () => {
   return (
-    <TestContainer
+    <PersonalityTestContainer
       title={steamGamePreferenceTestData.title}
       description={steamGamePreferenceTestData.description}
     >
       <PersonalityTest testData={steamGamePreferenceTestData} />
-    </TestContainer>
+    </PersonalityTestContainer>
   );
 };
 

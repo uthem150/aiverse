@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import type { Theme } from "@/styles/themes/types";
+import styled from '@emotion/styled';
+import type { Theme } from '@/styles/themes/types';
 
 export const StyledLayout = styled.div`
   display: flex;
@@ -12,13 +12,16 @@ export const StyledContent = styled.main`
   flex: 1;
   width: 100%;
   padding: ${({ theme }) => (theme as Theme).spacing.md};
-  background-color: ${({ theme }) =>
-    (theme as Theme).colors.background.primary};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.primary};
   transition: background-color
     ${({ theme }) =>
       `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
 
   @media (min-width: 768px) {
     padding: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
   }
 `;

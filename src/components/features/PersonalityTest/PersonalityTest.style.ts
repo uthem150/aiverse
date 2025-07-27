@@ -37,6 +37,9 @@ export const StyledPersonalityTest = styled.div`
   @media (max-width: 768px) {
     padding: ${({ theme }) => (theme as Theme).spacing.md};
   }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.sm};
+  }
 `;
 
 export const StyledProgressBar = styled.div`
@@ -106,6 +109,9 @@ export const StyledQuestionCard = styled.div`
 
   @media (max-width: 768px) {
     padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
   }
 `;
 

@@ -1,15 +1,15 @@
-import TestContainer from '@/components/common/TestContainer/TestContainer';
+import PersonalityTestContainer from '@/components/common/PersonalityTestContainer/PersonalityTestContainer';
 import PersonalityTest from '@/components/features/PersonalityTest/PersonalityTest';
 import { burnoutLevelTestData } from '@/data/personalityTests/burnoutLevelTest';
 
 const BurnoutLevelTestPage = () => {
   return (
-    <TestContainer
+    <PersonalityTestContainer
       title={burnoutLevelTestData.title}
       description={burnoutLevelTestData.description}
     >
       <PersonalityTest testData={burnoutLevelTestData} />
-    </TestContainer>
+    </PersonalityTestContainer>
   );
 };
 

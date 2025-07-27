@@ -1,15 +1,15 @@
-import TestContainer from '@/components/common/TestContainer/TestContainer';
+import PersonalityTestContainer from '@/components/common/PersonalityTestContainer/PersonalityTestContainer';
 import PersonalityTest from '@/components/features/PersonalityTest/PersonalityTest';
 import { mbtiOverimmersionTestData } from '@/data/personalityTests/mbtiOverimmersionTest';
 
 const MbtiOverimmersionTestPage = () => {
   return (
-    <TestContainer
+    <PersonalityTestContainer
       title={mbtiOverimmersionTestData.title}
       description={mbtiOverimmersionTestData.description}
     >
       <PersonalityTest testData={mbtiOverimmersionTestData} />
-    </TestContainer>
+    </PersonalityTestContainer>
   );
 };
 

@@ -1,11 +1,11 @@
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-import type { Theme } from "@/styles/themes/types";
-import { FONT_FAMILY } from "@/styles/typography";
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import type { Theme } from '@/styles/themes/types';
+import { FONT_FAMILY } from '@/styles/typography';
 
 interface StyledButtonProps {
-  variant: "primary" | "secondary" | "outlined";
-  size: "small" | "medium" | "large";
+  variant: 'primary' | 'secondary' | 'outlined';
+  size: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
   loading?: boolean;
 }
@@ -78,6 +78,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   font-family: ${FONT_FAMILY.primary};
   font-weight: 500;
   line-height: 1;
@@ -91,7 +92,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   outline: none;
   user-select: none;
   white-space: nowrap;
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 
   ${({ variant, theme }) => buttonVariants(theme as Theme)[variant]};
   ${({ size }) => buttonSizes[size]};

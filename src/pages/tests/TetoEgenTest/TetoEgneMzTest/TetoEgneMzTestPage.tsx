@@ -1,12 +1,15 @@
-import TestContainer from '@/components/common/TestContainer/TestContainer';
+import PersonalityTestContainer from '@/components/common/PersonalityTestContainer/PersonalityTestContainer';
 import TetoEgneTest from '@/components/features/TetoEgneTest/TetoEgneTest';
 import { tetoEgneMzTestData } from '@/data/tetoEgneTests/tetoEgneMzTest';
 
 const TetoEgneMzTestPage = () => {
   return (
-    <TestContainer title={tetoEgneMzTestData.title} description={tetoEgneMzTestData.description}>
+    <PersonalityTestContainer
+      title={tetoEgneMzTestData.title}
+      description={tetoEgneMzTestData.description}
+    >
       <TetoEgneTest testData={tetoEgneMzTestData} />
-    </TestContainer>
+    </PersonalityTestContainer>
   );
 };
 
