@@ -3,12 +3,35 @@ import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import {
   StyledPersonalityTest,
   StyledProgressBar,
+  StyledProgressText,
   StyledProgressFill,
   StyledQuestionCard,
   StyledOptionsGrid,
   StyledOption,
   StyledNavigationButtons,
   StyledResultDisplay,
+  StyledResultHeader,
+  StyledEmoji,
+  StyledResultContent,
+  StyledSection,
+  StyledTraits,
+  StyledTraitTag,
+  StyledCompatibility,
+  StyledCompatItem,
+  StyledGamesGrid,
+  StyledGameCard,
+  StyledGameInfo,
+  StyledGameName,
+  StyledGamePlatform,
+  StyledRecommendations,
+  StyledRecommendationItem,
+  StyledTagsGrid,
+  StyledTag,
+  StyledKpopGroups,
+  StyledKpopTag,
+  StyledCelebrities,
+  StyledCelebTag,
+  StyledResultActions,
 } from './PersonalityTest.style';
 import Typography from '@/components/common/Typography/Typography';
 import Button from '@/components/common/Button/Button';
@@ -140,8 +163,8 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
     return (
       <StyledPersonalityTest>
         <StyledResultDisplay>
-          <div className="result-header">
-            <div className="emoji">{result.emoji}</div>
+          <StyledResultHeader>
+            <StyledEmoji>{result.emoji}</StyledEmoji>
             <Typography variant="h2" align="center" color={result.color} responsive>
               {result.title}
             </Typography>
@@ -153,80 +176,77 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                 매칭도: {result.percentage}%
               </Typography>
             )} */}
-          </div>
+          </StyledResultHeader>
 
-          <div className="result-content">
-            <div className="section">
+          <StyledResultContent>
+            <StyledSection>
               <Typography variant="h5" responsive>
                 📝 상세 분석
               </Typography>
               <Typography variant="body1" responsive>
                 {result.detailedDescription}
               </Typography>
-            </div>
+            </StyledSection>
 
-            <div className="section">
+            <StyledSection>
               <Typography variant="h5">✨ 주요 특징</Typography>
-              <div className="traits">
+              <StyledTraits>
                 {result.traits.map((trait, index) => (
-                  <span key={index} className="trait-tag">
-                    {trait}
-                  </span>
+                  <StyledTraitTag key={index}>{trait}</StyledTraitTag>
                 ))}
-              </div>
-            </div>
+              </StyledTraits>
+            </StyledSection>
 
             {result.compatibility && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">💕 궁합</Typography>
-                <div className="compatibility">
+                <StyledCompatibility>
                   {Array.isArray(result.compatibility.best) &&
                     result.compatibility.best.length > 0 && (
-                      <div className="compat-item">
+                      <StyledCompatItem>
                         <Typography variant="body2" color="#10B981">
                           최고 궁합:
                         </Typography>
                         <span>{result.compatibility.best.join(', ')}</span>
-                      </div>
+                      </StyledCompatItem>
                     )}
                   {Array.isArray(result.compatibility.good) &&
                     result.compatibility.good.length > 0 && (
-                      <div className="compat-item">
+                      <StyledCompatItem>
                         <Typography variant="body2" color="#F59E0B">
                           좋은 궁합:
                         </Typography>
                         <span>{result.compatibility.good.join(', ')}</span>
-                      </div>
+                      </StyledCompatItem>
                     )}
                   {Array.isArray(result.compatibility.avoid) &&
                     result.compatibility.avoid.length > 0 && (
-                      <div className="compat-item">
+                      <StyledCompatItem>
                         <Typography variant="body2" color="#EF4444">
                           피해야 할:
                         </Typography>
                         <span>{result.compatibility.avoid.join(', ')}</span>
-                      </div>
+                      </StyledCompatItem>
                     )}
-                </div>
-              </div>
+                </StyledCompatibility>
+              </StyledSection>
             )}
 
             {/* 게임 추천 섹션 */}
             {result.recommendations.games && result.recommendations.games.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎮 추천 게임</Typography>
-                <div className="games-grid">
+                <StyledGamesGrid>
                   {result.recommendations.games.map((game, index) => (
-                    <a
+                    <StyledGameCard
                       key={index}
                       href={game.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="game-card"
                     >
-                      <div className="game-info">
-                        <div className="game-name">{game.name}</div>
-                        <div className="game-platform">
+                      <StyledGameInfo>
+                        <StyledGameName>{game.name}</StyledGameName>
+                        <StyledGamePlatform>
                           {game.url.includes('steam')
                             ? 'Steam'
                             : game.url.includes('epic')
@@ -234,299 +254,263 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                               : game.url.includes('nintendo')
                                 ? 'Nintendo'
                                 : '공식 사이트'}
-                        </div>
-                      </div>
-                    </a>
+                        </StyledGamePlatform>
+                      </StyledGameInfo>
+                    </StyledGameCard>
                   ))}
-                </div>
-              </div>
+                </StyledGamesGrid>
+              </StyledSection>
             )}
 
             {/* 추천사항 섹션 */}
             {((result.recommendations.activities && result.recommendations.activities.length > 0) ||
               (result.recommendations.tips && result.recommendations.tips.length > 0)) && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎯 추천사항</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.activities &&
                     result.recommendations.activities.map((activity, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {activity}
-                      </div>
+                      <StyledRecommendationItem key={`activity-${index}`}>
+                        {activity}
+                      </StyledRecommendationItem>
                     ))}
                   {result.recommendations.tips &&
                     result.recommendations.tips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={`tip-${index}`}>
+                        {tip}
+                      </StyledRecommendationItem>
                     ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 해시태그 섹션 */}
             {result.recommendations.hashtags && result.recommendations.hashtags.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">#️⃣ 추천 해시태그</Typography>
-                <div className="tags-grid">
+                <StyledTagsGrid>
                   {result.recommendations.hashtags.map((tag, index) => (
-                    <span key={index} className="tag">
-                      {tag}
-                    </span>
+                    <StyledTag key={index}>{tag}</StyledTag>
                   ))}
-                </div>
-              </div>
+                </StyledTagsGrid>
+              </StyledSection>
             )}
 
             {/* K-pop 그룹 섹션 */}
             {result.recommendations.kpopGroups && result.recommendations.kpopGroups.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎵 추천 K-pop 그룹</Typography>
-                <div className="kpop-groups">
+                <StyledKpopGroups>
                   {result.recommendations.kpopGroups.map((group, index) => (
-                    <span key={index} className="kpop-tag">
-                      {group}
-                    </span>
+                    <StyledKpopTag key={index}>{group}</StyledKpopTag>
                   ))}
-                </div>
-              </div>
+                </StyledKpopGroups>
+              </StyledSection>
             )}
 
             {/* 연예인 섹션 */}
             {result.recommendations.celebrities &&
               result.recommendations.celebrities.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">👑 닮은 연예인</Typography>
-                  <div className="celebrities">
+                  <StyledCelebrities>
                     {result.recommendations.celebrities.map((celeb, index) => (
-                      <span key={index} className="celeb-tag">
-                        {celeb}
-                      </span>
+                      <StyledCelebTag key={index}>{celeb}</StyledCelebTag>
                     ))}
-                  </div>
-                </div>
+                  </StyledCelebrities>
+                </StyledSection>
               )}
 
             {/* OTT 콘텐츠 섹션 */}
             {result.recommendations.ottContent && result.recommendations.ottContent.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">📺 추천 콘텐츠</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.ottContent.map((content, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {content}
-                    </div>
+                    <StyledRecommendationItem key={index}>{content}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 영화 추천 섹션 */}
             {result.recommendations.movies && result.recommendations.movies.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎬 추천 영화</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.movies.map((movie, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {movie}
-                    </div>
+                    <StyledRecommendationItem key={index}>{movie}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 여행지 추천 섹션 */}
             {result.recommendations.destinations &&
               result.recommendations.destinations.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">✈️ 추천 여행지</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.destinations.map((destination, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {destination}
-                      </div>
+                      <StyledRecommendationItem key={index}>{destination}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 게임 장르 섹션 */}
             {result.recommendations.gameGenres && result.recommendations.gameGenres.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎮 추천 게임 장르</Typography>
-                <div className="tags-grid">
+                <StyledTagsGrid>
                   {result.recommendations.gameGenres.map((genre, index) => (
-                    <span key={index} className="tag">
-                      {genre}
-                    </span>
+                    <StyledTag key={index}>{genre}</StyledTag>
                   ))}
-                </div>
-              </div>
+                </StyledTagsGrid>
+              </StyledSection>
             )}
 
             {/* 소통 팁 섹션 */}
             {result.recommendations.communicationTips &&
               result.recommendations.communicationTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">🗣️ 대화 스킬 UP 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.communicationTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 갈등 해결 전략 섹션 */}
             {result.recommendations.conflictStrategies &&
               result.recommendations.conflictStrategies.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">🤝 갈등 해결 전략</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.conflictStrategies.map((strategy, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {strategy}
-                      </div>
+                      <StyledRecommendationItem key={index}>{strategy}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 데이팅 팁 섹션 */}
             {result.recommendations.datingTips && result.recommendations.datingTips.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">❤️‍🔥 데이팅 팁</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.datingTips.map((tip, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {tip}
-                    </div>
+                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 의사결정 팁 섹션 */}
             {result.recommendations.decisionMakingTips &&
               result.recommendations.decisionMakingTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">💡 현명한 결정 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.decisionMakingTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 관계 발전 팁 섹션 */}
             {result.recommendations.relationshipTips &&
               result.recommendations.relationshipTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">💞 관계 발전 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.relationshipTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 선물 아이디어 섹션 */}
             {result.recommendations.giftIdeas && result.recommendations.giftIdeas.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🎁 추천 선물 아이디어</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.giftIdeas.map((idea, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {idea}
-                    </div>
+                    <StyledRecommendationItem key={index}>{idea}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 번아웃 극복 팁 섹션 */}
             {result.recommendations.burnoutTips &&
               result.recommendations.burnoutTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">🔥 번아웃 극복 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.burnoutTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 소비 팁 섹션 */}
             {result.recommendations.spendingTips &&
               result.recommendations.spendingTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">💰 현명한 소비 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.spendingTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* 갓생 팁 섹션 */}
             {result.recommendations.godsaengTips &&
               result.recommendations.godsaengTips.length > 0 && (
-                <div className="section">
+                <StyledSection>
                   <Typography variant="h5">👑 갓생 위한 팁</Typography>
-                  <div className="recommendations">
+                  <StyledRecommendations>
                     {result.recommendations.godsaengTips.map((tip, index) => (
-                      <div key={index} className="recommendation-item">
-                        • {tip}
-                      </div>
+                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                     ))}
-                  </div>
-                </div>
+                  </StyledRecommendations>
+                </StyledSection>
               )}
 
             {/* MBTI 활용 팁 섹션 */}
             {result.recommendations.mbtiTips && result.recommendations.mbtiTips.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🧐 MBTI 활용 팁</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.mbtiTips.map((tip, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {tip}
-                    </div>
+                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
 
             {/* 여행 팁 섹션 */}
             {result.recommendations.travelTips && result.recommendations.travelTips.length > 0 && (
-              <div className="section">
+              <StyledSection>
                 <Typography variant="h5">🗺️ 여행 꿀팁</Typography>
-                <div className="recommendations">
+                <StyledRecommendations>
                   {result.recommendations.travelTips.map((tip, index) => (
-                    <div key={index} className="recommendation-item">
-                      • {tip}
-                    </div>
+                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
                   ))}
-                </div>
-              </div>
+                </StyledRecommendations>
+              </StyledSection>
             )}
-          </div>
+          </StyledResultContent>
 
-          <div className="result-actions">
+          <StyledResultActions>
             <Button variant="secondary" onClick={resetTest}>
               <RotateCcw size={16} />
               다시 테스트
@@ -534,7 +518,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             <Button variant="primary" onClick={() => setShowShareResult(true)}>
               결과 공유하기
             </Button>
-          </div>
+          </StyledResultActions>
 
           {showShareResult && (
             <ShareResult
@@ -557,11 +541,11 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
       {/* Progress Bar */}
       <StyledProgressBar>
         <StyledProgressFill percentage={progressPercentage} />
-        <div className="progress-text">
+        <StyledProgressText>
           <Typography variant="caption">
             {progress.currentQuestionIndex + 1} / {testData.questions.length}
           </Typography>
-        </div>
+        </StyledProgressText>
       </StyledProgressBar>
 
       {/* Debug Info (개발 환경에서만 표시) */}

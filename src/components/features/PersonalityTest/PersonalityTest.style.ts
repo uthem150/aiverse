@@ -51,15 +51,15 @@ export const StyledProgressBar = styled.div`
   margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
   overflow: hidden;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+`;
 
-  .progress-text {
-    position: absolute;
-    top: -28px;
-    right: 0;
-    color: ${({ theme }) => (theme as Theme).colors.text.tertiary};
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
+export const StyledProgressText = styled.div`
+  position: absolute;
+  top: -28px;
+  right: 0;
+  color: ${({ theme }) => (theme as Theme).colors.text.tertiary};
+  font-weight: 500;
+  font-size: 0.875rem;
 `;
 
 export const StyledProgressFill = styled.div<ProgressFillProps>`
@@ -195,317 +195,319 @@ export const StyledNavigationButtons = styled.div`
 
 export const StyledResultDisplay = styled.div`
   animation: ${fadeIn} 0.8s ease-out;
+`;
 
-  .result-header {
-    text-align: center;
-    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
-    padding: ${({ theme }) => (theme as Theme).spacing['3xl']};
-    background: linear-gradient(
-      135deg,
-      rgba(99, 102, 241, 0.08) 0%,
-      rgba(139, 92, 246, 0.08) 50%,
-      rgba(6, 182, 212, 0.08) 100%
-    );
-    border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
-    border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
-    position: relative;
-    overflow: hidden;
+export const StyledResultHeader = styled.div`
+  text-align: center;
+  margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  padding: ${({ theme }) => (theme as Theme).spacing['3xl']};
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.08) 0%,
+    rgba(139, 92, 246, 0.08) 50%,
+    rgba(6, 182, 212, 0.08) 100%
+  );
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  position: relative;
+  overflow: hidden;
 
-    &::before {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+  }
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+`;
+
+export const StyledEmoji = styled.div`
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: ${({ theme }) => (theme as Theme).spacing.lg};
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  animation: ${scaleHover} 2s ease-in-out infinite;
+`;
+
+export const StyledResultContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => (theme as Theme).spacing.lg};
+`;
+
+export const StyledSection = styled.div`
+  padding: ${({ theme }) => (theme as Theme).spacing.xl};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.small};
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
+  }
+
+  h5 {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
+    color: ${({ theme }) => (theme as Theme).colors.text.primary};
+    display: flex;
+    align-items: center;
+    gap: ${({ theme }) => (theme as Theme).spacing.sm};
+
+    &::after {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
-    }
-
-    .emoji {
-      font-size: 5rem;
-      line-height: 1;
-      margin-bottom: ${({ theme }) => (theme as Theme).spacing.lg};
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-      animation: ${scaleHover} 2s ease-in-out infinite;
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        ${({ theme }) => (theme as Theme).colors.border.primary} 0%,
+        transparent 100%
+      );
     }
   }
+`;
 
-  .result-content {
-    display: flex;
+export const StyledTraits = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledTraitTag = styled.span`
+  padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.lg}`};
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+`;
+
+export const StyledCompatibility = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledCompatItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  padding: ${({ theme }) => (theme as Theme).spacing.md};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.secondary};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
+  border-left: 4px solid transparent;
+
+  &:nth-of-type(1) {
+    border-left-color: #10b981;
+    background-color: rgba(16, 185, 129, 0.05);
+  }
+  &:nth-of-type(2) {
+    border-left-color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+  &:nth-of-type(3) {
+    border-left-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+  }
+
+  span:last-child {
+    font-weight: 500;
+  }
+`;
+
+export const StyledGamesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledGameCard = styled.a`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+  padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
+  text-decoration: none;
+  color: ${({ theme }) => (theme as Theme).colors.text.primary};
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
+    border-color: ${({ theme }) => (theme as Theme).colors.interactive.primary};
+  }
+
+  &::before {
+    content: '🎮';
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+`;
+
+export const StyledGameInfo = styled.div`
+  flex: 1;
+`;
+
+export const StyledGameName = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: ${({ theme }) => (theme as Theme).colors.text.primary};
+`;
+
+export const StyledGamePlatform = styled.div`
+  font-size: 0.875rem;
+  color: ${({ theme }) => (theme as Theme).colors.text.tertiary};
+`;
+
+export const StyledRecommendations = styled.div`
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledRecommendationItem = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
+  padding: ${({ theme }) => (theme as Theme).spacing.md};
+  background-color: ${({ theme }) => (theme as Theme).colors.background.secondary};
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
+  color: ${({ theme }) => (theme as Theme).colors.text.secondary};
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    background-color: ${({ theme }) => (theme as Theme).colors.background.tertiary};
+    transform: translateX(4px);
+  }
+
+  &::before {
+    content: '✨';
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+`;
+
+export const StyledTagsGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledTag = styled.span`
+  padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  color: white;
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(6, 182, 212, 0.3);
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
+  }
+`;
+
+export const StyledKpopGroups = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledKpopTag = styled.span`
+  padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
+  background: linear-gradient(135deg, #ff6b9d 0%, #ff8ba7 100%);
+  color: white;
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+  }
+`;
+
+export const StyledCelebrities = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+export const StyledCelebTag = styled.span`
+  padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  color: white;
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  transition: all
+    ${({ theme }) =>
+      `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  }
+`;
+
+export const StyledResultActions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.lg};
+  margin-top: ${({ theme }) => (theme as Theme).spacing['3xl']};
+  padding-top: ${({ theme }) => (theme as Theme).spacing.xl};
+  border-top: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+
+  @media (max-width: 480px) {
     flex-direction: column;
-    gap: ${({ theme }) => (theme as Theme).spacing.lg};
-
-    .section {
-      padding: ${({ theme }) => (theme as Theme).spacing.xl};
-      background-color: ${({ theme }) => (theme as Theme).colors.background.elevated};
-      border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
-      border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
-      box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.small};
-      transition: all
-        ${({ theme }) =>
-          `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-      &:hover {
-        box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
-        transform: translateY(-2px);
-      }
-
-      h5 {
-        margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
-        color: ${({ theme }) => (theme as Theme).colors.text.primary};
-        display: flex;
-        align-items: center;
-        gap: ${({ theme }) => (theme as Theme).spacing.sm};
-
-        &::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: linear-gradient(
-            90deg,
-            ${({ theme }) => (theme as Theme).colors.border.primary} 0%,
-            transparent 100%
-          );
-        }
-      }
-    }
-
-    /* 특성 태그들 */
-    .traits {
-      display: flex;
-      flex-wrap: wrap;
-      gap: ${({ theme }) => (theme as Theme).spacing.sm};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .trait-tag {
-        padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.lg}`};
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        color: white;
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
-        font-size: 0.875rem;
-        font-weight: 600;
-        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-        }
-      }
-    }
-
-    /* 궁합 정보 */
-    .compatibility {
-      display: flex;
-      flex-direction: column;
-      gap: ${({ theme }) => (theme as Theme).spacing.md};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .compat-item {
-        display: flex;
-        align-items: center;
-        gap: ${({ theme }) => (theme as Theme).spacing.md};
-        padding: ${({ theme }) => (theme as Theme).spacing.md};
-        background-color: ${({ theme }) => (theme as Theme).colors.background.secondary};
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
-        border-left: 4px solid transparent;
-
-        &:nth-of-type(1) {
-          border-left-color: #10b981;
-          background-color: rgba(16, 185, 129, 0.05);
-        }
-        &:nth-of-type(2) {
-          border-left-color: #f59e0b;
-          background-color: rgba(245, 158, 11, 0.05);
-        }
-        &:nth-of-type(3) {
-          border-left-color: #ef4444;
-          background-color: rgba(239, 68, 68, 0.05);
-        }
-
-        span:last-child {
-          font-weight: 500;
-        }
-      }
-    }
-
-    /* 추천사항 목록 */
-    .recommendations {
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .recommendation-item {
-        display: flex;
-        align-items: flex-start;
-        gap: ${({ theme }) => (theme as Theme).spacing.sm};
-        margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
-        padding: ${({ theme }) => (theme as Theme).spacing.md};
-        background-color: ${({ theme }) => (theme as Theme).colors.background.secondary};
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
-        color: ${({ theme }) => (theme as Theme).colors.text.secondary};
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          background-color: ${({ theme }) => (theme as Theme).colors.background.tertiary};
-          transform: translateX(4px);
-        }
-
-        &::before {
-          content: '✨';
-          flex-shrink: 0;
-          margin-top: 2px;
-        }
-      }
-    }
-
-    /* 태그 그리드 (해시태그, 게임 장르 등) */
-    .tags-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: ${({ theme }) => (theme as Theme).spacing.sm};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .tag {
-        padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
-        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-        color: white;
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
-        font-size: 0.875rem;
-        font-weight: 500;
-        box-shadow: 0 2px 6px rgba(6, 182, 212, 0.3);
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
-        }
-      }
-    }
-
-    /* K-pop 그룹 태그 */
-    .kpop-groups {
-      display: flex;
-      flex-wrap: wrap;
-      gap: ${({ theme }) => (theme as Theme).spacing.sm};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .kpop-tag {
-        padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
-        background: linear-gradient(135deg, #ff6b9d 0%, #ff8ba7 100%);
-        color: white;
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
-        font-size: 0.875rem;
-        font-weight: 600;
-        box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
-        }
-      }
-    }
-
-    /* 연예인 태그 */
-    .celebrities {
-      display: flex;
-      flex-wrap: wrap;
-      gap: ${({ theme }) => (theme as Theme).spacing.sm};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .celeb-tag {
-        padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.md}`};
-        background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-        color: white;
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
-        font-size: 0.875rem;
-        font-weight: 600;
-        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-        }
-      }
-    }
-
-    /* 게임 링크 카드 */
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: ${({ theme }) => (theme as Theme).spacing.md};
-      margin-top: ${({ theme }) => (theme as Theme).spacing.md};
-
-      .game-card {
-        display: flex;
-        align-items: center;
-        gap: ${({ theme }) => (theme as Theme).spacing.md};
-        padding: ${({ theme }) => (theme as Theme).spacing.lg};
-        background: linear-gradient(
-          135deg,
-          rgba(99, 102, 241, 0.05) 0%,
-          rgba(139, 92, 246, 0.05) 100%
-        );
-        border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
-        border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
-        text-decoration: none;
-        color: ${({ theme }) => (theme as Theme).colors.text.primary};
-        transition: all
-          ${({ theme }) =>
-            `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
-
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.large};
-          border-color: ${({ theme }) => (theme as Theme).colors.interactive.primary};
-        }
-
-        &::before {
-          content: '🎮';
-          font-size: 2rem;
-          flex-shrink: 0;
-        }
-
-        .game-info {
-          flex: 1;
-
-          .game-name {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 4px;
-            color: ${({ theme }) => (theme as Theme).colors.text.primary};
-          }
-
-          .game-platform {
-            font-size: 0.875rem;
-            color: ${({ theme }) => (theme as Theme).colors.text.tertiary};
-          }
-        }
-      }
-    }
-  }
-
-  .result-actions {
-    display: flex;
-    justify-content: center;
-    gap: ${({ theme }) => (theme as Theme).spacing.lg};
-    margin-top: ${({ theme }) => (theme as Theme).spacing['3xl']};
-    padding-top: ${({ theme }) => (theme as Theme).spacing.xl};
-    border-top: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
-
-    @media (max-width: 480px) {
-      flex-direction: column;
-      gap: ${({ theme }) => (theme as Theme).spacing.md};
-    }
+    gap: ${({ theme }) => (theme as Theme).spacing.md};
   }
 `;
