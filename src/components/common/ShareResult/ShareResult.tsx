@@ -1,6 +1,7 @@
+// src/components/common/ShareResult/ShareResult.tsx
 import { useState, useEffect } from 'react';
 import { Share2, Download, Copy, MessageCircle, X, Loader, Gamepad2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   StyledShareResult,
   StyledShareButton,
@@ -12,6 +13,7 @@ import {
 } from './ShareResult.style';
 import Typography from '@/components/common/Typography/Typography';
 import { generateResultImage } from '@/utils/canvasImageGenerator';
+import { getTestMeta } from '@/data/testMeta';
 
 interface ShareResultProps {
   testTitle: string;
@@ -37,6 +39,13 @@ const ShareResult = ({
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 현재 페이지에서 테스트 ID 추출
+  const getTestIdFromPath = () => {
+    const pathSegments = location.pathname.split('/');
+    return pathSegments[pathSegments.length - 1];
+  };
 
   // 컴포넌트가 마운트되면 자동으로 이미지 생성
   useEffect(() => {
@@ -65,25 +74,98 @@ const ShareResult = ({
   };
 
   const shareToSocial = async (platform: 'kakao' | 'facebook' | 'twitter') => {
-    const shareText = `${result} - ${description}`;
+    const testId = getTestIdFromPath();
+    const meta = getTestMeta(testId);
     const shareUrl = window.location.href;
+
+    // 더 매력적인 공유 텍스트 구성
+    const shareText = `${meta.ogTitle || testTitle} - ${result}\n\n${meta.ogDescription || description}`;
 
     switch (platform) {
       case 'kakao':
-        if (window.Kakao) {
-          window.Kakao.Link.sendDefault({
-            objectType: 'feed',
-            content: {
-              title: testTitle,
-              description: shareText,
-              imageUrl: generatedImage || undefined,
-              link: {
-                mobileWebUrl: shareUrl,
-                webUrl: shareUrl,
+        console.log('📱 카카오톡 공유 시도');
+
+        // 메타 태그 기반 카카오톡 공유
+        if (window.Kakao && window.Kakao.Share) {
+          try {
+            console.log('🔥 카카오톡 공유 시도 (메타 태그 기반)');
+
+            // 현재 페이지의 메타 태그 정보 수집
+            const ogTitle =
+              document.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+              meta.ogTitle ||
+              testTitle;
+            const ogDescription =
+              document.querySelector('meta[property="og:description"]')?.getAttribute('content') ||
+              meta.ogDescription ||
+              description;
+            const ogImage =
+              document.querySelector('meta[property="og:image"]')?.getAttribute('content') ||
+              generatedImage ||
+              'https://aiverse-phi.vercel.app/images/aiverse-og-image.png';
+
+            window.Kakao.Share.sendDefault({
+              objectType: 'feed',
+              content: {
+                title: ogTitle,
+                description: `${result} - ${ogDescription}`,
+                imageUrl: ogImage,
+                link: {
+                  mobileWebUrl: shareUrl,
+                  webUrl: shareUrl,
+                },
               },
-            },
-          });
+              buttons: [
+                {
+                  title: '나도 테스트하기',
+                  link: {
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl,
+                  },
+                },
+              ],
+            });
+
+            console.log('✅ 카카오톡 공유 성공 (메타 태그 기반)');
+          } catch (error) {
+            console.error('❌ 카카오톡 공유 실패:', error);
+            fallbackShare(shareText, shareUrl);
+          }
+        }
+        // 구버전 Link API 호환성 (혹시 모를 경우)
+        else if (window.Kakao && window.Kakao.Link) {
+          try {
+            console.log('🔥 Link API 사용 (구버전)');
+            window.Kakao.Link.sendDefault({
+              objectType: 'feed',
+              content: {
+                title: meta.ogTitle || testTitle,
+                description: `${result} - ${description}`,
+                imageUrl:
+                  generatedImage ||
+                  `https://aiverse-phi.vercel.app/images/thumbnails/${testId}.png`,
+                link: {
+                  mobileWebUrl: shareUrl,
+                  webUrl: shareUrl,
+                },
+              },
+              buttons: [
+                {
+                  title: '나도 테스트하기',
+                  link: {
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl,
+                  },
+                },
+              ],
+            });
+            console.log('✅ 카카오톡 공유 성공 (Link API)');
+          } catch (error) {
+            console.error('❌ 카카오 공유 실패 (Link API):', error);
+            fallbackShare(shareText, shareUrl);
+          }
         } else {
+          console.error('❌ 카카오 SDK 또는 Share/Link 객체 없음');
           fallbackShare(shareText, shareUrl);
         }
         break;
@@ -118,15 +200,15 @@ const ShareResult = ({
         console.log('공유 취소됨');
       }
     } else {
-      await navigator.clipboard.writeText(`${text} ${url}`);
-      alert('링크가 복사되었습니다!');
+      await navigator.clipboard.writeText(`${text}\n\n${url}`);
+      alert('결과가 복사되었습니다!');
     }
   };
 
   const downloadImage = () => {
     if (generatedImage) {
       const link = document.createElement('a');
-      link.download = `${testTitle.replace(/\s+/g, '-')}-result.png`;
+      link.download = `${testTitle.replace(/\s+/g, '-')}-${result.replace(/\s+/g, '-')}.png`;
       link.href = generatedImage;
       link.click();
     } else {
@@ -135,16 +217,23 @@ const ShareResult = ({
   };
 
   const copyToClipboard = async () => {
-    const text = `${result} - ${description} ${window.location.href}`;
-    await navigator.clipboard.writeText(text);
-    alert('결과가 복사되었습니다!');
+    const testId = getTestIdFromPath();
+    const meta = getTestMeta(testId);
+    const shareUrl = window.location.href;
+    const text = `${meta.ogTitle || testTitle} - ${result}\n\n${description}\n\n${shareUrl}`;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('결과가 복사되었습니다! 📋');
+    } catch (error) {
+      console.error('복사 실패:', error);
+      alert('복사에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const goToOtherTests = () => {
-    // 현재 테스트와 다른 테스트들을 추천
-    // 우선 테스트 목록 페이지로 이동
     navigate('/tests');
-    onClose(); // 공유 모달 닫기
+    onClose();
   };
 
   return (

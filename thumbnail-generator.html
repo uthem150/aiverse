@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIverse 썸네일 생성기</title>
+    <style>
+      body {
+        font-family:
+          'Pretendard',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .canvas-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      canvas {
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        max-width: 100%;
+      }
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      label {
+        font-weight: 600;
+        color: #374151;
+      }
+      input,
+      select {
+        padding: 8px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      button {
+        background: #6366f1;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5856eb;
+      }
+      .preset-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 15px 0;
+      }
+      .preset-btn {
+        background: #10b981;
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+      .preset-btn:hover {
+        background: #059669;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎨 AIverse 썸네일 생성기</h1>
+      <p>간단하게 썸네일 이미지를 생성하고 다운로드하세요!</p>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="title">제목</label>
+          <input
+            type="text"
+            id="title"
+            value="💕 내 연애 스타일 테스트"
+            placeholder="테스트 제목"
+          />
+        </div>
+        <div class="control-group">
+          <label for="description">설명</label>
+          <input
+            type="text"
+            id="description"
+            value="MZ세대 연애 문화를 반영한 나만의 연애 스타일"
+            placeholder="테스트 설명"
+          />
+        </div>
+        <div class="control-group">
+          <label for="emoji">이모지</label>
+          <input type="text" id="emoji" value="💕" placeholder="🤖" maxlength="2" />
+        </div>
+        <div class="control-group">
+          <label for="bgColorType">배경색 입력 방식</label>
+          <select id="bgColorType" onchange="toggleColorInput()">
+            <option value="picker">색상 선택기</option>
+            <option value="code">색상 코드 입력</option>
+          </select>
+        </div>
+        <div class="control-group" id="colorPickerGroup">
+          <label for="bgColor">배경색</label>
+          <input type="color" id="bgColor" value="#F56565" />
+        </div>
+        <div class="control-group" id="colorCodeGroup" style="display: none">
+          <label for="bgColorCode">배경색 코드</label>
+          <input
+            type="text"
+            id="bgColorCode"
+            value="#F56565"
+            placeholder="#6366F1 또는 rgb(99, 102, 241)"
+          />
+          <small style="color: #666; font-size: 12px"
+            >예: #6366F1, rgb(99, 102, 241), #FF0000</small
+          >
+        </div>
+        <div class="control-group">
+          <label for="showParticipants">참여자 수 표시</label>
+          <select id="showParticipants">
+            <option value="true">표시</option>
+            <option value="false">숨김</option>
+          </select>
+        </div>
+        <div class="control-group" id="participantsGroup">
+          <label for="participants">참여자 수</label>
+          <input type="number" id="participants" value="45000" placeholder="45000" />
+        </div>
+      </div>
+
+      <div class="preset-buttons">
+        <button class="preset-btn" onclick="setPreset('love')">💕 연애 스타일</button>
+        <button class="preset-btn" onclick="setPreset('ai')">🤖 AI 분석</button>
+        <button class="preset-btn" onclick="setPreset('mbti')">🧠 MBTI</button>
+        <button class="preset-btn" onclick="setPreset('kpop')">🎵 K-pop</button>
+        <button class="preset-btn" onclick="setPreset('ott')">📺 OTT 취향</button>
+      </div>
+
+      <div style="text-align: center">
+        <button onclick="generateImage()">🎨 이미지 생성</button>
+        <button onclick="downloadImage()">💾 다운로드</button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="canvas" width="1200" height="630"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const presets = {
+        love: {
+          title: '💕 내 연애 스타일 테스트',
+          description: 'MZ세대 연애 문화를 반영한 나만의 연애 스타일',
+          emoji: '💕',
+          bgColor: '#F56565',
+          participants: 45000,
+        },
+        ai: {
+          title: '🤖 AI 얼굴 나이 테스트',
+          description: 'AI가 당신의 얼굴을 분석해서 나이를 맞춰보는 테스트',
+          emoji: '🤖',
+          bgColor: '#6366F1',
+          participants: 1200000,
+        },
+        mbti: {
+          title: '💖 MBTI 연애 궁합 테스트',
+          description: '16가지 MBTI 유형별 최고의 연애 궁합',
+          emoji: '💖',
+          bgColor: '#8B5CF6',
+          participants: 156000,
+        },
+        kpop: {
+          title: '🎵 K-pop 그룹 스타일 테스트',
+          description: '당신과 가장 잘 맞는 K-pop 그룹은?',
+          emoji: '🎵',
+          bgColor: '#EC4899',
+          participants: 89000,
+        },
+        ott: {
+          title: '📺 OTT 취향 분석 테스트',
+          description: '당신의 성향에 맞는 완벽한 OTT 콘텐츠',
+          emoji: '📺',
+          bgColor: '#10B981',
+          participants: 67000,
+        },
+      };
+
+      function setPreset(type) {
+        const preset = presets[type];
+        document.getElementById('title').value = preset.title;
+        document.getElementById('description').value = preset.description;
+        document.getElementById('emoji').value = preset.emoji;
+
+        // 배경색 설정
+        const colorType = document.getElementById('bgColorType').value;
+        if (colorType === 'picker') {
+          document.getElementById('bgColor').value = preset.bgColor;
+        } else {
+          document.getElementById('bgColorCode').value = preset.bgColor;
+        }
+
+        document.getElementById('participants').value = preset.participants;
+        document.getElementById('showParticipants').value = 'true';
+        toggleParticipantsInput();
+        generateImage();
+      }
+
+      function toggleColorInput() {
+        const colorType = document.getElementById('bgColorType').value;
+        const pickerGroup = document.getElementById('colorPickerGroup');
+        const codeGroup = document.getElementById('colorCodeGroup');
+
+        if (colorType === 'picker') {
+          pickerGroup.style.display = 'flex';
+          codeGroup.style.display = 'none';
+        } else {
+          pickerGroup.style.display = 'none';
+          codeGroup.style.display = 'flex';
+        }
+        generateImage();
+      }
+
+      function toggleParticipantsInput() {
+        const showParticipants = document.getElementById('showParticipants').value;
+        const participantsGroup = document.getElementById('participantsGroup');
+
+        if (showParticipants === 'true') {
+          participantsGroup.style.display = 'flex';
+        } else {
+          participantsGroup.style.display = 'none';
+        }
+        generateImage();
+      }
+
+      function getCurrentBgColor() {
+        const colorType = document.getElementById('bgColorType').value;
+        let bgColor;
+
+        if (colorType === 'picker') {
+          bgColor = document.getElementById('bgColor').value;
+        } else {
+          const colorCode = document.getElementById('bgColorCode').value.trim();
+          bgColor = parseColorCode(colorCode);
+        }
+
+        return bgColor;
+      }
+
+      function parseColorCode(colorCode) {
+        // HEX 코드 (#RRGGBB 또는 #RGB)
+        if (colorCode.startsWith('#')) {
+          if (colorCode.length === 4) {
+            // #RGB를 #RRGGBB로 변환
+            const r = colorCode[1];
+            const g = colorCode[2];
+            const b = colorCode[3];
+            return `#${r}${r}${g}${g}${b}${b}`;
+          } else if (colorCode.length === 7) {
+            return colorCode;
+          }
+        }
+
+        // RGB 형식 (rgb(r, g, b))
+        const rgbMatch = colorCode.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+        if (rgbMatch) {
+          const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0');
+          const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0');
+          const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0');
+          return `#${r}${g}${b}`;
+        }
+
+        // 기본값 반환
+        return '#6366F1';
+      }
+
+      function formatNumber(num) {
+        if (num >= 1000000) return Math.floor(num / 100000) / 10 + 'M';
+        if (num >= 1000) return Math.floor(num / 100) / 10 + 'K';
+        return num.toString();
+      }
+
+      function adjustBrightness(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = ((num >> 8) & 0x00ff) + amt;
+        const B = (num & 0x0000ff) + amt;
+        return (
+          '#' +
+          (
+            0x1000000 +
+            (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+            (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+            (B < 255 ? (B < 1 ? 0 : B) : 255)
+          )
+            .toString(16)
+            .slice(1)
+        );
+      }
+
+      function generateImage() {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const emoji = document.getElementById('emoji').value;
+        const bgColor = getCurrentBgColor();
+        const showParticipants = document.getElementById('showParticipants').value === 'true';
+        const participants = parseInt(document.getElementById('participants').value) || 0;
+
+        // 배경 그라디언트
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, bgColor);
+        gradient.addColorStop(1, adjustBrightness(bgColor, -20));
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 패턴 오버레이
+        ctx.save();
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = '#FFFFFF';
+        for (let x = 0; x < canvas.width; x += 60) {
+          for (let y = 0; y < canvas.height; y += 60) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+
+        // AIverse 로고
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('🤖 AIverse', 60, 80);
+
+        // 메인 이모지
+        ctx.font = '120px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(emoji, canvas.width / 2, 250);
+
+        // 제목
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 64px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'center';
+
+        // 제목 줄바꿈 처리
+        const words = title.split(' ');
+        let line = '';
+        let y = 350;
+        const maxWidth = canvas.width - 120;
+
+        for (let i = 0; i < words.length; i++) {
+          const testLine = line + words[i] + ' ';
+          const metrics = ctx.measureText(testLine);
+
+          if (metrics.width > maxWidth && i > 0) {
+            ctx.fillText(line.trim(), canvas.width / 2, y);
+            line = words[i] + ' ';
+            y += 70;
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line.trim(), canvas.width / 2, y);
+
+        // 설명
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.font = '32px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'center';
+
+        const descWords = description.split(' ');
+        let descLine = '';
+        let descY = y + 60;
+        let lineCount = 0;
+        const maxLines = 2;
+
+        for (let i = 0; i < descWords.length && lineCount < maxLines; i++) {
+          const testLine = descLine + descWords[i] + ' ';
+          const metrics = ctx.measureText(testLine);
+
+          if (metrics.width > maxWidth && i > 0) {
+            ctx.fillText(descLine.trim(), canvas.width / 2, descY);
+            descLine = descWords[i] + ' ';
+            descY += 40;
+            lineCount++;
+          } else {
+            descLine = testLine;
+          }
+        }
+
+        if (lineCount < maxLines) {
+          let finalLine = descLine.trim();
+          if (descWords.length > 15) {
+            finalLine += '...';
+          }
+          ctx.fillText(finalLine, canvas.width / 2, descY);
+        }
+
+        // 참여자 수 (선택적)
+        if (showParticipants && participants > 0) {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.font = '28px -apple-system, BlinkMacSystemFont, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(`👥 ${formatNumber(participants)}명 참여`, canvas.width / 2, 570);
+        }
+
+        // 장식 요소들
+        const decorations = [
+          { x: 100, y: 150, radius: 40, opacity: 0.1 },
+          { x: canvas.width - 100, y: 200, radius: 30, opacity: 0.15 },
+          { x: canvas.width - 80, y: canvas.height - 100, radius: 35, opacity: 0.1 },
+          { x: 120, y: canvas.height - 120, radius: 25, opacity: 0.2 },
+        ];
+
+        decorations.forEach(decoration => {
+          ctx.save();
+          ctx.globalAlpha = decoration.opacity;
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.arc(decoration.x, decoration.y, decoration.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      function downloadImage() {
+        const link = document.createElement('a');
+        const title = document.getElementById('title').value;
+        const filename =
+          title
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
+            .toLowerCase() + '.png';
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png', 0.9);
+        link.click();
+      }
+
+      // 초기 이미지 생성
+      generateImage();
+    </script>
+  </body>
+</html>

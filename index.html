@@ -9,7 +9,7 @@
     <title>AIverse - AI의 모든 것을 체험하다</title>
     <meta
       name="description"
-      content="AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요. 100만 명 이상 참여한 인기 테스트들!"
+      content="AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요. 300만 명 이상 참여한 인기 테스트들!"
     />
     <meta
       name="keywords"
@@ -24,8 +24,15 @@
       property="og:description"
       content="AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요!"
     />
-    <meta property="og:url" content="https://aiverse.netlify.app/" />
+    <meta property="og:url" content="https://aiverse-phi.vercel.app/" />
     <meta property="og:site_name" content="AIverse" />
+    <meta
+      property="og:image"
+      content="https://aiverse-phi.vercel.app/images/aiverse-og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
 
     <!-- Twitter Card 메타 태그 -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -34,6 +41,11 @@
       name="twitter:description"
       content="AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요!"
     />
+    <meta
+      name="twitter:image"
+      content="https://aiverse-phi.vercel.app/images/aiverse-og-image.png"
+    />
+    <meta name="twitter:site" content="@aiverse" />
 
     <!-- 폰트 로드 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,6 +54,15 @@
       href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- 카카오 SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+    <script>
+      // 카카오 SDK 초기화 (실제 앱 키로 교체 필요)
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        window.Kakao.init('650ca4af5136735346317e9abad849c5'); // 실제 카카오 앱 키로 교체
+      }
+    </script>
 
     <!-- TensorFlow.js 및 Teachable Machine CDN -->
     <!-- 이 스크립트들이 로드되면:
