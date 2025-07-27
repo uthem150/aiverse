@@ -1,5 +1,5 @@
 export interface Theme {
-  mode: "light" | "dark";
+  mode: 'light' | 'dark';
   useLowVision?: boolean;
   colors: {
     // Background
@@ -67,9 +67,9 @@ export interface Theme {
     md: string;
     lg: string;
     xl: string;
-    "2xl": string;
-    "3xl": string;
-    "4xl": string;
+    '2xl': string;
+    '3xl': string;
+    '4xl': string;
   };
 
   // Border Radius

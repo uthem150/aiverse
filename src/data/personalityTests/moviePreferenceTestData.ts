@@ -395,12 +395,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💖 로맨틱 코미디 애호가', '🎭 드라마/멜로 통달자'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10014">매드 맥스: 분노의 도로</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10015">존 윅 시리즈</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10016">다크 나이트</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10017">인셉션</a>',
-        ],
+        movies: ['매드 맥스: 분노의 도로', '존 윅 시리즈', '다크 나이트', '인셉션'],
         tips: [
           '영화의 디테일한 설정이나 메시지에도 관심을 가져보세요.',
           '때로는 블록버스터가 아닌 인디 스릴러 영화도 색다른 즐거움을 줄 수 있어요.',
@@ -424,12 +419,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💥 액션/스릴러 매니아', '👻 공포/미스터리 추적자'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10018">어바웃 타임</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10019">라라랜드</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10020">비긴 어게인</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10021">김종욱 찾기</a>',
-        ],
+        movies: ['어바웃 타임', '라라랜드', '비긴 어게인', '김종욱 찾기'],
         tips: [
           '로맨틱 코미디 외에 다양한 장르의 로맨스 영화도 시도해 보세요.',
           '영화 속 유머 코드에서 얻은 영감으로 일상을 더 즐겁게 만들어 보세요.',
@@ -460,12 +450,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['🧐 다큐멘터리 지식인', '🖼️ 독립/예술 영화 감별사'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10022">듄 시리즈</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10023">블레이드 러너 2049</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10024">마블 시네마틱 유니버스</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10025">해리포터 시리즈</a>',
-        ],
+        movies: ['듄 시리즈', '블레이드 러너 2049', '마블 시네마틱 유니버스', '해리포터 시리즈'],
         tips: [
           '영화의 배경이 된 과학적/사회적 이론을 찾아보는 것도 흥미로울 거예요.',
           '판타지/SF 웹툰이나 소설도 즐겨보세요. 당신의 세계관을 더 넓혀줄 거예요.',
@@ -489,13 +474,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💥 액션/스릴러 매니아', '👻 공포/미스터리 추적자'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10026">클래식</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10027">말모이</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10028">나의 특별한 형제</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10029">기생충</a> (드라마적 요소)',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10030">윤희에게</a>',
-        ],
+        movies: ['클래식', '말모이', '나의 특별한 형제', '기생충', '윤희에게'],
         tips: [
           '영화가 던지는 질문에 대해 스스로 답을 찾아보는 시간을 가져보세요.',
           '감동적인 이야기가 담긴 책이나 연극을 접해보는 것도 좋을 거예요.',
@@ -519,12 +498,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💖 로맨틱 코미디 애호가'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10031">나의 문어 선생님</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10032">소셜 딜레마</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10033">인사이드 잡</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10034">환상의 빛</a>',
-        ],
+        movies: ['나의 문어 선생님', '소셜 딜레마', '인사이드 잡', '환상의 빛'],
         tips: [
           '영화에서 얻은 정보를 바탕으로 관련 서적이나 전문가 강연을 찾아보세요.',
           '다큐멘터리 외에 실제 사건을 다룬 스릴러나 드라마 영화도 흥미로울 거예요.',
@@ -548,12 +522,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['👻 공포/미스터리 추적자', '🧐 다큐멘터리 지식인'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10035">너의 이름은.</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10036">코코</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10037">토이 스토리 4</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10038">센과 치히로의 행방불명</a>',
-        ],
+        movies: ['너의 이름은.', '코코', '토이 스토리 4', '센과 치히로의 행방불명'],
         tips: [
           '영화 속 캐릭터를 직접 그려보거나 관련 굿즈를 모아보는 것도 즐거울 거예요.',
           '애니메이션 원작의 만화책이나 소설을 찾아보는 것도 좋은 방법입니다.',
@@ -577,12 +546,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💖 로맨틱 코미디 애호가', '🧚 애니메이션/환상 동화형'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10039">컨저링 유니버스</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10040">살인의 추억</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10041">콜 미 바이 유어 네임</a> (멜로, 서스펜스)',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10042">아가씨</a> (스릴러, 미스터리)',
-        ],
+        movies: ['컨저링 유니버스', '살인의 추억', '콜 미 바이 유어 네임', '아가씨'],
         tips: [
           '영화 속 단서들을 직접 추리하며 보는 것도 즐거울 거예요.',
           '영화에 사용된 심리학적 기법이나 연출 방식을 분석해 보세요.',
@@ -606,12 +570,7 @@ export const moviePreferenceTestData: PersonalityTestData = {
         avoid: ['💥 액션/스릴러 매니아', '💖 로맨틱 코미디 애호가'],
       },
       recommendations: {
-        movies: [
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10043">타오르는 여인의 초상</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10044">어느 가족</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10045">클로저</a>',
-          '<a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=10046">로마</a>',
-        ],
+        movies: ['타오르는 여인의 초상', '어느 가족', '클로저', '로마'],
         tips: [
           '영화에 대한 전문 비평이나 감독의 인터뷰를 찾아보며 깊이를 더해보세요.',
           '독립 영화 페스티벌이나 예술 영화 상영회에 참여해 보는 것도 좋아요.',

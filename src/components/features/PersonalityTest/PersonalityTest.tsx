@@ -189,43 +189,57 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             </StyledSection>
 
             <StyledSection>
-              <Typography variant="h5">✨ 주요 특징</Typography>
+              <Typography variant="h5" responsive>
+                ✨ 주요 특징
+              </Typography>
               <StyledTraits>
                 {result.traits.map((trait, index) => (
-                  <StyledTraitTag key={index}>{trait}</StyledTraitTag>
+                  <StyledTraitTag key={index}>
+                    <Typography variant="label" color="white" responsive>
+                      {trait}
+                    </Typography>
+                  </StyledTraitTag>
                 ))}
               </StyledTraits>
             </StyledSection>
 
             {result.compatibility && (
               <StyledSection>
-                <Typography variant="h5">💕 궁합</Typography>
+                <Typography variant="h5" responsive>
+                  💕 궁합
+                </Typography>
                 <StyledCompatibility>
                   {Array.isArray(result.compatibility.best) &&
                     result.compatibility.best.length > 0 && (
                       <StyledCompatItem>
-                        <Typography variant="body2" color="#10B981">
+                        <Typography variant="body2" color="#10B981" responsive>
                           최고 궁합:
                         </Typography>
-                        <span>{result.compatibility.best.join(', ')}</span>
+                        <Typography variant="body1" responsive>
+                          {result.compatibility.best.join(', ')}{' '}
+                        </Typography>
                       </StyledCompatItem>
                     )}
                   {Array.isArray(result.compatibility.good) &&
                     result.compatibility.good.length > 0 && (
                       <StyledCompatItem>
-                        <Typography variant="body2" color="#F59E0B">
+                        <Typography variant="body2" color="#F59E0B" responsive>
                           좋은 궁합:
                         </Typography>
-                        <span>{result.compatibility.good.join(', ')}</span>
+                        <Typography variant="body1" responsive>
+                          {result.compatibility.good.join(', ')}
+                        </Typography>
                       </StyledCompatItem>
                     )}
                   {Array.isArray(result.compatibility.avoid) &&
                     result.compatibility.avoid.length > 0 && (
                       <StyledCompatItem>
-                        <Typography variant="body2" color="#EF4444">
+                        <Typography variant="body2" color="#EF4444" responsive>
                           피해야 할:
                         </Typography>
-                        <span>{result.compatibility.avoid.join(', ')}</span>
+                        <Typography variant="body1" responsive>
+                          {result.compatibility.avoid.join(', ')}
+                        </Typography>
                       </StyledCompatItem>
                     )}
                 </StyledCompatibility>
@@ -235,7 +249,9 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 게임 추천 섹션 */}
             {result.recommendations.games && result.recommendations.games.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🎮 추천 게임</Typography>
+                <Typography variant="h5" responsive>
+                  🎮 추천 게임
+                </Typography>
                 <StyledGamesGrid>
                   {result.recommendations.games.map((game, index) => (
                     <StyledGameCard
@@ -245,7 +261,11 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
                       rel="noopener noreferrer"
                     >
                       <StyledGameInfo>
-                        <StyledGameName>{game.name}</StyledGameName>
+                        <StyledGameName>
+                          <Typography variant="h6" responsive>
+                            {game.name}
+                          </Typography>
+                        </StyledGameName>
                         <StyledGamePlatform>
                           {game.url.includes('steam')
                             ? 'Steam'
@@ -266,18 +286,24 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {((result.recommendations.activities && result.recommendations.activities.length > 0) ||
               (result.recommendations.tips && result.recommendations.tips.length > 0)) && (
               <StyledSection>
-                <Typography variant="h5">🎯 추천사항</Typography>
+                <Typography variant="h5" responsive>
+                  🎯 추천사항
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.activities &&
                     result.recommendations.activities.map((activity, index) => (
                       <StyledRecommendationItem key={`activity-${index}`}>
-                        {activity}
+                        <Typography variant="body1" responsive>
+                          {activity}
+                        </Typography>
                       </StyledRecommendationItem>
                     ))}
                   {result.recommendations.tips &&
                     result.recommendations.tips.map((tip, index) => (
                       <StyledRecommendationItem key={`tip-${index}`}>
-                        {tip}
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
                       </StyledRecommendationItem>
                     ))}
                 </StyledRecommendations>
@@ -287,10 +313,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 해시태그 섹션 */}
             {result.recommendations.hashtags && result.recommendations.hashtags.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">#️⃣ 추천 해시태그</Typography>
+                <Typography variant="h5" responsive>
+                  #️⃣ 추천 해시태그
+                </Typography>
                 <StyledTagsGrid>
                   {result.recommendations.hashtags.map((tag, index) => (
-                    <StyledTag key={index}>{tag}</StyledTag>
+                    <StyledTag key={index}>
+                      <Typography variant="label" color="white" responsive>
+                        {tag}
+                      </Typography>
+                    </StyledTag>
                   ))}
                 </StyledTagsGrid>
               </StyledSection>
@@ -299,10 +331,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* K-pop 그룹 섹션 */}
             {result.recommendations.kpopGroups && result.recommendations.kpopGroups.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🎵 추천 K-pop 그룹</Typography>
+                <Typography variant="h5" responsive>
+                  🎵 추천 K-pop 그룹
+                </Typography>
                 <StyledKpopGroups>
                   {result.recommendations.kpopGroups.map((group, index) => (
-                    <StyledKpopTag key={index}>{group}</StyledKpopTag>
+                    <StyledKpopTag key={index}>
+                      <Typography variant="label" color="white" responsive>
+                        {group}
+                      </Typography>
+                    </StyledKpopTag>
                   ))}
                 </StyledKpopGroups>
               </StyledSection>
@@ -312,10 +350,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.celebrities &&
               result.recommendations.celebrities.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">👑 닮은 연예인</Typography>
+                  <Typography variant="h5" responsive>
+                    👑 닮은 연예인
+                  </Typography>
                   <StyledCelebrities>
                     {result.recommendations.celebrities.map((celeb, index) => (
-                      <StyledCelebTag key={index}>{celeb}</StyledCelebTag>
+                      <StyledCelebTag key={index}>
+                        <Typography variant="label" color="white" responsive>
+                          {celeb}
+                        </Typography>
+                      </StyledCelebTag>
                     ))}
                   </StyledCelebrities>
                 </StyledSection>
@@ -324,10 +368,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* OTT 콘텐츠 섹션 */}
             {result.recommendations.ottContent && result.recommendations.ottContent.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">📺 추천 콘텐츠</Typography>
+                <Typography variant="h5" responsive>
+                  📺 추천 콘텐츠
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.ottContent.map((content, index) => (
-                    <StyledRecommendationItem key={index}>{content}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {content}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>
@@ -336,10 +386,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 영화 추천 섹션 */}
             {result.recommendations.movies && result.recommendations.movies.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🎬 추천 영화</Typography>
+                <Typography variant="h5" responsive>
+                  🎬 추천 영화
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.movies.map((movie, index) => (
-                    <StyledRecommendationItem key={index}>{movie}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {movie}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>
@@ -349,10 +405,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.destinations &&
               result.recommendations.destinations.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">✈️ 추천 여행지</Typography>
+                  <Typography variant="h5" responsive>
+                    ✈️ 추천 여행지
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.destinations.map((destination, index) => (
-                      <StyledRecommendationItem key={index}>{destination}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {destination}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -361,10 +423,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 게임 장르 섹션 */}
             {result.recommendations.gameGenres && result.recommendations.gameGenres.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🎮 추천 게임 장르</Typography>
+                <Typography variant="h5" responsive>
+                  🎮 추천 게임 장르
+                </Typography>
                 <StyledTagsGrid>
                   {result.recommendations.gameGenres.map((genre, index) => (
-                    <StyledTag key={index}>{genre}</StyledTag>
+                    <StyledTag key={index}>
+                      <Typography variant="label" color="white" responsive>
+                        {genre}
+                      </Typography>
+                    </StyledTag>
                   ))}
                 </StyledTagsGrid>
               </StyledSection>
@@ -374,10 +442,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.communicationTips &&
               result.recommendations.communicationTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">🗣️ 대화 스킬 UP 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    🗣️ 대화 스킬 UP 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.communicationTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -387,10 +461,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.conflictStrategies &&
               result.recommendations.conflictStrategies.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">🤝 갈등 해결 전략</Typography>
+                  <Typography variant="h5" responsive>
+                    🤝 갈등 해결 전략
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.conflictStrategies.map((strategy, index) => (
-                      <StyledRecommendationItem key={index}>{strategy}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {strategy}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -399,10 +479,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 데이팅 팁 섹션 */}
             {result.recommendations.datingTips && result.recommendations.datingTips.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">❤️‍🔥 데이팅 팁</Typography>
+                <Typography variant="h5" responsive>
+                  ❤️‍🔥 데이팅 팁
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.datingTips.map((tip, index) => (
-                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {tip}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>
@@ -412,10 +498,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.decisionMakingTips &&
               result.recommendations.decisionMakingTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">💡 현명한 결정 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    💡 현명한 결정 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.decisionMakingTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -425,10 +517,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.relationshipTips &&
               result.recommendations.relationshipTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">💞 관계 발전 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    💞 관계 발전 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.relationshipTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -437,10 +535,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 선물 아이디어 섹션 */}
             {result.recommendations.giftIdeas && result.recommendations.giftIdeas.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🎁 추천 선물 아이디어</Typography>
+                <Typography variant="h5" responsive>
+                  🎁 추천 선물 아이디어
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.giftIdeas.map((idea, index) => (
-                    <StyledRecommendationItem key={index}>{idea}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {idea}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>
@@ -450,10 +554,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.burnoutTips &&
               result.recommendations.burnoutTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">🔥 번아웃 극복 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    🔥 번아웃 극복 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.burnoutTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -463,10 +573,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.spendingTips &&
               result.recommendations.spendingTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">💰 현명한 소비 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    💰 현명한 소비 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.spendingTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -476,10 +592,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {result.recommendations.godsaengTips &&
               result.recommendations.godsaengTips.length > 0 && (
                 <StyledSection>
-                  <Typography variant="h5">👑 갓생 위한 팁</Typography>
+                  <Typography variant="h5" responsive>
+                    👑 갓생 위한 팁
+                  </Typography>
                   <StyledRecommendations>
                     {result.recommendations.godsaengTips.map((tip, index) => (
-                      <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                      <StyledRecommendationItem key={index}>
+                        <Typography variant="body1" responsive>
+                          {tip}
+                        </Typography>
+                      </StyledRecommendationItem>
                     ))}
                   </StyledRecommendations>
                 </StyledSection>
@@ -488,10 +610,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* MBTI 활용 팁 섹션 */}
             {result.recommendations.mbtiTips && result.recommendations.mbtiTips.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🧐 MBTI 활용 팁</Typography>
+                <Typography variant="h5" responsive>
+                  🧐 MBTI 활용 팁
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.mbtiTips.map((tip, index) => (
-                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {tip}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>
@@ -500,10 +628,16 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
             {/* 여행 팁 섹션 */}
             {result.recommendations.travelTips && result.recommendations.travelTips.length > 0 && (
               <StyledSection>
-                <Typography variant="h5">🗺️ 여행 꿀팁</Typography>
+                <Typography variant="h5" responsive>
+                  🗺️ 여행 꿀팁
+                </Typography>
                 <StyledRecommendations>
                   {result.recommendations.travelTips.map((tip, index) => (
-                    <StyledRecommendationItem key={index}>{tip}</StyledRecommendationItem>
+                    <StyledRecommendationItem key={index}>
+                      <Typography variant="body1" responsive>
+                        {tip}
+                      </Typography>
+                    </StyledRecommendationItem>
                   ))}
                 </StyledRecommendations>
               </StyledSection>

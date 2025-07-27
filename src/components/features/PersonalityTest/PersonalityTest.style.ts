@@ -249,6 +249,11 @@ export const StyledSection = styled.div`
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
   border: 1px solid ${({ theme }) => (theme as Theme).colors.border.primary};
   box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.small};
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
   transition: all
     ${({ theme }) =>
       `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
@@ -264,25 +269,6 @@ export const StyledSection = styled.div`
   @media (max-width: 480px) {
     padding: ${({ theme }) => (theme as Theme).spacing.md};
   }
-
-  h5 {
-    margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
-    color: ${({ theme }) => (theme as Theme).colors.text.primary};
-    display: flex;
-    align-items: center;
-    gap: ${({ theme }) => (theme as Theme).spacing.sm};
-
-    &::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        ${({ theme }) => (theme as Theme).colors.border.primary} 0%,
-        transparent 100%
-      );
-    }
-  }
 `;
 
 export const StyledTraits = styled.div`
@@ -295,10 +281,7 @@ export const StyledTraits = styled.div`
 export const StyledTraitTag = styled.span`
   padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.lg}`};
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.full};
-  font-size: 0.875rem;
-  font-weight: 600;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
   transition: all
     ${({ theme }) =>
@@ -307,6 +290,13 @@ export const StyledTraitTag = styled.span`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.xs} ${(theme as Theme).spacing.md}`};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.xs} ${(theme as Theme).spacing.sm}`};
   }
 `;
 
@@ -349,6 +339,15 @@ export const StyledGamesGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: ${({ theme }) => (theme as Theme).spacing.md};
   margin-top: ${({ theme }) => (theme as Theme).spacing.md};
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: ${({ theme }) => (theme as Theme).spacing.sm};
+  }
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => (theme as Theme).spacing.xs};
+  }
 `;
 
 export const StyledGameCard = styled.a`
@@ -376,6 +375,22 @@ export const StyledGameCard = styled.a`
     font-size: 2rem;
     flex-shrink: 0;
   }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
+    gap: ${({ theme }) => (theme as Theme).spacing.sm};
+
+    &::before {
+      font-size: 1.75rem;
+    }
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.sm};
+
+    &::before {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 export const StyledGameInfo = styled.div`
@@ -383,8 +398,6 @@ export const StyledGameInfo = styled.div`
 `;
 
 export const StyledGameName = styled.div`
-  font-weight: 600;
-  font-size: 1rem;
   margin-bottom: 4px;
   color: ${({ theme }) => (theme as Theme).colors.text.primary};
 `;
@@ -392,6 +405,13 @@ export const StyledGameName = styled.div`
 export const StyledGamePlatform = styled.div`
   font-size: 0.875rem;
   color: ${({ theme }) => (theme as Theme).colors.text.tertiary};
+
+  @media (max-width: 768px) {
+    font-size: 0.8125rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+  }
 `;
 
 export const StyledRecommendations = styled.div`
@@ -400,7 +420,7 @@ export const StyledRecommendations = styled.div`
 
 export const StyledRecommendationItem = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: ${({ theme }) => (theme as Theme).spacing.sm};
   margin-bottom: ${({ theme }) => (theme as Theme).spacing.md};
   padding: ${({ theme }) => (theme as Theme).spacing.md};
@@ -410,6 +430,10 @@ export const StyledRecommendationItem = styled.div`
   transition: all
     ${({ theme }) =>
       `${(theme as Theme).animation.duration.normal} ${(theme as Theme).animation.easing.easeInOut}`};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.sm};
+  }
 
   &:hover {
     background-color: ${({ theme }) => (theme as Theme).colors.background.tertiary};
@@ -446,6 +470,13 @@ export const StyledTag = styled.span`
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
   }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.sm}`};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.xs} ${(theme as Theme).spacing.sm}`};
+  }
 `;
 
 export const StyledKpopGroups = styled.div`
@@ -471,6 +502,13 @@ export const StyledKpopTag = styled.span`
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
   }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.sm}`};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.xs} ${(theme as Theme).spacing.sm}`};
+  }
 `;
 
 export const StyledCelebrities = styled.div`
@@ -495,6 +533,13 @@ export const StyledCelebTag = styled.span`
   &:hover {
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.sm} ${(theme as Theme).spacing.sm}`};
+  }
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => `${(theme as Theme).spacing.xs} ${(theme as Theme).spacing.sm}`};
   }
 `;
 
