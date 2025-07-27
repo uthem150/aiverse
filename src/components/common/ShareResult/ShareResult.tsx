@@ -232,8 +232,10 @@ const ShareResult = ({
   };
 
   const goToOtherTests = () => {
+    // 현재 테스트와 다른 테스트들을 추천
+    // 우선 테스트 목록 페이지로 이동
     navigate('/tests');
-    onClose();
+    onClose(); // 공유 모달 닫기
   };
 
   return (
