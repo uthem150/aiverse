@@ -2,21 +2,46 @@ import { useState } from 'react';
 import { ChevronLeft, RotateCcw, Zap } from 'lucide-react';
 import {
   StyledTetoEgneTest,
+  StyledGenderStep,
   StyledGenderSelector,
   StyledGenderOption,
+  StyledEmoji,
   StyledProgressBar,
+  StyledProgressText,
   StyledProgressFill,
   StyledQuestionCard,
+  StyledCategoryBadge,
   StyledOptionsGrid,
   StyledOption,
+  StyledOptionEmoji,
   StyledNavigationButtons,
   StyledResultDisplay,
+  StyledResultActions,
   StyledCategoryResultGrid,
   StyledCategoryCard,
+  StyledDominantType,
   StyledHormoneBar,
+  StyledBarLabels,
+  StyledTestoLabel,
+  StyledEstrogenLabel,
   StyledHormoneBarFill,
   StyledOverallResult,
+  StyledResultEmoji,
+  StyledOverallStats,
+  StyledStatItem,
   StyledAnalysisSection,
+  StyledAnalysisItem,
+  StyledTags,
+  StyledTag,
+  StyledCharacteristics,
+  StyledCharacteristicItem,
+  StyledRecommendations,
+  StyledRecommendationItem,
+  StyledCompatibleTypes,
+  StyledTips,
+  StyledTipItem,
+  StyledFunFactsList,
+  StyledFunFactItem,
 } from './TetoEgneTest.style';
 import Typography from '@/components/common/Typography/Typography';
 import Button from '@/components/common/Button/Button';
@@ -211,8 +236,6 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
     onComplete?.(finalResult);
   };
 
-  // 나머지 함수들 (goToNextQuestion, goToPreviousQuestion, resetTest)은 동일
-
   const goToNextQuestion = () => {
     if (!isLastQuestion) {
       setProgress(prev => ({
@@ -256,7 +279,7 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
   if (step === 'gender') {
     return (
       <StyledTetoEgneTest>
-        <div className="gender-step">
+        <StyledGenderStep>
           <Typography variant="h2" align="center">
             🧬 테토에겐 테스트
           </Typography>
@@ -266,27 +289,27 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
 
           <StyledGenderSelector>
             <StyledGenderOption onClick={() => handleGenderSelect('female')}>
-              <div className="emoji">👩</div>
+              <StyledEmoji>👩</StyledEmoji>
               <Typography variant="h5">여성</Typography>
             </StyledGenderOption>
 
             <StyledGenderOption onClick={() => handleGenderSelect('male')}>
-              <div className="emoji">👨</div>
+              <StyledEmoji>👨</StyledEmoji>
               <Typography variant="h5">남성</Typography>
             </StyledGenderOption>
           </StyledGenderSelector>
-        </div>
+        </StyledGenderStep>
       </StyledTetoEgneTest>
     );
   }
 
-  // 결과 표시 단계 (기존과 거의 동일하지만 데이터 기반으로 렌더링)
+  // 결과 표시 단계
   if (step === 'result' && result) {
     return (
       <StyledTetoEgneTest>
         <StyledResultDisplay>
           <StyledOverallResult>
-            <div className="result-emoji">{result.overall.emoji}</div>
+            <StyledResultEmoji>{result.overall.emoji}</StyledResultEmoji>
             <Typography variant="h2" align="center" color="#6366F1">
               {result.overall.title}
             </Typography>
@@ -294,20 +317,20 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
               {result.overall.description}
             </Typography>
 
-            <div className="overall-stats">
-              <div className="stat-item testo">
+            <StyledOverallStats>
+              <StyledStatItem type="testo">
                 <Typography variant="h3" color="#FF6B35">
                   {result.overall.testoPercentage}%
                 </Typography>
                 <Typography variant="body2">테토 지수</Typography>
-              </div>
-              <div className="stat-item estrogen">
+              </StyledStatItem>
+              <StyledStatItem type="estrogen">
                 <Typography variant="h3" color="#FF69B4">
                   {result.overall.estrogenPercentage}%
                 </Typography>
                 <Typography variant="body2">에겐 지수</Typography>
-              </div>
-            </div>
+              </StyledStatItem>
+            </StyledOverallStats>
           </StyledOverallResult>
 
           <StyledCategoryResultGrid>
@@ -319,13 +342,13 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
 
                 <StyledHormoneBar>
                   <StyledHormoneBarFill percentage={categoryResult.testoPercentage} type="testo" />
-                  <div className="bar-labels">
-                    <span className="testo-label">{categoryResult.testoPercentage}%</span>
-                    <span className="estrogen-label">{categoryResult.estrogenPercentage}%</span>
-                  </div>
+                  <StyledBarLabels>
+                    <StyledTestoLabel>{categoryResult.testoPercentage}%</StyledTestoLabel>
+                    <StyledEstrogenLabel>{categoryResult.estrogenPercentage}%</StyledEstrogenLabel>
+                  </StyledBarLabels>
                 </StyledHormoneBar>
 
-                <div className="dominant-type">
+                <StyledDominantType>
                   <Typography variant="caption" color="#6B7280">
                     {categoryResult.dominantType === 'balanced'
                       ? '균형'
@@ -333,80 +356,80 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
                         ? '테토 우세'
                         : '에겐 우세'}
                   </Typography>
-                </div>
+                </StyledDominantType>
               </StyledCategoryCard>
             ))}
           </StyledCategoryResultGrid>
 
           <StyledAnalysisSection>
-            <div className="analysis-item">
+            <StyledAnalysisItem>
               <Typography variant="h5">💪 주요 강점</Typography>
-              <div className="tags">
+              <StyledTags>
                 {result.analysis.strengths.map((strength, index) => (
-                  <span key={index} className="tag strength-tag">
+                  <StyledTag key={index} variant="strength">
                     {strength}
-                  </span>
+                  </StyledTag>
                 ))}
-              </div>
-            </div>
+              </StyledTags>
+            </StyledAnalysisItem>
 
-            <div className="analysis-item">
+            <StyledAnalysisItem>
               <Typography variant="h5">✨ 성향 특징</Typography>
-              <div className="characteristics">
+              <StyledCharacteristics>
                 {result.analysis.characteristics.map((char, index) => (
-                  <div key={index} className="characteristic-item">
+                  <StyledCharacteristicItem key={index}>
                     • {char}
-                  </div>
+                  </StyledCharacteristicItem>
                 ))}
-              </div>
-            </div>
+              </StyledCharacteristics>
+            </StyledAnalysisItem>
 
-            <div className="analysis-item">
+            <StyledAnalysisItem>
               <Typography variant="h5">🎯 추천 활동</Typography>
-              <div className="recommendations">
+              <StyledRecommendations>
                 {result.analysis.recommendations.map((rec, index) => (
-                  <div key={index} className="recommendation-item">
+                  <StyledRecommendationItem key={index}>
                     • {rec}
-                  </div>
+                  </StyledRecommendationItem>
                 ))}
-              </div>
-            </div>
+              </StyledRecommendations>
+            </StyledAnalysisItem>
 
-            <div className="analysis-item">
+            <StyledAnalysisItem>
               <Typography variant="h5">💕 잘 맞는 타입</Typography>
-              <div className="compatible-types">
+              <StyledCompatibleTypes>
                 {result.analysis.compatibleTypes.map((type, index) => (
-                  <span key={index} className="tag compatible-tag">
+                  <StyledTag key={index} variant="compatible">
                     {type}
-                  </span>
+                  </StyledTag>
                 ))}
-              </div>
-            </div>
+              </StyledCompatibleTypes>
+            </StyledAnalysisItem>
 
-            <div className="analysis-item">
+            <StyledAnalysisItem>
               <Typography variant="h5">💡 개인화 팁</Typography>
-              <div className="tips">
+              <StyledTips>
                 {result.analysis.tips.map((tip, index) => (
-                  <div key={index} className="tip-item">
+                  <StyledTipItem key={index}>
                     • {tip}
-                  </div>
+                  </StyledTipItem>
                 ))}
-              </div>
-            </div>
+              </StyledTips>
+            </StyledAnalysisItem>
 
-            <div className="analysis-item fun-facts">
+            <StyledAnalysisItem>
               <Typography variant="h5">🎉 재미있는 분석</Typography>
-              <div className="fun-facts-list">
+              <StyledFunFactsList>
                 {result.analysis.funFacts.map((fact, index) => (
-                  <div key={index} className="fun-fact-item">
+                  <StyledFunFactItem key={index}>
                     {fact}
-                  </div>
+                  </StyledFunFactItem>
                 ))}
-              </div>
-            </div>
+              </StyledFunFactsList>
+            </StyledAnalysisItem>
           </StyledAnalysisSection>
 
-          <div className="result-actions">
+          <StyledResultActions>
             <Button variant="secondary" onClick={resetTest}>
               <RotateCcw size={16} />
               다시 테스트
@@ -414,7 +437,7 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
             <Button variant="primary" onClick={() => setShowShareResult(true)}>
               결과 공유하기
             </Button>
-          </div>
+          </StyledResultActions>
 
           {showShareResult && (
             <ShareResult
@@ -432,23 +455,23 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
     );
   }
 
-  // 테스트 진행 단계 (기존과 동일)
+  // 테스트 진행 단계
   return (
     <StyledTetoEgneTest>
       <StyledProgressBar>
         <StyledProgressFill percentage={progressPercentage} />
-        <div className="progress-text">
+        <StyledProgressText>
           <Typography variant="caption">
             {progress.currentQuestionIndex + 1} / {testData.questions.length}
           </Typography>
-        </div>
+        </StyledProgressText>
       </StyledProgressBar>
 
       <StyledQuestionCard>
-        <div className="category-badge">
+        <StyledCategoryBadge>
           <Zap size={16} />
           <Typography variant="caption">{categoryNames[currentQuestion?.category]}</Typography>
-        </div>
+        </StyledCategoryBadge>
 
         <Typography variant="h4" align="center">
           Q{progress.currentQuestionIndex + 1}. {currentQuestion?.question}
@@ -461,7 +484,7 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
               selected={selectedOptionId === option.id}
               onClick={() => handleOptionSelect(option.id)}
             >
-              {option.emoji && <span className="emoji">{option.emoji}</span>}
+              {option.emoji && <StyledOptionEmoji>{option.emoji}</StyledOptionEmoji>}
               <Typography variant="body1">{option.text}</Typography>
             </StyledOption>
           ))}
