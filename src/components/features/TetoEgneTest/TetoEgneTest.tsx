@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, RotateCcw, Zap } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCcw, Zap } from 'lucide-react';
 import {
   StyledTetoEgneTest,
   StyledGenderStep,
@@ -280,22 +280,26 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
     return (
       <StyledTetoEgneTest>
         <StyledGenderStep>
-          <Typography variant="h2" align="center">
+          <Typography variant="h2" align="center" responsive>
             🧬 테토에겐 테스트
           </Typography>
-          <Typography variant="body1" align="center" color="#6B7280">
+          <Typography variant="body1" align="center" color="#6B7280" responsive>
             더 정확한 분석을 위해 성별을 선택해주세요
           </Typography>
 
           <StyledGenderSelector>
             <StyledGenderOption onClick={() => handleGenderSelect('female')}>
               <StyledEmoji>👩</StyledEmoji>
-              <Typography variant="h5">여성</Typography>
+              <Typography variant="h5" responsive>
+                여성
+              </Typography>
             </StyledGenderOption>
 
             <StyledGenderOption onClick={() => handleGenderSelect('male')}>
               <StyledEmoji>👨</StyledEmoji>
-              <Typography variant="h5">남성</Typography>
+              <Typography variant="h5" responsive>
+                남성
+              </Typography>
             </StyledGenderOption>
           </StyledGenderSelector>
         </StyledGenderStep>
@@ -310,25 +314,29 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
         <StyledResultDisplay>
           <StyledOverallResult>
             <StyledResultEmoji>{result.overall.emoji}</StyledResultEmoji>
-            <Typography variant="h2" align="center" color="#6366F1">
+            <Typography variant="h2" align="center" color="#6366F1" responsive>
               {result.overall.title}
             </Typography>
-            <Typography variant="body1" align="center">
+            <Typography variant="body1" align="center" responsive>
               {result.overall.description}
             </Typography>
 
             <StyledOverallStats>
               <StyledStatItem type="testo">
-                <Typography variant="h3" color="#FF6B35">
+                <Typography variant="h3" color="#FF6B35" responsive>
                   {result.overall.testoPercentage}%
                 </Typography>
-                <Typography variant="body2">테토 지수</Typography>
+                <Typography variant="body2" responsive>
+                  테토 지수
+                </Typography>
               </StyledStatItem>
               <StyledStatItem type="estrogen">
-                <Typography variant="h3" color="#FF69B4">
+                <Typography variant="h3" color="#FF69B4" responsive>
                   {result.overall.estrogenPercentage}%
                 </Typography>
-                <Typography variant="body2">에겐 지수</Typography>
+                <Typography variant="body2" responsive>
+                  에겐 지수
+                </Typography>
               </StyledStatItem>
             </StyledOverallStats>
           </StyledOverallResult>
@@ -336,7 +344,7 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
           <StyledCategoryResultGrid>
             {Object.entries(result.categories).map(([category, categoryResult]) => (
               <StyledCategoryCard key={category}>
-                <Typography variant="h6" align="center">
+                <Typography variant="h6" align="center" responsive>
                   {categoryNames[category as keyof typeof categoryNames]}
                 </Typography>
 
@@ -349,7 +357,7 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
                 </StyledHormoneBar>
 
                 <StyledDominantType>
-                  <Typography variant="caption" color="#6B7280">
+                  <Typography variant="caption" color="#6B7280" responsive>
                     {categoryResult.dominantType === 'balanced'
                       ? '균형'
                       : categoryResult.dominantType === 'testo'
@@ -363,66 +371,90 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
 
           <StyledAnalysisSection>
             <StyledAnalysisItem>
-              <Typography variant="h5">💪 주요 강점</Typography>
+              <Typography variant="h5" responsive>
+                💪 주요 강점
+              </Typography>
               <StyledTags>
                 {result.analysis.strengths.map((strength, index) => (
                   <StyledTag key={index} variant="strength">
-                    {strength}
+                    <Typography variant="label" color="white" responsive>
+                      {strength}
+                    </Typography>
                   </StyledTag>
                 ))}
               </StyledTags>
             </StyledAnalysisItem>
 
             <StyledAnalysisItem>
-              <Typography variant="h5">✨ 성향 특징</Typography>
+              <Typography variant="h5" responsive>
+                ✨ 성향 특징
+              </Typography>
               <StyledCharacteristics>
                 {result.analysis.characteristics.map((char, index) => (
                   <StyledCharacteristicItem key={index}>
-                    • {char}
+                    <Typography variant="body1" responsive>
+                      {char}
+                    </Typography>
                   </StyledCharacteristicItem>
                 ))}
               </StyledCharacteristics>
             </StyledAnalysisItem>
 
             <StyledAnalysisItem>
-              <Typography variant="h5">🎯 추천 활동</Typography>
+              <Typography variant="h5" responsive>
+                🎯 추천 활동
+              </Typography>
               <StyledRecommendations>
                 {result.analysis.recommendations.map((rec, index) => (
                   <StyledRecommendationItem key={index}>
-                    • {rec}
+                    <Typography variant="body1" responsive>
+                      {rec}
+                    </Typography>
                   </StyledRecommendationItem>
                 ))}
               </StyledRecommendations>
             </StyledAnalysisItem>
 
             <StyledAnalysisItem>
-              <Typography variant="h5">💕 잘 맞는 타입</Typography>
+              <Typography variant="h5" responsive>
+                💕 잘 맞는 타입
+              </Typography>
               <StyledCompatibleTypes>
                 {result.analysis.compatibleTypes.map((type, index) => (
                   <StyledTag key={index} variant="compatible">
-                    {type}
+                    <Typography variant="label" color="white" responsive>
+                      {type}
+                    </Typography>
                   </StyledTag>
                 ))}
               </StyledCompatibleTypes>
             </StyledAnalysisItem>
 
             <StyledAnalysisItem>
-              <Typography variant="h5">💡 개인화 팁</Typography>
+              <Typography variant="h5" responsive>
+                💡 개인화 팁
+              </Typography>
               <StyledTips>
                 {result.analysis.tips.map((tip, index) => (
                   <StyledTipItem key={index}>
-                    • {tip}
+                    <Typography variant="body1" responsive>
+                      {tip}
+                    </Typography>
                   </StyledTipItem>
                 ))}
               </StyledTips>
             </StyledAnalysisItem>
 
             <StyledAnalysisItem>
-              <Typography variant="h5">🎉 재미있는 분석</Typography>
+              <Typography variant="h5" responsive>
+                🎉 재미있는 분석
+              </Typography>
               <StyledFunFactsList>
                 {result.analysis.funFacts.map((fact, index) => (
                   <StyledFunFactItem key={index}>
-                    {fact}
+                    <Typography variant="body1" responsive>
+                      {fact}
+                    </Typography>
                   </StyledFunFactItem>
                 ))}
               </StyledFunFactsList>
@@ -470,10 +502,12 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
       <StyledQuestionCard>
         <StyledCategoryBadge>
           <Zap size={16} />
-          <Typography variant="caption">{categoryNames[currentQuestion?.category]}</Typography>
+          <Typography variant="caption" responsive>
+            {categoryNames[currentQuestion?.category]}
+          </Typography>
         </StyledCategoryBadge>
 
-        <Typography variant="h4" align="center">
+        <Typography variant="h4" align="center" responsive>
           Q{progress.currentQuestionIndex + 1}. {currentQuestion?.question}
         </Typography>
 
@@ -485,7 +519,9 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
               onClick={() => handleOptionSelect(option.id)}
             >
               {option.emoji && <StyledOptionEmoji>{option.emoji}</StyledOptionEmoji>}
-              <Typography variant="body1">{option.text}</Typography>
+              <Typography variant="body1" responsive>
+                {option.text}
+              </Typography>
             </StyledOption>
           ))}
         </StyledOptionsGrid>
@@ -505,6 +541,14 @@ const TetoEgneTest = ({ testData, onComplete }: TetoEgneTestProps) => {
           <RotateCcw size={16} />
           처음부터
         </Button>
+
+        {/* 다음 버튼 (선택사항 - 자동 진행되므로 필요에 따라) */}
+        {selectedOptionId && !isLastQuestion && (
+          <Button variant="primary" onClick={goToNextQuestion}>
+            다음
+            <ChevronRight size={16} />
+          </Button>
+        )}
       </StyledNavigationButtons>
     </StyledTetoEgneTest>
   );
