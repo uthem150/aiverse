@@ -157,7 +157,7 @@ const PersonalityTest = ({ testData, onComplete }: PersonalityTestProps) => {
   const selectedOptionId = progress.answers[currentQuestion?.id];
 
   // 디버깅용 점수 표시 (개발 중에만 사용)
-  const showDebugInfo = process.env.NODE_ENV === 'development';
+  // const showDebugInfo = process.env.NODE_ENV === 'development';
 
   if (result) {
     return (

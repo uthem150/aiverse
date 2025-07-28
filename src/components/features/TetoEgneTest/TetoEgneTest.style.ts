@@ -35,13 +35,6 @@ const fadeIn = keyframes`
   }
 `;
 
-// 태그 호버 애니메이션
-const scaleHover = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-`;
-
 // 결과 이모지 애니메이션
 const resultEmoji = keyframes`
   0% { transform: scale(1); }
