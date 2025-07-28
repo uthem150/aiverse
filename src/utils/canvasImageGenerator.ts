@@ -41,29 +41,77 @@ export class ResultImageGenerator {
     // 로고/브랜딩
     await this.drawBranding();
 
+    // 레이아웃 계산 (사용자 이미지 유무에 따라)
+    const hasUserImage = !!userImage;
+    const layout = this.calculateLayout(hasUserImage);
+
     // 사용자 이미지 (있는 경우)
     if (userImage) {
-      await this.drawUserImage(userImage);
-    }
-
-    // 결과 텍스트
-    await this.drawResultText(result, emoji, accentColor);
-
-    // 설명 텍스트
-    await this.drawDescription(description, accentColor);
-
-    // 신뢰도 (있는 경우)
-    if (confidence) {
-      await this.drawConfidence(confidence, accentColor);
+      await this.drawUserImage(userImage, layout.userImageY);
     }
 
     // 테스트 제목
-    await this.drawTestTitle(testTitle, accentColor);
+    await this.drawTestTitle(testTitle, accentColor, layout.testTitleY, layout.testTitleSize);
+
+    // 결과 텍스트 (이모지 + 텍스트)
+    await this.drawResultText(
+      result,
+      emoji,
+      accentColor,
+      layout.resultY,
+      layout.resultSize,
+      layout.emojiSize
+    );
+
+    // 설명 텍스트
+    await this.drawDescription(
+      description,
+      accentColor,
+      layout.descriptionY,
+      layout.descriptionSize
+    );
+
+    // 신뢰도 (있는 경우)
+    if (confidence) {
+      await this.drawConfidence(confidence, accentColor, layout.confidenceY, layout.confidenceSize);
+    }
 
     // 워터마크
     await this.drawWatermark();
 
     return this.canvas.toDataURL('image/png', 0.9);
+  }
+
+  private calculateLayout(hasUserImage: boolean) {
+    if (hasUserImage) {
+      // 사용자 이미지가 있을 때의 레이아웃
+      return {
+        testTitleY: 120,
+        testTitleSize: 20,
+        userImageY: 220,
+        resultY: 400,
+        resultSize: 42,
+        emojiSize: 48,
+        descriptionY: 490,
+        descriptionSize: 24,
+        confidenceY: 520,
+        confidenceSize: 18,
+      };
+    } else {
+      // 사용자 이미지가 없을 때의 레이아웃
+      return {
+        testTitleY: 180,
+        testTitleSize: 28,
+        userImageY: 0, // 사용하지 않음
+        resultY: 300,
+        resultSize: 52,
+        emojiSize: 64,
+        descriptionY: 400,
+        descriptionSize: 28,
+        confidenceY: 420,
+        confidenceSize: 22,
+      };
+    }
   }
 
   private clearCanvas() {
@@ -113,14 +161,14 @@ export class ResultImageGenerator {
     this.ctx.restore();
   }
 
-  private async drawUserImage(userImageSrc: string): Promise<void> {
+  private async drawUserImage(userImageSrc: string, yPosition: number): Promise<void> {
     return new Promise(resolve => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => {
         // 원형 마스크로 이미지 그리기
         const centerX = this.canvas.width / 2;
-        const centerY = 220;
+        const centerY = yPosition;
         const radius = 80;
 
         this.ctx.save();
@@ -163,28 +211,40 @@ export class ResultImageGenerator {
     });
   }
 
-  private async drawResultText(result: string, emoji: string, color: string) {
+  private async drawResultText(
+    result: string,
+    emoji: string,
+    color: string,
+    yPosition: number,
+    textSize: number,
+    emojiSize: number
+  ) {
     // 이모지
-    this.ctx.font = '48px Arial';
+    this.ctx.font = `${emojiSize}px Arial`;
     this.ctx.textAlign = 'center';
-    this.ctx.fillText(emoji, this.canvas.width / 2, 360);
+    this.ctx.fillText(emoji, this.canvas.width / 2, yPosition - 20);
 
     // 결과 텍스트
     this.ctx.fillStyle = color;
-    this.ctx.font = 'bold 42px Pretendard, sans-serif';
-    this.ctx.fillText(result, this.canvas.width / 2, 420);
+    this.ctx.font = `bold ${textSize}px Pretendard, sans-serif`;
+    this.ctx.fillText(result, this.canvas.width / 2, yPosition + 40);
   }
 
-  private async drawDescription(description: string, color: string) {
+  private async drawDescription(
+    description: string,
+    color: string,
+    yPosition: number,
+    fontSize: number
+  ) {
     this.ctx.fillStyle = color;
-    this.ctx.font = '24px Pretendard, sans-serif';
+    this.ctx.font = `${fontSize}px Pretendard, sans-serif`;
     this.ctx.textAlign = 'center';
 
     // 텍스트 줄바꿈 처리
     const words = description.split(' ');
     const lines = [];
     let currentLine = '';
-    const maxWidth = 600;
+    const maxWidth = 650; // 이미지가 없을 때 더 넓게
 
     for (const word of words) {
       const testLine = currentLine + word + ' ';
@@ -200,23 +260,34 @@ export class ResultImageGenerator {
     lines.push(currentLine.trim());
 
     // 줄별로 그리기
+    const lineHeight = fontSize * 1.4;
     lines.forEach((line, index) => {
-      this.ctx.fillText(line, this.canvas.width / 2, 460 + index * 35);
+      this.ctx.fillText(line, this.canvas.width / 2, yPosition + index * lineHeight);
     });
   }
 
-  private async drawConfidence(confidence: number, color: string) {
+  private async drawConfidence(
+    confidence: number,
+    color: string,
+    yPosition: number,
+    fontSize: number
+  ) {
     this.ctx.fillStyle = color;
-    this.ctx.font = '18px Pretendard, sans-serif';
+    this.ctx.font = `${fontSize}px Pretendard, sans-serif`;
     this.ctx.textAlign = 'center';
-    this.ctx.fillText(`신뢰도: ${confidence}%`, this.canvas.width / 2, 520);
+    this.ctx.fillText(`신뢰도: ${confidence}%`, this.canvas.width / 2, yPosition);
   }
 
-  private async drawTestTitle(testTitle: string, color: string) {
+  private async drawTestTitle(
+    testTitle: string,
+    color: string,
+    yPosition: number,
+    fontSize: number
+  ) {
     this.ctx.fillStyle = color;
-    this.ctx.font = '20px Pretendard, sans-serif';
+    this.ctx.font = `bold ${fontSize}px Pretendard, sans-serif`;
     this.ctx.textAlign = 'center';
-    this.ctx.fillText(testTitle, this.canvas.width / 2, 120);
+    this.ctx.fillText(testTitle, this.canvas.width / 2, yPosition);
   }
 
   private async drawWatermark() {
