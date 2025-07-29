@@ -42,6 +42,14 @@ export const StyledTestImage = styled.div`
   &:hover img {
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    height: 160px;
+  }
+
+  @media (max-width: 480px) {
+    height: 140px;
+  }
 `;
 
 export const StyledTestBadge = styled.div<BadgeProps>`

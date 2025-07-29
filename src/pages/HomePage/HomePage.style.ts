@@ -29,10 +29,28 @@ export const StyledHeroSection = styled.section`
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['4xl']};
+
+  @media (max-width: 768px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+    padding: ${({ theme }) => (theme as Theme).spacing['2xl']} 0;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
+    padding: ${({ theme }) => `${(theme as Theme).spacing['2xl']} ${(theme as Theme).spacing.md}`};
+  }
 `;
 
 export const StyledSection = styled.section`
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['4xl']};
+
+  @media (max-width: 768px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  }
 `;
 
 export const StyledSectionHeader = styled.div`
@@ -41,6 +59,14 @@ export const StyledSectionHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => (theme as Theme).spacing.sm};
+
+  @media (max-width: 768px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
 `;
 
 export const StyledStatsGrid = styled.div`
@@ -48,6 +74,14 @@ export const StyledStatsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: ${({ theme }) => (theme as Theme).spacing.xl};
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+
+  @media (max-width: 768px) {
+    gap: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => (theme as Theme).spacing.md};
+  }
 `;
 
 export const StyledStatsCard = styled.div`
@@ -64,12 +98,24 @@ export const StyledStatsCard = styled.div`
     box-shadow: ${({ theme }) => (theme as Theme).colors.shadow.medium};
     transform: translateY(-2px);
   }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
+  }
 `;
 
 export const StyledCategoryGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: ${({ theme }) => (theme as Theme).spacing.xl};
+
+  @media (max-width: 768px) {
+    gap: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    gap: ${({ theme }) => (theme as Theme).spacing.md};
+  }
 `;
 
 interface CategoryCardProps {
@@ -96,6 +142,14 @@ export const StyledCategoryCard = styled.div<CategoryCardProps>`
     transform: translateY(-4px);
     background: ${({ color }) => `${color}08`};
   }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.xl};
+  }
+
+  @media (max-width: 480px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
 `;
 
 export const StyledCategoryIcon = styled.div`
@@ -110,5 +164,11 @@ export const StyledTestGrid = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: ${({ theme }) => (theme as Theme).spacing.lg};
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => (theme as Theme).spacing.md};
   }
 `;

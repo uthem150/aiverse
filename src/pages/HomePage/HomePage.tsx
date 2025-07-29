@@ -35,6 +35,9 @@ const HomePage = () => {
 
   const totalTests = testCategories.flatMap(category => category.tests).length;
 
+  // **동적으로 계산된 카테고리 개수**
+  const totalCategories = testCategories.length;
+
   const handleTestClick = (testId: string) => {
     navigate(`/test/${testId}`);
   };
@@ -80,7 +83,7 @@ const HomePage = () => {
           </StyledStatsCard>
           <StyledStatsCard>
             <Typography variant="h3" color="#06B6D4">
-              4개
+              {totalCategories}개
             </Typography>
             <Typography variant="body2" color="#6B7280">
               테스트 카테고리

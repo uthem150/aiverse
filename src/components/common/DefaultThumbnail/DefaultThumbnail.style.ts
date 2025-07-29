@@ -22,7 +22,6 @@ export const StyledDefaultThumbnail = styled.div<StyledDefaultThumbnailProps>`
     ${({ backgroundColor }) => backgroundColor}CC 50%,
     ${({ backgroundColor }) => backgroundColor}B3 100%
   );
-  border-radius: ${({ theme }) => (theme as Theme).borderRadius.lg};
   overflow: hidden;
 
   /* 미세한 텍스처 효과 */
