@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock, Users, Star, Zap } from 'lucide-react';
+import { Clock, Star, Zap } from 'lucide-react';
 import {
   StyledTestCard,
   StyledTestImage,
@@ -22,15 +22,15 @@ const TestCard = ({ test, onClick }: TestCardProps) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
-  const formatParticipantCount = (count: number) => {
-    if (count >= 1000000) {
-      return `${Math.floor(count / 100000) / 10}M`;
-    }
-    if (count >= 1000) {
-      return `${Math.floor(count / 100) / 10}K`;
-    }
-    return count.toString();
-  };
+  // const formatParticipantCount = (count: number) => {
+  //   if (count >= 1000000) {
+  //     return `${Math.floor(count / 100000) / 10}M`;
+  //   }
+  //   if (count >= 1000) {
+  //     return `${Math.floor(count / 100) / 10}K`;
+  //   }
+  //   return count.toString();
+  // };
 
   // 테스트가 속한 카테고리 정보 찾기
   const category = testCategories.find(cat => cat.id === test.category);
