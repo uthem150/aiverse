@@ -4,50 +4,50 @@ import HomePage from '@/pages/HomePage/HomePage';
 import TestListPage from '@/pages/TestListPage/TestListPage';
 
 // AI 분석 테스트들
-import FaceAgeTestPage from '@/pages/tests/FaceAgeTest/FaceAgeTestPage';
-import FaceGradeTestPage from '@/pages/tests/FaceGradeTest/FaceGradeTestPage';
-import EyeTestPage from '@/pages/tests/EyeTest/EyeTestPage';
-import PersonalColorTestPage from '@/pages/tests/PersonalColorTest/PersonalColorTestPage';
-import HogwartsTestPage from '@/pages/tests/HogwartsTest/HogwartsTestPage';
-import FlowerTestPage from '@/pages/tests/FlowerTest/FlowerTestPage';
+import FaceAgeTestPage from '@/pages/tests/AI_Analysis/FaceAgeTest/FaceAgeTestPage';
+import FaceGradeTestPage from '@/pages/tests/AI_Analysis/FaceGradeTest/FaceGradeTestPage';
+import EyeTestPage from '@/pages/tests/AI_Analysis/EyeTest/EyeTestPage';
+import PersonalColorTestPage from '@/pages/tests/AI_Analysis/PersonalColorTest/PersonalColorTestPage';
+import HogwartsTestPage from '@/pages/tests/AI_Analysis/HogwartsTest/HogwartsTestPage';
+import FlowerTestPage from '@/pages/tests/AI_Analysis/FlowerTest/FlowerTestPage';
 
 // 성격/연애 테스트들
-import MbtiCompatibilityTestPage from '@/pages/tests/PersonalityTest/MbtiCompatibilityTest/MbtiCompatibilityTestPage';
-import LoveStyleTestPage from '@/pages/tests/PersonalityTest/LoveStyleTest/LoveStyleTestPage';
-import IdealTypeTestPage from '@/pages/tests/PersonalityTest/IdealTypeTest/IdealTypeTestPage';
-import BreakupCopingTestPage from '@/pages/tests/PersonalityTest/BreakupCopingTest/BreakupCopingTestPage';
-import CommunicationStyleTestPage from '@/pages/tests/PersonalityTest/CommunicationStyleTest/CommunicationStyleTestPage';
-import ConflictCopingTestPage from '@/pages/tests/PersonalityTest/ConflictCopingTest/ConflictCopingTestPage';
-import ConflictResolutionStyleTestPage from '@/pages/tests/PersonalityTest/ConflictResolutionStyleTest/ConflictResolutionStyleTestPage';
-import DatingMethodTestPage from '@/pages/tests/PersonalityTest/DatingMethodTest/DatingMethodTestPage';
-import DatingStyleTestPage from '@/pages/tests/PersonalityTest/DatingStyleTest/DatingStyleTestPage';
-import DecisionMakingStyleTestPage from '@/pages/tests/PersonalityTest/DecisionMakingStyleTest/DecisionMakingStyleTestPage';
-import EarlyRelationshipBehaviorTestPage from '@/pages/tests/PersonalityTest/EarlyRelationshipBehaviorTest/EarlyRelationshipBehaviorTestPage';
-import GiftGivingStyleTestPage from '@/pages/tests/PersonalityTest/GiftGivingStyleTest/GiftGivingStyleTestPage';
+import MbtiCompatibilityTestPage from '@/pages/tests/Dating_personality/MbtiCompatibilityTest/MbtiCompatibilityTestPage';
+import LoveStyleTestPage from '@/pages/tests/Dating_personality/LoveStyleTest/LoveStyleTestPage';
+import IdealTypeTestPage from '@/pages/tests/Dating_personality/IdealTypeTest/IdealTypeTestPage';
+import BreakupCopingTestPage from '@/pages/tests/Dating_personality/BreakupCopingTest/BreakupCopingTestPage';
+import CommunicationStyleTestPage from '@/pages/tests/Dating_personality/CommunicationStyleTest/CommunicationStyleTestPage';
+import ConflictCopingTestPage from '@/pages/tests/Dating_personality/ConflictCopingTest/ConflictCopingTestPage';
+import ConflictResolutionStyleTestPage from '@/pages/tests/Dating_personality/ConflictResolutionStyleTest/ConflictResolutionStyleTestPage';
+import DatingMethodTestPage from '@/pages/tests/Dating_personality/DatingMethodTest/DatingMethodTestPage';
+import DatingStyleTestPage from '@/pages/tests/Dating_personality/DatingStyleTest/DatingStyleTestPage';
+import DecisionMakingStyleTestPage from '@/pages/tests/Dating_personality/DecisionMakingStyleTest/DecisionMakingStyleTestPage';
+import EarlyRelationshipBehaviorTestPage from '@/pages/tests/Dating_personality/EarlyRelationshipBehaviorTest/EarlyRelationshipBehaviorTestPage';
+import GiftGivingStyleTestPage from '@/pages/tests/Dating_personality/GiftGivingStyleTest/GiftGivingStyleTestPage';
 
 // MZ 라이프스타일 테스트들
-import BurnoutLevelTestPage from '@/pages/tests/PersonalityTest/BurnoutLevelTest/BurnoutLevelTestPage';
-import SpendingTypeTestPage from '@/pages/tests/PersonalityTest/SpendingTypeTest/SpendingTypeTestPage';
-import GodsaengTypeTestPage from '@/pages/tests/PersonalityTest/GodsaengTypeTest/GodsaengTypeTestPage';
-import MbtiOverimmersionTestPage from '@/pages/tests/PersonalityTest/MbtiOverimmersionTest/MbtiOverimmersionTestPage';
-import SpendingStyleTestPage from '@/pages/tests/PersonalityTest/SpendingStyleTest/SpendingStyleTestPage';
-import TravelStyleTestPage from '@/pages/tests/PersonalityTest/TravelStyleTest/TravelStyleTestPage';
+import BurnoutLevelTestPage from '@/pages/tests/MZ_LifeStyle/BurnoutLevelTest/BurnoutLevelTestPage';
+import SpendingTypeTestPage from '@/pages/tests/MZ_LifeStyle/SpendingTypeTest/SpendingTypeTestPage';
+import GodsaengTypeTestPage from '@/pages/tests/MZ_LifeStyle/GodsaengTypeTest/GodsaengTypeTestPage';
+import MbtiOverimmersionTestPage from '@/pages/tests/MZ_LifeStyle/MbtiOverimmersionTest/MbtiOverimmersionTestPage';
+import SpendingStyleTestPage from '@/pages/tests/MZ_LifeStyle/SpendingStyleTest/SpendingStyleTestPage';
+import TravelStyleTestPage from '@/pages/tests/Travel/TravelStyleTest/TravelStyleTestPage';
 
 // 엔터테인먼트 테스트들
-import OttPreferenceTestPage from '@/pages/tests/PersonalityTest/OttPreferenceTest/OttPreferenceTestPage';
-import KpopStyleTestPage from '@/pages/tests/PersonalityTest/KpopStyleTest/kpopStyleTest';
-import DeokjilTypeTestPage from '@/pages/tests/PersonalityTest/DeokjilTypeTest/DeokjilTypeTestPage';
-import GameTypeTestPage from '@/pages/tests/PersonalityTest/GameTypeTest/GameTypeTestPage';
-import MoviePreferenceTestPage from '@/pages/tests/PersonalityTest/MoviePreferenceTest/MoviePreferenceTestPage';
-import SteamGamePreferenceTestPage from '@/pages/tests/PersonalityTest/SteamGamePreferenceTest/SteamGamePreferenceTestPage';
+import OttPreferenceTestPage from '@/pages/tests/Entertainment/OttPreferenceTest/OttPreferenceTestPage';
+import KpopStyleTestPage from '@/pages/tests/Entertainment/KpopStyleTest/kpopStyleTest';
+import DeokjilTypeTestPage from '@/pages/tests/Entertainment/DeokjilTypeTest/DeokjilTypeTestPage';
+import GameTypeTestPage from '@/pages/tests/Entertainment/GameTypeTest/GameTypeTestPage';
+import MoviePreferenceTestPage from '@/pages/tests/Entertainment/MoviePreferenceTest/MoviePreferenceTestPage';
+import SteamGamePreferenceTestPage from '@/pages/tests/Entertainment/SteamGamePreferenceTest/SteamGamePreferenceTestPage';
 
 // 테토 에겐 테스트들
 import TetoEgneBasicTestPage from '@/pages/tests/TetoEgenTest/TetoEgneBasicTest/TetoEgneTestBasicPage';
 import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEgneMzTestPage';
 
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
-import DomesticTravelStyleTestPage from '@/pages/tests/PersonalityTest/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
-import OverseasTravelStyleTestPage from '@/pages/tests/PersonalityTest/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
+import DomesticTravelStyleTestPage from '@/pages/tests/Travel/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
+import OverseasTravelStyleTestPage from '@/pages/tests/Travel/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
 
 export const router = createBrowserRouter([
   {

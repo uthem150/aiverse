@@ -39,6 +39,22 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🎨 AI 퍼스널 컬러 테스트',
     ogDescription: '아직도 내 톤을 모른다면? AI가 5초 만에 찾아주는 인생 컬러! 89만 명 참여 완료!',
   },
+  'hogwarts-test': {
+    title: '호그와트 기숙사 테스트 - AIverse',
+    description:
+      'AI가 당신의 성향을 분석하여 가장 어울리는 호그와트 기숙사를 배정해드립니다. 그리핀도르, 슬리데린, 후플푸프, 래번클로 중 당신의 기숙사는?',
+    keywords: '호그와트 기숙사 테스트, 해리포터 테스트, 기숙사 배정, MBTI 테스트, 성격 테스트',
+    ogTitle: '🧙‍ 호그와트 기숙사 테스트',
+    ogDescription: '당신을 위한 기숙사 배정! 92만 명이 참여한 바로 그 테스트!',
+  },
+  'flower-test': {
+    title: '나와 닮은 꽃 찾기 테스트 - AIverse',
+    description:
+      'AI가 당신의 성격과 분위기를 분석하여 가장 닮은 꽃을 찾아드립니다. 당신의 꽃말도 함께 확인해보세요.',
+    keywords: '꽃 테스트, 나와 닮은 꽃, 탄생화 테스트, 심리 테스트, 꽃말',
+    ogTitle: '🌸 나와 닮은 꽃 찾기 테스트',
+    ogDescription: '나는 어떤 꽃을 닮았을까? 63만 명이 찾아본 나의 꽃과 꽃말!',
+  },
 
   // 연애 & 성격
   'love-style-test': {
@@ -220,24 +236,6 @@ export const testMetaData: Record<string, TestMetaData> = {
     keywords: '국내 여행, 여행지 추천, AI 여행 추천, 주말 여행, 여행 테스트',
     ogTitle: '🏞️ 국내 여행지 추천 테스트',
     ogDescription: '이번 주말 어디 가지? AI가 추천하는 나만의 맞춤 국내 여행지!',
-  },
-
-  // 판타지 테스트
-  'hogwarts-test': {
-    title: '호그와트 기숙사 테스트 - AIverse',
-    description:
-      'AI가 당신의 성향을 분석하여 가장 어울리는 호그와트 기숙사를 배정해드립니다. 그리핀도르, 슬리데린, 후플푸프, 래번클로 중 당신의 기숙사는?',
-    keywords: '호그와트 기숙사 테스트, 해리포터 테스트, 기숙사 배정, MBTI 테스트, 성격 테스트',
-    ogTitle: '🧙‍ 호그와트 기숙사 테스트',
-    ogDescription: '당신을 위한 기숙사 배정! 92만 명이 참여한 바로 그 테스트!',
-  },
-  'flower-test': {
-    title: '나와 닮은 꽃 찾기 테스트 - AIverse',
-    description:
-      'AI가 당신의 성격과 분위기를 분석하여 가장 닮은 꽃을 찾아드립니다. 당신의 꽃말도 함께 확인해보세요.',
-    keywords: '꽃 테스트, 나와 닮은 꽃, 탄생화 테스트, 심리 테스트, 꽃말',
-    ogTitle: '🌸 나와 닮은 꽃 찾기 테스트',
-    ogDescription: '나는 어떤 꽃을 닮았을까? 63만 명이 찾아본 나의 꽃과 꽃말!',
   },
 
   // 엔터테인먼트
