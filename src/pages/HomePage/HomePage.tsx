@@ -54,9 +54,12 @@ const HomePage = () => {
           🤖 AIverse에 오신 것을 환영합니다
         </Typography>
         <Typography variant="body1" align="center" color="#6B7280">
+          AI의 모든 것을 체험하고 발견하는 공간 • 전 세계 300만 명 이상 참여한 인기 테스트들
+        </Typography>
+        {/* <Typography variant="body1" align="center" color="#6B7280">
           AI의 모든 것을 체험하고 발견하는 공간 • 전 세계 {Math.floor(totalParticipants / 10000)}만
           명이 참여한 테스트들
-        </Typography>
+        </Typography> */}
         <Button variant="primary" size="large" onClick={() => navigate(`/tests`)}>
           지금 시작하기 <ArrowRight size={20} />
         </Button>

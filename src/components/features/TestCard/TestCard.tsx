@@ -120,14 +120,14 @@ const TestCard = ({ test, onClick }: TestCardProps) => {
             <Typography variant="caption">{test.estimatedTime}분</Typography>
           </StyledTestStats>
 
-          {test.participantCount && (
+          {/* {test.participantCount && (
             <StyledTestStats>
               <Users size={14} />
               <Typography variant="caption">
                 {formatParticipantCount(test.participantCount)}명 참여
               </Typography>
             </StyledTestStats>
-          )}
+          )} */}
         </StyledTestMeta>
       </StyledTestInfo>
     </StyledTestCard>
