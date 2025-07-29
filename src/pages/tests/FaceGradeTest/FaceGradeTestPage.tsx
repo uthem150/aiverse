@@ -17,6 +17,7 @@ import {
   StyledLoadingAnimation,
 } from './FaceGradeTestPage.style';
 import ShareResult from '@/components/common/ShareResult/ShareResult';
+import { trackEvent, trackTestStart } from '@/utils/analytics';
 
 interface GradeResult {
   className: string;
@@ -103,6 +104,9 @@ const FaceGradeTestPage = () => {
   const handleGenderSelect = (gender: 'male' | 'female') => {
     setSelectedGender(gender);
     setStep('upload');
+
+    // 테스트 시작 추적
+    trackTestStart('face-grade-test');
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,6 +199,9 @@ const FaceGradeTestPage = () => {
 
   const shareResult = () => {
     setShowShareResult(true);
+
+    // 공유 모달 열기 추적
+    trackEvent('share_modal_open', 'engagement', 'face-grade-test');
   };
 
   const closeShareResult = () => {

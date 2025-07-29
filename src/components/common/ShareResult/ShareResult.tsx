@@ -14,6 +14,7 @@ import {
 import Typography from '@/components/common/Typography/Typography';
 import { generateResultImage } from '@/utils/canvasImageGenerator';
 import { getTestMeta } from '@/data/testMeta';
+import { trackImageGeneration, trackTestShare } from '@/utils/analytics';
 
 interface ShareResultProps {
   testTitle: string;
@@ -65,6 +66,9 @@ const ShareResult = ({
         emoji,
       });
       setGeneratedImage(imageDataUrl);
+
+      // 이미지 생성 추적
+      trackImageGeneration(testTitle.toLowerCase().replace(/\s+/g, '-'));
     } catch (error) {
       console.error('이미지 생성 실패:', error);
       // 에러 발생시에도 버튼들은 표시되도록
@@ -74,6 +78,9 @@ const ShareResult = ({
   };
 
   const shareToSocial = async (platform: 'kakao' | 'facebook' | 'twitter') => {
+    // 공유 추적
+    trackTestShare(testTitle.toLowerCase().replace(/\s+/g, '-'), platform);
+
     const testId = getTestIdFromPath();
     const meta = getTestMeta(testId);
     const shareUrl = window.location.href;
