@@ -1,17 +1,17 @@
-import type { ReactNode, ButtonHTMLAttributes } from "react";
-import { StyledButton } from "./Button.style";
+import type { ReactNode, ButtonHTMLAttributes } from 'react';
+import { StyledButton } from './Button.style';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outlined";
-  size?: "small" | "medium" | "large";
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'loading'> {
+  variant?: 'primary' | 'secondary' | 'outlined';
+  size?: 'small' | 'medium' | 'large';
   children: ReactNode;
   fullWidth?: boolean;
   loading?: boolean;
 }
 
 const Button = ({
-  variant = "primary",
-  size = "medium",
+  variant = 'primary',
+  size = 'medium',
   children,
   fullWidth = false,
   loading = false,
@@ -23,11 +23,11 @@ const Button = ({
       variant={variant}
       size={size}
       fullWidth={fullWidth}
-      loading={loading}
+      $loading={loading} // $ prefix로 styled-component에만 전달
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? "Loading..." : children}
+      {loading ? 'Loading...' : children}
     </StyledButton>
   );
 };

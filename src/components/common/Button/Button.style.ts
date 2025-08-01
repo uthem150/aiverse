@@ -7,7 +7,7 @@ interface StyledButtonProps {
   variant: 'primary' | 'secondary' | 'outlined';
   size: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
-  loading?: boolean;
+  $loading?: boolean; // $ prefix 추가
 }
 
 const buttonVariants = (theme: Theme) => ({
@@ -107,8 +107,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     cursor: not-allowed;
   }
 
-  ${({ loading }) =>
-    loading &&
+  ${({ $loading }) =>
+    $loading &&
     css`
       opacity: 0.8;
       cursor: not-allowed;

@@ -48,6 +48,7 @@ import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEg
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import DomesticTravelStyleTestPage from '@/pages/tests/Travel/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
 import OverseasTravelStyleTestPage from '@/pages/tests/Travel/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
+import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPage';
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +67,11 @@ export const router = createBrowserRouter([
         path: 'tests/:category',
         element: <TestListPage />,
       },
-
+      // 텐서플로우 테스트
+      {
+        path: 'test/face-emotion-test',
+        element: <FaceEmotionTestPage />,
+      },
       // AI 분석 테스트들
       {
         path: 'test/face-age-test',
