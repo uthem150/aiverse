@@ -175,3 +175,44 @@ export const StyledErrorMessage = styled.div`
   border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
   max-width: 400px;
 `;
+
+/* NEW – 공통 유틸 */
+export const StyledButtonGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+/* select 전용 */
+export const StyledQualitySelect = styled.select`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 36px 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  box-sizing: border-box;
+`;
+
+/* 감정 카드 묶음 */
+export const StyledEmotionList = styled.div`
+  display: grid;
+  gap: ${({ theme }) => (theme as Theme).spacing.md};
+`;
+
+/* 로딩 스피너 */
+export const StyledSpinner = styled.div`
+  width: 48px;
+  height: 48px;
+  border: 4px solid ${({ theme }) => (theme as Theme).colors.border.primary};
+  border-top: 4px solid ${({ theme }) => (theme as Theme).colors.interactive.primary};
+  border-radius: 50%;
+  animation: ${spinAnimation} 1s linear infinite;
+`;

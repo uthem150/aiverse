@@ -17,6 +17,10 @@ import {
   StyledStatsGrid,
   StyledStatItem,
   StyledErrorMessage,
+  StyledSpinner,
+  StyledQualitySelect,
+  StyledButtonGroup,
+  StyledEmotionList,
 } from './FaceEmotionTestPage.style';
 
 interface EmotionData {
@@ -482,7 +486,7 @@ const FaceEmotionTestPage = () => {
     return (
       <TestContainer title="🎭 실시간 얼굴 감정 인식" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
-          <div className="spinner" />
+          <StyledSpinner />
           <Typography variant="body1">AI 감정 인식 모델 로딩 중...</Typography>
           <Typography variant="caption" color="#6B7280">
             face-api.js 모델들을 로드하고 있습니다 🤖
@@ -500,6 +504,7 @@ const FaceEmotionTestPage = () => {
       onShare={shareResult}
     >
       <StyledTestStep>
+        {/* ───────────── 비디오 & 캔버스 ───────────── */}
         <StyledVideoContainer>
           <StyledVideo
             ref={videoRef}
@@ -512,6 +517,7 @@ const FaceEmotionTestPage = () => {
           <StyledCanvas ref={canvasRef} />
         </StyledVideoContainer>
 
+        {/* ───────────── 컨트롤 ───────────── */}
         <StyledControls>
           {!isStreaming ? (
             <Button variant="primary" size="large" onClick={startCamera}>
@@ -519,9 +525,7 @@ const FaceEmotionTestPage = () => {
               카메라 시작
             </Button>
           ) : (
-            <div
-              style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}
-            >
+            <StyledButtonGroup>
               {!isDetecting ? (
                 <Button variant="primary" onClick={startDetection}>
                   <Play size={16} />
@@ -533,40 +537,26 @@ const FaceEmotionTestPage = () => {
                   감정 인식 중지
                 </Button>
               )}
+
               <Button variant="outlined" onClick={stopCamera}>
                 <RotateCcw size={16} />
                 카메라 중지
               </Button>
 
-              <select
+              <StyledQualitySelect
                 value={detectionQuality}
                 onChange={e => setDetectionQuality(e.target.value as any)}
                 disabled={isDetecting}
-                style={{
-                  appearance: 'none', // 크롬, 사파리
-                  WebkitAppearance: 'none',
-                  MozAppearance: 'none',
-                  backgroundImage: `url("data:image/svg+xml;utf8,<svg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 12px center',
-                  backgroundColor: '#333',
-                  color: '#fff',
-                  padding: '8px 36px 8px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid #D1D5DB',
-                  fontSize: '14px',
-                  boxSizing: 'border-box',
-                }}
               >
                 <option value="high">고품질 (느림)</option>
                 <option value="medium">보통 (권장)</option>
                 <option value="low">저품질 (빠름)</option>
-              </select>
-            </div>
+              </StyledQualitySelect>
+            </StyledButtonGroup>
           )}
         </StyledControls>
 
-        {/* 실시간 분석 결과 */}
+        {/* ───────────── 결과 패널 ───────────── */}
         {(emotions.length > 0 || faceStats) && (
           <StyledResultPanel>
             {faceStats && (
@@ -602,7 +592,7 @@ const FaceEmotionTestPage = () => {
                   실시간 감정 분석
                 </Typography>
 
-                <div style={{ display: 'grid', gap: '12px' }}>
+                <StyledEmotionList>
                   {emotions.slice(0, 5).map((emotion, index) => (
                     <StyledEmotionCard key={emotion.name} isTop={index === 0}>
                       <div className="emotion-header">
@@ -617,7 +607,7 @@ const FaceEmotionTestPage = () => {
                       </StyledEmotionBar>
                     </StyledEmotionCard>
                   ))}
-                </div>
+                </StyledEmotionList>
               </>
             )}
           </StyledResultPanel>
