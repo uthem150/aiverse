@@ -49,6 +49,13 @@ import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import DomesticTravelStyleTestPage from '@/pages/tests/Travel/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
 import OverseasTravelStyleTestPage from '@/pages/tests/Travel/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
 import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPage';
+import DatingCharacterTestPage from '@/pages/tests/Dating_personality/datingCharacterTest/datingCharacterTestPage';
+import MentalAgeTestPage from '@/pages/tests/MZ_LifeStyle/mentalAgeTest/mentalAgeTestPage';
+import XGenerationTestPage from '@/pages/tests/MZ_LifeStyle/xGenerationTest/xGenerationTestPage';
+import KDramaCharacterTestPage from '@/pages/tests/Entertainment/kDramaCharacterTest/kDramaCharacterTestPage';
+import AnimalFaceTestPage from '@/pages/tests/Entertainment/animalFaceTest/animalFaceTestPage';
+import KboTeamTestPage from '@/pages/tests/SportsFan/kboTeamTest/kboTeamTest';
+import OverseasFootballTeamTestPage from '@/pages/tests/SportsFan/overseasFootballTeamTest/overseasFootballTeamTestPage';
 
 export const router = createBrowserRouter([
   {
@@ -147,6 +154,14 @@ export const router = createBrowserRouter([
         path: 'test/gift-giving-style-test',
         element: <GiftGivingStyleTestPage />,
       },
+      {
+        path: 'test/dating-character-test',
+        element: <DatingCharacterTestPage />,
+      },
+      {
+        path: 'test/ideal-type-match-test',
+        element: <IdealTypeTestPage />,
+      },
 
       // MZ 라이프스타일 테스트들
       {
@@ -168,6 +183,14 @@ export const router = createBrowserRouter([
       {
         path: 'test/spending-style-test',
         element: <SpendingStyleTestPage />,
+      },
+      {
+        path: 'test/mental-age-test',
+        element: <MentalAgeTestPage />,
+      },
+      {
+        path: 'test/x-generation-test',
+        element: <XGenerationTestPage />,
       },
 
       // 여행지 추천 테스트
@@ -216,8 +239,25 @@ export const router = createBrowserRouter([
         element: <MoviePreferenceTestPage />,
       },
       {
+        path: 'test/k-drama-character-test',
+        element: <KDramaCharacterTestPage />,
+      },
+      {
+        path: 'test/animal-face-test',
+        element: <AnimalFaceTestPage />,
+      },
+      {
         path: 'test/steam-game-preference-test',
         element: <SteamGamePreferenceTestPage />,
+      },
+      // 스포츠 팬
+      {
+        path: 'test/kbo-team-test',
+        element: <KboTeamTestPage />,
+      },
+      {
+        path: 'test/overseas-football-team-test',
+        element: <OverseasFootballTeamTestPage />,
       },
       {
         path: '*',

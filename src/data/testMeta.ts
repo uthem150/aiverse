@@ -55,6 +55,14 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🌸 나와 닮은 꽃 찾기 테스트',
     ogDescription: '나는 어떤 꽃을 닮았을까? 63만 명이 찾아본 나의 꽃과 꽃말!',
   },
+  'animal-face-test': {
+    title: '나와 닮은 동물상 테스트 - AIverse',
+    description:
+      'AI가 당신의 얼굴을 분석해서 나와 닮은 동물상을 찾아드립니다. 강아지상, 고양이상, 토끼상 등 당신은 어떤 동물상일까요?',
+    keywords: '동물상 테스트, AI 동물상, 강아지상, 고양이상, 얼굴 관상, AI 분석',
+    ogTitle: '🐶 나와 닮은 동물상 테스트',
+    ogDescription: 'AI가 분석하는 당신의 동물상! 55만 명이 참여한 인기 테스트!',
+  },
 
   // 텐서플로우
   'face-emotion-test': {
@@ -163,6 +171,23 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🎁 나의 선물 증정 스타일 테스트',
     ogDescription: '선물에 담긴 당신의 마음, 당신의 선물 스타일은 어떤 유형일까요?',
   },
+  'dating-character-test': {
+    title: '❤️‍🩹 나의 연애 캐릭터 테스트 - AIverse',
+    description:
+      '연애할 때 나는 어떤 캐릭터일까? 연인에게 나는 어떤 모습으로 비칠까? 나의 연애 스타일과 숨겨진 연애 캐릭터를 확인해 보세요!',
+    keywords: '연애 캐릭터, 연애 스타일, 심리 테스트, 성격 분석, 연애 유형',
+    ogTitle: '❤️‍🩹 나의 연애 캐릭터 테스트',
+    ogDescription: '나는 어떤 연애 캐릭터일까? 순정파 댕댕이? 츤데레 냥냥이? 당신의 연애 캐릭터는?',
+  },
+  'ideal-type-match-test': {
+    title: '💘 이상형 매칭 테스트 - AIverse',
+    description:
+      '내가 생각하는 나의 이상형은? 나도 몰랐던 나의 이상형을 찾아보세요! 재미있는 질문들을 통해 당신의 마음을 두근거리게 할 단 한 사람을 공개합니다.',
+    keywords: '이상형 매칭, 이상형 테스트, 연애 테스트, 궁합, 데이트',
+    ogTitle: '💘 이상형 매칭 테스트',
+    ogDescription:
+      '당신이 꿈꾸는 완벽한 이상형은? 당신의 마음을 두근거리게 할 단 한 사람을 찾아보세요!',
+  },
 
   // 테토에겐 테스트
   'teto-egne-basic-test': {
@@ -221,6 +246,22 @@ export const testMetaData: Record<string, TestMetaData> = {
     keywords: '소비 심리, 소비 습관, 충동구매, 돈 관리, 재테크 테스트',
     ogTitle: '💸 나의 소비 심리 테스트',
     ogDescription: '내 통장이 텅장인 이유! 당신의 지갑을 열게 만드는 소비 심리 분석.',
+  },
+  'mental-age-test': {
+    title: '내 숨은 나이 테스트 (정신연령 검사) - AIverse',
+    description:
+      '평소 생활 습관, 소비 취향, 말투 등으로 알아보는 나의 진짜 정신연령은? 간단한 질문으로 당신의 숨은 나이를 확인해 보세요.',
+    keywords: '정신연령, 숨은 나이, 심리 테스트, 성격 테스트, 정신연령 검사',
+    ogTitle: '👶 내 숨은 나이 테스트 (정신연령 검사)',
+    ogDescription: '혹시 나는 아재...? 25만 명이 참여한 나의 진짜 나이 테스트!',
+  },
+  'x-generation-test': {
+    title: '당신은 몇 세대 사람인가요? (X세대 테스트) - AIverse',
+    description:
+      '세대별 공감 테스트를 통해 당신의 성향이 어느 세대에 가까운지 알아봅니다. 재미로 보는 세대 공감 테스트!',
+    keywords: 'X세대, MZ세대, 세대 테스트, 꼰대 테스트, 라이프스타일',
+    ogTitle: '👴 당신은 몇 세대 사람인가요? (X세대 테스트)',
+    ogDescription: 'X세대? MZ세대? 당신은 어떤 세대의 사람일까요?',
   },
 
   // 여행 테스트
@@ -298,6 +339,32 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🕹️ 스팀 게임 취향 테스트',
     ogDescription: '스팀 게이머 필독! 당신의 게임 취향으로 성격을 분석해드려요.',
   },
+  'k-drama-character-test': {
+    title: '나의 K-드라마 캐릭터 테스트 - AIverse',
+    description:
+      '사랑, 우정, 성장! 당신은 K-드라마 속 어떤 캐릭터일까요? 주인공, 조력자, 빌런 등 당신의 성향을 분석해드립니다.',
+    keywords: 'K-드라마 테스트, 드라마 캐릭터, 성격 테스트, 심리 테스트, 드라마 추천',
+    ogTitle: '🎬 나의 K-드라마 캐릭터 테스트',
+    ogDescription: '나는 혹시 로코 여주? 아니면 빌런...? 나의 K-드라마 속 캐릭터는?',
+  },
+
+  // 스포츠 팬
+  'kbo-team-test': {
+    title: '나와 맞는 KBO팀 테스트 - AIverse',
+    description:
+      '한국 프로야구 10개 팀 중 당신의 야구 취향과 가장 잘 맞는 팀을 찾아드립니다. 내 마음속의 야구팀은 어디?',
+    keywords: 'KBO 테스트, 야구팀, 야구 테스트, 프로야구, 스포츠 팬',
+    ogTitle: '⚾ 나와 맞는 KBO팀 테스트',
+    ogDescription: '야구 덕후들 모여라! 당신의 야구 취향과 딱 맞는 KBO팀을 찾아보세요!',
+  },
+  'overseas-football-team-test': {
+    title: '나와 맞는 해외 축구팀 테스트 - AIverse',
+    description:
+      '축구 스타일에 따라 당신과 가장 잘 맞는 해외 축구팀을 찾아드립니다. 프리미어리그, 라리가, 분데스리가 등 당신의 운명적인 팀은?',
+    keywords: '해외 축구, 축구팀, 축구 테스트, 프리미어리그, 라리가, 스포츠 팬',
+    ogTitle: '⚽ 나와 맞는 해외 축구팀 테스트',
+    ogDescription: '해축 팬 필독! 당신의 축구 취향에 맞는 최고의 해외 축구팀은?',
+  },
 
   // AI 미래예측
   'ai-fortune': {
@@ -367,6 +434,7 @@ export const getTestThumbnailUrl = (testId: string): string => {
     'face-grade-test',
     'eye-test',
     'personal-color-test',
+    'animal-face-test',
     // 연애 & 성격
     'love-style-test',
     'ideal-type-test',
@@ -380,6 +448,8 @@ export const getTestThumbnailUrl = (testId: string): string => {
     'decision-making-style-test',
     'early-relationship-behavior-test',
     'gift-giving-style-test',
+    'dating-character-test',
+    'ideal-type-match-test',
     // 테토에겐
     'teto-egne-basic-test',
     'teto-egne-mz-test',
@@ -389,6 +459,8 @@ export const getTestThumbnailUrl = (testId: string): string => {
     'godsaeng-type-test',
     'mbti-overimmersion-test',
     'spending-style-test',
+    'mental-age-test',
+    'x-generation-test',
     // 여행
     'travel-style-test',
     'overseas-travel-style-test',
@@ -403,6 +475,10 @@ export const getTestThumbnailUrl = (testId: string): string => {
     'game-type-test',
     'movie-preference-test',
     'steam-game-preference-test',
+    'k-drama-character-test',
+    // 스포츠 팬
+    'kbo-team-test',
+    'overseas-football-team-test',
     // AI 미래예측
     'ai-fortune',
     'ai-career',
