@@ -29,9 +29,9 @@ const HomePage = () => {
   // 새로운 테스트들
   const newTests = testCategories.flatMap(category => category.tests).filter(test => test.isNew);
 
-  const totalParticipants = testCategories
-    .flatMap(category => category.tests)
-    .reduce((sum, test) => sum + (test.participantCount || 0), 0);
+  // const totalParticipants = testCategories
+  //   .flatMap(category => category.tests)
+  //   .reduce((sum, test) => sum + (test.participantCount || 0), 0);
 
   const totalTests = testCategories.flatMap(category => category.tests).length;
 
