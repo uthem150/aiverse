@@ -519,8 +519,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#6CABDD',
       traits: ['전술적', '완벽주의', '현대적', '시스템', '지배', '냉철함'],
       compatibility: {
-        best: ['bayern-munich'],
-        avoid: ['manchester-united'],
+        best: ['바이에른 뮌헨'],
+        avoid: ['맨체스터 유나이티드'],
       },
       recommendations: {
         celebrities: ['펩 과르디올라', '케빈 데 브라위너', '엘링 홀란드'],
@@ -538,8 +538,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#C8102E',
       traits: ['열정', '공동체', '드라마', '투지', '감성적', '기적'],
       compatibility: {
-        best: ['borussia-dortmund'],
-        avoid: ['manchester-united', 'chelsea'],
+        best: ['보루시아 도르트문트'],
+        avoid: ['맨체스터 유나이티드', '첼시'],
       },
       recommendations: {
         celebrities: ['위르겐 클롭', '스티븐 제라드', '모하메드 살라'],
@@ -557,8 +557,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#EF0107',
       traits: ['예술적', '낭만', '스타일', '유망주', '과정 중시', '철학'],
       compatibility: {
-        best: ['fc-barcelona', 'ajax'],
-        avoid: ['chelsea', 'tottenham-hotspur'],
+        best: ['FC 바르셀로나', '아약스'],
+        avoid: ['첼시', '토트넘 홋스퍼'],
       },
       recommendations: {
         celebrities: ['아르센 벵거', '티에리 앙리', '부카요 사카'],
@@ -576,8 +576,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#DA291C',
       traits: ['역사', '자부심', '브랜드', '승리주의', '기대치 높음', '전통'],
       compatibility: {
-        best: ['real-madrid', 'ac-milan'],
-        avoid: ['liverpool', 'manchester-city'],
+        best: ['레알 마드리드', 'AC 밀란'],
+        avoid: ['리버풀', '맨체스터 시티'],
       },
       recommendations: {
         celebrities: ['알렉스 퍼거슨', '웨인 루니', '브루노 페르난데스'],
@@ -595,8 +595,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#034694',
       traits: ['실용주의', '승부사', '냉철함', '결과 중시', '과감함', '변화'],
       compatibility: {
-        best: ['juventus', 'inter-milan'],
-        avoid: ['arsenal', 'liverpool'],
+        best: ['유벤투스', '인테르'],
+        avoid: ['아스날', '리버풀'],
       },
       recommendations: {
         celebrities: ['조세 무리뉴', '디디에 드록바', '은골로 캉테'],
@@ -614,8 +614,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#FFFFFF',
       traits: ['순정', '기대', '희망', '공격축구', '인내', '헌신'],
       compatibility: {
-        best: ['borussia-dortmund'],
-        avoid: ['arsenal', 'chelsea'],
+        best: ['보루시아 도르트문트'],
+        avoid: ['아스날', '첼시'],
       },
       recommendations: {
         celebrities: ['손흥민', '해리 케인', '가레스 베일'],
@@ -633,8 +633,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#241F20',
       traits: ['충성심', '희망', '부활', '자부심', '지역밀착', '열정'],
       compatibility: {
-        best: ['ac-milan'],
-        avoid: ['manchester-united'],
+        best: ['AC 밀란'],
+        avoid: ['맨체스터 유나이티드'],
       },
       recommendations: {
         celebrities: ['앨런 시어러', '키어런 트리피어', '브루누 기마랑이스'],
@@ -652,8 +652,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#FEBE10',
       traits: ['최고 지향', '스타 파워', '승자의 DNA', '역사', '화려함', '드라마'],
       compatibility: {
-        best: ['manchester-united', 'ac-milan'],
-        avoid: ['fc-barcelona', 'atletico-madrid'],
+        best: ['맨체스터 유나이티드', 'AC 밀란'],
+        avoid: ['FC 바르셀로나', '아틀레티코 마드리드'],
       },
       recommendations: {
         celebrities: ['지네딘 지단', '크리스티아누 호날두', '주드 벨링엄'],
@@ -671,8 +671,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#A50044',
       traits: ['철학', '정체성', '예술', '유소년', '가치', '자부심'],
       compatibility: {
-        best: ['arsenal', 'ajax'],
-        avoid: ['real-madrid', 'chelsea'],
+        best: ['아스날', '아약스'],
+        avoid: ['레알 마드리드', '첼시'],
       },
       recommendations: {
         celebrities: ['요한 크루이프', '리오넬 메시', '차비 에르난데스'],
@@ -690,8 +690,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#272E61',
       traits: ['투지', '정신력', '언더독', '조직력', '수비', '열정'],
       compatibility: {
-        best: ['borussia-dortmund', 'liverpool'],
-        avoid: ['real-madrid', 'fc-barcelona'],
+        best: ['보루시아 도르트문트', '리버풀'],
+        avoid: ['레알 마드리드', 'FC 바르셀로나'],
       },
       recommendations: {
         celebrities: ['디에고 시메오네', '앙투안 그리즈만', '코케'],
@@ -709,8 +709,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#DC052D',
       traits: ['효율', '지배', '안정감', '자부심', '시스템', '꾸준함'],
       compatibility: {
-        best: ['manchester-city', 'juventus'],
-        avoid: ['borussia-dortmund'],
+        best: ['맨체스터 시티', '유벤투스'],
+        avoid: ['보루시아 도르트문트'],
       },
       recommendations: {
         celebrities: ['프란츠 베켄바워', '토마스 뮐러', '해리 케인'],
@@ -728,8 +728,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#FDE100',
       traits: ['열정', '젊음', '에너지', '팬심', '유망주', '언더독'],
       compatibility: {
-        best: ['liverpool', 'atletico-madrid'],
-        avoid: ['bayern-munich'],
+        best: ['리버풀', '아틀레티코 마드리드'],
+        avoid: ['바이에른 뮌헨'],
       },
       recommendations: {
         celebrities: ['마르코 로이스', '주드 벨링엄', '엘링 홀란드'],
@@ -747,8 +747,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#004170',
       traits: ['스타성', '화려함', '트렌디', '자본', '브랜드', '엔터테인먼트'],
       compatibility: {
-        best: ['manchester-city', 'real-madrid'],
-        avoid: ['ajax', 'atletico-madrid'],
+        best: ['맨체스터 시티', '레알 마드리드'],
+        avoid: ['아약스', '아틀레티코 마드리드'],
       },
       recommendations: {
         celebrities: ['킬리안 음바페', '네이마르', '즐라탄 이브라히모비치'],
@@ -766,8 +766,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#FFFFFF',
       traits: ['승리주의', '실리', '전통', '수비', '정신력', '자부심'],
       compatibility: {
-        best: ['chelsea', 'bayern-munich'],
-        avoid: ['ac-milan', 'inter-milan'],
+        best: ['첼시', '바이에른 뮌헨'],
+        avoid: ['AC 밀란', '인테르'],
       },
       recommendations: {
         celebrities: ['알레산드로 델 피에로', '잔루이지 부폰', '파벨 네드베트'],
@@ -785,8 +785,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#FB090B',
       traits: ['전통', '재건', '스타일', '로맨스', '역사', '영광'],
       compatibility: {
-        best: ['manchester-united', 'real-madrid'],
-        avoid: ['inter-milan', 'juventus'],
+        best: ['맨체스터 유나이티드', '레알 마드리드'],
+        avoid: ['인테르', '유벤투스'],
       },
       recommendations: {
         celebrities: ['파올로 말디니', '카카', '즐라탄 이브라히모비치'],
@@ -804,8 +804,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#010E80',
       traits: ['실리', '전략적', '견고함', '라이벌', '효율', '현실주의'],
       compatibility: {
-        best: ['chelsea', 'atletico-madrid'],
-        avoid: ['ac-milan', 'juventus'],
+        best: ['첼시', '아틀레티코 마드리드'],
+        avoid: ['AC 밀란', '유벤투스'],
       },
       recommendations: {
         celebrities: ['하비에르 사네티', '사무엘 에투', '라우타로 마르티네스'],
@@ -823,8 +823,8 @@ export const overseasFootballTeamTestData: PersonalityTestData = {
       color: '#D2122E',
       traits: ['육성', '철학', '혁신', '미래지향적', '개척자', '과정 중시'],
       compatibility: {
-        best: ['fc-barcelona', 'arsenal'],
-        avoid: ['psg', 'chelsea'],
+        best: ['FC 바르셀로나', '아스날'],
+        avoid: ['파리 생제르맹', '첼시'],
       },
       recommendations: {
         celebrities: ['요한 크루이프', '데니스 베르캄프', '프렝키 더용'],
