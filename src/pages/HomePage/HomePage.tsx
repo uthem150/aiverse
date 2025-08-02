@@ -68,14 +68,14 @@ const HomePage = () => {
       {/* Stats Section */}
       <StyledSection>
         <StyledStatsGrid>
-          <StyledStatsCard>
+          {/* <StyledStatsCard>
             <Typography variant="h3" color="#6366F1">
               {Math.floor(totalParticipants / 10000)}만+
             </Typography>
             <Typography variant="body2" color="#6B7280">
               총 참여자 수
             </Typography>
-          </StyledStatsCard>
+          </StyledStatsCard> */}
           <StyledStatsCard>
             <Typography variant="h3" color="#8B5CF6">
               {totalTests}개
