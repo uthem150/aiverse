@@ -29,7 +29,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: false, // 배포 시 소스맵 제거로 크기 줄이기
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -44,8 +44,13 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 600, // 경고 한도를 600KB로 조정
+    chunkSizeWarningLimit: 600,
   },
   // 정적 파일 최적화
   assetsInclude: ['**/*.bin', '**/*.shard*', '**/*.json'],
+  // 외부 라이브러리 최적화
+  optimizeDeps: {
+    exclude: ['face-api.js'], // face-api.js는 사전 번들링 제외
+    include: ['@emotion/react', '@emotion/styled'], // emotion은 사전 번들링 포함
+  },
 });

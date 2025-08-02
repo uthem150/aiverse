@@ -4,6 +4,7 @@ import * as faceapi from 'face-api.js';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
+import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledVideoContainer,
@@ -45,12 +46,13 @@ const FaceEmotionTestPage = () => {
   const [faceStats, setFaceStats] = useState<FaceStats | null>(null);
   const [isDetecting, setIsDetecting] = useState(false);
   const [detectionQuality, setDetectionQuality] = useState<'high' | 'medium' | 'low'>('medium');
+  const [loadingStep, setLoadingStep] = useState<string>('TensorFlow.js 로딩 중...');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isComponentMountedRef = useRef(true); // 컴포넌트 마운트 상태 추적
+  const isComponentMountedRef = useRef(true);
 
   // 감정별 색상과 이모지 정의
   const emotionConfig = {
@@ -92,7 +94,7 @@ const FaceEmotionTestPage = () => {
     // 비디오 요소 정리
     if (videoRef.current) {
       videoRef.current.srcObject = null;
-      videoRef.current.load(); // 비디오 완전히 언로드
+      videoRef.current.load();
     }
 
     // 캔버스 정리
@@ -131,44 +133,71 @@ const FaceEmotionTestPage = () => {
     performCompleteCleanup();
   }, [performCompleteCleanup]);
 
-  // AI 모델 로드
+  // AI 모델 로드 (ESLint 규칙 준수)
   useEffect(() => {
     let isCancelled = false;
 
-    const loadModels = async () => {
+    const loadTensorFlowAndModels = async (): Promise<void> => {
       try {
-        if (!window.tf) {
-          throw new Error('TensorFlow.js가 로드되지 않았습니다.');
+        // 1단계: TensorFlow.js for Face-API 로딩
+        setLoadingStep('TensorFlow.js 로딩 중...');
+        const loader = AILibraryLoader.getInstance();
+        await loader.loadTensorFlowForFaceAPI(); // 변경됨
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        // 2단계: Backend 설정
+        setLoadingStep('GPU 백엔드 초기화 중...');
+        try {
+          await window.tf.setBackend('webgl');
+          await window.tf.ready();
+          console.log('✅ WebGL backend initialized');
+        } catch (webglError) {
+          console.warn('⚠️ WebGL failed, falling back to CPU:', webglError);
+          await window.tf.setBackend('cpu');
+          await window.tf.ready();
+          console.log('✅ CPU backend initialized');
         }
 
-        console.log('🤖 Loading AI models...');
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        // 3단계: Face-API 모델 로딩
+        console.log('🤖 Loading face-api.js models...');
         const MODEL_URL = '/models';
 
-        // 순차 로드
+        setLoadingStep('얼굴 감지 모델 로딩 중...');
         await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
-        if (isCancelled) return;
+        if (isCancelled || !isComponentMountedRef.current) return;
 
+        setLoadingStep('얼굴 랜드마크 모델 로딩 중...');
         await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-        if (isCancelled) return;
+        if (isCancelled || !isComponentMountedRef.current) return;
 
+        setLoadingStep('표정 인식 모델 로딩 중...');
         await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
-        if (isCancelled) return;
+        if (isCancelled || !isComponentMountedRef.current) return;
 
+        // 선택적 모델
         try {
+          setLoadingStep('나이/성별 예측 모델 로딩 중...');
           await faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL);
-        } catch {
-          console.warn('⚠️ Age gender model failed - continuing without it');
+          console.log('✅ Age/Gender model loaded');
+        } catch (ageGenderError) {
+          console.warn('⚠️ Age/Gender model failed - continuing without it');
         }
 
         if (!isCancelled && isComponentMountedRef.current) {
-          console.log('✅ All models loaded successfully!');
+          console.log('🎉 All models loaded successfully!');
           setIsModelLoaded(true);
           setModelError(null);
+          setLoadingStep('완료!');
         }
       } catch (error) {
+        console.error('❌ Model loading failed:', error);
         if (!isCancelled && isComponentMountedRef.current) {
-          console.error('❌ Model loading failed:', error);
-          setModelError(error instanceof Error ? error.message : '모델 로드 실패');
+          const errorMessage =
+            error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.';
+          setModelError(errorMessage);
           setIsModelLoaded(false);
         }
       }
@@ -176,15 +205,20 @@ const FaceEmotionTestPage = () => {
 
     const timer = setTimeout(() => {
       if (!isCancelled) {
-        loadModels();
+        loadTensorFlowAndModels().catch(error => {
+          console.error('Async loading error:', error);
+          if (!isCancelled && isComponentMountedRef.current) {
+            setModelError('모델 로딩 중 예기치 못한 오류가 발생했습니다.');
+          }
+        });
       }
-    }, 1500);
+    }, 500);
 
     return () => {
       isCancelled = true;
       clearTimeout(timer);
     };
-  }, []); // 의존성 배열 비움 - 한 번만 실행
+  }, []);
 
   // 컴포넌트 언마운트 시 완전한 정리
   useEffect(() => {
@@ -197,16 +231,16 @@ const FaceEmotionTestPage = () => {
     };
   }, [performCompleteCleanup]);
 
-  // 페이지 가시성 변경 시 정리 (브라우저 탭 변경, 뒤로가기 등)
+  // 페이지 가시성 변경 시 정리
   useEffect(() => {
-    const handleVisibilityChange = () => {
+    const handleVisibilityChange = (): void => {
       if (document.hidden) {
         console.log('📱 Page hidden - pausing detection...');
         stopDetection();
       }
     };
 
-    const handleBeforeUnload = () => {
+    const handleBeforeUnload = (): void => {
       console.log('🚪 Page unloading - cleaning up...');
       performCompleteCleanup();
     };
@@ -223,7 +257,7 @@ const FaceEmotionTestPage = () => {
   }, [stopDetection, performCompleteCleanup]);
 
   // 카메라 시작
-  const startCamera = useCallback(async () => {
+  const startCamera = useCallback(async (): Promise<void> => {
     if (!isModelLoaded) {
       alert('AI 모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -292,7 +326,7 @@ const FaceEmotionTestPage = () => {
   }, [isModelLoaded]);
 
   // 얼굴 감지 시작
-  const startDetection = useCallback(() => {
+  const startDetection = useCallback((): void => {
     if (
       !videoRef.current ||
       !canvasRef.current ||
@@ -307,7 +341,7 @@ const FaceEmotionTestPage = () => {
 
     const settings = qualitySettings[detectionQuality];
 
-    const detectFaces = async () => {
+    const detectFaces = async (): Promise<void> => {
       // 컴포넌트가 언마운트되었거나 감지가 중지되었으면 종료
       if (!isComponentMountedRef.current || !detectionIntervalRef.current) {
         return;
@@ -432,30 +466,44 @@ const FaceEmotionTestPage = () => {
     };
 
     // interval 설정
-    detectionIntervalRef.current = setInterval(detectFaces, settings.interval);
+    detectionIntervalRef.current = setInterval(() => {
+      detectFaces().catch(error => {
+        console.error('Detection interval error:', error);
+      });
+    }, settings.interval);
   }, [isModelLoaded, detectionQuality]);
 
   // 비디오 로드 시 자동 감지 시작
-  const handleVideoLoaded = useCallback(() => {
+  const handleVideoLoaded = useCallback((): void => {
     if (isStreaming && !isDetecting && isModelLoaded && isComponentMountedRef.current) {
       setTimeout(startDetection, 1000);
     }
   }, [isStreaming, isDetecting, isModelLoaded, startDetection]);
 
-  const shareResult = useCallback(() => {
+  const shareResult = useCallback((): void => {
     if (emotions.length > 0) {
       const topEmotion = emotions[0];
       const text = `AI 감정 분석 결과: ${topEmotion.emoji} ${topEmotion.name} ${topEmotion.value}%! 실시간 얼굴 감정 인식 테스트를 체험해보세요.`;
 
       if (navigator.share) {
-        navigator.share({
-          title: 'AIverse 실시간 감정 인식 테스트',
-          text,
-          url: window.location.href,
-        });
+        navigator
+          .share({
+            title: 'AIverse 실시간 감정 인식 테스트',
+            text,
+            url: window.location.href,
+          })
+          .catch(error => {
+            console.error('Share failed:', error);
+          });
       } else {
-        navigator.clipboard.writeText(`${text} ${window.location.href}`);
-        alert('결과가 복사되었습니다!');
+        navigator.clipboard
+          .writeText(`${text} ${window.location.href}`)
+          .then(() => {
+            alert('결과가 복사되었습니다!');
+          })
+          .catch(error => {
+            console.error('Copy failed:', error);
+          });
       }
     }
   }, [emotions]);
@@ -487,9 +535,9 @@ const FaceEmotionTestPage = () => {
       <TestContainer title="🎭 실시간 얼굴 감정 인식" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <StyledSpinner />
-          <Typography variant="body1">AI 감정 인식 모델 로딩 중...</Typography>
+          <Typography variant="body1">{loadingStep}</Typography>
           <Typography variant="caption" color="#6B7280">
-            face-api.js 모델들을 로드하고 있습니다 🤖
+            처음 방문 시 모델 다운로드로 시간이 걸릴 수 있습니다 🤖
           </Typography>
         </StyledLoadingAnimation>
       </TestContainer>

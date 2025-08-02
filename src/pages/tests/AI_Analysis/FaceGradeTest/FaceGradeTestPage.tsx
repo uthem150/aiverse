@@ -3,6 +3,7 @@ import { Camera, RotateCcw, Zap, TrendingUp } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
+import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledImageUpload,
@@ -39,22 +40,11 @@ const FaceGradeTestPage = () => {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [loadingStep, setLoadingStep] = useState('라이브러리 로딩 중...');
+  const [modelError, setModelError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showShareResult, setShowShareResult] = useState(false);
-
-  // TensorFlow.js 모델 로드 확인
-  useEffect(() => {
-    const checkModels = () => {
-      if (window.tmImage && window.tf) {
-        setIsModelReady(true);
-      } else {
-        // 모델이 로드되지 않았으면 1초 후 다시 확인
-        setTimeout(checkModels, 1000);
-      }
-    };
-
-    checkModels();
-  }, []);
+  const isComponentMountedRef = useRef(true);
 
   const gradeInfo = {
     최상위천상계: {
@@ -101,7 +91,71 @@ const FaceGradeTestPage = () => {
     },
   };
 
-  const handleGenderSelect = (gender: 'male' | 'female') => {
+  // TensorFlow.js 및 Teachable Machine 로드
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadModelsAndLibraries = async (): Promise<void> => {
+      try {
+        setLoadingStep('TensorFlow.js 로딩 중...');
+
+        const loader = AILibraryLoader.getInstance();
+        await loader.loadTensorFlow();
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        setLoadingStep('Teachable Machine 로딩 중...');
+        await loader.loadTeachableMachine();
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        // 최종 확인
+        if (loader.isTeachableMachineReady()) {
+          console.log('✅ All libraries ready for Face Grade Test');
+          setIsModelReady(true);
+          setModelError(null);
+          setLoadingStep('완료!');
+        } else {
+          throw new Error('라이브러리 로딩은 완료되었지만 초기화되지 않았습니다.');
+        }
+      } catch (error) {
+        console.error('❌ Library loading failed:', error);
+        if (!isCancelled && isComponentMountedRef.current) {
+          const errorMessage = error instanceof Error ? error.message : '라이브러리 로드 실패';
+          setModelError(errorMessage);
+          setIsModelReady(false);
+        }
+      }
+    };
+
+    const timer = setTimeout(() => {
+      if (!isCancelled) {
+        loadModelsAndLibraries().catch(error => {
+          console.error('Async loading error:', error);
+          if (!isCancelled && isComponentMountedRef.current) {
+            setModelError('라이브러리 로딩 중 예기치 못한 오류가 발생했습니다.');
+          }
+        });
+      }
+    }, 500);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // 컴포넌트 언마운트 시 정리
+  useEffect(() => {
+    isComponentMountedRef.current = true;
+
+    return () => {
+      console.log('🚪 FaceGradeTest unmounting...');
+      isComponentMountedRef.current = false;
+    };
+  }, []);
+
+  const handleGenderSelect = (gender: 'male' | 'female'): void => {
     setSelectedGender(gender);
     setStep('upload');
 
@@ -109,7 +163,7 @@ const FaceGradeTestPage = () => {
     trackTestStart('face-grade-test');
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -121,7 +175,7 @@ const FaceGradeTestPage = () => {
     }
   };
 
-  const analyzeImage = async () => {
+  const analyzeImage = async (): Promise<void> => {
     if (!selectedImage || !selectedGender || !isModelReady) {
       alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -136,16 +190,22 @@ const FaceGradeTestPage = () => {
           ? 'https://teachablemachine.withgoogle.com/models/sWJFOW_Of/'
           : 'https://teachablemachine.withgoogle.com/models/g3pMiZBPT/';
 
+      console.log('📦 Loading Teachable Machine model...');
+
       // 모델 로드
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
+
+      console.log('✅ Model loaded, starting prediction...');
 
       // 이미지 요소 생성 및 예측
       const img = new Image();
       img.crossOrigin = 'anonymous';
 
-      img.onload = async () => {
+      img.onload = async (): Promise<void> => {
         try {
           const predictions = await model.predict(img);
+
+          console.log('✅ Prediction completed:', predictions);
 
           // 예측 결과 정렬
           const sortedPredictions = predictions
@@ -159,15 +219,17 @@ const FaceGradeTestPage = () => {
           const gradeKey = topGrade.className.replace(/\s/g, '') as keyof typeof gradeInfo;
           const gradeData = gradeInfo[gradeKey] || gradeInfo['인간계'];
 
-          setResult({
-            topGrade: gradeData.title,
-            confidence: Math.round(topGrade.probability * 100),
-            allGrades: sortedPredictions,
-            message: gradeData.description,
-            description: `AI가 분석한 결과 ${gradeData.emoji} ${gradeData.title}입니다!`,
-          });
+          if (isComponentMountedRef.current) {
+            setResult({
+              topGrade: gradeData.title,
+              confidence: Math.round(topGrade.probability * 100),
+              allGrades: sortedPredictions,
+              message: gradeData.description,
+              description: `AI가 분석한 결과 ${gradeData.emoji} ${gradeData.title}입니다!`,
+            });
 
-          setStep('result');
+            setStep('result');
+          }
         } catch (error) {
           console.error('Prediction failed:', error);
           alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -176,7 +238,7 @@ const FaceGradeTestPage = () => {
         }
       };
 
-      img.onerror = () => {
+      img.onerror = (): void => {
         setIsLoading(false);
         alert('이미지 로드에 실패했습니다. 다른 이미지를 시도해주세요.');
       };
@@ -189,7 +251,7 @@ const FaceGradeTestPage = () => {
     }
   };
 
-  const resetTest = () => {
+  const resetTest = (): void => {
     setStep('gender');
     setSelectedGender(null);
     setSelectedImage(null);
@@ -197,16 +259,41 @@ const FaceGradeTestPage = () => {
     setIsLoading(false);
   };
 
-  const shareResult = () => {
+  const shareResult = (): void => {
     setShowShareResult(true);
 
     // 공유 모달 열기 추적
     trackEvent('share_modal_open', 'engagement', 'face-grade-test');
   };
 
-  const closeShareResult = () => {
+  const closeShareResult = (): void => {
     setShowShareResult(false);
   };
+
+  // 모델 로드 오류 시
+  if (modelError) {
+    return (
+      <TestContainer
+        title="✨ AI 외모 등급 테스트"
+        description="라이브러리 로드 중 오류가 발생했습니다."
+      >
+        <StyledLoadingAnimation>
+          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
+            ⚠️
+          </div>
+          <Typography variant="h5" color="#EF4444">
+            로드 실패
+          </Typography>
+          <Typography variant="body2" color="#6B7280">
+            {modelError}
+          </Typography>
+          <Button variant="primary" onClick={() => window.location.reload()}>
+            페이지 새로고침
+          </Button>
+        </StyledLoadingAnimation>
+      </TestContainer>
+    );
+  }
 
   // 모델이 로드되지 않았을 때 로딩 표시
   if (!isModelReady) {
@@ -214,9 +301,9 @@ const FaceGradeTestPage = () => {
       <TestContainer title="✨ AI 외모 등급 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">AI 모델 로딩 중...</Typography>
+          <Typography variant="body1">{loadingStep}</Typography>
           <Typography variant="caption" color="#6B7280">
-            잠시만 기다려주세요 🤖
+            처음 방문 시 라이브러리 다운로드로 시간이 걸릴 수 있습니다 🤖
           </Typography>
         </StyledLoadingAnimation>
       </TestContainer>
@@ -253,6 +340,7 @@ const FaceGradeTestPage = () => {
           </StyledGenderSelector>
         </StyledTestStep>
       )}
+
       {/* Image Upload */}
       {step === 'upload' && (
         <StyledTestStep>
@@ -280,6 +368,7 @@ const FaceGradeTestPage = () => {
           />
         </StyledTestStep>
       )}
+
       {/* Analysis */}
       {step === 'analysis' && (
         <StyledTestStep>
@@ -320,6 +409,7 @@ const FaceGradeTestPage = () => {
           )}
         </StyledTestStep>
       )}
+
       {/* Results */}
       {step === 'result' && result && (
         <StyledTestStep>

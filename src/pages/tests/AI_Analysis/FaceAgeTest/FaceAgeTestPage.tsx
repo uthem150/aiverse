@@ -3,6 +3,7 @@ import { RotateCcw, Zap, Calendar } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
+import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledImageUpload,
@@ -29,18 +30,61 @@ const FaceAgeTestPage = () => {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [modelError, setModelError] = useState<string | null>(null);
+  const [loadingStep, setLoadingStep] = useState('라이브러리 로딩 중...');
   const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isComponentMountedRef = useRef(true);
 
   useEffect(() => {
-    const checkModels = () => {
-      if (window.tmImage && window.tf) {
-        setIsModelReady(true);
-      } else {
-        setTimeout(checkModels, 1000);
+    let isCancelled = false;
+
+    const loadModelsAndLibraries = async () => {
+      try {
+        setLoadingStep('TensorFlow.js 로딩 중...');
+        const loader = AILibraryLoader.getInstance();
+        await loader.loadTensorFlow();
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        setLoadingStep('Teachable Machine 로딩 중...');
+        await loader.loadTeachableMachine();
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        if (loader.isTeachableMachineReady()) {
+          setIsModelReady(true);
+          setModelError(null);
+          setLoadingStep('완료!');
+        } else {
+          throw new Error('라이브러리는 로드되었지만 초기화되지 않았습니다.');
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : '라이브러리 로드 실패';
+        if (!isCancelled && isComponentMountedRef.current) {
+          setModelError(errorMessage);
+          setIsModelReady(false);
+        }
       }
     };
-    checkModels();
+
+    const timer = setTimeout(() => {
+      if (!isCancelled) {
+        loadModelsAndLibraries();
+      }
+    }, 500);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    isComponentMountedRef.current = true;
+    return () => {
+      isComponentMountedRef.current = false;
+    };
   }, []);
 
   const handleGenderSelect = (gender: 'male' | 'female') => {
@@ -82,24 +126,19 @@ const FaceAgeTestPage = () => {
       img.onload = async () => {
         try {
           const predictions = await model.predict(img);
-          const sortedPredictions = predictions.sort(
-            (a: any, b: any) => b.probability - a.probability
-          );
+          const sorted = predictions.sort((a: any, b: any) => b.probability - a.probability);
+          const predictedAge = parseInt(sorted[0].className) || Math.floor(Math.random() * 30) + 20;
+          const confidence = Math.round(sorted[0].probability * 100);
 
-          const predictedAge =
-            parseInt(sortedPredictions[0].className) || Math.floor(Math.random() * 30) + 20;
-          const confidence = Math.round(sortedPredictions[0].probability * 100);
-
-          setResult({
-            predictedAge,
-            confidence,
-            message: getAgeMessage(predictedAge),
-            actualAge: undefined,
-          });
-
-          setStep('result');
+          if (isComponentMountedRef.current) {
+            setResult({
+              predictedAge,
+              confidence,
+              message: getAgeMessage(predictedAge),
+            });
+            setStep('result');
+          }
         } catch (error) {
-          console.error('Prediction failed:', error);
           alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
         } finally {
           setIsLoading(false);
@@ -113,7 +152,6 @@ const FaceAgeTestPage = () => {
 
       img.src = selectedImage;
     } catch (error) {
-      console.error('Model loading failed:', error);
       setIsLoading(false);
       alert('모델 로드에 실패했습니다. 네트워크 연결을 확인해주세요.');
     }
@@ -145,12 +183,36 @@ const FaceAgeTestPage = () => {
     setShowShareResult(false);
   };
 
+  if (modelError) {
+    return (
+      <TestContainer title="🤖 AI 얼굴 나이 테스트" description="라이브러리 로딩 중 오류 발생">
+        <StyledLoadingAnimation>
+          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
+            ⚠️
+          </div>
+          <Typography variant="h5" color="#EF4444">
+            로드 실패
+          </Typography>
+          <Typography variant="body2" color="#6B7280">
+            {modelError}
+          </Typography>
+          <Button variant="primary" onClick={() => window.location.reload()}>
+            페이지 새로고침
+          </Button>
+        </StyledLoadingAnimation>
+      </TestContainer>
+    );
+  }
+
   if (!isModelReady) {
     return (
       <TestContainer title="🤖 AI 얼굴 나이 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">AI 모델 로딩 중...</Typography>
+          <Typography variant="body1">{loadingStep}</Typography>
+          <Typography variant="caption" color="#6B7280">
+            처음 방문 시 로딩에 시간이 걸릴 수 있습니다 🧠
+          </Typography>
         </StyledLoadingAnimation>
       </TestContainer>
     );

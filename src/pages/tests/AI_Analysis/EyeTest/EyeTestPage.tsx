@@ -16,6 +16,7 @@ import {
   StyledCelebCard,
 } from './EyeTestPage.style';
 import ShareResult from '@/components/common/ShareResult/ShareResult';
+import AILibraryLoader from '@/utils/aiLibraryLoader';
 
 interface EyeAnalysisResult {
   eyeType: string;
@@ -32,19 +33,11 @@ const EyeTestPage = () => {
   const [result, setResult] = useState<EyeAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
-  const [showShareResult, setShowShareResult] = useState(false);
+  const [loadingStep, setLoadingStep] = useState('라이브러리 로딩 중...');
+  const [modelError, setModelError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const checkModels = () => {
-      if (window.tmImage && window.tf) {
-        setIsModelReady(true);
-      } else {
-        setTimeout(checkModels, 1000);
-      }
-    };
-    checkModels();
-  }, []);
+  const [showShareResult, setShowShareResult] = useState(false);
+  const isComponentMountedRef = useRef(true);
 
   const eyeTypeInfo = {
     봉황안: {
@@ -104,6 +97,53 @@ const EyeTestPage = () => {
       celebrities: '수지, 수애, 허지웅',
     },
   };
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadLibraries = async () => {
+      try {
+        setLoadingStep('TensorFlow.js 로딩 중...');
+        const loader = AILibraryLoader.getInstance();
+        await loader.loadTensorFlow();
+
+        if (isCancelled || !isComponentMountedRef.current) return;
+
+        setLoadingStep('Teachable Machine 로딩 중...');
+        await loader.loadTeachableMachine();
+
+        if (loader.isTeachableMachineReady()) {
+          setIsModelReady(true);
+          setModelError(null);
+          setLoadingStep('완료!');
+        } else {
+          throw new Error('라이브러리는 로드되었으나 초기화되지 않았습니다.');
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '라이브러리 로드 실패';
+        if (!isCancelled) {
+          setModelError(message);
+          setIsModelReady(false);
+        }
+      }
+    };
+
+    const timer = setTimeout(() => {
+      if (!isCancelled) loadLibraries();
+    }, 500);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    isComponentMountedRef.current = true;
+    return () => {
+      isComponentMountedRef.current = false;
+    };
+  }, []);
 
   const handleGenderSelect = (gender: 'male' | 'female') => {
     setSelectedGender(gender);
@@ -189,20 +229,39 @@ const EyeTestPage = () => {
     setIsLoading(false);
   };
 
-  const shareResult = () => {
-    setShowShareResult(true);
-  };
+  const shareResult = () => setShowShareResult(true);
+  const closeShareResult = () => setShowShareResult(false);
 
-  const closeShareResult = () => {
-    setShowShareResult(false);
-  };
+  if (modelError) {
+    return (
+      <TestContainer title="👁️ AI 눈 관상 테스트" description="라이브러리 로드 중 오류 발생">
+        <StyledLoadingAnimation>
+          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
+            ⚠️
+          </div>
+          <Typography variant="h5" color="#EF4444">
+            로드 실패
+          </Typography>
+          <Typography variant="body2" color="#6B7280">
+            {modelError}
+          </Typography>
+          <Button variant="primary" onClick={() => window.location.reload()}>
+            새로고침
+          </Button>
+        </StyledLoadingAnimation>
+      </TestContainer>
+    );
+  }
 
   if (!isModelReady) {
     return (
       <TestContainer title="👁️ AI 눈 관상 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">AI 모델 로딩 중...</Typography>
+          <Typography variant="body1">{loadingStep}</Typography>
+          <Typography variant="caption" color="#6B7280">
+            처음 방문 시 시간이 다소 걸릴 수 있습니다 👁️
+          </Typography>
         </StyledLoadingAnimation>
       </TestContainer>
     );
