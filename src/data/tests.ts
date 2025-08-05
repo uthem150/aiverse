@@ -532,7 +532,7 @@ export const testCategories: TestCategory[] = [
     tests: [
       {
         id: 'kbo-team-test',
-        title: '나와 맞는 KBO팀 테스트',
+        title: '내 운명의 KBO팀 테스트',
         description: '나의 야구 취향에 맞는 완벽한 KBO 팀은?',
         thumbnail: '/images/kbo-team-test.jpg',
         category: 'sports-fan',
@@ -544,7 +544,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'overseas-football-team-test',
-        title: '나와 맞는 해외 축구팀 테스트',
+        title: '내 운명의 해외 축구팀 테스트',
         description: '축구 취향으로 알아보는 나의 완벽한 해외 축구팀은?',
         thumbnail: '/images/overseas-football-team-test.jpg',
         category: 'sports-fan',

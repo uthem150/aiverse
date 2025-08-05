@@ -2,7 +2,7 @@ import type { PersonalityTestData } from '@/types/personalityTest';
 
 export const kboTeamTestData: PersonalityTestData = {
   id: 'kbo-team-preference-test',
-  title: '⚾ 나와 어울리는 KBO 프로야구 팀 찾기',
+  title: '⚾ 나의 운명의 KBO 프로야구 팀 찾기',
   description:
     '당신의 성향과 응원 스타일은 어떤 KBO 구단과 가장 잘 맞을까요? 열 가지 구단의 매력을 통해 나와 꼭 맞는 운명의 팀을 찾아보세요!',
   category: 'sports',

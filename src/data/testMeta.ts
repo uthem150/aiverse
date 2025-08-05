@@ -350,19 +350,19 @@ export const testMetaData: Record<string, TestMetaData> = {
 
   // 스포츠 팬
   'kbo-team-test': {
-    title: '나와 맞는 KBO팀 테스트 - AIverse',
+    title: '내 운명의 KBO팀 테스트 - AIverse',
     description:
       '한국 프로야구 10개 팀 중 당신의 야구 취향과 가장 잘 맞는 팀을 찾아드립니다. 내 마음속의 야구팀은 어디?',
     keywords: 'KBO 테스트, 야구팀, 야구 테스트, 프로야구, 스포츠 팬',
-    ogTitle: '⚾ 나와 맞는 KBO팀 테스트',
+    ogTitle: '⚾ 내 운명의 KBO팀 테스트',
     ogDescription: '야구 덕후들 모여라! 당신의 야구 취향과 딱 맞는 KBO팀을 찾아보세요!',
   },
   'overseas-football-team-test': {
-    title: '나와 맞는 해외 축구팀 테스트 - AIverse',
+    title: '내 운명의 해외 축구팀 테스트 - AIverse',
     description:
       '축구 스타일에 따라 당신과 가장 잘 맞는 해외 축구팀을 찾아드립니다. 프리미어리그, 라리가, 분데스리가 등 당신의 운명적인 팀은?',
     keywords: '해외 축구, 축구팀, 축구 테스트, 프리미어리그, 라리가, 스포츠 팬',
-    ogTitle: '⚽ 나와 맞는 해외 축구팀 테스트',
+    ogTitle: '⚽ 내 운명의 해외 축구팀 테스트',
     ogDescription: '해축 팬 필독! 당신의 축구 취향에 맞는 최고의 해외 축구팀은?',
   },
 
