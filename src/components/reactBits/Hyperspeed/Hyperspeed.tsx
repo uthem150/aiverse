@@ -1046,6 +1046,9 @@ class App {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
 
+    this.onTouchStart = this.onTouchStart.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
+
     window.addEventListener('resize', this.onWindowResize.bind(this));
   }
 
@@ -1129,7 +1132,20 @@ class App {
     this.container.addEventListener('mouseup', this.onMouseUp);
     this.container.addEventListener('mouseout', this.onMouseUp);
 
+    this.container.addEventListener('touchstart', this.onTouchStart, { passive: false });
+    this.container.addEventListener('touchend', this.onTouchEnd, { passive: false });
+
     this.tick();
+  }
+
+  onTouchStart(ev: TouchEvent) {
+    ev.preventDefault();
+    this.onMouseDown(ev as any); // 기존 마우스 다운 핸들러 호출
+  }
+
+  onTouchEnd(ev: TouchEvent) {
+    ev.preventDefault();
+    this.onMouseUp(ev as any); // 기존 마우스 업 핸들러 호출
   }
 
   onMouseDown(ev: MouseEvent) {
@@ -1201,6 +1217,9 @@ class App {
       this.container.removeEventListener('mousedown', this.onMouseDown);
       this.container.removeEventListener('mouseup', this.onMouseUp);
       this.container.removeEventListener('mouseout', this.onMouseUp);
+
+      this.container.removeEventListener('touchstart', this.onTouchStart);
+      this.container.removeEventListener('touchend', this.onTouchEnd);
     }
   }
 

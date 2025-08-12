@@ -226,10 +226,16 @@ export default function Orb({
     let currentRot = 0;
     const rotationSpeed = 0.3;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    // 1. 마우스와 터치를 함께 처리하는 통합 핸들러
+    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
+      // 터치 이벤트인 경우 e.touches[0] 사용
+      const touch = 'touches' in e ? e.touches[0] : null;
+      const clientX = touch ? touch.clientX : (e as MouseEvent).clientX;
+      const clientY = touch ? touch.clientY : (e as MouseEvent).clientY;
+
       const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
       const width = rect.width;
       const height = rect.height;
       const size = Math.min(width, height);
@@ -245,12 +251,16 @@ export default function Orb({
       }
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       targetHover = 0;
     };
 
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    // 2. 마우스와 터치 이벤트 리스너 모두 등록
+    container.addEventListener('mousemove', handlePointerMove);
+    container.addEventListener('mouseleave', handlePointerLeave);
+    container.addEventListener('touchmove', handlePointerMove, { passive: false });
+    container.addEventListener('touchend', handlePointerLeave, { passive: false });
+    container.addEventListener('touchcancel', handlePointerLeave, { passive: false });
 
     let rafId: number;
     const update = (t: number) => {
@@ -276,8 +286,14 @@ export default function Orb({
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', resize);
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', handleMouseLeave);
+
+      // 3. 등록한 모든 이벤트 리스너 제거
+      container.removeEventListener('mousemove', handlePointerMove);
+      container.removeEventListener('mouseleave', handlePointerLeave);
+      container.removeEventListener('touchmove', handlePointerMove);
+      container.removeEventListener('touchend', handlePointerLeave);
+      container.removeEventListener('touchcancel', handlePointerLeave);
+
       container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };

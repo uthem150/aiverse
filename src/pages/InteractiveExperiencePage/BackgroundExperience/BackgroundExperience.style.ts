@@ -29,6 +29,12 @@ export const OverlayHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  pointer-events: none; /* 기본적으로 이벤트 차단 */
+
+  /* 버튼들만 이벤트 허용 */
+  > * {
+    pointer-events: auto;
+  }
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -94,7 +100,7 @@ export const InfoPanel = styled.div<{ show: boolean }>`
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 2rem;
-  z-index: 60;
+  z-index: 200;
   opacity: ${props => (props.show ? 1 : 0)};
   visibility: ${props => (props.show ? 'visible' : 'hidden')};
   transition: all 0.3s ease;
@@ -160,11 +166,17 @@ export const ControlBar = styled.div<{ expanded: boolean }>`
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(255, 255, 255, 0.2);
-  z-index: 50;
+  z-index: 150;
   transform: translateY(${props => (props.expanded ? '0' : 'calc(100% - 70px)')});
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: ${props => (props.expanded ? '0' : '16px 16px 0 0')};
   will-change: transform;
+  pointer-events: none; /* 기본적으로 이벤트 차단 */
+
+  /* 내부 요소들만 이벤트 허용 */
+  > * {
+    pointer-events: auto;
+  }
 
   @media (max-width: 768px) {
     transform: translateY(${props => (props.expanded ? '0' : 'calc(100% - 60px)')});
@@ -419,8 +431,35 @@ export const BackgroundRenderer = styled.div`
   height: 100%;
   z-index: 1;
 
-  /* 배경 컴포넌트가 화면을 채우도록 */
+  /* 배경 컴포넌트의 이벤트를 허용 */
+  pointer-events: auto;
+
+  /* 배경 컴포넌트가 화면을 완전히 채우도록 */
   & > * {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Galaxy, Hyperspeed 등 canvas 요소들 */
+  canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+  }
+
+  /* 컴포넌트 컨테이너들 */
+  .galaxy-container,
+  .orb-container,
+  .darkveil-canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: 100% !important;
   }

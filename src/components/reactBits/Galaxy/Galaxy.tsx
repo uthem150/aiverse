@@ -1,6 +1,6 @@
-import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
-import { useEffect, useRef } from "react";
-import "./Galaxy.css";
+import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
+import { useEffect, useRef } from 'react';
+import './Galaxy.css';
 
 const vertexShader = `
 attribute vec2 uv;
@@ -244,7 +244,7 @@ export default function Galaxy({
         );
       }
     }
-    window.addEventListener("resize", resize, false);
+    window.addEventListener('resize', resize, false);
     resize();
 
     const geometry = new Triangle(gl);
@@ -254,11 +254,7 @@ export default function Galaxy({
       uniforms: {
         uTime: { value: 0 },
         uResolution: {
-          value: new Color(
-            gl.canvas.width,
-            gl.canvas.height,
-            gl.canvas.width / gl.canvas.height
-          ),
+          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height),
         },
         uFocal: { value: new Float32Array(focal) },
         uRotation: { value: new Float32Array(rotation) },
@@ -267,10 +263,7 @@ export default function Galaxy({
         uHueShift: { value: hueShift },
         uSpeed: { value: speed },
         uMouse: {
-          value: new Float32Array([
-            smoothMousePos.current.x,
-            smoothMousePos.current.y,
-          ]),
+          value: new Float32Array([smoothMousePos.current.x, smoothMousePos.current.y]),
         },
         uGlowIntensity: { value: glowIntensity },
         uSaturation: { value: saturation },
@@ -312,32 +305,74 @@ export default function Galaxy({
     animateId = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
-    function handleMouseMove(e: MouseEvent) {
+    // --- 이벤트 핸들러 로직 수정 ---
+
+    // 공통: 좌표 업데이트 함수
+    function updateTargetPosition(clientX: number, clientY: number) {
       const rect = ctn.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
+      const x = (clientX - rect.left) / rect.width;
+      const y = 1.0 - (clientY - rect.top) / rect.height;
       targetMousePos.current = { x, y };
-      targetMouseActive.current = 1.0;
     }
 
+    // PC 마우스 핸들러
+    function handleMouseEnter() {
+      targetMouseActive.current = 1.0;
+    }
     function handleMouseLeave() {
       targetMouseActive.current = 0.0;
     }
+    function handleMouseMove(e: MouseEvent) {
+      updateTargetPosition(e.clientX, e.clientY);
+    }
+
+    // 모바일 터치 핸들러
+    function handleTouchStart(e: TouchEvent) {
+      e.preventDefault();
+      targetMouseActive.current = 1.0;
+      if (e.touches.length > 0) {
+        updateTargetPosition(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }
+    function handleTouchEnd() {
+      targetMouseActive.current = 0.0;
+    }
+    function handleTouchMove(e: TouchEvent) {
+      e.preventDefault();
+      if (e.touches.length > 0) {
+        updateTargetPosition(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }
 
     if (mouseInteraction) {
-      ctn.addEventListener("mousemove", handleMouseMove);
-      ctn.addEventListener("mouseleave", handleMouseLeave);
+      // PC 이벤트
+      ctn.addEventListener('mouseenter', handleMouseEnter);
+      ctn.addEventListener('mouseleave', handleMouseLeave);
+      ctn.addEventListener('mousemove', handleMouseMove);
+
+      // 모바일 이벤트
+      ctn.addEventListener('touchstart', handleTouchStart, { passive: false });
+      ctn.addEventListener('touchend', handleTouchEnd);
+      ctn.addEventListener('touchmove', handleTouchMove, { passive: false });
+      ctn.addEventListener('touchcancel', handleTouchEnd);
     }
 
     return () => {
       cancelAnimationFrame(animateId);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener('resize', resize);
       if (mouseInteraction) {
-        ctn.removeEventListener("mousemove", handleMouseMove);
-        ctn.removeEventListener("mouseleave", handleMouseLeave);
+        // 모든 이벤트 리스너 제거
+        ctn.removeEventListener('mouseenter', handleMouseEnter);
+        ctn.removeEventListener('mouseleave', handleMouseLeave);
+        ctn.removeEventListener('mousemove', handleMouseMove);
+
+        ctn.removeEventListener('touchstart', handleTouchStart);
+        ctn.removeEventListener('touchend', handleTouchEnd);
+        ctn.removeEventListener('touchmove', handleTouchMove);
+        ctn.removeEventListener('touchcancel', handleTouchEnd);
       }
       ctn.removeChild(gl.canvas);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [
     focal,

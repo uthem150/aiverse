@@ -22,7 +22,7 @@ import SplashCursor from '@/components/reactBits/SplashCursor/SplashCursor';
 import BlobCursor from '@/components/reactBits/BlobCursor/BlobCursor';
 import Ribbons from '@/components/reactBits/Ribbons/Ribbons';
 
-type CursorType = 'splash' | 'fluid' | 'ribbon' | 'none';
+type CursorType = 'fluid' | 'splash' | 'ribbon' | 'none';
 
 const CursorExperience: React.FC = () => {
   const navigate = useNavigate();
@@ -31,16 +31,16 @@ const CursorExperience: React.FC = () => {
 
   const cursorOptions = [
     {
-      type: 'splash' as CursorType,
-      icon: '💥',
-      name: '스플래시 이펙트',
-      description: '움직일 때마다 화려한 물결이 퍼집니다',
-    },
-    {
       type: 'fluid' as CursorType,
       icon: '🌀',
       name: '플루이드 트레일',
       description: '마우스를 따라다니는 부드러운 액체 효과',
+    },
+    {
+      type: 'splash' as CursorType,
+      icon: '💥',
+      name: '스플래시 이펙트',
+      description: '움직일 때마다 화려한 물결이 퍼집니다',
     },
     {
       type: 'ribbon' as CursorType,
@@ -85,6 +85,7 @@ const CursorExperience: React.FC = () => {
               width: '100vw',
               height: '100vh',
               zIndex: 1,
+              pointerEvents: 'none',
             }}
           >
             <Ribbons
@@ -108,7 +109,8 @@ const CursorExperience: React.FC = () => {
               left: '50%',
               width: '10vw',
               height: '10vh',
-              zIndex: 1,
+              zIndex: 9999,
+              pointerEvents: 'none',
             }}
           >
             <BlobCursor
@@ -143,14 +145,21 @@ const CursorExperience: React.FC = () => {
           <ExperienceArea>
             <GuideText>
               <div className="highlight">{getCurrentCursorInfo().name}</div>
-              커서를 움직이고 클릭하여 효과를 확인해보세요
+              {activeCursor === 'fluid' && '마우스를 움직여서 블롭 커서를 확인해보세요'}
+              {activeCursor === 'splash' &&
+                '마우스를 클릭하고 움직여서 스플래시 효과를 확인해보세요'}
+              {activeCursor === 'ribbon' && '마우스를 움직여서 아름다운 리본 효과를 그려보세요'}
+              {activeCursor === 'none' && '커서 효과가 비활성화되었습니다'}
             </GuideText>
           </ExperienceArea>
         </MainContent>
 
-        {/* 하단 컨트롤 바 - 드롭다운 형태 */}
+        {/* 하단 컨트롤 바 - 개선된 드롭다운 형태 */}
         <ControlBar expanded={isControlExpanded}>
-          <ControlHeader onClick={() => setIsControlExpanded(!isControlExpanded)}>
+          <ControlHeader
+            onClick={() => setIsControlExpanded(!isControlExpanded)}
+            style={{ pointerEvents: 'auto' }}
+          >
             <div className="current-effect">
               <span className="current-icon">{getCurrentCursorInfo().icon}</span>
               <span className="current-name">{getCurrentCursorInfo().name}</span>

@@ -75,25 +75,37 @@ const BackgroundExperience: React.FC = () => {
       description: '빛의 속도로 이동하는 느낌',
       color: '#dc2626',
       component: (
-        <Hyperspeed
-          effectOptions={{
-            fov: 90,
-            fovSpeedUp: 150,
-            speedUp: 2.5,
-            carLightsFade: 0.4,
-            colors: {
-              roadColor: 0x080808,
-              islandColor: 0x0a0a0a,
-              background: 0x000000,
-              shoulderLines: 0xffffff,
-              brokenLines: 0xffffff,
-              leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
-              rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
-              sticks: 0x03b3c3,
-            },
-            distortion: 'turbulentDistortion',
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: '#000000', // 어두운 우주 배경
+            overflow: 'hidden',
           }}
-        />
+        >
+          <Hyperspeed
+            effectOptions={{
+              fov: 90,
+              fovSpeedUp: 150,
+              speedUp: 3,
+              carLightsFade: 0.4,
+              colors: {
+                roadColor: 0x080808,
+                islandColor: 0x0a0a0a,
+                background: 0x000000, // 완전히 어두운 배경
+                shoulderLines: 0xffffff,
+                brokenLines: 0xffffff,
+                leftCars: [0xff1744, 0xe91e63, 0x9c27b0],
+                rightCars: [0x03a9f4, 0x00bcd4, 0x009688],
+                sticks: 0x00e676,
+              },
+              distortion: 'turbulentDistortion',
+            }}
+          />
+        </div>
       ),
     },
     {
@@ -123,31 +135,45 @@ const BackgroundExperience: React.FC = () => {
       component: (
         <div
           style={{
-            position: 'relative',
+            position: 'absolute',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             background: 'radial-gradient(circle at center, #1a0a2e 0%, #0a0a1a 100%)',
+            overflow: 'hidden',
           }}
         >
-          {/* 여러 개의 오브들을 배치 */}
+          {/* 인터랙티브 배경 파티클 */}
+          <Particles
+            count={80}
+            color="#8b5cf6"
+            mouseInteraction={true}
+            mouseRadius={120}
+            mouseForce={0.6}
+          />
+
+          {/* 여러 개의 오브들을 절대 위치로 배치 */}
           <div
             style={{
               position: 'absolute',
-              top: '20%',
-              left: '20%',
+              top: '15%',
+              left: '15%',
               width: '200px',
               height: '200px',
+              pointerEvents: 'auto',
             }}
           >
-            <Orb hue={270} hoverIntensity={0.3} rotateOnHover={true} forceHoverState={false} />
+            <Orb hue={270} hoverIntensity={0.5} rotateOnHover={true} forceHoverState={false} />
           </div>
           <div
             style={{
               position: 'absolute',
-              top: '60%',
-              right: '25%',
+              top: '50%',
+              right: '20%',
               width: '150px',
               height: '150px',
+              pointerEvents: 'auto',
             }}
           >
             <Orb hue={300} hoverIntensity={0.4} rotateOnHover={true} forceHoverState={false} />
@@ -155,16 +181,16 @@ const BackgroundExperience: React.FC = () => {
           <div
             style={{
               position: 'absolute',
-              bottom: '20%',
-              left: '50%',
+              bottom: '15%',
+              left: '45%',
               width: '180px',
               height: '180px',
               transform: 'translateX(-50%)',
+              pointerEvents: 'auto',
             }}
           >
-            <Orb hue={240} hoverIntensity={0.2} rotateOnHover={true} forceHoverState={false} />
+            <Orb hue={240} hoverIntensity={0.6} rotateOnHover={true} forceHoverState={false} />
           </div>
-          <Particles count={100} color="#8b5cf6" />
         </div>
       ),
     },
@@ -177,12 +203,22 @@ const BackgroundExperience: React.FC = () => {
       component: (
         <div
           style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             background: 'linear-gradient(45deg, #0a0f1c 0%, #1a1a2e 50%, #16213e 100%)',
+            overflow: 'hidden',
           }}
         >
-          <Particles count={300} color="#fbbf24" />
+          <Particles
+            count={300}
+            color="#fbbf24"
+            mouseInteraction={true}
+            mouseRadius={200}
+            mouseForce={1.2}
+          />
         </div>
       ),
     },
@@ -195,20 +231,24 @@ const BackgroundExperience: React.FC = () => {
       component: (
         <div
           style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            overflow: 'hidden',
           }}
         >
           <Cubes
-            gridSize={12}
+            gridSize={10}
             maxAngle={60}
             radius={4}
             duration={{ enter: 0.3, leave: 0.6 }}
-            cellGap={8}
+            cellGap={12}
             borderStyle="1px solid #10b981"
             faceColor="#065f46"
             shadow="0 0 10px rgba(16, 185, 129, 0.3)"
@@ -218,56 +258,6 @@ const BackgroundExperience: React.FC = () => {
             rippleSpeed={1.5}
           />
         </div>
-      ),
-    },
-    {
-      id: 'cosmic-deep',
-      icon: '🌠',
-      name: '코스믹 딥',
-      description: '심우주의 신비로운 깊이',
-      color: '#1e1b4b',
-      component: (
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            background: 'radial-gradient(ellipse at center, #1e1b4b 0%, #0f0f23 70%, #000000 100%)',
-          }}
-        >
-          <Galaxy
-            focal={[0.5, 0.5]}
-            rotation={[0.7, 0.7]}
-            starSpeed={0.3}
-            density={2}
-            hueShift={220}
-            speed={0.5}
-            mouseInteraction={true}
-            glowIntensity={0.6}
-            saturation={0.8}
-            mouseRepulsion={false}
-            twinkleIntensity={0.8}
-            rotationSpeed={0.05}
-            autoCenterRepulsion={1}
-            transparent={true}
-          />
-        </div>
-      ),
-    },
-    {
-      id: 'default',
-      icon: '🌃',
-      name: '기본 배경',
-      description: '깔끔한 그라데이션',
-      color: '#6366f1',
-      component: (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #3730a3 100%)',
-          }}
-        />
       ),
     },
   ];
@@ -290,7 +280,7 @@ const BackgroundExperience: React.FC = () => {
   return (
     <>
       <BackgroundContainer>
-        {/* 배경 렌더러 */}
+        {/* 배경 렌더러 - 이벤트 차단 방지 */}
         <BackgroundRenderer>{currentBg.component}</BackgroundRenderer>
 
         {/* 오버레이 헤더 */}
@@ -314,11 +304,18 @@ const BackgroundExperience: React.FC = () => {
             <div className="info-icon">{currentBg.icon}</div>
             <div className="info-title">{currentBg.name}</div>
             <div className="info-description">{currentBg.description}</div>
-            <div className="info-tip">하단 컨트롤에서 다른 배경으로 전환할 수 있습니다</div>
+            <div className="info-tip">
+              {currentBg.id === 'hyperspeed' && '마우스를 클릭하고 드래그하면 속도가 빨라집니다! '}
+              {currentBg.id === 'galaxy' && '마우스를 움직이면 별들이 반응합니다! '}
+              {currentBg.id === 'mystic-orbs' && '오브들 위에 마우스를 올려보세요! '}
+              {currentBg.id === 'particle-system' && '마우스로 파티클들과 상호작용해보세요! '}
+              {currentBg.id === 'cube-3d' && '마우스를 움직이거나 터치하여 큐브들을 기울여보세요! '}
+              하단 컨트롤에서 다른 배경으로 전환할 수 있습니다
+            </div>
           </div>
         </InfoPanel>
 
-        {/* 하단 컨트롤 바 - 개선된 드롭다운 형태 */}
+        {/* 하단 컨트롤 바 */}
         <ControlBar expanded={isControlExpanded}>
           <ControlHeader onClick={() => setIsControlExpanded(!isControlExpanded)}>
             <div className="current-effect">
