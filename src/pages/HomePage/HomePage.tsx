@@ -1,4 +1,4 @@
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { ArrowRight, TrendingUp, Sparkles, Gamepad2, Palette, Zap } from 'lucide-react';
 import {
   StyledHomePage,
   StyledHeroSection,
@@ -10,6 +10,8 @@ import {
   StyledSectionHeader,
   StyledStatsCard,
   StyledStatsGrid,
+  StyledExperienceSection,
+  StyledExperienceCard,
 } from './HomePage.style';
 import Typography from '@/components/common/Typography/Typography';
 import Button from '@/components/common/Button/Button';
@@ -46,6 +48,10 @@ const HomePage = () => {
     navigate(`/tests/${categoryId}`);
   };
 
+  const handleExperienceClick = () => {
+    navigate('/interactive-hub');
+  };
+
   return (
     <StyledHomePage>
       {/* Hero Section */}
@@ -64,6 +70,42 @@ const HomePage = () => {
           지금 시작하기 <ArrowRight size={20} />
         </Button>
       </StyledHeroSection>
+
+      {/* Interactive Experience Section */}
+      <StyledExperienceSection>
+        <StyledExperienceCard onClick={handleExperienceClick}>
+          <div className="experience-header">
+            <Gamepad2 size={32} />
+            <div>
+              <Typography variant="h3" color="#ffffff">
+                🎮 인터랙티브 체험관
+              </Typography>
+              <Typography variant="body1" color="rgba(255, 255, 255, 0.8)">
+                최신 웹 기술로 구현된 몰입형 인터랙티브 경험들
+              </Typography>
+            </div>
+          </div>
+          <div className="experience-features">
+            <div className="feature">
+              <Palette size={20} />
+              <span>커서 인터랙션</span>
+            </div>
+            <div className="feature">
+              <Sparkles size={20} />
+              <span>배경 체험</span>
+            </div>
+            <div className="feature">
+              <Zap size={20} />
+              <span>조합 모드</span>
+            </div>
+          </div>
+          <div className="experience-cta">
+            <Typography variant="body2" color="rgba(255, 255, 255, 0.9)">
+              다양한 인터랙티브 효과들을 카테고리별로 체험해보세요! ✨
+            </Typography>
+          </div>
+        </StyledExperienceCard>
+      </StyledExperienceSection>
 
       {/* Stats Section */}
       <StyledSection>
@@ -124,7 +166,7 @@ const HomePage = () => {
         </StyledCategoryGrid>
       </StyledSection>
 
-      {/* Popular Tests - onClick 수정 */}
+      {/* Popular Tests */}
       <StyledSection>
         <StyledSectionHeader>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -143,7 +185,7 @@ const HomePage = () => {
         </StyledTestGrid>
       </StyledSection>
 
-      {/* New Tests - onClick 수정 */}
+      {/* New Tests */}
       {newTests.length > 0 && (
         <StyledSection>
           <StyledSectionHeader>

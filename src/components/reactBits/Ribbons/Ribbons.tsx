@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Transform, Vec3, Color, Polyline } from 'ogl';
 
+import './Ribbons.css';
+
 interface RibbonsProps {
   colors?: string[];
   baseSpring?: number;
@@ -39,12 +41,7 @@ const Ribbons: React.FC<RibbonsProps> = ({
     const renderer = new Renderer({ dpr: window.devicePixelRatio || 2, alpha: true });
     const gl = renderer.gl;
     if (Array.isArray(backgroundColor) && backgroundColor.length === 4) {
-      gl.clearColor(
-        backgroundColor[0],
-        backgroundColor[1],
-        backgroundColor[2],
-        backgroundColor[3]
-      );
+      gl.clearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
     } else {
       gl.clearColor(0, 0, 0, 0);
     }
@@ -215,10 +212,7 @@ const Ribbons: React.FC<RibbonsProps> = ({
       lastTime = currentTime;
 
       lines.forEach(line => {
-        tmp.copy(mouse)
-          .add(line.mouseOffset)
-          .sub(line.points[0])
-          .multiply(line.spring);
+        tmp.copy(mouse).add(line.mouseOffset).sub(line.points[0]).multiply(line.spring);
         line.mouseVelocity.add(tmp).multiply(line.friction);
         line.points[0].add(line.mouseVelocity);
 
@@ -266,7 +260,7 @@ const Ribbons: React.FC<RibbonsProps> = ({
     backgroundColor,
   ]);
 
-  return <div ref={containerRef} className="relative w-full h-full" />;
+  return <div ref={containerRef} className="ribbons-container" />;
 };
 
 export default Ribbons;

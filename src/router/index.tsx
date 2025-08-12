@@ -3,6 +3,16 @@ import Layout from '@/components/layout/Layout/Layout';
 import HomePage from '@/pages/HomePage/HomePage';
 import TestListPage from '@/pages/TestListPage/TestListPage';
 
+// 체험관 페이지들 (직접 임포트)
+import MagicExperienceHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
+import CursorExperience from '@/pages/InteractiveExperiencePage/CursorExperience/CursorExperience';
+import BackgroundExperience from '@/pages/InteractiveExperiencePage/BackgroundExperience/BackgroundExperience';
+import GameExperience from '@/pages/InteractiveExperiencePage/GameExperience/GameExperience';
+
+// 게임들 (직접 임포트)
+import TargetShooter from '@/pages/games/TargetShooter/TargetShooter';
+import OrbCollector from '@/pages/games/OrbCollector/OrbCollector';
+
 // AI 분석 테스트들
 import FaceAgeTestPage from '@/pages/tests/AI_Analysis/FaceAgeTest/FaceAgeTestPage';
 import FaceGradeTestPage from '@/pages/tests/AI_Analysis/FaceGradeTest/FaceGradeTestPage';
@@ -24,6 +34,7 @@ import DatingStyleTestPage from '@/pages/tests/Dating_personality/DatingStyleTes
 import DecisionMakingStyleTestPage from '@/pages/tests/Dating_personality/DecisionMakingStyleTest/DecisionMakingStyleTestPage';
 import EarlyRelationshipBehaviorTestPage from '@/pages/tests/Dating_personality/EarlyRelationshipBehaviorTest/EarlyRelationshipBehaviorTestPage';
 import GiftGivingStyleTestPage from '@/pages/tests/Dating_personality/GiftGivingStyleTest/GiftGivingStyleTestPage';
+import DatingCharacterTestPage from '@/pages/tests/Dating_personality/datingCharacterTest/datingCharacterTestPage';
 
 // MZ 라이프스타일 테스트들
 import BurnoutLevelTestPage from '@/pages/tests/MZ_LifeStyle/BurnoutLevelTest/BurnoutLevelTestPage';
@@ -31,7 +42,13 @@ import SpendingTypeTestPage from '@/pages/tests/MZ_LifeStyle/SpendingTypeTest/Sp
 import GodsaengTypeTestPage from '@/pages/tests/MZ_LifeStyle/GodsaengTypeTest/GodsaengTypeTestPage';
 import MbtiOverimmersionTestPage from '@/pages/tests/MZ_LifeStyle/MbtiOverimmersionTest/MbtiOverimmersionTestPage';
 import SpendingStyleTestPage from '@/pages/tests/MZ_LifeStyle/SpendingStyleTest/SpendingStyleTestPage';
+import MentalAgeTestPage from '@/pages/tests/MZ_LifeStyle/mentalAgeTest/mentalAgeTestPage';
+import XGenerationTestPage from '@/pages/tests/MZ_LifeStyle/xGenerationTest/xGenerationTestPage';
+
+// 여행 테스트들
 import TravelStyleTestPage from '@/pages/tests/Travel/TravelStyleTest/TravelStyleTestPage';
+import DomesticTravelStyleTestPage from '@/pages/tests/Travel/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
+import OverseasTravelStyleTestPage from '@/pages/tests/Travel/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
 
 // 엔터테인먼트 테스트들
 import OttPreferenceTestPage from '@/pages/tests/Entertainment/OttPreferenceTest/OttPreferenceTestPage';
@@ -40,22 +57,25 @@ import DeokjilTypeTestPage from '@/pages/tests/Entertainment/DeokjilTypeTest/Deo
 import GameTypeTestPage from '@/pages/tests/Entertainment/GameTypeTest/GameTypeTestPage';
 import MoviePreferenceTestPage from '@/pages/tests/Entertainment/MoviePreferenceTest/MoviePreferenceTestPage';
 import SteamGamePreferenceTestPage from '@/pages/tests/Entertainment/SteamGamePreferenceTest/SteamGamePreferenceTestPage';
+import KDramaCharacterTestPage from '@/pages/tests/Entertainment/kDramaCharacterTest/kDramaCharacterTestPage';
+import AnimalFaceTestPage from '@/pages/tests/Entertainment/animalFaceTest/animalFaceTestPage';
+
+// 스포츠 팬 테스트들
+import KboTeamTestPage from '@/pages/tests/SportsFan/kboTeamTest/kboTeamTest';
+import OverseasFootballTeamTestPage from '@/pages/tests/SportsFan/overseasFootballTeamTest/overseasFootballTeamTestPage';
 
 // 테토 에겐 테스트들
 import TetoEgneBasicTestPage from '@/pages/tests/TetoEgenTest/TetoEgneBasicTest/TetoEgneTestBasicPage';
 import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEgneMzTestPage';
 
-import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
-import DomesticTravelStyleTestPage from '@/pages/tests/Travel/DomesticTravelStyleTest/DomesticTravelStyleTestPage';
-import OverseasTravelStyleTestPage from '@/pages/tests/Travel/OverseasTravelStyleTest/OverseasTravelStyleTestPage';
+// 텐서플로우 테스트
 import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPage';
-import DatingCharacterTestPage from '@/pages/tests/Dating_personality/datingCharacterTest/datingCharacterTestPage';
-import MentalAgeTestPage from '@/pages/tests/MZ_LifeStyle/mentalAgeTest/mentalAgeTestPage';
-import XGenerationTestPage from '@/pages/tests/MZ_LifeStyle/xGenerationTest/xGenerationTestPage';
-import KDramaCharacterTestPage from '@/pages/tests/Entertainment/kDramaCharacterTest/kDramaCharacterTestPage';
-import AnimalFaceTestPage from '@/pages/tests/Entertainment/animalFaceTest/animalFaceTestPage';
-import KboTeamTestPage from '@/pages/tests/SportsFan/kboTeamTest/kboTeamTest';
-import OverseasFootballTeamTestPage from '@/pages/tests/SportsFan/overseasFootballTeamTest/overseasFootballTeamTestPage';
+
+// 기존 인터랙티브 테스트들
+import ConcentrationTestPage from '@/pages/tests/Interactive/ConcentrationTest/ConcentrationTestPage';
+
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
+import InteractiveHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +93,37 @@ export const router = createBrowserRouter([
       {
         path: 'tests/:category',
         element: <TestListPage />,
+      },
+      // 인터랙티브 체험관
+      {
+        path: 'interactive-hub',
+        element: <InteractiveHub />,
+      },
+      {
+        path: 'interactive/cursor',
+        element: <CursorExperience />,
+      },
+      {
+        path: 'interactive/background',
+        element: <BackgroundExperience />,
+      },
+      {
+        path: 'interactive/games',
+        element: <GameExperience />,
+      },
+      // 게임들
+      {
+        path: 'game/target-shooter',
+        element: <TargetShooter />,
+      },
+      {
+        path: 'game/orb-collector',
+        element: <OrbCollector />,
+      },
+      // 기존 인터랙티브 테스트들
+      {
+        path: 'test/focus-test',
+        element: <ConcentrationTestPage />,
       },
       // 텐서플로우 테스트
       {

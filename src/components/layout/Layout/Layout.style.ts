@@ -25,3 +25,8 @@ export const StyledContent = styled.main`
     padding: ${({ theme }) => (theme as Theme).spacing.lg};
   }
 `;
+
+export const StyledInteractiveContent = styled.main`
+  flex: 1;
+  width: 100%;
+`;

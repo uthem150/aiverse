@@ -1,4 +1,4 @@
-// src/components/common/SEO/SEO.tsx (스마트 버전)
+// src/components/common/SEO/SEO.tsx
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { getTestMeta, getTestThumbnailUrl } from '@/data/testMeta';
@@ -31,14 +31,14 @@ const SEO = ({
 }: SEOProps) => {
   const location = useLocation();
 
-  // URL에서 테스트 ID 추출
-  const getTestIdFromPath = () => {
-    const pathSegments = location.pathname.split('/');
+  // URL에서 ID 추출 (test, interactive 경로 처리)
+  const getIdFromPath = () => {
+    const pathSegments = location.pathname.split('/'); // 예: '/interactive/orb-collector' -> ['', 'interactive', 'orb-collector']
     const lastSegment = pathSegments[pathSegments.length - 1];
 
-    // '/test/love-style-test' 형태에서 'love-style-test' 추출
-    if (pathSegments.includes('test') && lastSegment) {
-      return lastSegment;
+    // '/test/...' 또는 '/interactive/...' 형태의 경로를 감지
+    if ((pathSegments.includes('test') || pathSegments.includes('interactive')) && lastSegment) {
+      return lastSegment; // 'orb-collector' 반환
     }
 
     return null;
@@ -58,12 +58,12 @@ const SEO = ({
       };
     }
 
-    const testId = getTestIdFromPath();
+    const pathId = getIdFromPath(); 
 
-    if (testId) {
-      // 테스트 페이지인 경우
-      const meta = getTestMeta(testId);
-      const thumbnailUrl = getTestThumbnailUrl(testId);
+    if (pathId) {
+      // 테스트 또는 인터랙티브 페이지인 경우
+      const meta = getTestMeta(pathId);
+      const thumbnailUrl = getTestThumbnailUrl(pathId);
 
       return {
         autoTitle: meta.title,
@@ -92,6 +92,17 @@ const SEO = ({
         autoDescription: 'AI 분석, 성격 테스트, MBTI, 연애 스타일 등 다양한 테스트를 둘러보세요!',
         autoKeywords: 'AI 테스트 목록, MBTI 테스트, 성격 분석, 연애 테스트',
         autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
+        autoType: 'website' as const,
+      };
+    }
+
+    if (location.pathname === '/interactive-hub') {
+      const meta = getTestMeta('interactive-experience');
+      return {
+        autoTitle: meta.title,
+        autoDescription: meta.description,
+        autoKeywords: meta.keywords,
+        autoImage: getTestThumbnailUrl('interactive-experience'),
         autoType: 'website' as const,
       };
     }

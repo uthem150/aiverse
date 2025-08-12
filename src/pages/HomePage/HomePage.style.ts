@@ -41,6 +41,102 @@ export const StyledHeroSection = styled.section`
   }
 `;
 
+export const StyledExperienceSection = styled.section`
+  margin-bottom: ${({ theme }) => (theme as Theme).spacing['4xl']};
+  
+  @media (max-width: 768px) {
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  }
+`;
+
+export const StyledExperienceCard = styled.div`
+  background: linear-gradient(135deg, #1a0a3a 0%, #2d1b4e 50%, #4c1d95 100%);
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  border-radius: ${({ theme }) => (theme as Theme).borderRadius.xl};
+  padding: ${({ theme }) => (theme as Theme).spacing['2xl']};
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4);
+    border-color: rgba(168, 85, 247, 0.6);
+    
+    &:before {
+      left: 100%;
+    }
+  }
+
+  .experience-header {
+    display: flex;
+    align-items: center;
+    gap: ${({ theme }) => (theme as Theme).spacing.lg};
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.xl};
+    
+    svg {
+      color: #a855f7;
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+    }
+  }
+
+  .experience-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: ${({ theme }) => (theme as Theme).spacing.md};
+    margin-bottom: ${({ theme }) => (theme as Theme).spacing.lg};
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: ${({ theme }) => (theme as Theme).spacing.sm};
+      background: rgba(255, 255, 255, 0.1);
+      padding: ${({ theme }) => (theme as Theme).spacing.sm} ${({ theme }) => (theme as Theme).spacing.md};
+      border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      svg {
+        color: #f59e0b;
+      }
+    }
+  }
+
+  .experience-cta {
+    text-align: center;
+    padding: ${({ theme }) => (theme as Theme).spacing.md};
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: ${({ theme }) => (theme as Theme).borderRadius.md};
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => (theme as Theme).spacing.xl};
+    
+    .experience-header {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .experience-features {
+      justify-content: center;
+    }
+  }
+`;
+
 export const StyledSection = styled.section`
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['4xl']};
 

@@ -413,6 +413,65 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '📚 MBTI 동화 캐릭터 테스트',
     ogDescription: '신데렐라? 백설공주? 당신을 닮은 동화 캐릭터를 찾아보세요!',
   },
+
+  // 인터랙티브 체험관
+  'interactive-hub': {
+    title: '인터랙티브 체험관 | AIverse - 차세대 웹 기술 체험',
+    description:
+      '최신 웹 기술로 구현된 인터랙티브 체험들을 만나보세요. 커서 효과, 배경 체험, 인터랙티브 게임까지 다양한 카테고리로 구성된 체험관입니다.',
+    keywords: '인터랙티브 체험, 웹 애니메이션, 커서 효과, 배경 효과, 웹 게임',
+    ogTitle: '🚀 차세대 웹 기술 체험관',
+    ogDescription: '커서, 배경, 게임 등 최신 웹 기술의 향연! 지금 바로 경험해보세요.',
+  },
+  background: {
+    title: '배경 체험 | AIverse - 몰입형 배경 효과 체험',
+    description:
+      '다양한 몰입형 배경 효과들을 체험해보세요. 우주 갤럭시, 하이퍼스피드, 파티클 시스템 등의 배경을 제공합니다.',
+    keywords: '배경 효과, 인터랙티브 배경, 웹GL, 파티클 시스템, 몰입형 체험',
+    ogTitle: '✨ 몰입형 배경 효과 체험',
+    ogDescription: '우주, 파티클 등 환상적인 웹 배경 효과의 세계로 빠져보세요!',
+  },
+  cursor: {
+    title: '커서 인터랙션 체험 | AIverse - 다양한 커서 효과 체험',
+    description:
+      '다양한 커서 인터랙션 효과들을 체험해보세요. 플루이드 트레일, 스플래시 이펙트 등의 커서 효과를 제공합니다.',
+    keywords: '커서 효과, 인터랙티브 커서, 마우스 트레일, 웹 애니메이션, 사용자 경험',
+    ogTitle: '👆 다양한 커서 효과 체험',
+    ogDescription: '밋밋한 마우스 커서는 이제 그만! 화려한 커서 효과를 직접 체험해보세요.',
+  },
+  games: {
+    title: '인터랙티브 게임 | AIverse - 재미있는 웹 게임 체험',
+    description:
+      '다양한 인터랙티브 게임들을 체험해보세요. 타겟 슈팅과 오브 컬렉터 게임으로 반응속도와 마우스 컨트롤 실력을 테스트하세요.',
+    keywords: '인터랙티브 게임, 웹 게임, 반응속도 테스트, 마우스 컨트롤, 온라인 게임',
+    ogTitle: '🎮 재미있는 웹 게임 체험',
+    ogDescription: '반응속도와 컨트롤 실력을 시험해볼 시간! 다양한 웹 게임을 즐겨보세요.',
+  },
+  'orb-collector': {
+    title: '오브 컬렉터 게임 | AIverse - 마우스 컨트롤 게임',
+    description:
+      '마우스로 떠다니는 마법의 오브들을 수집하여 점수를 획득하는 인터랙티브 게임입니다.',
+    keywords: '오브 컬렉터, 마우스 컨트롤, 웹 게임, 인터랙티브 게임, 반응속도',
+    ogTitle: '🔮 오브 컬렉터 게임',
+    ogDescription: '마우스로 마법 오브를 수집하고 최고 점수에 도전해보세요!',
+  },
+  'target-shooter': {
+    title: '타겟 슈팅 게임 | AIverse - 반응속도 측정',
+    description:
+      '타겟을 정확하고 빠르게 클릭하여 반응속도와 정확성을 측정하는 인터랙티브 게임입니다.',
+    keywords: '타겟 슈팅, 반응속도 테스트, 정확성 측정, 웹 게임, 클릭 게임',
+    ogTitle: '🎯 타겟 슈팅 게임',
+    ogDescription: '순발력과 정확성에 자신 있나요? 지금 바로 반응속도를 테스트해보세요!',
+  },
+
+  'focus-test': {
+    title: '집중력 테스트 | AIverse - 나의 집중력 유형 분석',
+    description:
+      '사격 게임으로 집중력을 측정하고 나만의 집중력 유형을 발견하세요. 정확도와 반응속도로 분석하는 재미있는 집중력 테스트!',
+    keywords: '집중력 테스트, 반응속도 테스트, 사격 게임, 집중력 유형, 정확도 측정',
+    ogTitle: '🎯 나의 집중력 유형 분석',
+    ogDescription: '게임으로 알아보는 나의 집중력 유형! 과연 나는 어떤 타입일까?',
+  },
 };
 
 export const getTestMeta = (testId: string): TestMetaData => {
@@ -428,68 +487,15 @@ export const getTestMeta = (testId: string): TestMetaData => {
 
 // 테스트별 썸네일 URL 생성 함수
 export const getTestThumbnailUrl = (testId: string): string => {
-  const thumbnailExists = [
-    // AI 분석
-    'face-age-test',
-    'face-grade-test',
-    'eye-test',
-    'personal-color-test',
-    'animal-face-test',
-    // 연애 & 성격
-    'love-style-test',
-    'ideal-type-test',
-    'mbti-compatibility-test',
-    'breakup-coping-test',
-    'communication-style-test',
-    'conflict-coping-test',
-    'conflict-resolution-style-test',
-    'dating-method-test',
-    'dating-style-test',
-    'decision-making-style-test',
-    'early-relationship-behavior-test',
-    'gift-giving-style-test',
-    'dating-character-test',
-    'ideal-type-match-test',
-    // 테토에겐
-    'teto-egne-basic-test',
-    'teto-egne-mz-test',
-    // MZ 라이프스타일
-    'burnout-level-test',
-    'spending-type-test',
-    'godsaeng-type-test',
-    'mbti-overimmersion-test',
-    'spending-style-test',
-    'mental-age-test',
-    'x-generation-test',
-    // 여행
-    'travel-style-test',
-    'overseas-travel-style-test',
-    'domestic-travel-style-test',
-    // 판타지
-    'hogwarts-test',
-    'flower-test',
-    // 엔터테인먼트
-    'kpop-style-test',
-    'ott-preference-test',
-    'deokjil-type-test',
-    'game-type-test',
-    'movie-preference-test',
-    'steam-game-preference-test',
-    'k-drama-character-test',
-    // 스포츠 팬
-    'kbo-team-test',
-    'overseas-football-team-test',
-    // AI 미래예측
-    'ai-fortune',
-    'ai-career',
-  ];
+  // 모든 testMetaData 키를 동적으로 가져와서 확인
+  const allTestIds = Object.keys(testMetaData);
 
-  if (thumbnailExists.includes(testId)) {
+  if (allTestIds.includes(testId)) {
     return `https://aiverse-phi.vercel.app/images/thumbnails/${testId}.png`;
   }
 
-  // 기본 이미지 사용
-  return `https://aiverse-phi.vercel.app/images/thumbnails/${testId}.png`;
+  // 일치하는 ID가 없으면 기본 이미지 URL 반환
+  return getDefaultSiteImage();
 };
 
 // 기본 사이트 이미지 URL

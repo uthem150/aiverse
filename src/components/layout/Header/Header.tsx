@@ -1,37 +1,63 @@
+import React from 'react';
 import { Sun, Moon } from 'lucide-react';
+
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Home, Sparkles } from 'lucide-react';
 import {
-  StyledHeader,
+  Logo,
+  Nav,
+  NavButton,
   StyledContainer,
-  StyledLogo,
-  StyledNav,
+  StyledHeader,
   StyledThemeButton,
 } from './Header.style';
 import { useThemeStore } from '@/stores/themeStore';
-import Typography from '@/components/common/Typography/Typography';
-import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isDarkMode, toggleTheme } = useThemeStore();
 
-  const handleLogoClick = () => {
-    navigate(`/`);
+  // 체험관 관련 경로들 정의
+  const isInInteractiveHub = () => {
+    const path = location.pathname;
+    return (
+      path === '/interactive-hub' || path.startsWith('/experience/') || path.startsWith('/game/')
+    );
+  };
+
+  const handleToggleClick = () => {
+    if (isInInteractiveHub()) {
+      // 체험관에 있으면 홈으로
+      navigate('/');
+    } else {
+      // 홈에 있으면 체험관으로
+      navigate('/interactive-hub');
+    }
+  };
+
+  const getButtonText = () => {
+    return isInInteractiveHub() ? '홈으로' : '체험관';
+  };
+
+  const getButtonIcon = () => {
+    return isInInteractiveHub() ? <Home size={18} /> : <Sparkles size={18} />;
   };
 
   return (
     <StyledHeader>
       <StyledContainer>
-        <StyledLogo onClick={handleLogoClick} aria-label="홈 화면 이동">
-          <Typography variant="h4" color="#6366F1">
-            AIverse
-          </Typography>
-        </StyledLogo>
+        <Logo onClick={() => navigate('/')}>AIverse</Logo>
 
-        <StyledNav>
+        <Nav>
+          <NavButton onClick={handleToggleClick}>
+            {getButtonIcon()}
+            {getButtonText()}
+          </NavButton>
           <StyledThemeButton onClick={toggleTheme} aria-label="다크 모드 토글">
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </StyledThemeButton>
-        </StyledNav>
+        </Nav>
       </StyledContainer>
     </StyledHeader>
   );
