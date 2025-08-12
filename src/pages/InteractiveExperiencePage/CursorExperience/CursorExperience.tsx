@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import {
   CursorContainer,
-  Title,
   BackButton,
   MainContent,
   ExperienceArea,
@@ -90,20 +89,6 @@ const CursorExperience: React.FC = () => {
               // offsetFactor={0.01}
               effectAmplitude={0.7}
             />
-
-            {/* <Ribbons
-              baseThickness={30}
-              colors={['#5227FF']}
-              baseSpring={0.06}
-              baseFriction={0.75}
-              speedMultiplier={0.25}
-              maxAge={1000}
-              pointCount={25}
-              offsetFactor={0.01}
-              enableFade={true}
-              enableShaderEffect={false}
-              effectAmplitude={0.5}
-            /> */}
           </div>
         )}
         {activeCursor === 'fluid' && (

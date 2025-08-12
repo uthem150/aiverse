@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Info, X } from 'lucide-react';
 import {
   BackgroundContainer,
@@ -298,12 +297,7 @@ const BackgroundExperience: React.FC = () => {
     }
   };
 
-  const drawDefault = (
-    ctx: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-    time: number
-  ) => {
+  const drawDefault = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     const gradient = ctx.createLinearGradient(0, 0, width, height);
     gradient.addColorStop(0, '#4f46e5');
     gradient.addColorStop(0.5, '#7c3aed');
@@ -346,7 +340,7 @@ const BackgroundExperience: React.FC = () => {
         drawCube3D(ctx, width, height, timestamp);
         break;
       default:
-        drawDefault(ctx, width, height, timestamp);
+        drawDefault(ctx, width, height);
         break;
     }
 

@@ -3,13 +3,12 @@ import Layout from '@/components/layout/Layout/Layout';
 import HomePage from '@/pages/HomePage/HomePage';
 import TestListPage from '@/pages/TestListPage/TestListPage';
 
-// 체험관 페이지들 (직접 임포트)
-import MagicExperienceHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
+// 체험관 페이지들 
 import CursorExperience from '@/pages/InteractiveExperiencePage/CursorExperience/CursorExperience';
 import BackgroundExperience from '@/pages/InteractiveExperiencePage/BackgroundExperience/BackgroundExperience';
 import GameExperience from '@/pages/InteractiveExperiencePage/GameExperience/GameExperience';
 
-// 게임들 (직접 임포트)
+// 게임들
 import TargetShooter from '@/pages/games/TargetShooter/TargetShooter';
 import OrbCollector from '@/pages/games/OrbCollector/OrbCollector';
 

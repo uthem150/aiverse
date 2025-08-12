@@ -1,17 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const slideUp = keyframes`
   from {
     transform: translateY(100%);
@@ -58,7 +47,7 @@ export const OverlayHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
   }
@@ -82,7 +71,7 @@ export const BackButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
-  
+
   @media (max-width: 768px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
@@ -106,7 +95,7 @@ export const InfoToggle = styled.button`
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
   }
-  
+
   @media (max-width: 768px) {
     width: 45px;
     height: 45px;
@@ -124,12 +113,12 @@ export const InfoPanel = styled.div<{ show: boolean }>`
   border-radius: 20px;
   padding: 2rem;
   z-index: 60;
-  opacity: ${props => props.show ? 1 : 0};
-  visibility: ${props => props.show ? 'visible' : 'hidden'};
+  opacity: ${props => (props.show ? 1 : 0)};
+  visibility: ${props => (props.show ? 'visible' : 'hidden')};
   transition: all 0.3s ease;
   max-width: 400px;
   width: 90%;
-  
+
   .info-content {
     text-align: center;
     color: white;
@@ -192,7 +181,7 @@ export const ControlBar = styled.div`
   padding: 1.5rem 2rem;
   z-index: 50;
   animation: ${slideUp} 0.8s ease-out;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
   }
@@ -214,11 +203,11 @@ export const BackgroundGrid = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   flex-wrap: wrap;
-  
+
   @media (max-width: 768px) {
     gap: 0.6rem;
   }
-  
+
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: center;
@@ -226,14 +215,11 @@ export const BackgroundGrid = styled.div`
 `;
 
 export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
-  background: ${props => props.active 
-    ? `linear-gradient(135deg, ${props.color}40, ${props.color}20)`
-    : 'rgba(255, 255, 255, 0.05)'
-  };
-  border: 2px solid ${props => props.active 
-    ? `${props.color}80` 
-    : 'rgba(255, 255, 255, 0.1)'
-  };
+  background: ${props =>
+    props.active
+      ? `linear-gradient(135deg, ${props.color}40, ${props.color}20)`
+      : 'rgba(255, 255, 255, 0.05)'};
+  border: 2px solid ${props => (props.active ? `${props.color}80` : 'rgba(255, 255, 255, 0.1)')};
   border-radius: 12px;
   padding: 0.8rem 1rem;
   cursor: pointer;
@@ -242,8 +228,8 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   align-items: center;
   gap: 0.8rem;
   min-width: 140px;
-  animation: ${props => props.active ? pulseGlow : 'none'} 2s infinite;
-  
+  animation: ${props => (props.active ? pulseGlow : 'none')} 2s infinite;
+
   &:hover {
     background: linear-gradient(135deg, ${props => props.color}30, ${props => props.color}15);
     border-color: ${props => props.color}60;
@@ -278,27 +264,27 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   @media (max-width: 768px) {
     min-width: 120px;
     padding: 0.6rem 0.8rem;
-    
+
     .bg-icon {
       font-size: 1.3rem;
     }
-    
+
     .bg-name {
       font-size: 0.8rem;
     }
-    
+
     .bg-description {
       font-size: 0.65rem;
     }
   }
-  
+
   @media (max-width: 600px) {
     min-width: 280px;
-    
+
     .bg-description {
       white-space: normal;
       overflow: visible;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
 import {
   ConcentrationContainer,
   GameArea,
@@ -45,7 +44,7 @@ const ConcentrationTestPage: React.FC = () => {
   });
   const [timeLeft, setTimeLeft] = useState(30);
   const [targetStartTime, setTargetStartTime] = useState(0);
-  const [gameArea, setGameArea] = useState({ width: 800, height: 500 });
+  const [gameArea] = useState({ width: 800, height: 500 });
   const [concentrationType, setConcentrationType] = useState<ConcentrationType | null>(null);
 
   // 타겟 생성
@@ -137,7 +136,7 @@ const ConcentrationTestPage: React.FC = () => {
   // 집중력 유형 분석
   useEffect(() => {
     if (gameState === 'finished') {
-      const { score, accuracy, reactionTime } = stats;
+      const { accuracy, reactionTime } = stats;
 
       if (accuracy >= 90 && reactionTime < 400) {
         setConcentrationType('laser');
