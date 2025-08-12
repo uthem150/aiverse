@@ -35,7 +35,7 @@ const CursorExperience: React.FC = () => {
       type: 'splash' as CursorType,
       icon: '💥',
       name: '스플래시 이펙트',
-      description: '클릭할 때마다 화려한 파티클이 폭발합니다',
+      description: '움직일 때마다 화려한 물결이 퍼집니다',
     },
     {
       type: 'ribbon' as CursorType,
@@ -105,7 +105,7 @@ const CursorExperience: React.FC = () => {
             <BlobCursor
               blobType="circle"
               fillColor="#5227FF"
-              trailCount={5}
+              trailCount={3}
               sizes={[60, 125, 75]}
               innerSizes={[20, 35, 25]}
               innerColor="rgba(255,255,255,0.8)"
@@ -114,9 +114,9 @@ const CursorExperience: React.FC = () => {
               shadowBlur={5}
               shadowOffsetX={10}
               shadowOffsetY={10}
-              filterStdDeviation={30}
+              filterStdDeviation={23}
               useFilter={true}
-              fastDuration={0.1}
+              fastDuration={0.2}
               slowDuration={0.5}
               zIndex={100}
             />

@@ -94,7 +94,7 @@ export const testCategories: TestCategory[] = [
   },
   {
     id: 'interactive-experience',
-    name: '🎮 인터랙티브 체험',
+    name: '인터랙티브 체험',
     description: '최신 웹 기술로 만든 몰입형 인터랙티브 테스트',
     icon: '🎮',
     color: '#FF6B35',

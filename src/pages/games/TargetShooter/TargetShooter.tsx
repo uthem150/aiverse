@@ -225,7 +225,7 @@ const TargetShooter: React.FC = () => {
   }, [gameState, createTarget]);
 
   const handleBackClick = () => {
-    navigate('/experience/games');
+    navigate('/interactive/games');
   };
 
   const progress = ((GAME_DURATION - timeLeft) / GAME_DURATION) * 100;

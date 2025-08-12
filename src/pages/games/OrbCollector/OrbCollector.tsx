@@ -356,7 +356,7 @@ const OrbCollector: React.FC = () => {
   }, [gameState, updateOrbs]);
 
   const handleBackClick = () => {
-    navigate('/experience/games');
+    navigate('/interactive/games');
   };
 
   const progress = ((GAME_DURATION - timeLeft) / GAME_DURATION) * 100;
