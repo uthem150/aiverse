@@ -38,10 +38,6 @@ const GameExperience: React.FC = () => {
     navigate(path);
   };
 
-  const handleBackClick = () => {
-    navigate('/interactive-hub');
-  };
-
   return (
     <>
       <GameContainer>

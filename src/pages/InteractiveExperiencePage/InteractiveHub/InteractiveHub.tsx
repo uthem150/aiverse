@@ -28,8 +28,8 @@ const InteractiveHub: React.FC = () => {
       id: 'background',
       icon: '🌌',
       title: '배경 체험',
-      description: '몰입감 넘치는 다양한 배경 효과들로 완전히 새로운 공간을 경험하세요',
-      features: ['우주 갤럭시', '하이퍼스피드', '파티클 시스템', '3D 환경'],
+      description: '고품질 리액트 비츠 컴포넌트로 구현된 몰입감 넘치는 배경 효과들',
+      features: ['은하수 갤럭시', '하이퍼스피드', '다크 베일', '3D 큐브', '신비한 오브'],
       bgColor: '#3b82f6',
       available: true,
     },
@@ -69,7 +69,8 @@ const InteractiveHub: React.FC = () => {
         <ContentWrapper>
           <MainTitle>🎮 인터랙티브 체험관</MainTitle>
           <MainSubtitle>
-            최신 웹 기술로 구현된 몰입형 인터랙티브 경험들을 만나보세요.
+            최신 웹 기술과 고품질 리액트 비츠 컴포넌트로 구현된 몰입형 인터랙티브 경험들을
+            만나보세요.
             <br />각 카테고리별로 특별히 설계된 체험공간에서 새로운 디지털 세계를 탐험하세요.
           </MainSubtitle>
 

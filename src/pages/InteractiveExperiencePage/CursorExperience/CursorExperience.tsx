@@ -11,6 +11,7 @@ import {
   ControlHeader,
   ControlContent,
   ControlTitle,
+  ScrollContainer,
   CursorGrid,
   CursorCard,
   ExpandButton,
@@ -25,7 +26,7 @@ type CursorType = 'splash' | 'fluid' | 'ribbon' | 'none';
 
 const CursorExperience: React.FC = () => {
   const navigate = useNavigate();
-  const [activeCursor, setActiveCursor] = useState<CursorType>('splash');
+  const [activeCursor, setActiveCursor] = useState<CursorType>('fluid');
   const [isControlExpanded, setIsControlExpanded] = useState(false);
 
   const cursorOptions = [
@@ -62,6 +63,11 @@ const CursorExperience: React.FC = () => {
 
   const handleBackClick = () => {
     navigate('/interactive-hub');
+  };
+
+  const handleCursorSelect = (type: CursorType) => {
+    setActiveCursor(type);
+    setIsControlExpanded(false); // 선택 후 자동으로 접기
   };
 
   return (
@@ -102,13 +108,13 @@ const CursorExperience: React.FC = () => {
               left: '50%',
               width: '10vw',
               height: '10vh',
-              zIndex: 9999,
+              zIndex: 1,
             }}
           >
             <BlobCursor
               blobType="circle"
               fillColor="#5227FF"
-              trailCount={5}
+              trailCount={3}
               sizes={[60, 125, 75]}
               innerSizes={[20, 35, 25]}
               innerColor="rgba(255,255,255,0.8)"
@@ -121,7 +127,7 @@ const CursorExperience: React.FC = () => {
               useFilter={true}
               fastDuration={0.2}
               slowDuration={0.5}
-              zIndex={10}
+              zIndex={100}
             />
           </div>
         )}
@@ -156,24 +162,23 @@ const CursorExperience: React.FC = () => {
 
           <ControlContent expanded={isControlExpanded}>
             <ControlTitle>커서 효과 선택</ControlTitle>
-            <CursorGrid>
-              {cursorOptions.map(option => (
-                <CursorCard
-                  key={option.type}
-                  active={activeCursor === option.type}
-                  onClick={() => {
-                    setActiveCursor(option.type);
-                    setIsControlExpanded(false); // 선택 후 자동으로 접기
-                  }}
-                >
-                  <span className="cursor-icon">{option.icon}</span>
-                  <div className="cursor-content">
-                    <span className="cursor-name">{option.name}</span>
-                    <span className="cursor-description">{option.description}</span>
-                  </div>
-                </CursorCard>
-              ))}
-            </CursorGrid>
+            <ScrollContainer>
+              <CursorGrid>
+                {cursorOptions.map(option => (
+                  <CursorCard
+                    key={option.type}
+                    active={activeCursor === option.type}
+                    onClick={() => handleCursorSelect(option.type)}
+                  >
+                    <span className="cursor-icon">{option.icon}</span>
+                    <div className="cursor-content">
+                      <span className="cursor-name">{option.name}</span>
+                      <span className="cursor-description">{option.description}</span>
+                    </div>
+                  </CursorCard>
+                ))}
+              </CursorGrid>
+            </ScrollContainer>
           </ControlContent>
         </ControlBar>
       </CursorContainer>

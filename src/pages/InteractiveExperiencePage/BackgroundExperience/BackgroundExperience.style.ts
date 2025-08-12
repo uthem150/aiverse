@@ -17,15 +17,6 @@ export const BackgroundContainer = styled.div`
   overflow: hidden;
 `;
 
-export const BackgroundCanvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-`;
-
 export const OverlayHeader = styled.div`
   position: fixed;
   top: 0;
@@ -166,14 +157,17 @@ export const ControlBar = styled.div<{ expanded: boolean }>`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(255, 255, 255, 0.2);
   z-index: 50;
-  transition: all 0.3s ease;
+  transform: translateY(${props => (props.expanded ? '0' : 'calc(100% - 70px)')});
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: ${props => (props.expanded ? '0' : '16px 16px 0 0')};
+  will-change: transform;
 
   @media (max-width: 768px) {
+    transform: translateY(${props => (props.expanded ? '0' : 'calc(100% - 60px)')});
     border-radius: ${props => (props.expanded ? '0' : '12px 12px 0 0')};
   }
 `;
@@ -186,6 +180,7 @@ export const ControlHeader = styled.div`
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  min-height: 70px;
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
@@ -209,6 +204,7 @@ export const ControlHeader = styled.div`
 
   @media (max-width: 768px) {
     padding: 0.8rem 1.5rem;
+    min-height: 60px;
 
     .current-icon {
       font-size: 1.3rem;
@@ -231,15 +227,16 @@ export const ExpandButton = styled.div`
 `;
 
 export const ControlContent = styled.div<{ expanded: boolean }>`
-  max-height: ${props => (props.expanded ? '300px' : '0')};
+  height: ${props => (props.expanded ? 'auto' : '0')};
   opacity: ${props => (props.expanded ? '1' : '0')};
   overflow: hidden;
-  transition: all 0.4s ease;
-  padding: ${props => (props.expanded ? '1.5rem 2rem' : '0 2rem')};
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: ${props => (props.expanded ? '0 2rem 1.5rem 2rem' : '0 2rem')};
+  max-height: ${props => (props.expanded ? '60vh' : '0')};
 
   @media (max-width: 768px) {
-    padding: ${props => (props.expanded ? '1rem 1.5rem' : '0 1.5rem')};
-    max-height: ${props => (props.expanded ? '400px' : '0')};
+    padding: ${props => (props.expanded ? '0 1.5rem 1rem 1.5rem' : '0 1.5rem')};
+    max-height: ${props => (props.expanded ? '50vh' : '0')};
   }
 `;
 
@@ -247,24 +244,61 @@ export const ControlTitle = styled.h3`
   color: white;
   font-size: 1rem;
   font-weight: 600;
-  margin: 0 0 1rem 0;
+  margin: 1rem 0;
   text-align: center;
   opacity: 0.9;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
+    margin: 0.8rem 0;
+  }
+`;
+
+export const ScrollContainer = styled.div`
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  margin-right: -8px;
+
+  /* 커스텀 스크롤바 */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+
+  @media (max-width: 768px) {
+    max-height: 35vh;
   }
 `;
 
 export const BackgroundGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 0.8rem;
   max-width: 1200px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 0.6rem;
   }
 
@@ -288,6 +322,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   align-items: center;
   gap: 0.6rem;
   animation: ${props => (props.active ? pulseGlow : 'none')} 2s infinite;
+  min-height: 80px;
 
   &:hover {
     background: linear-gradient(135deg, ${props => props.color}30, ${props => props.color}15);
@@ -303,7 +338,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   .bg-content {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.2rem;
     flex: 1;
     min-width: 0;
   }
@@ -311,7 +346,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   .bg-name {
     color: white;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -319,7 +354,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
 
   .bg-description {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
@@ -329,17 +364,18 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   @media (max-width: 768px) {
     padding: 0.6rem;
     gap: 0.5rem;
+    min-height: 70px;
 
     .bg-icon {
       font-size: 1.2rem;
     }
 
     .bg-name {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
     }
 
     .bg-description {
-      font-size: 0.6rem;
+      font-size: 0.65rem;
     }
   }
 
@@ -348,6 +384,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
     text-align: center;
     gap: 0.3rem;
     padding: 0.5rem;
+    min-height: 90px;
 
     .bg-icon {
       font-size: 1.5rem;
@@ -365,11 +402,26 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
     }
 
     .bg-name {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
     }
 
     .bg-description {
-      font-size: 0.55rem;
+      font-size: 0.6rem;
     }
+  }
+`;
+
+export const BackgroundRenderer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  /* 배경 컴포넌트가 화면을 채우도록 */
+  & > * {
+    width: 100% !important;
+    height: 100% !important;
   }
 `;
