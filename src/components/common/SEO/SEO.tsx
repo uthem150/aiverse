@@ -48,7 +48,7 @@ const SEO = ({
   const getAutoMetadata = () => {
     if (disableAutoDetection) {
       return {
-        autoTitle: 'AIverse - AI의 모든 것을 체험하다',
+        autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
         autoDescription:
           'AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요. 300만 명 이상 참여한 인기 테스트들!',
         autoKeywords:
@@ -58,7 +58,7 @@ const SEO = ({
       };
     }
 
-    const pathId = getIdFromPath(); 
+    const pathId = getIdFromPath();
 
     if (pathId) {
       // 테스트 또는 인터랙티브 페이지인 경우
@@ -77,7 +77,7 @@ const SEO = ({
     // 기타 페이지별 설정
     if (location.pathname === '/') {
       return {
-        autoTitle: 'AIverse - AI의 모든 것을 체험하다',
+        autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
         autoDescription:
           'AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요. 300만 명 이상 참여한 인기 테스트들!',
         autoKeywords: 'AI 테스트, 얼굴 분석, MBTI 테스트, 성격 테스트, 인공지능',
@@ -88,7 +88,7 @@ const SEO = ({
 
     if (location.pathname.startsWith('/tests')) {
       return {
-        autoTitle: '테스트 목록 - AIverse',
+        autoTitle: '테스트 목록 - AIverse-phi',
         autoDescription: 'AI 분석, 성격 테스트, MBTI, 연애 스타일 등 다양한 테스트를 둘러보세요!',
         autoKeywords: 'AI 테스트 목록, MBTI 테스트, 성격 분석, 연애 테스트',
         autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
@@ -109,7 +109,7 @@ const SEO = ({
 
     // 기본값
     return {
-      autoTitle: 'AIverse - AI의 모든 것을 체험하다',
+      autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
       autoDescription:
         'AI 얼굴 분석, MBTI 테스트, 성격 분석 등 다양한 AI 테스트를 무료로 체험해보세요!',
       autoKeywords: 'AI 테스트, 얼굴 분석, MBTI 테스트, 성격 테스트',

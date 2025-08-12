@@ -47,7 +47,7 @@ const Header: React.FC = () => {
   return (
     <StyledHeader>
       <StyledContainer>
-        <Logo onClick={() => navigate('/')}>AIverse</Logo>
+        <Logo onClick={() => navigate('/')}>AIverse-phi</Logo>
 
         <Nav>
           <NavButton onClick={handleToggleClick}>
