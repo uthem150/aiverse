@@ -37,15 +37,22 @@ const comboGlow = keyframes`
 `;
 
 export const GameContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1e1b4b 50%, #312e81 75%, #1e1b4b 100%);
+  flex: 1%;
+  background: linear-gradient(
+    135deg,
+    #1e1b4b 0%,
+    #312e81 25%,
+    #1e1b4b 50%,
+    #312e81 75%,
+    #1e1b4b 100%
+  );
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   user-select: none;
   cursor: crosshair;
-  
+
   &:before {
     content: '';
     position: absolute;
@@ -53,7 +60,7 @@ export const GameContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
+    background-image:
       radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
@@ -74,7 +81,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
     flex-direction: column;
@@ -100,7 +107,7 @@ export const BackButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
   }
-  
+
   @media (max-width: 768px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
@@ -115,7 +122,7 @@ export const Title = styled.h1`
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
-  
+
   @media (max-width: 768px) {
     font-size: 1.4rem;
   }
@@ -125,7 +132,7 @@ export const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
@@ -136,24 +143,24 @@ export const StatsPanel = styled.div`
 export const Stat = styled.div`
   text-align: center;
   color: white;
-  
+
   .stat-label {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-  
+
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
     color: #8b5cf6;
   }
-  
+
   @media (max-width: 768px) {
     .stat-label {
       font-size: 0.7rem;
     }
-    
+
     .stat-value {
       font-size: 1rem;
     }
@@ -166,18 +173,18 @@ export const GameArea = styled.div`
   margin-top: 120px;
   padding: 2rem;
   overflow: hidden;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
     margin-top: 140px;
   }
 `;
 
-export const Orb = styled.div<{ 
-  x: number; 
-  y: number; 
-  size: number; 
-  color: string; 
+export const Orb = styled.div<{
+  x: number;
+  y: number;
+  size: number;
+  color: string;
   collecting?: boolean;
 }>`
   position: absolute;
@@ -185,14 +192,21 @@ export const Orb = styled.div<{
   top: ${props => props.y}px;
   width: ${props => props.size}px;
   height: ${props => props.size}px;
-  background: radial-gradient(circle at 30% 30%, ${props => props.color}ff, ${props => props.color}cc, ${props => props.color}88);
+  background: radial-gradient(
+    circle at 30% 30%,
+    ${props => props.color}ff,
+    ${props => props.color}cc,
+    ${props => props.color}88
+  );
   border-radius: 50%;
-  animation: ${props => props.collecting ? orbCollect : orbFloat} ${props => props.collecting ? '0.3s' : '3s'} ease-in-out ${props => props.collecting ? 'forwards' : 'infinite'};
+  animation: ${props => (props.collecting ? orbCollect : orbFloat)}
+    ${props => (props.collecting ? '0.3s' : '3s')} ease-in-out
+    ${props => (props.collecting ? 'forwards' : 'infinite')};
   box-shadow: 0 0 20px ${props => props.color}88;
   border: 2px solid ${props => props.color}cc;
   z-index: 10;
   pointer-events: none;
-  
+
   &:before {
     content: '';
     position: absolute;
@@ -229,14 +243,14 @@ export const ComboDisplay = styled.div<{ show: boolean; combo: number }>`
   color: #8b5cf6;
   animation: ${comboGlow} 0.5s ease-in-out;
   z-index: 500;
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
-  
+
   &:before {
     content: 'COMBO x${props => props.combo}';
   }
-  
+
   @media (max-width: 768px) {
     font-size: ${props => Math.min(2 + props.combo * 0.1, 4)}rem;
   }
@@ -250,7 +264,7 @@ export const GameOverlay = styled.div<{ show: boolean }>`
   bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -265,28 +279,28 @@ export const OverlayContent = styled.div`
   text-align: center;
   max-width: 500px;
   width: 90%;
-  
+
   .overlay-title {
     font-size: 2rem;
     font-weight: 700;
     color: white;
     margin-bottom: 1rem;
   }
-  
+
   .overlay-text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 2rem;
     line-height: 1.6;
   }
-  
+
   @media (max-width: 768px) {
     padding: 2rem 1.5rem;
-    
+
     .overlay-title {
       font-size: 1.6rem;
     }
-    
+
     .overlay-text {
       font-size: 1rem;
     }
@@ -304,16 +318,16 @@ export const ActionButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0 0.5rem;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
-  
+
   @media (max-width: 768px) {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -331,10 +345,10 @@ export const Countdown = styled.div<{ show: boolean }>`
   color: #8b5cf6;
   text-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
   z-index: 500;
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
-  
+
   @media (max-width: 768px) {
     font-size: 3rem;
   }
@@ -351,7 +365,7 @@ export const ProgressBar = styled.div`
   border-radius: 4px;
   overflow: hidden;
   z-index: 100;
-  
+
   @media (max-width: 768px) {
     width: 250px;
     bottom: 1rem;
@@ -376,9 +390,9 @@ export const CollectionRadius = styled.div<{ x: number; y: number; show: boolean
   border-radius: 50%;
   pointer-events: none;
   z-index: 5;
-  opacity: ${props => props.show ? 0.5 : 0};
+  opacity: ${props => (props.show ? 0.5 : 0)};
   transition: opacity 0.3s ease;
-  
+
   &:before {
     content: '';
     position: absolute;

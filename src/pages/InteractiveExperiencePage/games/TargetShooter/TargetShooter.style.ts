@@ -54,7 +54,7 @@ const scoreFloat = keyframes`
 `;
 
 export const GameContainer = styled.div`
-  min-height: 100vh;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   position: relative;
   overflow: hidden;
@@ -76,7 +76,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
     flex-direction: column;
@@ -102,7 +102,7 @@ export const BackButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
   }
-  
+
   @media (max-width: 768px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
@@ -117,7 +117,7 @@ export const Title = styled.h1`
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
-  
+
   @media (max-width: 768px) {
     font-size: 1.4rem;
   }
@@ -127,7 +127,7 @@ export const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-  
+
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
@@ -138,24 +138,24 @@ export const StatsPanel = styled.div`
 export const Stat = styled.div`
   text-align: center;
   color: white;
-  
+
   .stat-label {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-  
+
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
     color: #ef4444;
   }
-  
+
   @media (max-width: 768px) {
     .stat-label {
       font-size: 0.7rem;
     }
-    
+
     .stat-value {
       font-size: 1rem;
     }
@@ -168,7 +168,7 @@ export const GameArea = styled.div`
   margin-top: 120px;
   padding: 2rem;
   overflow: hidden;
-  
+
   @media (max-width: 768px) {
     padding: 1rem;
     margin-top: 140px;
@@ -184,11 +184,13 @@ export const Target = styled.div<{ x: number; y: number; size: number }>`
   background: radial-gradient(circle, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
   border-radius: 50%;
   cursor: crosshair;
-  animation: ${targetAppear} 0.3s ease-out, ${targetPulse} 2s ease-in-out infinite;
+  animation:
+    ${targetAppear} 0.3s ease-out,
+    ${targetPulse} 2s ease-in-out infinite;
   border: 3px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
   z-index: 10;
-  
+
   &:before {
     content: '';
     position: absolute;
@@ -200,7 +202,7 @@ export const Target = styled.div<{ x: number; y: number; size: number }>`
     background: white;
     border-radius: 50%;
   }
-  
+
   &:hover {
     animation-play-state: paused;
     transform: scale(1.1);
@@ -231,7 +233,7 @@ export const ScoreFloat = styled.div<{ x: number; y: number; score: number }>`
   pointer-events: none;
   z-index: 30;
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
-  
+
   &:before {
     content: '+${props => props.score}';
   }
@@ -245,7 +247,7 @@ export const GameOverlay = styled.div<{ show: boolean }>`
   bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -260,28 +262,28 @@ export const OverlayContent = styled.div`
   text-align: center;
   max-width: 500px;
   width: 90%;
-  
+
   .overlay-title {
     font-size: 2rem;
     font-weight: 700;
     color: white;
     margin-bottom: 1rem;
   }
-  
+
   .overlay-text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 2rem;
     line-height: 1.6;
   }
-  
+
   @media (max-width: 768px) {
     padding: 2rem 1.5rem;
-    
+
     .overlay-title {
       font-size: 1.6rem;
     }
-    
+
     .overlay-text {
       font-size: 1rem;
     }
@@ -299,16 +301,16 @@ export const ActionButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0 0.5rem;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
-  
+
   @media (max-width: 768px) {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -326,10 +328,10 @@ export const Countdown = styled.div<{ show: boolean }>`
   color: #ef4444;
   text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
   z-index: 500;
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
-  
+
   @media (max-width: 768px) {
     font-size: 3rem;
   }
@@ -346,7 +348,7 @@ export const ProgressBar = styled.div`
   border-radius: 4px;
   overflow: hidden;
   z-index: 100;
-  
+
   @media (max-width: 768px) {
     width: 250px;
     bottom: 1rem;

@@ -1,15 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 
-const slideUp = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
 const pulseGlow = keyframes`
   0%, 100% {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
@@ -22,7 +13,7 @@ const pulseGlow = keyframes`
 export const BackgroundContainer = styled.div`
   position: relative;
   width: 100vw;
-  height: 100vh;
+  flex: 1;
   overflow: hidden;
 `;
 
@@ -170,7 +161,7 @@ export const CloseButton = styled.button`
   }
 `;
 
-export const ControlBar = styled.div`
+export const ControlBar = styled.div<{ expanded: boolean }>`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -178,12 +169,77 @@ export const ControlBar = styled.div`
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 1.5rem 2rem;
   z-index: 50;
-  animation: ${slideUp} 0.8s ease-out;
+  transition: all 0.3s ease;
+  border-radius: ${props => (props.expanded ? '0' : '16px 16px 0 0')};
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    border-radius: ${props => (props.expanded ? '0' : '12px 12px 0 0')};
+  }
+`;
+
+export const ControlHeader = styled.div`
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .current-effect {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: white;
+  }
+
+  .current-icon {
+    font-size: 1.5rem;
+  }
+
+  .current-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+
+    .current-icon {
+      font-size: 1.3rem;
+    }
+
+    .current-name {
+      font-size: 0.9rem;
+    }
+  }
+`;
+
+export const ExpandButton = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+  }
+`;
+
+export const ControlContent = styled.div<{ expanded: boolean }>`
+  max-height: ${props => (props.expanded ? '300px' : '0')};
+  opacity: ${props => (props.expanded ? '1' : '0')};
+  overflow: hidden;
+  transition: all 0.4s ease;
+  padding: ${props => (props.expanded ? '1.5rem 2rem' : '0 2rem')};
+
+  @media (max-width: 768px) {
+    padding: ${props => (props.expanded ? '1rem 1.5rem' : '0 1.5rem')};
+    max-height: ${props => (props.expanded ? '400px' : '0')};
   }
 `;
 
@@ -194,23 +250,27 @@ export const ControlTitle = styled.h3`
   margin: 0 0 1rem 0;
   text-align: center;
   opacity: 0.9;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const BackgroundGrid = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 0.8rem;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
 
   @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.6rem;
   }
 
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: center;
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
   }
 `;
 
@@ -221,13 +281,12 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
       : 'rgba(255, 255, 255, 0.05)'};
   border: 2px solid ${props => (props.active ? `${props.color}80` : 'rgba(255, 255, 255, 0.1)')};
   border-radius: 12px;
-  padding: 0.8rem 1rem;
+  padding: 0.8rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  min-width: 140px;
+  gap: 0.6rem;
   animation: ${props => (props.active ? pulseGlow : 'none')} 2s infinite;
 
   &:hover {
@@ -237,7 +296,7 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   }
 
   .bg-icon {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     flex-shrink: 0;
   }
 
@@ -252,13 +311,15 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   .bg-name {
     color: white;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .bg-description {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
@@ -266,29 +327,49 @@ export const BackgroundCard = styled.div<{ active: boolean; color: string }>`
   }
 
   @media (max-width: 768px) {
-    min-width: 120px;
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem;
+    gap: 0.5rem;
 
     .bg-icon {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
 
     .bg-name {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     .bg-description {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
     }
   }
 
-  @media (max-width: 600px) {
-    min-width: 280px;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
+    padding: 0.5rem;
 
+    .bg-icon {
+      font-size: 1.5rem;
+    }
+
+    .bg-content {
+      align-items: center;
+    }
+
+    .bg-name,
     .bg-description {
       white-space: normal;
       overflow: visible;
       text-overflow: unset;
+    }
+
+    .bg-name {
+      font-size: 0.7rem;
+    }
+
+    .bg-description {
+      font-size: 0.55rem;
     }
   }
 `;

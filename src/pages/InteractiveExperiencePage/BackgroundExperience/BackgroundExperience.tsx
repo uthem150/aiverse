@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Info, X } from 'lucide-react';
+import { ArrowLeft, Info, X, ChevronUp, ChevronDown } from 'lucide-react';
 import {
   BackgroundContainer,
   BackgroundCanvas,
@@ -9,10 +9,13 @@ import {
   InfoToggle,
   CloseButton,
   ControlBar,
+  ControlHeader,
+  ControlContent,
   ControlTitle,
   BackgroundGrid,
   BackgroundCard,
   BackButton,
+  ExpandButton,
 } from './BackgroundExperience.style';
 
 interface BackgroundEffect {
@@ -29,6 +32,7 @@ const BackgroundExperience: React.FC = () => {
   const animationRef = useRef<number | null>(null);
   const [activeBackground, setActiveBackground] = useState('galaxy');
   const [showInfo, setShowInfo] = useState(false);
+  const [isControlExpanded, setIsControlExpanded] = useState(false);
 
   const backgrounds: BackgroundEffect[] = [
     {
@@ -370,7 +374,7 @@ const BackgroundExperience: React.FC = () => {
   }, [activeBackground]);
 
   const handleBackClick = () => {
-    navigate('/magic-experience');
+    navigate('/interactive-hub');
   };
 
   const currentBg = getCurrentBackground();
@@ -405,25 +409,40 @@ const BackgroundExperience: React.FC = () => {
           </div>
         </InfoPanel>
 
-        {/* 하단 컨트롤 바 */}
-        <ControlBar>
-          <ControlTitle>배경 효과 선택</ControlTitle>
-          <BackgroundGrid>
-            {backgrounds.map(bg => (
-              <BackgroundCard
-                key={bg.id}
-                active={activeBackground === bg.id}
-                color={bg.color}
-                onClick={() => setActiveBackground(bg.id)}
-              >
-                <span className="bg-icon">{bg.icon}</span>
-                <div className="bg-content">
-                  <span className="bg-name">{bg.name}</span>
-                  <span className="bg-description">{bg.description}</span>
-                </div>
-              </BackgroundCard>
-            ))}
-          </BackgroundGrid>
+        {/* 하단 컨트롤 바 - 드롭다운 형태 */}
+        <ControlBar expanded={isControlExpanded}>
+          <ControlHeader onClick={() => setIsControlExpanded(!isControlExpanded)}>
+            <div className="current-effect">
+              <span className="current-icon">{currentBg.icon}</span>
+              <span className="current-name">{currentBg.name}</span>
+            </div>
+            <ExpandButton>
+              {isControlExpanded ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+            </ExpandButton>
+          </ControlHeader>
+
+          <ControlContent expanded={isControlExpanded}>
+            <ControlTitle>배경 효과 선택</ControlTitle>
+            <BackgroundGrid>
+              {backgrounds.map(bg => (
+                <BackgroundCard
+                  key={bg.id}
+                  active={activeBackground === bg.id}
+                  color={bg.color}
+                  onClick={() => {
+                    setActiveBackground(bg.id);
+                    setIsControlExpanded(false); // 선택 후 자동으로 접기
+                  }}
+                >
+                  <span className="bg-icon">{bg.icon}</span>
+                  <div className="bg-content">
+                    <span className="bg-name">{bg.name}</span>
+                    <span className="bg-description">{bg.description}</span>
+                  </div>
+                </BackgroundCard>
+              ))}
+            </BackgroundGrid>
+          </ControlContent>
         </ControlBar>
       </BackgroundContainer>
     </>

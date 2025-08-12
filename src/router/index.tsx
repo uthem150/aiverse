@@ -9,8 +9,8 @@ import BackgroundExperience from '@/pages/InteractiveExperiencePage/BackgroundEx
 import GameExperience from '@/pages/InteractiveExperiencePage/GameExperience/GameExperience';
 
 // 게임들
-import TargetShooter from '@/pages/games/TargetShooter/TargetShooter';
-import OrbCollector from '@/pages/games/OrbCollector/OrbCollector';
+import TargetShooter from '@/pages/InteractiveExperiencePage/games/TargetShooter/TargetShooter';
+import OrbCollector from '@/pages/InteractiveExperiencePage/games/OrbCollector/OrbCollector';
 
 // AI 분석 테스트들
 import FaceAgeTestPage from '@/pages/tests/AI_Analysis/FaceAgeTest/FaceAgeTestPage';

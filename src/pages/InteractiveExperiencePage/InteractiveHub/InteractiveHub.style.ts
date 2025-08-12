@@ -25,7 +25,7 @@ const cardHover = keyframes`
 `;
 
 export const ExperienceContainer = styled.div`
-  min-height: 100vh;
+  flex: 1;
   background: linear-gradient(
     135deg,
     #0f0f23 0%,
@@ -35,12 +35,13 @@ export const ExperienceContainer = styled.div`
     #0f0f23 100%
   );
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 6rem 2rem 2rem 2rem;
 
   &:before {
     content: '';
@@ -55,12 +56,21 @@ export const ExperienceContainer = styled.div`
       radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
     pointer-events: none;
   }
+
+  @media (max-width: 768px) {
+    padding: 5rem 1.5rem 1rem 1.5rem;
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4.5rem 1rem 0.5rem 1rem;
+  }
 `;
 
 export const BackButton = styled.button`
   position: fixed;
   top: 6rem;
-  left: 3rem;
+  left: 2rem;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -98,6 +108,10 @@ export const ContentWrapper = styled.div`
   max-width: 1200px;
   text-align: center;
   animation: ${fadeIn} 1s ease-out;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const MainTitle = styled.h1`
@@ -125,13 +139,18 @@ export const MainTitle = styled.h1`
   @media (max-width: 768px) {
     font-size: 2.5rem;
   }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 export const MainSubtitle = styled.p`
   font-size: 1.3rem;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -139,19 +158,30 @@ export const MainSubtitle = styled.p`
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
 export const CategoryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 `;
 
@@ -160,7 +190,7 @@ export const CategoryCard = styled.div<{ bgColor: string; delay: number }>`
   backdrop-filter: blur(20px);
   border: 2px solid ${props => props.bgColor}40;
   border-radius: 20px;
-  padding: 2.5rem 2rem;
+  padding: 2rem 1.5rem;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
@@ -194,55 +224,85 @@ export const CategoryCard = styled.div<{ bgColor: string; delay: number }>`
   }
 
   .category-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
     transition: all 0.3s ease;
     display: block;
   }
 
   .category-title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: white;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 
   .category-description {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
   }
 
   .category-features {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
     justify-content: center;
 
     .feature-tag {
       background: rgba(255, 255, 255, 0.1);
-      padding: 0.3rem 0.8rem;
-      border-radius: 12px;
-      font-size: 0.8rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+      }
     }
   }
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
 
     .category-icon {
-      font-size: 3rem;
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
     }
 
     .category-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
     }
 
     .category-description {
       font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.2rem 0.8rem;
+
+    .category-icon {
+      font-size: 2rem;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+    }
+
+    .category-description {
+      font-size: 0.85rem;
+    }
+
+    .feature-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
     }
   }
 `;

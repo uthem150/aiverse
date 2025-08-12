@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronUp, ChevronDown } from 'lucide-react';
 import {
   CursorContainer,
   BackButton,
@@ -8,9 +8,12 @@ import {
   ExperienceArea,
   GuideText,
   ControlBar,
+  ControlHeader,
+  ControlContent,
   ControlTitle,
   CursorGrid,
   CursorCard,
+  ExpandButton,
 } from './CursorExperience.style';
 
 // React-bits 컴포넌트들 임포트
@@ -18,24 +21,25 @@ import SplashCursor from '@/components/reactBits/SplashCursor/SplashCursor';
 import BlobCursor from '@/components/reactBits/BlobCursor/BlobCursor';
 import Ribbons from '@/components/reactBits/Ribbons/Ribbons';
 
-type CursorType = 'fluid' | 'splash' | 'ribbon' | 'none';
+type CursorType = 'splash' | 'fluid' | 'ribbon' | 'none';
 
 const CursorExperience: React.FC = () => {
   const navigate = useNavigate();
-  const [activeCursor, setActiveCursor] = useState<CursorType>('fluid');
+  const [activeCursor, setActiveCursor] = useState<CursorType>('splash');
+  const [isControlExpanded, setIsControlExpanded] = useState(false);
 
   const cursorOptions = [
-    {
-      type: 'fluid' as CursorType,
-      icon: '🌀',
-      name: '플루이드 트레일',
-      description: '마우스를 따라다니는 부드러운 액체 효과',
-    },
     {
       type: 'splash' as CursorType,
       icon: '💥',
       name: '스플래시 이펙트',
       description: '움직일 때마다 화려한 물결이 퍼집니다',
+    },
+    {
+      type: 'fluid' as CursorType,
+      icon: '🌀',
+      name: '플루이드 트레일',
+      description: '마우스를 따라다니는 부드러운 액체 효과',
     },
     {
       type: 'ribbon' as CursorType,
@@ -86,7 +90,6 @@ const CursorExperience: React.FC = () => {
               enableFade={true}
               enableShaderEffect={true}
               baseSpring={0.03}
-              // offsetFactor={0.01}
               effectAmplitude={0.7}
             />
           </div>
@@ -105,7 +108,7 @@ const CursorExperience: React.FC = () => {
             <BlobCursor
               blobType="circle"
               fillColor="#5227FF"
-              trailCount={3}
+              trailCount={5}
               sizes={[60, 125, 75]}
               innerSizes={[20, 35, 25]}
               innerColor="rgba(255,255,255,0.8)"
@@ -118,7 +121,7 @@ const CursorExperience: React.FC = () => {
               useFilter={true}
               fastDuration={0.2}
               slowDuration={0.5}
-              zIndex={100}
+              zIndex={10}
             />
           </div>
         )}
@@ -138,24 +141,40 @@ const CursorExperience: React.FC = () => {
             </GuideText>
           </ExperienceArea>
         </MainContent>
-        {/* 하단 컨트롤 바 */}
-        <ControlBar>
-          <ControlTitle>커서 효과 선택</ControlTitle>
-          <CursorGrid>
-            {cursorOptions.map(option => (
-              <CursorCard
-                key={option.type}
-                active={activeCursor === option.type}
-                onClick={() => setActiveCursor(option.type)}
-              >
-                <span className="cursor-icon">{option.icon}</span>
-                <div className="cursor-content">
-                  <span className="cursor-name">{option.name}</span>
-                  <span className="cursor-description">{option.description}</span>
-                </div>
-              </CursorCard>
-            ))}
-          </CursorGrid>
+
+        {/* 하단 컨트롤 바 - 드롭다운 형태 */}
+        <ControlBar expanded={isControlExpanded}>
+          <ControlHeader onClick={() => setIsControlExpanded(!isControlExpanded)}>
+            <div className="current-effect">
+              <span className="current-icon">{getCurrentCursorInfo().icon}</span>
+              <span className="current-name">{getCurrentCursorInfo().name}</span>
+            </div>
+            <ExpandButton>
+              {isControlExpanded ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+            </ExpandButton>
+          </ControlHeader>
+
+          <ControlContent expanded={isControlExpanded}>
+            <ControlTitle>커서 효과 선택</ControlTitle>
+            <CursorGrid>
+              {cursorOptions.map(option => (
+                <CursorCard
+                  key={option.type}
+                  active={activeCursor === option.type}
+                  onClick={() => {
+                    setActiveCursor(option.type);
+                    setIsControlExpanded(false); // 선택 후 자동으로 접기
+                  }}
+                >
+                  <span className="cursor-icon">{option.icon}</span>
+                  <div className="cursor-content">
+                    <span className="cursor-name">{option.name}</span>
+                    <span className="cursor-description">{option.description}</span>
+                  </div>
+                </CursorCard>
+              ))}
+            </CursorGrid>
+          </ControlContent>
         </ControlBar>
       </CursorContainer>
     </>

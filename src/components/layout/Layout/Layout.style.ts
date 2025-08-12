@@ -29,4 +29,6 @@ export const StyledContent = styled.main`
 export const StyledInteractiveContent = styled.main`
   flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;

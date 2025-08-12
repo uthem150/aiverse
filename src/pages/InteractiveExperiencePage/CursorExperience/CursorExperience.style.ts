@@ -1,17 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const pulseGlow = keyframes`
   0%, 100% {
     box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
@@ -22,7 +11,7 @@ const pulseGlow = keyframes`
 `;
 
 export const CursorContainer = styled.div`
-  min-height: 100vh;
+  flex: 1;
   background: linear-gradient(
     135deg,
     #0f0f23 0%,
@@ -32,7 +21,7 @@ export const CursorContainer = styled.div`
     #0f0f23 100%
   );
   position: relative;
-  /* overflow: hidden; */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 
@@ -53,7 +42,7 @@ export const CursorContainer = styled.div`
 export const BackButton = styled.button`
   position: fixed;
   top: 6rem;
-  left: 3rem;
+  left: 2rem;
   background: rgba(236, 72, 153, 0.1);
   border: 2px solid rgba(236, 72, 153, 0.3);
   border-radius: 12px;
@@ -65,7 +54,7 @@ export const BackButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  z-index: 3;
+  z-index: 100;
 
   &:hover {
     background: rgba(236, 72, 153, 0.2);
@@ -74,24 +63,10 @@ export const BackButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    top: 4.5rem;
-    left: 2rem;
+    top: 5.5rem;
+    left: 0.5rem;
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
-  }
-`;
-
-export const Title = styled.h1`
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(45deg, #ec4899, #a855f7);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-
-  @media (max-width: 768px) {
-    font-size: 1.4rem;
   }
 `;
 
@@ -100,14 +75,14 @@ export const MainContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 100px; /* 헤더 높이만큼 마진 */
-  margin-bottom: 180px; /* 컨트롤 바 높이만큼 마진 */
   padding: 2rem;
+  padding-top: 6rem;
+  padding-bottom: 2rem;
 
   @media (max-width: 768px) {
-    margin-top: 80px;
-    margin-bottom: 200px;
     padding: 1rem;
+    padding-top: 5rem;
+    padding-bottom: 1rem;
   }
 `;
 
@@ -131,6 +106,11 @@ export const ExperienceArea = styled.div`
 
   @media (max-width: 768px) {
     height: 300px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    height: 250px;
   }
 `;
 
@@ -158,9 +138,17 @@ export const GuideText = styled.div`
       font-size: 1.6rem;
     }
   }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+
+    .highlight {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
-export const ControlBar = styled.div`
+export const ControlBar = styled.div<{ expanded: boolean }>`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -168,12 +156,77 @@ export const ControlBar = styled.div`
   background: rgba(15, 15, 35, 0.95);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(236, 72, 153, 0.3);
-  padding: 1.5rem 2rem;
   z-index: 50;
-  animation: ${fadeIn} 0.8s ease-out;
+  transition: all 0.3s ease;
+  border-radius: ${props => (props.expanded ? '0' : '20px 20px 0 0')};
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    border-radius: ${props => (props.expanded ? '0' : '16px 16px 0 0')};
+  }
+`;
+
+export const ControlHeader = styled.div`
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: ${props => '1px solid rgba(255, 255, 255, 0.1)'};
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(236, 72, 153, 0.05);
+  }
+
+  .current-effect {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: white;
+  }
+
+  .current-icon {
+    font-size: 1.5rem;
+  }
+
+  .current-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+
+    .current-icon {
+      font-size: 1.3rem;
+    }
+
+    .current-name {
+      font-size: 0.9rem;
+    }
+  }
+`;
+
+export const ExpandButton = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: rgba(236, 72, 153, 0.8);
+    transform: scale(1.1);
+  }
+`;
+
+export const ControlContent = styled.div<{ expanded: boolean }>`
+  max-height: ${props => (props.expanded ? '400px' : '0')};
+  opacity: ${props => (props.expanded ? '1' : '0')};
+  overflow: hidden;
+  transition: all 0.4s ease;
+  padding: ${props => (props.expanded ? '1.5rem 2rem' : '0 2rem')};
+
+  @media (max-width: 768px) {
+    padding: ${props => (props.expanded ? '1rem 1.5rem' : '0 1.5rem')};
+    max-height: ${props => (props.expanded ? '500px' : '0')};
   }
 `;
 
@@ -183,18 +236,22 @@ export const ControlTitle = styled.h3`
   font-weight: 600;
   margin: 0 0 1rem 0;
   text-align: center;
-  opacity: 0.8;
+  opacity: 0.9;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const CursorGrid = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 0.8rem;
   }
 `;
@@ -207,13 +264,12 @@ export const CursorCard = styled.div<{ active: boolean }>`
   border: 2px solid
     ${props => (props.active ? 'rgba(236, 72, 153, 0.5)' : 'rgba(255, 255, 255, 0.1)')};
   border-radius: 12px;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 1rem;
-  min-width: 250px;
   animation: ${props => (props.active ? pulseGlow : 'none')} 2s infinite;
 
   &:hover {
@@ -230,7 +286,7 @@ export const CursorCard = styled.div<{ active: boolean }>`
   .cursor-content {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.3rem;
     flex: 1;
   }
 
@@ -243,12 +299,11 @@ export const CursorCard = styled.div<{ active: boolean }>`
   .cursor-description {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.8rem;
-    line-height: 1.3;
+    line-height: 1.4;
   }
 
   @media (max-width: 768px) {
-    min-width: unset;
-    padding: 0.8rem 1rem;
+    padding: 0.8rem;
 
     .cursor-icon {
       font-size: 1.5rem;
@@ -260,6 +315,16 @@ export const CursorCard = styled.div<{ active: boolean }>`
 
     .cursor-description {
       font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+
+    .cursor-icon {
+      font-size: 2rem;
     }
   }
 `;

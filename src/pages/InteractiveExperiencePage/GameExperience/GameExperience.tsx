@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import {
   GameContainer,
-  Header,
-  Title,
-  BackButton,
   ContentWrapper,
   MainTitle,
   MainSubtitle,
@@ -48,14 +45,6 @@ const GameExperience: React.FC = () => {
   return (
     <>
       <GameContainer>
-        <Header>
-          <BackButton onClick={handleBackClick}>
-            <ArrowLeft size={16} />
-            체험관으로
-          </BackButton>
-          <Title>🎮 인터랙티브 게임</Title>
-        </Header>
-
         <ContentWrapper>
           <MainTitle>🎮 인터랙티브 게임</MainTitle>
           <MainSubtitle>
