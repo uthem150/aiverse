@@ -100,11 +100,23 @@ export const testCategories: TestCategory[] = [
     color: '#FF6B35',
     tests: [
       {
-        id: 'focus-test',
-        title: '🎯 집중력 테스트',
+        id: 'target-shooter',
+        title: '🎯 타겟 슈팅 게임 | AIverse-phi - 반응속도 측정',
+        description: '순발력과 정확성에 자신 있나요? 지금 바로 반응속도를 테스트해보세요!',
+        thumbnail: '/images/target-shooter.jpg',
+        category: 'interactive-experience',
+        difficulty: 'medium',
+        estimatedTime: 3,
+        isNew: true,
+        isHot: true,
+        participantCount: 15000,
+      },
+      {
+        id: 'orb-collector',
+        title: '🔮 오브 컬렉터 게임 | AIverse-phi - 마우스 컨트롤 게임',
         description:
-          '사격 게임으로 측정하는 나의 집중력과 반응속도! 정확도와 반응시간으로 집중력 유형 분석',
-        thumbnail: '/images/focus-test.jpg',
+          '마우스로 떠다니는 마법의 오브들을 수집하여 점수를 획득하는 인터랙티브 게임입니다.',
+        thumbnail: '/images/orb-collector.jpg',
         category: 'interactive-experience',
         difficulty: 'medium',
         estimatedTime: 3,

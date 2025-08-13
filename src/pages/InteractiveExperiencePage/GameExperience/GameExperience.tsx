@@ -20,7 +20,7 @@ const GameExperience: React.FC = () => {
       description: '빠르고 정확한 클릭으로 타겟을 맞춰보세요',
       features: ['반응속도 측정', '정확성 테스트', '실시간 통계', '60초 챌린지'],
       bgColor: '#ef4444',
-      path: '/game/target-shooter',
+      path: '/interactive/target-shooter',
     },
     {
       id: 'orb-collector',
@@ -29,7 +29,7 @@ const GameExperience: React.FC = () => {
       description: '마우스로 떠다니는 마법의 오브들을 수집하세요',
       features: ['마우스 컨트롤', '콤보 시스템', '동적 난이도', '90초 챌린지'],
       bgColor: '#8b5cf6',
-      path: '/game/orb-collector',
+      path: '/interactive/orb-collector',
     },
   ];
 

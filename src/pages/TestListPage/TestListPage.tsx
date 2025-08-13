@@ -65,7 +65,15 @@ const TestListPage = () => {
   }, [allTests, selectedCategory, searchQuery, sortBy]);
 
   const handleTestClick = (testId: string) => {
-    navigate(`/test/${testId}`);
+    // 테스트 ID로 해당 테스트 객체 찾기
+    const test = allTests.find(t => t.id === testId);
+
+    // interactive-experience 카테고리인지 확인하여 다른 경로로 라우팅
+    if (test?.category === 'interactive-experience') {
+      navigate(`/interactive/${testId}`);
+    } else {
+      navigate(`/test/${testId}`);
+    }
   };
 
   const handleCategoryChange = (newCategory: string) => {

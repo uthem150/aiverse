@@ -3,7 +3,7 @@ import Layout from '@/components/layout/Layout/Layout';
 import HomePage from '@/pages/HomePage/HomePage';
 import TestListPage from '@/pages/TestListPage/TestListPage';
 
-// 체험관 페이지들 
+// 체험관 페이지들
 import CursorExperience from '@/pages/InteractiveExperiencePage/CursorExperience/CursorExperience';
 import BackgroundExperience from '@/pages/InteractiveExperiencePage/BackgroundExperience/BackgroundExperience';
 import GameExperience from '@/pages/InteractiveExperiencePage/GameExperience/GameExperience';
@@ -70,9 +70,6 @@ import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEg
 // 텐서플로우 테스트
 import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPage';
 
-// 기존 인터랙티브 테스트들
-import ConcentrationTestPage from '@/pages/tests/Interactive/ConcentrationTest/ConcentrationTestPage';
-
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import InteractiveHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
 
@@ -112,17 +109,12 @@ export const router = createBrowserRouter([
       },
       // 게임들
       {
-        path: 'game/target-shooter',
+        path: 'interactive/target-shooter',
         element: <TargetShooter />,
       },
       {
-        path: 'game/orb-collector',
+        path: 'interactive/orb-collector',
         element: <OrbCollector />,
-      },
-      // 기존 인터랙티브 테스트들
-      {
-        path: 'test/focus-test',
-        element: <ConcentrationTestPage />,
       },
       // 텐서플로우 테스트
       {
