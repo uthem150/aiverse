@@ -26,6 +26,7 @@ import DarkVeil from '@/components/reactBits/DarkVeil/DarkVeil';
 import Particles from '@/components/reactBits/Particles/Particles';
 import Cubes from '@/components/reactBits/Cubes/Cubes';
 import Orb from '@/components/reactBits/Orb/Orb';
+import Waves from '@/components/reactBits/Waves/Waves';
 
 interface BackgroundEffect {
   id: string;
@@ -110,20 +111,36 @@ const BackgroundExperience: React.FC = () => {
     },
     {
       id: 'dark-veil',
-      icon: '🌑',
-      name: '다크 베일',
-      description: '신비로운 어둠의 장막',
+      icon: '🌊',
+      name: '선형 물결',
+      description: '신비로운 선형 물결',
       color: '#374151',
       component: (
-        <DarkVeil
-          hueShift={0}
-          noiseIntensity={0.03}
-          scanlineIntensity={0.1}
-          speed={0.8}
-          scanlineFrequency={0.5}
-          warpAmount={0.2}
-          resolutionScale={1}
-        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'radial-gradient(circle at center, #220d8a 0%, #1d0728 100%)',
+            overflow: 'hidden',
+          }}
+        >
+          <Waves
+            lineColor="#fff"
+            backgroundColor="rgba(255, 255, 255, 0.2)"
+            waveSpeedX={0.02}
+            waveSpeedY={0.01}
+            waveAmpX={40}
+            waveAmpY={20}
+            friction={0.9}
+            tension={0.01}
+            maxCursorMove={120}
+            xGap={12}
+            yGap={36}
+          />
+        </div>
       ),
     },
     {
