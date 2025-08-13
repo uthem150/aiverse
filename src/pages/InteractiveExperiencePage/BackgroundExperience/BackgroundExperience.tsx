@@ -22,7 +22,6 @@ import {
 // React-bits 배경 컴포넌트들 임포트
 import Galaxy from '@/components/reactBits/Galaxy/Galaxy';
 import Hyperspeed from '@/components/reactBits/Hyperspeed/Hyperspeed';
-import DarkVeil from '@/components/reactBits/DarkVeil/DarkVeil';
 import Particles from '@/components/reactBits/Particles/Particles';
 import Cubes from '@/components/reactBits/Cubes/Cubes';
 import Orb from '@/components/reactBits/Orb/Orb';
