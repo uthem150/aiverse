@@ -21,8 +21,9 @@ import {
 import SplashCursor from '@/components/reactBits/SplashCursor/SplashCursor';
 import BlobCursor from '@/components/reactBits/BlobCursor/BlobCursor';
 import Ribbons from '@/components/reactBits/Ribbons/Ribbons';
+import MetaBalls from '@/components/reactBits/MetaBalls/MetaBalls';
 
-type CursorType = 'fluid' | 'splash' | 'ribbon' | 'none';
+type CursorType = 'fluid' | 'splash' | 'ribbon' | 'meta-balls' | 'none';
 
 const CursorExperience: React.FC = () => {
   const navigate = useNavigate();
@@ -47,6 +48,12 @@ const CursorExperience: React.FC = () => {
       icon: '🎀',
       name: '리본',
       description: '리본 체조의 부드러운 리본 흐름을 마음껏 표현해보세요',
+    },
+    {
+      type: 'meta-balls' as CursorType,
+      icon: '💦',
+      name: '메타 볼',
+      description: '나눠졌다 합쳐졌다 재밌는 메타볼을 체험해보세요.',
     },
     {
       type: 'none' as CursorType,
@@ -130,6 +137,31 @@ const CursorExperience: React.FC = () => {
               fastDuration={0.2}
               slowDuration={0.5}
               zIndex={100}
+            />
+          </div>
+        )}
+        {activeCursor === 'meta-balls' && (
+          <div
+            style={{
+              position: 'fixed',
+              top: '0%',
+              left: '0%',
+              width: '100%',
+              height: '100%',
+              zIndex: 100,
+            }}
+          >
+            <MetaBalls
+              color="#9341d2"
+              cursorBallColor="#4b2d95"
+              cursorBallSize={3}
+              ballCount={15}
+              hoverSmoothness={0.1}
+              animationSize={50}
+              enableMouseInteraction={true}
+              enableTransparency={true}
+              clumpFactor={1}
+              speed={0.3}
             />
           </div>
         )}

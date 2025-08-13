@@ -156,7 +156,7 @@ export const ControlBar = styled.div<{ expanded: boolean }>`
   background: rgba(15, 15, 35, 0.98);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(236, 72, 153, 0.3);
-  z-index: 50;
+  z-index: 150;
   transform: translateY(${props => (props.expanded ? '0' : 'calc(100% - 70px)')});
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: ${props => (props.expanded ? '0' : '20px 20px 0 0')};
