@@ -46,11 +46,20 @@ const Ribbons: React.FC<RibbonsProps> = ({
       gl.clearColor(0, 0, 0, 0);
     }
 
-    gl.canvas.style.position = 'absolute';
-    gl.canvas.style.top = '0';
-    gl.canvas.style.left = '0';
-    gl.canvas.style.width = '100%';
-    gl.canvas.style.height = '100%';
+    // 캔버스 스타일 및 모바일 최적화 설정
+    const canvasStyle = gl.canvas.style;
+    canvasStyle.position = 'absolute';
+    canvasStyle.top = '0';
+    canvasStyle.left = '0';
+    canvasStyle.width = '100%';
+    canvasStyle.height = '100%';
+    canvasStyle.touchAction = 'none';
+    canvasStyle.userSelect = 'none';
+    canvasStyle.setProperty('-webkit-user-select', 'none');
+    canvasStyle.setProperty('-webkit-touch-callout', 'none');
+    canvasStyle.setProperty('-webkit-user-drag', 'none');
+    canvasStyle.setProperty('-webkit-tap-highlight-color', 'transparent');
+
     container.appendChild(gl.canvas);
 
     const scene = new Transform();
@@ -180,31 +189,131 @@ const Ribbons: React.FC<RibbonsProps> = ({
     resize();
 
     const mouse = new Vec3();
-    function updateMouse(e: MouseEvent | TouchEvent) {
-      let x: number, y: number;
-      if (!container) return;
+    let isInteracting = false;
+
+    // 좌표 계산 함수
+    function getCoordinates(clientX: number, clientY: number) {
+      if (!container) return { x: 0, y: 0 };
       const rect = container.getBoundingClientRect();
-      if ('changedTouches' in e && e.changedTouches.length) {
-        x = e.changedTouches[0].clientX - rect.left;
-        y = e.changedTouches[0].clientY - rect.top;
-      } else if (e instanceof MouseEvent) {
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
-      } else {
-        x = 0;
-        y = 0;
-      }
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
       const width = container.clientWidth;
       const height = container.clientHeight;
-      mouse.set((x / width) * 2 - 1, (y / height) * -2 + 1, 0);
+      return {
+        x: (x / width) * 2 - 1,
+        y: (y / height) * -2 + 1,
+      };
     }
-    container.addEventListener('mousemove', updateMouse);
-    container.addEventListener('touchstart', updateMouse);
-    container.addEventListener('touchmove', updateMouse);
+
+    // 마우스 위치 업데이트 함수
+    function updateMouse(x: number, y: number) {
+      mouse.set(x, y, 0);
+      if (!isInteracting) {
+        isInteracting = true;
+      }
+    }
+
+    // 마우스 이벤트 핸들러
+    function handleMouseMove(e: MouseEvent) {
+      const coords = getCoordinates(e.clientX, e.clientY);
+      updateMouse(coords.x, coords.y);
+    }
+
+    function handleMouseEnter(e: MouseEvent) {
+      const coords = getCoordinates(e.clientX, e.clientY);
+      updateMouse(coords.x, coords.y);
+    }
+
+    function handleMouseLeave() {
+      isInteracting = false;
+    }
+
+    // 터치 이벤트 핸들러 (passive 이벤트 문제 해결)
+    function handleTouchStart(e: TouchEvent) {
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch (error) {
+        // passive 이벤트인 경우 무시
+      }
+
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const coords = getCoordinates(touch.clientX, touch.clientY);
+        updateMouse(coords.x, coords.y);
+      }
+    }
+
+    function handleTouchMove(e: TouchEvent) {
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch (error) {
+        // passive 이벤트인 경우 무시
+      }
+
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const coords = getCoordinates(touch.clientX, touch.clientY);
+        updateMouse(coords.x, coords.y);
+      }
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch (error) {
+        // passive 이벤트인 경우 무시
+      }
+      isInteracting = false;
+    }
+
+    // 컨텍스트 메뉴 방지
+    function handleContextMenu(e: Event) {
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch (error) {
+        // passive 이벤트인 경우 무시
+      }
+    }
+
+    function handleSelectStart(e: Event) {
+      try {
+        e.preventDefault();
+        e.stopPropagation();
+      } catch (error) {
+        // passive 이벤트인 경우 무시
+      }
+    }
+
+    // 이벤트 리스너 등록
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
+
+    // 터치 이벤트는 passive: false로 등록하여 preventDefault 가능하게 함
+    const touchOptions = { passive: false, capture: true };
+    try {
+      container.addEventListener('touchstart', handleTouchStart, touchOptions);
+      container.addEventListener('touchmove', handleTouchMove, touchOptions);
+      container.addEventListener('touchend', handleTouchEnd, touchOptions);
+      container.addEventListener('contextmenu', handleContextMenu, touchOptions);
+      container.addEventListener('selectstart', handleSelectStart, touchOptions);
+    } catch (error) {
+      // 일부 브라우저에서 지원하지 않는 경우 기본 등록
+      container.addEventListener('touchstart', handleTouchStart);
+      container.addEventListener('touchmove', handleTouchMove);
+      container.addEventListener('touchend', handleTouchEnd);
+      container.addEventListener('contextmenu', handleContextMenu);
+      container.addEventListener('selectstart', handleSelectStart);
+    }
 
     const tmp = new Vec3();
     let frameId: number;
     let lastTime = performance.now();
+
     function update() {
       frameId = requestAnimationFrame(update);
       const currentTime = performance.now();
@@ -237,9 +346,14 @@ const Ribbons: React.FC<RibbonsProps> = ({
 
     return () => {
       window.removeEventListener('resize', resize);
-      container.removeEventListener('mousemove', updateMouse);
-      container.removeEventListener('touchstart', updateMouse);
-      container.removeEventListener('touchmove', updateMouse);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('contextmenu', handleContextMenu);
+      container.removeEventListener('selectstart', handleSelectStart);
       cancelAnimationFrame(frameId);
       if (gl.canvas && gl.canvas.parentNode === container) {
         container.removeChild(gl.canvas);
