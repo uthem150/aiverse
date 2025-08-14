@@ -53,6 +53,51 @@ const scoreFloat = keyframes`
   }
 `;
 
+// 새로운 애니메이션들
+const resultAppear = keyframes`
+  0% {
+    transform: scale(0.5) translateY(50px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) translateY(-10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+`;
+
+const tierGlow = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+`;
+
+const statsReveal = keyframes`
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const buttonHover = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+`;
+
 export const GameContainer = styled.div`
   flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
@@ -78,9 +123,14 @@ export const Header = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
   }
 `;
 
@@ -104,8 +154,16 @@ export const BackButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    gap: 0.3rem;
   }
 `;
 
@@ -119,7 +177,11 @@ export const Title = styled.h1`
   margin: 0;
 
   @media (max-width: 768px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
   }
 `;
 
@@ -132,6 +194,10 @@ export const StatsPanel = styled.div`
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.75rem;
   }
 `;
 
@@ -160,6 +226,16 @@ export const Stat = styled.div`
       font-size: 1rem;
     }
   }
+
+  @media (max-width: 480px) {
+    .stat-label {
+      font-size: 0.65rem;
+    }
+
+    .stat-value {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const GameArea = styled.div`
@@ -172,6 +248,11 @@ export const GameArea = styled.div`
   @media (max-width: 768px) {
     padding: 1rem;
     margin-top: 140px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+    margin-top: 120px;
   }
 `;
 
@@ -207,6 +288,10 @@ export const Target = styled.div<{ x: number; y: number; size: number }>`
     animation-play-state: paused;
     transform: scale(1.1);
   }
+
+  @media (max-width: 480px) {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+  }
 `;
 
 export const HitEffect = styled.div<{ x: number; y: number }>`
@@ -220,6 +305,11 @@ export const HitEffect = styled.div<{ x: number; y: number }>`
   animation: ${hitEffect} 0.5s ease-out forwards;
   pointer-events: none;
   z-index: 20;
+
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const ScoreFloat = styled.div<{ x: number; y: number; score: number }>`
@@ -237,6 +327,10 @@ export const ScoreFloat = styled.div<{ x: number; y: number; score: number }>`
   &:before {
     content: '+${props => props.score}';
   }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const GameOverlay = styled.div<{ show: boolean }>`
@@ -245,76 +339,357 @@ export const GameOverlay = styled.div<{ show: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
   display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 2rem;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 export const OverlayContent = styled.div`
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(239, 68, 68, 0.3);
-  border-radius: 20px;
-  padding: 3rem 2rem;
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
   text-align: center;
-  max-width: 500px;
-  width: 90%;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  animation: ${resultAppear} 0.8s ease-out;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(239, 68, 68, 0.2);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 24px;
+    z-index: -1;
+    animation: ${tierGlow} 3s ease-in-out infinite;
+  }
 
   .overlay-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #fff, #f1f5f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .overlay-text {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
   }
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    padding: 1.8rem 1.3rem;
+    margin: 1rem;
+    border-radius: 20px;
 
     .overlay-title {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
     }
 
     .overlay-text {
-      font-size: 1rem;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 16px;
+
+    .overlay-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .overlay-text {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
     }
   }
 `;
 
-export const ActionButton = styled.button`
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  border: none;
+// 새로운 결과 관련 스타일들
+export const TierBadge = styled.div<{ color: string }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
+  border: 2px solid ${props => props.color};
+  border-radius: 16px;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: ${props => props.color};
+  text-shadow: 0 0 20px ${props => props.color}80;
+  animation: ${tierGlow} 2s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    gap: 0.3rem;
+  }
+`;
+
+export const ScoreBreakdown = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  backdrop-filter: blur(10px);
+
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+    margin: 1.2rem 0;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+  }
+`;
+
+export const ScoreItem = styled.div<{ delay?: number }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+
+  &:last-child {
+    border-bottom: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #00200cff;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .score-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+  }
+
+  .score-value {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem 0;
+
+    &:last-child {
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
+      padding-top: 0.8rem;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+    }
+
+    .score-value {
+      font-size: 0.9rem;
+    }
+  }
+`;
+
+export const StatGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+
+  @media (max-width: 768px) {
+    gap: 0.8rem;
+    margin: 1.2rem 0;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin: 1rem 0;
+  }
+`;
+
+export const StatCard = styled.div<{ delay?: number }>`
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+
+  .stat-title {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ef4444;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    border-radius: 10px;
+
+    .stat-title {
+      font-size: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-number {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+    border-radius: 8px;
+
+    .stat-title {
+      font-size: 0.7rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-number {
+      font-size: 1.1rem;
+    }
+  }
+`;
+
+export const PerformanceMessage = styled.div<{ delay?: number }>`
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  color: #22c55e;
+  font-weight: 600;
+  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.2rem;
+    margin: 1.2rem 0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+`;
+
+export const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
+  background: ${props =>
+    props.variant === 'secondary'
+      ? 'rgba(255, 255, 255, 0.1)'
+      : 'linear-gradient(135deg, #ef4444, #dc2626)'};
+  border: ${props =>
+    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin: 0 0.5rem;
+  margin: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.6s,
+      height 0.6s;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+    animation: ${buttonHover} 0.6s ease-in-out;
+
+    &:before {
+      width: 300px;
+      height: 300px;
+    }
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translateY(-1px);
   }
 
   @media (max-width: 768px) {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.7rem 1.3rem;
+    font-size: 0.95rem;
+    margin: 0.4rem;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
     margin: 0.3rem;
+    border-radius: 10px;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 `;
 
@@ -335,6 +710,10 @@ export const Countdown = styled.div<{ show: boolean }>`
   @media (max-width: 768px) {
     font-size: 3rem;
   }
+
+  @media (max-width: 480px) {
+    font-size: 2.5rem;
+  }
 `;
 
 export const ProgressBar = styled.div`
@@ -351,7 +730,14 @@ export const ProgressBar = styled.div`
 
   @media (max-width: 768px) {
     width: 250px;
+    bottom: 1.5rem;
+    height: 6px;
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
     bottom: 1rem;
+    height: 5px;
   }
 `;
 
