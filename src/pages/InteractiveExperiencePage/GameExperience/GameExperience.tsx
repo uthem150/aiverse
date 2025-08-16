@@ -9,33 +9,67 @@ import {
   GameCard,
 } from './GameExperience.style';
 
+// 데이터 소스 import
+import { testCategories } from '@/data/tests';
+
 const GameExperience: React.FC = () => {
   const navigate = useNavigate();
 
-  const games = [
-    {
-      id: 'target-shooter',
-      icon: '🎯',
-      title: '타겟 슈팅',
-      description: '빠르고 정확한 클릭으로 타겟을 맞춰보세요',
-      features: ['반응속도 측정', '정확성 테스트', '실시간 통계', '60초 챌린지'],
-      bgColor: '#ef4444',
-      path: '/interactive/target-shooter',
-    },
-    {
-      id: 'orb-collector',
-      icon: '🔮',
-      title: '오브 컬렉터',
-      description: '마우스로 떠다니는 마법의 오브들을 수집하세요',
-      features: ['마우스 컨트롤', '콤보 시스템', '동적 난이도', '90초 챌린지'],
-      bgColor: '#8b5cf6',
-      path: '/interactive/orb-collector',
-    },
-  ];
+  // 'interactive-experience' 카테고리 데이터 찾기
+  const interactiveCategory = testCategories.find(
+    category => category.id === 'interactive-experience'
+  );
+
+  // GameCard에서 사용할 데이터 형태로 가공
+  // 'tests' 배열이 존재할 경우에만 map 함수 실행
+  const interactiveGames =
+    interactiveCategory?.tests.map(game => {
+      // title에서 이모지와 실제 제목 분리
+      const titleParts = game.title.split(' | ');
+      const gameNameWithIcon = titleParts[0];
+      const icon = gameNameWithIcon.match(/(\p{Emoji})/u)?.[0] || '🎮';
+      const title = gameNameWithIcon.replace(/(\p{Emoji_Presentation}|\p{Emoji})/gu, '').trim();
+
+      // features 배열 동적 생성
+      const features = [];
+      if (game.isNew) features.push('✨ NEW');
+      if (game.isHot) features.push('🔥 HOT');
+      if (game.difficulty) {
+        const difficultyMap = {
+          easy: '쉬움',
+          medium: '보통',
+          hard: '어려움',
+        };
+        features.push(`난이도: ${difficultyMap[game.difficulty] || game.difficulty}`);
+      }
+      if (game.estimatedTime) features.push(`약 ${game.estimatedTime}분`);
+
+      return {
+        id: game.id,
+        icon: icon,
+        title: title,
+        description: game.description,
+        features: features,
+        bgColor: interactiveCategory.color, // 카테고리의 대표 색상 사용
+        path: `/interactive/${game.id}`,
+      };
+    }) || []; // interactiveCategory.tests가 없으면 빈 배열 반환
 
   const handleGameClick = (path: string) => {
     navigate(path);
   };
+
+  // 렌더링할 게임이 없는 경우를 대비
+  if (!interactiveGames.length) {
+    return (
+      <GameContainer>
+        <ContentWrapper>
+          <MainTitle>🎮 인터랙티브 게임</MainTitle>
+          <MainSubtitle>현재 이용 가능한 게임이 없습니다.</MainSubtitle>
+        </ContentWrapper>
+      </GameContainer>
+    );
+  }
 
   return (
     <>
@@ -49,11 +83,11 @@ const GameExperience: React.FC = () => {
           </MainSubtitle>
 
           <GameGrid>
-            {games.map((game, index) => (
+            {interactiveGames.map((game, index) => (
               <GameCard
                 key={game.id}
                 bgColor={game.bgColor}
-                delay={index * 0.2}
+                delay={index * 0.1} // 애니메이션 딜레이 소폭 감소
                 onClick={() => handleGameClick(game.path)}
               >
                 <div className="game-icon">{game.icon}</div>

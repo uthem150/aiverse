@@ -99,11 +99,11 @@ const buttonHover = keyframes`
 `;
 
 export const GameContainer = styled.div`
+  display: flex;
   flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   position: relative;
   overflow: hidden;
-  display: flex;
   flex-direction: column;
   user-select: none;
 `;

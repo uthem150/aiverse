@@ -463,14 +463,109 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🎯 타겟 슈팅 게임',
     ogDescription: '순발력과 정확성에 자신 있나요? 지금 바로 반응속도를 테스트해보세요!',
   },
-
-  'focus-test': {
-    title: '집중력 테스트 | AIverse-phi - 나의 집중력 유형 분석',
+  'block-faller': {
+    title: '블록 폴러 게임 | AIverse-phi - 클래식 블록 퍼즐',
     description:
-      '사격 게임으로 집중력을 측정하고 나만의 집중력 유형을 발견하세요. 정확도와 반응속도로 분석하는 재미있는 집중력 테스트!',
-    keywords: '집중력 테스트, 반응속도 테스트, 사격 게임, 집중력 유형, 정확도 측정',
-    ogTitle: '🎯 나의 집중력 유형 분석',
-    ogDescription: '게임으로 알아보는 나의 집중력 유형! 과연 나는 어떤 타입일까?',
+      '떨어지는 블록을 쌓아 라인을 완성하고 점수를 획득하는 중독성 강한 클래식 퍼즐 게임입니다.',
+    keywords: '블록 폴러, 블록 퍼즐, 테트리스, 웹 게임, 고전 게임',
+    ogTitle: '🧱 블록 폴러 게임',
+    ogDescription: '떨어지는 블록을 완벽하게 쌓아 최고 점수에 도전하세요!',
+  },
+  'color-match': {
+    title: '컬러 매치 게임 | AIverse-phi - 색상 감각 테스트',
+    description:
+      '제시된 색상과 일치하는 색상을 빠르게 찾아 클릭하여 색상 감각과 순발력을 테스트하는 게임입니다.',
+    keywords: '컬러 매치, 색깔 맞추기, 색상 감각, 순발력 테스트, 웹 게임',
+    ogTitle: '🎨 컬러 매치 게임',
+    ogDescription: '당신의 색상 감각은 얼마나 뛰어날까요? 지금 바로 확인해보세요!',
+  },
+  'flappy-game': {
+    title: '플래피 게임 | AIverse-phi - 장애물 피하기 게임',
+    description:
+      '화면을 클릭하여 캐릭터를 날아오르게 하고, 장애물을 피해 최대한 멀리 나아가는 아케이드 게임입니다.',
+    keywords: '플래피 게임, 장애물 피하기, 아케이드 게임, 웹 게임, 컨트롤 게임',
+    ogTitle: '🐦 플래피 게임',
+    ogDescription: '장애물을 피해 더 멀리 날아보세요! 당신의 컨트롤 실력은?',
+  },
+  'math-quiz': {
+    title: '수학 퀴즈 게임 | AIverse-phi - 두뇌 훈련 퀴즈',
+    description:
+      '제한 시간 안에 다양한 수학 문제를 풀어 암산 능력과 문제 해결 능력을 향상시키는 두뇌 훈련 게임입니다.',
+    keywords: '수학 퀴즈, 암산 게임, 두뇌 훈련, 산수 문제, 웹 게임',
+    ogTitle: '🧮 수학 퀴즈 게임',
+    ogDescription: '두뇌를 깨워보세요! 제한 시간 안에 수학 천재가 되어보세요.',
+  },
+  'maze-runner': {
+    title: '메이즈 러너 게임 | AIverse-phi - 미로 탈출 게임',
+    description:
+      '복잡한 미로 속에서 출구를 찾아 탈출하는 길 찾기 게임으로, 공간 지각 능력과 문제 해결 능력을 시험합니다.',
+    keywords: '메이즈 러너, 미로 찾기, 미로 탈출, 길 찾기 게임, 웹 게임',
+    ogTitle: '🗺️ 메이즈 러너 게임',
+    ogDescription: '복잡한 미로를 탈출하고 당신의 길 찾기 능력을 증명하세요!',
+  },
+  'memory-cards': {
+    title: '기억력 카드 게임 | AIverse-phi - 기억력 향상 게임',
+    description:
+      '뒤집힌 카드들 중에서 같은 그림의 카드를 찾아 맞추며 기억력과 집중력을 향상시키는 게임입니다.',
+    keywords: '기억력 카드, 카드 맞추기, 메모리 게임, 두뇌 훈련, 웹 게임',
+    ogTitle: '🧠 기억력 카드 게임',
+    ogDescription: '당신의 기억력을 시험해보세요! 모든 카드 쌍을 찾아보세요.',
+  },
+  'reaction-test': {
+    title: '반응속도 테스트 게임 | AIverse-phi - 순발력 측정',
+    description:
+      '화면의 신호에 따라 최대한 빠르게 반응하여 클릭하고, 당신의 순발력과 반응속도를 밀리초(ms) 단위로 측정해보세요.',
+    keywords: '반응속도 테스트, 순발력 측정, 클릭 속도, 웹 게임, 집중력 게임',
+    ogTitle: '⚡️ 반응속도 테스트',
+    ogDescription: '당신의 반응속도는 상위 몇 %일까요? 지금 바로 측정해보세요!',
+  },
+  'simon-says': {
+    title: '사이먼 세이즈 게임 | AIverse-phi - 기억력 챌린지',
+    description:
+      '컴퓨터가 제시하는 색상과 소리의 순서를 기억했다가 그대로 따라하며 기억력의 한계에 도전하는 게임입니다.',
+    keywords: '사이먼 세이즈, 기억력 게임, 순서 기억, 두뇌 훈련, 웹 게임',
+    ogTitle: '🎶 사이먼 세이즈 게임',
+    ogDescription: '빛과 소리의 순서를 기억하고 한계에 도전해보세요!',
+  },
+  'sliding-puzzle': {
+    title: '슬라이딩 퍼즐 게임 | AIverse-phi - 이미지 퍼즐',
+    description:
+      '흩어진 그림 조각들을 움직여 원래의 완전한 그림으로 맞추는 클래식 슬라이딩 퍼즐 게임입니다.',
+    keywords: '슬라이딩 퍼즐, 이미지 퍼즐, 숫자 퍼즐, 두뇌 게임, 웹 게임',
+    ogTitle: '🧩 슬라이딩 퍼즐 게임',
+    ogDescription: '흩어진 조각을 맞춰 아름다운 그림을 완성해보세요!',
+  },
+  'snake-game': {
+    title: '스네이크 게임 | AIverse-phi - 클래식 아케이드',
+    description:
+      '먹이를 먹고 점점 길어지는 뱀을 조종하여 벽이나 자신의 몸에 부딪히지 않고 최고 점수를 기록하는 고전 게임입니다.',
+    keywords: '스네이크 게임, 뱀 게임, 고전 게임, 아케이드, 웹 게임',
+    ogTitle: '🐍 스네이크 게임',
+    ogDescription: '추억의 스네이크 게임! 먹이를 먹고 가장 긴 뱀이 되어보세요.',
+  },
+  'speed-clicker': {
+    title: '스피드 클리커 게임 | AIverse-phi - 클릭 속도 측정',
+    description:
+      '제한된 시간 안에 마우스를 최대한 빠르게 클릭하여 당신의 클릭 속도(CPS)를 측정하는 간단한 게임입니다.',
+    keywords: '스피드 클리커, 클릭 속도 테스트, CPS, 순발력 게임, 웹 게임',
+    ogTitle: '🖱️ 스피드 클리커 게임',
+    ogDescription: '10초 안에 몇 번이나 클릭할 수 있나요? 당신의 한계에 도전하세요!',
+  },
+  'tic-tac-toe': {
+    title: '틱택토 게임 | AIverse-phi - 클래식 보드 게임',
+    description:
+      '두 명의 플레이어가 번갈아 가며 O와 X를 놓아 같은 모양을 세 개 연속으로 먼저 만드는 사람이 승리하는 고전 전략 게임입니다.',
+    keywords: '틱택토, O-X 게임, 보드 게임, 전략 게임, 2인용 게임',
+    ogTitle: '⭕️❌ 틱택토 게임',
+    ogDescription: '친구 또는 AI와 함께 즐기는 클래식 틱택토 한 판!',
+  },
+  'whack-a-mole': {
+    title: '두더지 잡기 게임 | AIverse-phi - 순발력 게임',
+    description:
+      '여러 구멍에서 랜덤하게 나타나는 두더지를 망치로 빠르게 잡아서 점수를 획득하는 순발력과 반응속도 게임입니다.',
+    keywords: '두더지 잡기, 순발력 게임, 반응속도, 아케이드, 웹 게임',
+    ogTitle: '🔨 두더지 잡기 게임',
+    ogDescription: '튀어나오는 두더지를 놓치지 마세요! 최고의 사냥꾼이 되어보세요.',
   },
 };
 

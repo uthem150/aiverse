@@ -72,6 +72,19 @@ import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPa
 
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import InteractiveHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
+import MemoryCards from '@/pages/InteractiveExperiencePage/games/MemoryCards/MemoryCards';
+import ColorMatch from '@/pages/InteractiveExperiencePage/games/ColorMatch/ColorMatch';
+import BlockFaller from '@/pages/InteractiveExperiencePage/games/BlockFaller/BlockFaller';
+import FlappyGame from '@/pages/InteractiveExperiencePage/games/FlappyGame/FlappyGame';
+import MathQuiz from '@/pages/InteractiveExperiencePage/games/MathQuiz/MathQuiz';
+import MazeRunner from '@/pages/InteractiveExperiencePage/games/MazeRunner/MazeRunner';
+import ReactionTest from '@/pages/InteractiveExperiencePage/games/ReactionTest/ReactionTest';
+import SimonSays from '@/pages/InteractiveExperiencePage/games/SimonSays/SimonSays';
+import SlidingPuzzle from '@/pages/InteractiveExperiencePage/games/SlidingPuzzle/SlidingPuzzle';
+import SnakeGame from '@/pages/InteractiveExperiencePage/games/SnakeGame/SnakeGame';
+import SpeedClicker from '@/pages/InteractiveExperiencePage/games/SpeedClicker/SpeedClicker';
+import TicTacToe from '@/pages/InteractiveExperiencePage/games/TicTacToe/TicTacToe';
+import WhackAMole from '@/pages/InteractiveExperiencePage/games/WhackAMole/WhackAMole';
 
 export const router = createBrowserRouter([
   {
@@ -109,13 +122,66 @@ export const router = createBrowserRouter([
       },
       // 게임들
       {
-        path: 'interactive/target-shooter',
-        element: <TargetShooter />,
+        path: 'interactive/block-faller',
+        element: <BlockFaller />,
+      },
+      {
+        path: 'interactive/color-match',
+        element: <ColorMatch />,
+      },
+      {
+        path: 'interactive/flappy-game',
+        element: <FlappyGame />,
+      },
+      {
+        path: 'interactive/math-quiz',
+        element: <MathQuiz />,
+      },
+      {
+        path: 'interactive/maze-runner',
+        element: <MazeRunner />,
+      },
+      {
+        path: 'interactive/memory-cards',
+        element: <MemoryCards />,
       },
       {
         path: 'interactive/orb-collector',
         element: <OrbCollector />,
       },
+      {
+        path: 'interactive/reaction-test',
+        element: <ReactionTest />,
+      },
+      {
+        path: 'interactive/simon-says',
+        element: <SimonSays />,
+      },
+      {
+        path: 'interactive/sliding-puzzle',
+        element: <SlidingPuzzle />,
+      },
+      {
+        path: 'interactive/snake-game',
+        element: <SnakeGame />,
+      },
+      {
+        path: 'interactive/speed-clicker',
+        element: <SpeedClicker />,
+      },
+      {
+        path: 'interactive/target-shooter',
+        element: <TargetShooter />,
+      },
+      {
+        path: 'interactive/tic-tac-toe',
+        element: <TicTacToe />,
+      },
+      {
+        path: 'interactive/whack-a-mole',
+        element: <WhackAMole />,
+      },
+
       // 텐서플로우 테스트
       {
         path: 'test/face-emotion-test',
