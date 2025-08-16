@@ -631,7 +631,6 @@ const OverlayContent = styled.div`
     margin: 0.5rem;
     border-radius: 16px;
     max-height: 85vh;
-    overflow-y: auto;
 
     .overlay-title {
       font-size: 1.5rem;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 // 애니메이션 정의 (css로 래핑)
 const clickPulse = keyframes`
@@ -104,7 +105,8 @@ const buttonHover = keyframes`
 `;
 
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #dc2626 30%, #b91c1c 70%, #991b1b 100%);
   display: flex;
   flex-direction: column;
@@ -275,18 +277,16 @@ const GameArea = styled.div`
   justify-content: center;
   padding: 2rem;
   gap: 2rem;
-  margin-top: 120px;
+  margin-top: 1rem;
   position: relative;
 
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1.5rem;
-    margin-top: 140px;
   }
 
   @media (max-width: 480px) {
     padding: 0.75rem;
-    margin-top: 120px;
     gap: 1rem;
   }
 `;
@@ -312,6 +312,14 @@ const ClickZone = styled.div<{
   box-shadow:
     0 20px 40px rgba(239, 68, 68, 0.3),
     inset 0 0 50px rgba(255, 255, 255, 0.1);
+
+  /* ✅ 터치/제스처는 클릭 영역에서만 막고, 전역 스크롤/클릭은 허용 */
+  touch-action: none; /* 팬/줌 비활성화 */
+  -ms-touch-action: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: contain;
 
   ${props =>
     props.isActive &&
@@ -619,6 +627,8 @@ const GameOverlay = styled.div<{ show: boolean }>`
   z-index: 1000;
   padding: 2rem;
 
+  -webkit-overflow-scrolling: touch;
+
   @media (max-width: 480px) {
     padding: 1rem;
   }
@@ -634,7 +644,7 @@ const OverlayContent = styled.div`
   max-width: 600px;
   width: 100%;
   position: relative;
-  overflow: hidden;
+
   animation: ${resultAppear} 0.8s ease-out;
   box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
@@ -690,8 +700,6 @@ const OverlayContent = styled.div`
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
-    max-height: 85vh;
-    overflow-y: auto;
 
     .overlay-title {
       font-size: 1.5rem;
@@ -816,7 +824,6 @@ const StatGrid = styled.div`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.6rem;
     margin: 1rem 0;
   }
@@ -1041,6 +1048,9 @@ const SpeedClicker: React.FC = () => {
     accuracy: 100,
   });
   const [clickTimes, setClickTimes] = useState<number[]>([]);
+  const clickTimesRef = useRef<number[]>([]); // 최신 클릭타임 참조
+  const navigate = useNavigate();
+
   const [showCombo, setShowCombo] = useState(false);
   const [personalBest, setPersonalBest] = useState<Record<GameMode, number>>({
     sprint: 0,
@@ -1048,9 +1058,32 @@ const SpeedClicker: React.FC = () => {
     precision: 0,
   });
 
-  const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const cpsUpdateRef = useRef<NodeJS.Timeout | null>(null);
-  const lastClickTimeRef = useRef<number>(0);
+  // ✅ 브라우저/Node 모두 안전한 타이머 타입
+  const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const cpsUpdateRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // ✅ 실행 식별자(runId)와 상태 ref
+  const runIdRef = useRef(0);
+  const gameStateRef = useRef(gameState);
+  useEffect(() => {
+    gameStateRef.current = gameState;
+  }, [gameState]);
+
+  const clearTimers = () => {
+    if (gameTimerRef.current) {
+      clearInterval(gameTimerRef.current);
+      gameTimerRef.current = null;
+    }
+    if (cpsUpdateRef.current) {
+      clearInterval(cpsUpdateRef.current);
+      cpsUpdateRef.current = null;
+    }
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
+    }
+  };
 
   // 티어 계산 함수
   const calculateTier = (finalStats: GameStats): TierInfo => {
@@ -1058,7 +1091,7 @@ const SpeedClicker: React.FC = () => {
       sprint: 1,
       endurance: 0.8,
       precision: 0.6,
-    };
+    } as const;
 
     const adjustedCPS = finalStats.maxCps * modeMultiplier[gameMode];
     const comboBonus = finalStats.maxCombo * 0.1;
@@ -1066,27 +1099,20 @@ const SpeedClicker: React.FC = () => {
     const totalScore = adjustedCPS + comboBonus + accuracyBonus;
 
     for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
+      if (totalScore >= tier.minScore) return tier;
     }
     return TIERS[TIERS.length - 1];
   };
 
-  const calculateCPS = useCallback(() => {
-    const now = Date.now();
-    const recentClicks = clickTimes.filter(time => now - time <= 1000);
-    return recentClicks.length;
-  }, [clickTimes]);
-
   const handleClick = useCallback(() => {
-    if (gameState !== 'playing') return;
+    if (gameStateRef.current !== 'playing') return;
 
     const now = Date.now();
-    const timeSinceLastClick = now - lastClickTimeRef.current;
+    const timeSinceLastClick = now - (clickTimesRef.current.at(-1) ?? 0);
 
     setClickTimes(prev => {
       const newTimes = [...prev, now].filter(time => now - time <= 5000);
+      clickTimesRef.current = newTimes; // ✅ ref 갱신 (interval에서 사용)
       return newTimes;
     });
 
@@ -1120,11 +1146,22 @@ const SpeedClicker: React.FC = () => {
         accuracy: newAccuracy,
       };
     });
+  }, [gameMode]);
 
-    lastClickTimeRef.current = now;
-  }, [gameState, gameMode]);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (gameStateRef.current !== 'playing') return;
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
 
   const startGame = () => {
+    // ✅ 이전 타이머 정리 & 이번 실행 식별
+    clearTimers();
+    runIdRef.current += 1;
+    const runId = runIdRef.current;
+
     setGameState('countdown');
     setCountdown(3);
     setStats({
@@ -1138,30 +1175,47 @@ const SpeedClicker: React.FC = () => {
       accuracy: 100,
     });
     setClickTimes([]);
-    lastClickTimeRef.current = 0;
+    clickTimesRef.current = [];
+    // 마지막 클릭 시간은 배열의 끝으로 대체
 
-    const countdownInterval = setInterval(() => {
+    countdownRef.current = setInterval(() => {
+      if (runId !== runIdRef.current) return; // ✅ 최신 실행만 동작
       setCountdown(prev => {
         if (prev <= 1) {
-          clearInterval(countdownInterval);
+          if (countdownRef.current) {
+            clearInterval(countdownRef.current);
+            countdownRef.current = null;
+          }
           setGameState('playing');
 
           gameTimerRef.current = setInterval(() => {
+            if (runId !== runIdRef.current) return;
             setStats(prevStats => {
               const newTimeLeft = prevStats.timeLeft - 1;
               if (newTimeLeft <= 0) {
-                setGameState('finished');
+                if (gameTimerRef.current) {
+                  clearInterval(gameTimerRef.current);
+                  gameTimerRef.current = null;
+                }
+                // 상태 가드 (이중 전환 방지)
+                if (gameStateRef.current === 'playing' && runId === runIdRef.current) {
+                  setGameState('finished');
+                }
                 return { ...prevStats, timeLeft: 0 };
               }
               return { ...prevStats, timeLeft: newTimeLeft };
             });
           }, 1000);
 
-          // CPS 업데이트
+          // ✅ CPS 업데이트 (stale closure 방지: ref 사용)
           cpsUpdateRef.current = setInterval(() => {
+            if (runId !== runIdRef.current) return;
+
             const now = Date.now();
-            const recentClicks = clickTimes.filter(time => now - time <= 1000);
+            const recentClicks = clickTimesRef.current.filter(time => now - time <= 1000);
             const currentCps = recentClicks.length;
+            // 메모리 관리: 5초 이전 클릭 제거
+            clickTimesRef.current = clickTimesRef.current.filter(t => now - t <= 5000);
 
             setStats(prevStats => {
               const newMaxCps = Math.max(prevStats.maxCps, currentCps);
@@ -1177,50 +1231,39 @@ const SpeedClicker: React.FC = () => {
   };
 
   const endGame = useCallback(() => {
-    if (gameTimerRef.current) clearInterval(gameTimerRef.current);
-    if (cpsUpdateRef.current) clearInterval(cpsUpdateRef.current);
-
-    if (stats.clicks > personalBest[gameMode]) {
-      const newBest = { ...personalBest, [gameMode]: stats.clicks };
-      setPersonalBest(newBest);
-    }
-  }, [stats.clicks, personalBest, gameMode]);
+    // 게임 종료 시점에만 개인 기록 갱신
+    setPersonalBest(prev => {
+      const best = prev[gameMode];
+      if (stats.clicks > best) {
+        return { ...prev, [gameMode]: stats.clicks };
+      }
+      return prev;
+    });
+  }, [stats.clicks, gameMode]);
 
   const resetGame = () => {
-    if (gameTimerRef.current) clearInterval(gameTimerRef.current);
-    if (cpsUpdateRef.current) clearInterval(cpsUpdateRef.current);
-    setGameState('setup');
+    // ✅ 이전 실행 무효화 + 타이머 정리
+    runIdRef.current += 1;
+    clearTimers();
     setShowCombo(false);
+    setGameState('setup');
   };
 
   const handleBackClick = () => {
-    if (gameTimerRef.current) clearInterval(gameTimerRef.current);
-    if (cpsUpdateRef.current) clearInterval(cpsUpdateRef.current);
-    // navigate(-1); // 실제 프로젝트에서는 navigate 사용
-    console.log('Back to game list');
+    runIdRef.current += 1;
+    clearTimers();
+    navigate(-1);
   };
 
   useEffect(() => {
-    if (gameState === 'finished') {
-      endGame();
-    }
+    if (gameState === 'finished') endGame();
   }, [gameState, endGame]);
 
   useEffect(() => {
     return () => {
-      if (gameTimerRef.current) clearInterval(gameTimerRef.current);
-      if (cpsUpdateRef.current) clearInterval(cpsUpdateRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    const preventDefault = (e: Event) => e.preventDefault();
-    document.addEventListener('touchstart', preventDefault, { passive: false });
-    document.addEventListener('touchmove', preventDefault, { passive: false });
-
-    return () => {
-      document.removeEventListener('touchstart', preventDefault);
-      document.removeEventListener('touchmove', preventDefault);
+      // 언마운트 시 남은 콜백 무효화 및 정리
+      runIdRef.current += 1;
+      clearTimers();
     };
   }, []);
 
@@ -1287,8 +1330,11 @@ const SpeedClicker: React.FC = () => {
                 isActive={isGameActive}
                 isCombo={stats.combo >= 10}
                 clicks={stats.clicks}
-                onClick={handleClick}
-                onTouchStart={handleClick}
+                role="button"
+                tabIndex={0}
+                onPointerDown={handleClick} // ✅ 포인터 이벤트로 통합 (모바일/PC 모두)
+                onKeyDown={handleKeyDown}
+                onContextMenu={e => e.preventDefault()} // 모바일 롱프레스 메뉴 방지
               >
                 <div className="click-text">
                   {isGameActive ? 'CLICK!' : gameState === 'countdown' ? '준비...' : '완료'}

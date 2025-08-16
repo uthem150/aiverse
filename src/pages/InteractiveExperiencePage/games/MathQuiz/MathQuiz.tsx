@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowLeft, Calculator, Brain, Zap } from 'lucide-react';
+import { flushSync } from 'react-dom';
+import { ArrowLeft, Calculator, Brain, Send } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
 
-// 애니메이션 정의
+/* =========================
+ * Animations
+ * =======================*/
 const questionAppear = keyframes`
   0% { transform: translateY(-20px) scale(0.9); opacity: 0; }
   50% { transform: translateY(-5px) scale(1.05); opacity: 0.8; }
@@ -25,71 +28,35 @@ const wrongAnswer = keyframes`
 `;
 
 const comboGlow = keyframes`
-  0% { 
-    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
-    transform: scale(1);
-  }
-  50% { 
-    box-shadow: 0 0 40px rgba(249, 115, 22, 0.9);
-    transform: scale(1.05);
-  }
-  100% { 
-    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
-    transform: scale(1);
-  }
+  0% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); transform: scale(1); }
+  50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.9); transform: scale(1.05); }
+  100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); transform: scale(1); }
 `;
 
 const resultAppear = keyframes`
-  0% {
-    transform: scale(0.5) translateY(50px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(-10px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+  50% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 `;
 
 const tierGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
 `;
 
 const statsReveal = keyframes`
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 `;
 
 const buttonHover = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 `;
 
 const difficultyPulse = keyframes`
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 `;
 
 const inputFocus = keyframes`
@@ -98,7 +65,9 @@ const inputFocus = keyframes`
   100% { transform: scale(1); }
 `;
 
-// 난이도 설정 개선
+/* =========================
+ * Config
+ * =======================*/
 interface Difficulty {
   name: string;
   emoji: string;
@@ -108,8 +77,9 @@ interface Difficulty {
   description: string;
   multiplier: number;
 }
+type DifficultyKey = 'easy' | 'medium' | 'hard' | 'expert';
 
-const DIFFICULTIES: Record<string, Difficulty> = {
+const DIFFICULTIES: Record<DifficultyKey, Difficulty> = {
   easy: {
     name: '쉬움',
     emoji: '🟢',
@@ -148,14 +118,12 @@ const DIFFICULTIES: Record<string, Difficulty> = {
   },
 };
 
-// 티어 시스템
 interface TierInfo {
   name: string;
   emoji: string;
   color: string;
   minScore: number;
 }
-
 const TIERS: TierInfo[] = [
   { name: '수학 천재', emoji: '🧠', color: '#FFD700', minScore: 12000 },
   { name: '계산 마스터', emoji: '🏆', color: '#00CED1', minScore: 9000 },
@@ -167,8 +135,14 @@ const TIERS: TierInfo[] = [
   { name: '계산 초보', emoji: '📚', color: '#808080', minScore: 0 },
 ];
 
+/* =========================
+ * Styled Components
+ *  - keyframes 조건부 적용은 반드시 css``로 감싸서 반환
+ *  - animation-delay는 값만 동적으로 주입
+ * =======================*/
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #3b82f6 70%, #1e40af 100%);
   display: flex;
   flex-direction: column;
@@ -178,10 +152,7 @@ const GameContainer = styled.div`
 `;
 
 const Header = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 100;
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(20px);
@@ -190,13 +161,13 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
     padding: 0.75rem 1rem;
     flex-direction: column;
     gap: 0.75rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
@@ -219,9 +190,7 @@ const BackButton = styled.button`
   &:hover {
     background: rgba(59, 130, 246, 0.2);
     transform: translateY(-2px);
-    ${css`
-      animation: ${buttonHover} 0.6s ease-in-out;
-    `}
+    animation: ${buttonHover} 0.6s ease-in-out;
     box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
   }
 
@@ -230,7 +199,6 @@ const BackButton = styled.button`
     font-size: 0.85rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
@@ -248,11 +216,9 @@ const Title = styled.h1`
   -webkit-text-fill-color: transparent;
   margin: 0;
   text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
@@ -262,13 +228,11 @@ const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   @media (max-width: 480px) {
     gap: 0.75rem;
   }
@@ -279,8 +243,8 @@ const Stat = styled.div<{ highlight?: boolean }>`
   color: white;
   transition: all 0.3s ease;
 
-  ${props =>
-    props.highlight &&
+  ${p =>
+    p.highlight &&
     css`
       animation: ${comboGlow} 1s ease-in-out infinite;
       border-radius: 8px;
@@ -292,11 +256,10 @@ const Stat = styled.div<{ highlight?: boolean }>`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: ${props => (props.highlight ? '#f97316' : '#3b82f6')};
+    color: ${p => (p.highlight ? '#f97316' : '#3b82f6')};
     text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
   }
 
@@ -308,7 +271,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .stat-label {
       font-size: 0.65rem;
@@ -327,17 +289,14 @@ const GameArea = styled.div`
   justify-content: center;
   padding: 2rem;
   gap: 3rem;
-  margin-top: 120px;
-
+  overflow: hidden;
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 2rem;
-    margin-top: 140px;
   }
-
   @media (max-width: 480px) {
     gap: 1.5rem;
-    margin-top: 120px;
+    padding: 0.5rem;
   }
 `;
 
@@ -355,25 +314,23 @@ const QuestionDisplay = styled.div<{ isCorrect?: boolean; isWrong?: boolean }>`
   animation: ${questionAppear} 0.6s ease-out;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 
-  ${props =>
-    props.isCorrect &&
+  ${p =>
+    p.isCorrect &&
     css`
       animation: ${correctAnswer} 0.6s ease;
     `}
-
-  ${props =>
-    props.isWrong &&
+  ${p =>
+    p.isWrong &&
     css`
       animation: ${wrongAnswer} 0.6s ease;
     `}
 
-  @media (max-width: 768px) {
+  @media (max-width:768px) {
     font-size: 2.2rem;
     padding: 2rem 1.5rem;
     min-width: 300px;
     border-radius: 20px;
   }
-
   @media (max-width: 480px) {
     font-size: 1.8rem;
     padding: 1.5rem 1rem;
@@ -382,9 +339,20 @@ const QuestionDisplay = styled.div<{ isCorrect?: boolean; isWrong?: boolean }>`
   }
 `;
 
+const AnswerContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  @media (max-width: 480px) {
+    gap: 0.8rem;
+    flex-direction: column;
+    width: 100%;
+  }
+`;
+
 const AnswerInput = styled.input<{ hasError?: boolean }>`
   background: rgba(255, 255, 255, 0.05);
-  border: 3px solid ${props => (props.hasError ? '#ef4444' : 'rgba(59, 130, 246, 0.4)')};
+  border: 3px solid ${p => (p.hasError ? '#ef4444' : 'rgba(59,130,246,.4)')};
   border-radius: 16px;
   padding: 1.5rem;
   color: white;
@@ -400,9 +368,7 @@ const AnswerInput = styled.input<{ hasError?: boolean }>`
   &:focus {
     border-color: #10b981;
     box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-    ${css`
-      animation: ${inputFocus} 0.3s ease;
-    `}
+    animation: ${inputFocus} 0.3s ease;
   }
 
   &::placeholder {
@@ -415,12 +381,54 @@ const AnswerInput = styled.input<{ hasError?: boolean }>`
     padding: 1.2rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
-    width: 160px;
+    width: 100%;
+    max-width: 200px;
     font-size: 1.5rem;
     padding: 1rem;
     border-radius: 10px;
+  }
+`;
+
+const SubmitButton = styled.button<{ disabled?: boolean }>`
+  background: ${p =>
+    p.disabled ? 'rgba(107,114,128,.3)' : 'linear-gradient(135deg,#10b981,#059669)'};
+  border: none;
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.4);
+    animation: ${buttonHover} 0.6s ease-in-out;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+  }
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 200px;
   }
 `;
 
@@ -445,12 +453,10 @@ const TimerBar = styled.div`
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
   @media (max-width: 768px) {
     width: 250px;
     height: 10px;
   }
-
   @media (max-width: 480px) {
     width: 200px;
     height: 8px;
@@ -458,39 +464,39 @@ const TimerBar = styled.div`
 `;
 
 const TimerFill = styled.div<{ timeLeft: number; maxTime: number }>`
-  width: ${props => (props.timeLeft / props.maxTime) * 100}%;
+  width: ${p => (p.timeLeft / p.maxTime) * 100}%;
   height: 100%;
   background: linear-gradient(
     90deg,
-    ${props =>
-      props.timeLeft / props.maxTime > 0.5
+    ${p =>
+      p.timeLeft / p.maxTime > 0.5
         ? '#10b981'
-        : props.timeLeft / props.maxTime > 0.25
+        : p.timeLeft / p.maxTime > 0.25
           ? '#f59e0b'
           : '#ef4444'}
   );
   transition: width 0.1s linear;
   border-radius: 6px;
   box-shadow: 0 0 10px
-    ${props =>
-      props.timeLeft / props.maxTime > 0.5
-        ? 'rgba(16, 185, 129, 0.5)'
-        : props.timeLeft / props.maxTime > 0.25
-          ? 'rgba(245, 158, 11, 0.5)'
-          : 'rgba(239, 68, 68, 0.5)'};
+    ${p =>
+      p.timeLeft / p.maxTime > 0.5
+        ? 'rgba(16,185,129,.5)'
+        : p.timeLeft / p.maxTime > 0.25
+          ? 'rgba(245,158,11,.5)'
+          : 'rgba(239,68,68,.5)'};
 `;
 
 const ComboDisplay = styled.div<{ show: boolean; combo: number }>`
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 4rem;
+  transform: translateX(-50%);
+  font-size: 3rem;
   font-weight: bold;
   color: #f97316;
   text-shadow: 0 0 20px rgba(249, 115, 22, 0.8);
-  z-index: 100;
-  opacity: ${props => (props.show ? 1 : 0)};
+  z-index: 200;
+  opacity: ${p => (p.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
   background: rgba(0, 0, 0, 0.8);
@@ -498,36 +504,31 @@ const ComboDisplay = styled.div<{ show: boolean; combo: number }>`
   border-radius: 20px;
   border: 3px solid #f97316;
   backdrop-filter: blur(10px);
-
   &::before {
-    content: '${props => props.combo}x COMBO!';
+    content: '${p => p.combo}x COMBO!';
   }
-
   @media (max-width: 768px) {
-    font-size: 3rem;
-    padding: 0.8rem 1.5rem;
-  }
-
-  @media (max-width: 480px) {
     font-size: 2.5rem;
+    padding: 0.8rem 1.5rem;
+    top: 100px;
+  }
+  @media (max-width: 480px) {
+    font-size: 2rem;
     padding: 0.6rem 1rem;
+    top: 80px;
   }
 `;
 
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
-
   @media (max-width: 480px) {
     padding: 1rem;
   }
@@ -552,10 +553,7 @@ const OverlayContent = styled.div`
   &:before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    inset: -2px;
     border-radius: 24px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
@@ -571,7 +569,6 @@ const OverlayContent = styled.div`
     margin-bottom: 1.5rem;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
-
   .overlay-text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
@@ -583,31 +580,23 @@ const OverlayContent = styled.div`
     padding: 1.8rem 1.3rem;
     margin: 1rem;
     border-radius: 20px;
-    max-height: calc(100vh - 2rem);
-    overflow-y: auto;
-
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
     }
-
     .overlay-text {
       font-size: 0.95rem;
       margin-bottom: 2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
-    max-height: calc(100vh - 1rem);
-
     .overlay-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
     }
-
     .overlay-text {
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
@@ -620,7 +609,6 @@ const DifficultySelector = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 2rem 0;
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -629,9 +617,9 @@ const DifficultySelector = styled.div`
 `;
 
 const DifficultyCard = styled.button<{ selected: boolean }>`
-  background: ${props =>
-    props.selected ? 'linear-gradient(135deg, #3b82f6, #1e40af)' : 'rgba(255, 255, 255, 0.05)'};
-  border: 2px solid ${props => (props.selected ? '#3b82f6' : 'rgba(255, 255, 255, 0.1)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg,#3b82f6,#1e40af)' : 'rgba(255,255,255,.05)'};
+  border: 2px solid ${p => (p.selected ? '#3b82f6' : 'rgba(255,255,255,.1)')};
   border-radius: 12px;
   padding: 1rem;
   color: white;
@@ -639,8 +627,8 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   transition: all 0.3s ease;
   text-align: left;
 
-  ${props =>
-    props.selected &&
+  ${p =>
+    p.selected &&
     css`
       animation: ${difficultyPulse} 2s ease-in-out infinite;
     `}
@@ -659,7 +647,6 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
-
   .difficulty-desc {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -668,11 +655,9 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   @media (max-width: 480px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .difficulty-header {
       font-size: 1rem;
     }
-
     .difficulty-desc {
       font-size: 0.85rem;
     }
@@ -683,15 +668,15 @@ const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
-  border: 2px solid ${props => props.color};
+  background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
+  border: 2px solid ${p => p.color};
   border-radius: 16px;
   padding: 0.8rem 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: ${props => props.color};
-  text-shadow: 0 0 20px ${props => props.color}80;
+  color: ${p => p.color};
+  text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
 
   @media (max-width: 768px) {
@@ -700,7 +685,6 @@ const TierBadge = styled.div<{ color: string }>`
     margin-bottom: 1.2rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
@@ -717,13 +701,11 @@ const ScoreBreakdown = styled.div`
   padding: 1.5rem;
   margin: 1.5rem 0;
   backdrop-filter: blur(10px);
-
   @media (max-width: 768px) {
     padding: 1.2rem;
     margin: 1.2rem 0;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 1rem;
     margin: 1rem 0;
@@ -737,7 +719,8 @@ const ScoreItem = styled.div<{ delay?: number }>`
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out both;
+  animation-delay: ${p => (p.delay || 0) * 0.1}s;
 
   &:last-child {
     border-bottom: none;
@@ -752,7 +735,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
   }
-
   .score-value {
     color: #3b82f6;
     font-weight: 600;
@@ -761,17 +743,14 @@ const ScoreItem = styled.div<{ delay?: number }>`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0;
-
     &:last-child {
       font-size: 1.1rem;
       margin-top: 0.4rem;
       padding-top: 0.8rem;
     }
-
     .score-label {
       font-size: 0.85rem;
     }
-
     .score-value {
       font-size: 0.9rem;
     }
@@ -783,12 +762,10 @@ const StatGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 1.5rem 0;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.6rem;
@@ -802,7 +779,8 @@ const StatCard = styled.div<{ delay?: number }>`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out both;
+  animation-delay: ${p => (p.delay || 0) * 0.1}s;
 
   .stat-title {
     font-size: 0.8rem;
@@ -811,7 +789,6 @@ const StatCard = styled.div<{ delay?: number }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
@@ -822,26 +799,21 @@ const StatCard = styled.div<{ delay?: number }>`
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .stat-title {
       font-size: 0.75rem;
       margin-bottom: 0.4rem;
     }
-
     .stat-number {
       font-size: 1.2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem;
     border-radius: 8px;
-
     .stat-title {
       font-size: 0.7rem;
       margin-bottom: 0.3rem;
     }
-
     .stat-number {
       font-size: 1.1rem;
     }
@@ -856,8 +828,8 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   margin: 1.5rem 0;
   color: #3b82f6;
   font-weight: 600;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  animation: ${statsReveal} 0.6s ease-out both;
+  animation-delay: ${p => (p.delay || 0) * 0.1}s;
 
   @media (max-width: 768px) {
     padding: 0.8rem 1.2rem;
@@ -865,7 +837,6 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
     border-radius: 10px;
     font-size: 0.95rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     margin: 1rem 0;
@@ -875,12 +846,9 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  background: ${props =>
-    props.variant === 'secondary'
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'linear-gradient(135deg, #3b82f6, #1e40af)'};
-  border: ${props =>
-    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  background: ${p =>
+    p.variant === 'secondary' ? 'rgba(255,255,255,.1)' : 'linear-gradient(135deg,#3b82f6,#1e40af)'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
@@ -913,14 +881,11 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
-    ${css`
-      animation: ${buttonHover} 0.6s ease-in-out;
-    `}
-
-    &:before {
-      width: 300px;
-      height: 300px;
-    }
+    animation: ${buttonHover} 0.6s ease-in-out;
+  }
+  &:hover:before {
+    width: 300px;
+    height: 300px;
   }
 
   &:active {
@@ -933,24 +898,24 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     margin: 0.4rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
     margin: 0.3rem;
     border-radius: 10px;
-
     &:hover {
       transform: translateY(-2px);
     }
   }
 `;
 
+/* =========================
+ * Game Logic Types
+ * =======================*/
 interface Question {
   expression: string;
   answer: number;
 }
-
 interface GameStats {
   score: number;
   correct: number;
@@ -961,58 +926,64 @@ interface GameStats {
   avgTime: number;
   timeouts: number;
 }
+const INITIAL_STATS: GameStats = {
+  score: 0,
+  correct: 0,
+  wrong: 0,
+  streak: 0,
+  maxStreak: 0,
+  questionsAnswered: 0,
+  avgTime: 0,
+  timeouts: 0,
+};
+const GAME_DURATION = 60;
 
-const GAME_DURATION = 60; // 60초
-
+/* =========================
+ * Component
+ * =======================*/
 const MathQuiz: React.FC = () => {
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
-  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard' | 'expert'>('medium');
+  const [difficulty, setDifficulty] = useState<DifficultyKey>('medium');
   const [currentQuestion, setCurrentQuestion] = useState<Question>({ expression: '', answer: 0 });
   const [userAnswer, setUserAnswer] = useState('');
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [questionTimeLeft, setQuestionTimeLeft] = useState(0);
-  const [stats, setStats] = useState<GameStats>({
-    score: 0,
-    correct: 0,
-    wrong: 0,
-    streak: 0,
-    maxStreak: 0,
-    questionsAnswered: 0,
-    avgTime: 0,
-    timeouts: 0,
-  });
+  const [stats, setStats] = useState<GameStats>(INITIAL_STATS);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [showCombo, setShowCombo] = useState(false);
   const [questionStartTime, setQuestionStartTime] = useState(0);
 
+  // 결과 스냅샷
+  const [finalStats, setFinalStats] = useState<GameStats | null>(null);
+  const [finalDifficulty, setFinalDifficulty] = useState<DifficultyKey>(difficulty);
+
   const inputRef = useRef<HTMLInputElement>(null);
-  const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const questionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const questionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 티어 계산 함수
-  const calculateTier = (finalStats: GameStats): TierInfo => {
-    const baseScore = finalStats.score;
+  // 최신 gameState 보관
+  const gameStateRef = useRef(gameState);
+  useEffect(() => {
+    gameStateRef.current = gameState;
+  }, [gameState]);
+
+  // 티어 계산
+  const calculateTier = (final: GameStats, diffKey: DifficultyKey): TierInfo => {
+    const baseScore = final.score;
     const accuracyBonus =
-      finalStats.questionsAnswered > 0
-        ? (finalStats.correct / finalStats.questionsAnswered) * 1000
-        : 0;
-    const streakBonus = finalStats.maxStreak * 50;
-    const speedBonus = finalStats.avgTime > 0 ? Math.max(0, (5000 - finalStats.avgTime) / 10) : 0;
-    const difficultyMultiplier = DIFFICULTIES[difficulty].multiplier;
-
+      final.questionsAnswered > 0 ? (final.correct / final.questionsAnswered) * 1000 : 0;
+    const streakBonus = final.maxStreak * 50;
+    const speedBonus = final.avgTime > 0 ? Math.max(0, (5000 - final.avgTime) / 10) : 0;
+    const difficultyMultiplier = DIFFICULTIES[diffKey].multiplier;
     const totalScore =
       (baseScore + accuracyBonus + streakBonus + speedBonus) * difficultyMultiplier;
-
-    for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
-    }
+    for (const tier of TIERS) if (totalScore >= tier.minScore) return tier;
     return TIERS[TIERS.length - 1];
   };
 
-  const generateQuestion = useCallback((difficulty: keyof typeof DIFFICULTIES): Question => {
-    const config = DIFFICULTIES[difficulty];
+  // 문제 생성
+  const generateQuestion = useCallback((diffKey: DifficultyKey): Question => {
+    const config = DIFFICULTIES[diffKey];
     const [min, max] = config.range;
     const operations = config.operations;
 
@@ -1020,8 +991,8 @@ const MathQuiz: React.FC = () => {
     let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
     let num2 = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    let expression: string;
-    let answer: number;
+    let expression = '';
+    let answer = 0;
 
     switch (operation) {
       case '+':
@@ -1029,48 +1000,55 @@ const MathQuiz: React.FC = () => {
         answer = num1 + num2;
         break;
       case '-':
-        if (num2 > num1) [num1, num2] = [num2, num1]; // 음수 방지
+        if (num2 > num1) [num1, num2] = [num2, num1];
         expression = `${num1} - ${num2}`;
         answer = num1 - num2;
         break;
       case '×':
-        num1 = Math.floor(Math.random() * 20) + 1; // 곱셈은 작은 수로
+        num1 = Math.floor(Math.random() * 20) + 1;
         num2 = Math.floor(Math.random() * 20) + 1;
         expression = `${num1} × ${num2}`;
         answer = num1 * num2;
         break;
-      case '÷':
-        answer = Math.floor(Math.random() * 25) + 1;
-        num1 = answer * (Math.floor(Math.random() * 15) + 1);
-        expression = `${num1} ÷ ${answer}`;
+      case '÷': {
+        const q = Math.floor(Math.random() * 25) + 1;
+        const d = Math.floor(Math.random() * 15) + 1;
+        num1 = q * d;
+        expression = `${num1} ÷ ${d}`;
+        answer = q;
         break;
+      }
       default:
         expression = `${num1} + ${num2}`;
         answer = num1 + num2;
     }
-
     return { expression, answer };
   }, []);
 
-  const nextQuestion = useCallback(() => {
-    const newQuestion = generateQuestion(difficulty);
-    setCurrentQuestion(newQuestion);
-    setUserAnswer('');
-    setFeedback(null);
-    setQuestionTimeLeft(DIFFICULTIES[difficulty].timeLimit);
-    setQuestionStartTime(Date.now());
+  // 다음 문제 (force=true면 상태 가드 무시)
+  const nextQuestion = useCallback(
+    (force = false) => {
+      if (!force && gameStateRef.current !== 'playing') return;
 
-    // 포커스 설정
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-  }, [difficulty, generateQuestion]);
+      const newQuestion = generateQuestion(difficulty);
+      setCurrentQuestion(newQuestion);
+      setUserAnswer('');
+      setFeedback(null);
+      setQuestionTimeLeft(DIFFICULTIES[difficulty].timeLimit);
+      setQuestionStartTime(Date.now());
+
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    },
+    [difficulty, generateQuestion]
+  );
 
   const handleAnswerSubmit = useCallback(
     (answer: string) => {
       if (!answer.trim()) return;
 
-      const numAnswer = parseInt(answer);
+      const numAnswer = parseInt(answer, 10);
       const isCorrect = numAnswer === currentQuestion.answer;
       const responseTime = Date.now() - questionStartTime;
 
@@ -1087,9 +1065,9 @@ const MathQuiz: React.FC = () => {
 
         let scoreIncrease = 0;
         if (isCorrect) {
-          scoreIncrease = 10 + newStreak * 3; // 연속 정답 보너스 증가
-          if (responseTime < 2000) scoreIncrease += 8; // 빠른 답변 보너스 증가
-          if (responseTime < 1000) scoreIncrease += 5; // 매우 빠른 답변 추가 보너스
+          scoreIncrease = 10 + newStreak * 3;
+          if (responseTime < 2000) scoreIncrease += 8;
+          if (responseTime < 1000) scoreIncrease += 5;
         }
 
         return {
@@ -1104,7 +1082,6 @@ const MathQuiz: React.FC = () => {
         };
       });
 
-      // 연속 정답 5개 이상일 때 콤보 표시
       if (isCorrect && stats.streak + 1 >= 5 && (stats.streak + 1) % 5 === 0) {
         setShowCombo(true);
         setTimeout(() => setShowCombo(false), 2000);
@@ -1117,36 +1094,30 @@ const MathQuiz: React.FC = () => {
     [currentQuestion.answer, questionStartTime, nextQuestion, stats.streak]
   );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUserAnswer(e.target.value);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') handleAnswerSubmit(userAnswer);
   };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleAnswerSubmit(userAnswer);
-    }
-  };
+  const handleSubmitClick = () => handleAnswerSubmit(userAnswer);
 
   const startGame = () => {
+    setFinalStats(null);
+    setFinalDifficulty(difficulty);
+
     setGameState('playing');
     setTimeLeft(GAME_DURATION);
-    setStats({
-      score: 0,
-      correct: 0,
-      wrong: 0,
-      streak: 0,
-      maxStreak: 0,
-      questionsAnswered: 0,
-      avgTime: 0,
-      timeouts: 0,
-    });
+    setStats(INITIAL_STATS);
 
-    nextQuestion();
+    nextQuestion(true);
 
-    // 게임 타이머
     gameTimerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
+          if (gameTimerRef.current) {
+            clearInterval(gameTimerRef.current);
+            gameTimerRef.current = null;
+          }
           setGameState('finished');
           return 0;
         }
@@ -1155,19 +1126,45 @@ const MathQuiz: React.FC = () => {
     }, 1000);
   };
 
+  // 결과 스냅샷 (의존성 명시)
+  useEffect(() => {
+    if (gameState === 'finished') {
+      setFinalStats(stats);
+      setFinalDifficulty(difficulty);
+    }
+  }, [gameState, stats, difficulty]);
+
   const restartGame = () => {
-    if (gameTimerRef.current) clearInterval(gameTimerRef.current);
-    if (questionTimerRef.current) clearInterval(questionTimerRef.current);
-    setGameState('setup');
+    if (gameTimerRef.current) {
+      clearInterval(gameTimerRef.current);
+      gameTimerRef.current = null;
+    }
+    if (questionTimerRef.current) {
+      clearTimeout(questionTimerRef.current);
+      questionTimerRef.current = null;
+    }
+
+    flushSync(() => {
+      setGameState('setup');
+    });
+
+    setFinalStats(null);
+    setCurrentQuestion({ expression: '', answer: 0 });
+    setUserAnswer('');
+    setTimeLeft(GAME_DURATION);
+    setQuestionTimeLeft(0);
+    setStats(INITIAL_STATS);
+    setFeedback(null);
     setShowCombo(false);
+    setQuestionStartTime(0);
   };
 
+  // 문제 제한시간
   useEffect(() => {
     if (gameState === 'playing' && questionTimeLeft > 0) {
       questionTimerRef.current = setTimeout(() => {
         setQuestionTimeLeft(prev => {
           if (prev <= 1) {
-            // 시간 초과
             setStats(prevStats => ({
               ...prevStats,
               wrong: prevStats.wrong + 1,
@@ -1183,12 +1180,12 @@ const MathQuiz: React.FC = () => {
         });
       }, 1000);
     }
-
     return () => {
       if (questionTimerRef.current) clearTimeout(questionTimerRef.current);
     };
   }, [gameState, questionTimeLeft, nextQuestion]);
 
+  // 언마운트 클린업
   useEffect(() => {
     return () => {
       if (gameTimerRef.current) clearInterval(gameTimerRef.current);
@@ -1202,9 +1199,15 @@ const MathQuiz: React.FC = () => {
     console.log('게임 목록으로 돌아가기');
   };
 
+  // 표시 데이터 (오버레이는 스냅샷 우선)
+  const displayStats = finalStats ?? stats;
+  const displayDifficulty: DifficultyKey = finalStats ? finalDifficulty : difficulty;
+
   const accuracy =
-    stats.questionsAnswered > 0 ? Math.round((stats.correct / stats.questionsAnswered) * 100) : 0;
-  const currentTier = calculateTier(stats);
+    displayStats.questionsAnswered > 0
+      ? Math.round((displayStats.correct / displayStats.questionsAnswered) * 100)
+      : 0;
+  const currentTier = calculateTier(displayStats, displayDifficulty);
 
   return (
     <GameContainer>
@@ -1217,11 +1220,11 @@ const MathQuiz: React.FC = () => {
         <StatsPanel>
           <Stat>
             <div className="stat-label">점수</div>
-            <div className="stat-value">{stats.score}</div>
+            <div className="stat-value">{displayStats.score}</div>
           </Stat>
-          <Stat highlight={stats.streak >= 5}>
+          <Stat highlight={displayStats.streak >= 5}>
             <div className="stat-label">연속</div>
-            <div className="stat-value">{stats.streak}</div>
+            <div className="stat-value">{displayStats.streak}</div>
           </Stat>
           <Stat>
             <div className="stat-label">정확도</div>
@@ -1240,15 +1243,20 @@ const MathQuiz: React.FC = () => {
             {currentQuestion.expression} = ?
           </QuestionDisplay>
 
-          <AnswerInput
-            ref={inputRef}
-            value={userAnswer}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            placeholder="답"
-            hasError={feedback === 'wrong'}
-            autoComplete="off"
-          />
+          <AnswerContainer>
+            <AnswerInput
+              ref={inputRef}
+              value={userAnswer}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder="답"
+              hasError={feedback === 'wrong'}
+              autoComplete="off"
+            />
+            <SubmitButton onClick={handleSubmitClick} disabled={!userAnswer.trim()}>
+              <Send size={20} />
+            </SubmitButton>
+          </AnswerContainer>
 
           <TimerContainer>
             <TimerLabel>문제 제한시간</TimerLabel>
@@ -1259,7 +1267,7 @@ const MathQuiz: React.FC = () => {
         </GameArea>
       )}
 
-      <ComboDisplay show={showCombo} combo={stats.streak} />
+      <ComboDisplay show={showCombo} combo={displayStats.streak} />
 
       <GameOverlay show={gameState === 'setup'}>
         <OverlayContent>
@@ -1268,8 +1276,7 @@ const MathQuiz: React.FC = () => {
             60초 동안 수학 문제를 최대한 많이 풀어보세요!
             <br />
             연속으로 맞출수록 더 높은 점수를 얻습니다.
-            <br />
-            각 문제는 제한 시간이 있습니다.
+            <br />각 문제는 제한 시간이 있습니다.
             <br />
             <br />
             <strong>난이도를 선택하세요:</strong>
@@ -1280,7 +1287,7 @@ const MathQuiz: React.FC = () => {
               <DifficultyCard
                 key={key}
                 selected={difficulty === key}
-                onClick={() => setDifficulty(key as 'easy' | 'medium' | 'hard' | 'expert')}
+                onClick={() => setDifficulty(key as DifficultyKey)}
               >
                 <div className="difficulty-header">
                   {diff.emoji} {diff.name}
@@ -1313,43 +1320,53 @@ const MathQuiz: React.FC = () => {
           <ScoreBreakdown>
             <ScoreItem delay={1}>
               <span className="score-label">🎯 기본 점수</span>
-              <span className="score-value">{stats.score}점</span>
+              <span className="score-value">{displayStats.score}점</span>
             </ScoreItem>
             <ScoreItem delay={2}>
               <span className="score-label">🎖️ 정확도 보너스</span>
               <span className="score-value">
                 +
                 {Math.round(
-                  stats.questionsAnswered > 0 ? (stats.correct / stats.questionsAnswered) * 1000 : 0
+                  displayStats.questionsAnswered > 0
+                    ? (displayStats.correct / displayStats.questionsAnswered) * 1000
+                    : 0
                 )}
                 점
               </span>
             </ScoreItem>
             <ScoreItem delay={3}>
               <span className="score-label">🔥 연속 보너스</span>
-              <span className="score-value">+{stats.maxStreak * 50}점</span>
+              <span className="score-value">+{displayStats.maxStreak * 50}점</span>
             </ScoreItem>
             <ScoreItem delay={4}>
               <span className="score-label">⚡ 속도 보너스</span>
               <span className="score-value">
-                +{Math.round(stats.avgTime > 0 ? Math.max(0, (5000 - stats.avgTime) / 10) : 0)}점
+                +
+                {Math.round(
+                  displayStats.avgTime > 0 ? Math.max(0, (5000 - displayStats.avgTime) / 10) : 0
+                )}
+                점
               </span>
             </ScoreItem>
             <ScoreItem delay={5}>
               <span className="score-label">🔢 난이도 배수</span>
-              <span className="score-value">x{DIFFICULTIES[difficulty].multiplier}</span>
+              <span className="score-value">
+                x{DIFFICULTIES[finalStats ? finalDifficulty : difficulty].multiplier}
+              </span>
             </ScoreItem>
             <ScoreItem delay={6}>
               <span className="score-label">💎 총 점수</span>
               <span className="score-value" style={{ color: currentTier.color }}>
                 {Math.round(
-                  (stats.score +
-                    (stats.questionsAnswered > 0
-                      ? (stats.correct / stats.questionsAnswered) * 1000
+                  (displayStats.score +
+                    (displayStats.questionsAnswered > 0
+                      ? (displayStats.correct / displayStats.questionsAnswered) * 1000
                       : 0) +
-                    stats.maxStreak * 50 +
-                    (stats.avgTime > 0 ? Math.max(0, (5000 - stats.avgTime) / 10) : 0)) *
-                    DIFFICULTIES[difficulty].multiplier
+                    displayStats.maxStreak * 50 +
+                    (displayStats.avgTime > 0
+                      ? Math.max(0, (5000 - displayStats.avgTime) / 10)
+                      : 0)) *
+                    DIFFICULTIES[finalStats ? finalDifficulty : difficulty].multiplier
                 )}
                 점
               </span>
@@ -1363,28 +1380,28 @@ const MathQuiz: React.FC = () => {
             </StatCard>
             <StatCard delay={8}>
               <div className="stat-title">평균 응답시간</div>
-              <div className="stat-number">{stats.avgTime}ms</div>
+              <div className="stat-number">{displayStats.avgTime}ms</div>
             </StatCard>
             <StatCard delay={9}>
               <div className="stat-title">최고 연속</div>
-              <div className="stat-number">{stats.maxStreak}개</div>
+              <div className="stat-number">{displayStats.maxStreak}개</div>
             </StatCard>
             <StatCard delay={10}>
               <div className="stat-title">총 문제 수</div>
-              <div className="stat-number">{stats.questionsAnswered}개</div>
+              <div className="stat-number">{displayStats.questionsAnswered}개</div>
             </StatCard>
           </StatGrid>
 
           <PerformanceMessage delay={11}>
-            {difficulty === 'expert' && stats.score >= 300
+            {(finalStats ? finalDifficulty : difficulty) === 'expert' && displayStats.score >= 300
               ? '🧠 수학 천재! 전문가 난이도를 정복했군요!'
-              : stats.score >= 400 && accuracy >= 90
+              : displayStats.score >= 400 && accuracy >= 90
                 ? '🏆 완벽한 계산 마스터! 정확도와 속도 모두 최고예요!'
-                : stats.score >= 300 && stats.maxStreak >= 10
+                : displayStats.score >= 300 && displayStats.maxStreak >= 10
                   ? '⚡ 연속 정답의 달인! 집중력이 대단해요!'
-                  : stats.score >= 200 && stats.avgTime <= 2000
+                  : displayStats.score >= 200 && displayStats.avgTime <= 2000
                     ? '💨 빠른 계산 고수! 순발력이 뛰어나네요!'
-                    : stats.score >= 100
+                    : displayStats.score >= 100
                       ? '👍 좋은 실력! 꾸준히 발전하고 있어요!'
                       : '💪 수학 연습을 통해 더 발전해보세요!'}
           </PerformanceMessage>

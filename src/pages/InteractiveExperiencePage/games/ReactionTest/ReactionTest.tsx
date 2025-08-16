@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 // 애니메이션 정의
 const pulse = keyframes`
@@ -202,7 +203,8 @@ const TIERS: TierInfo[] = [
 ];
 
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -357,16 +359,14 @@ const GameArea = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  margin-top: 120px;
+  margin-top: 1rem;
 
   @media (max-width: 768px) {
     padding: 1rem;
-    margin-top: 140px;
   }
 
   @media (max-width: 480px) {
     padding: 0.75rem;
-    margin-top: 120px;
   }
 `;
 
@@ -518,14 +518,14 @@ const Instructions = styled.div`
 
   @media (max-width: 768px) {
     font-size: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
   }
 
   @media (max-width: 480px) {
     font-size: 0.9rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     padding: 1rem;
     border-radius: 10px;
   }
@@ -536,21 +536,21 @@ const ResultsPanel = styled.div`
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 1rem;
   margin-top: 2rem;
   width: 100%;
   max-width: 600px;
   animation: ${resultAppear} 0.8s ease-out;
 
   @media (max-width: 768px) {
-    padding: 1.5rem;
-    margin-top: 1.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
     border-radius: 16px;
   }
 
   @media (max-width: 480px) {
-    padding: 1.2rem;
-    margin-top: 1.2rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
     border-radius: 12px;
   }
 `;
@@ -642,7 +642,7 @@ const ResultsList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 0.8rem;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 
   @media (max-width: 480px) {
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -776,7 +776,6 @@ const OverlayContent = styled.div`
     margin: 1rem;
     border-radius: 20px;
     max-height: calc(100vh - 2rem);
-    overflow-y: auto;
 
     .overlay-title {
       font-size: 1.8rem;
@@ -1091,6 +1090,7 @@ const ReactionTest: React.FC = () => {
   });
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   // 티어 계산 함수
   const calculateTier = (finalStats: GameStats): TierInfo => {
@@ -1266,7 +1266,7 @@ const ReactionTest: React.FC = () => {
 
   const handleBackClick = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    console.log('게임 목록으로 돌아가기');
+    navigate(-1);
   };
 
   const startGameWithDifficulty = () => {
@@ -1331,7 +1331,7 @@ const ReactionTest: React.FC = () => {
           <Instructions>
             {gameState === 'intro' && (
               <>
-                파란색 ⚡ → 빨간색 🛑 → 초록색 🚀이 되면 즉시 클릭하세요!
+                파란색 ⚡ → 빨간색 🛑 → 초록색 🟢이 되면 즉시 클릭하세요!
                 <br />
                 선택한 난이도: {selectedDifficulty.emoji} {selectedDifficulty.name} (
                 {selectedDifficulty.attempts}번 시도)
@@ -1495,19 +1495,19 @@ const ReactionTest: React.FC = () => {
           </StatCard>
 
           <PerformanceMessage delay={7}>
-            {selectedDifficulty.name === '지옥' && stats.bestTime < 200
-              ? '💀 지옥 난이도에서 200ms 이하! 당신은 반응속도의 신!'
-              : stats.bestTime < 150
+            {selectedDifficulty.name === '지옥' && stats.bestTime < 250
+              ? '💀 지옥 난이도에서 250ms 이하! 당신은 반응속도의 신!'
+              : stats.bestTime < 250
                 ? '⚡ 초인적인 반응속도! 번개보다 빠르네요!'
-                : stats.bestTime < 200
+                : stats.bestTime < 300
                   ? '🚀 매우 빠른 반응속도! 뛰어난 반사신경!'
-                  : stats.bestTime < 250
+                  : stats.bestTime < 450
                     ? '👍 빠른 반응속도! 평균보다 뛰어나요!'
-                    : stats.bestTime < 300
+                    : stats.bestTime < 500
                       ? '😊 적당한 반응속도입니다!'
                       : '💪 더 연습하면 빨라질 거예요!'}
             <br />
-            <small>일반적인 평균 반응속도는 250-300ms입니다.</small>
+            <small>일반적인 평균 반응속도는 450-650ms입니다.</small>
           </PerformanceMessage>
 
           <div style={{ marginTop: '2rem' }}>

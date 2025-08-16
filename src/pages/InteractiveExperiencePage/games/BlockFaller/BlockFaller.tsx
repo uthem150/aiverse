@@ -139,7 +139,8 @@ const DIFFICULTIES: Difficulty[] = [
 ];
 
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -294,19 +295,17 @@ const GameArea = styled.div`
   align-items: center;
   padding: 2rem;
   gap: 2rem;
-  margin-top: 120px;
+  margin-top: 3rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 1rem;
     gap: 1.5rem;
-    margin-top: 140px;
   }
 
   @media (max-width: 480px) {
     padding: 0.75rem;
     gap: 1rem;
-    margin-top: 120px;
   }
 `;
 
@@ -405,55 +404,75 @@ const SidePanel = styled.div`
 `;
 
 const NextBlock = styled.div`
+  /* 프리뷰/타이틀 공통 높이 변수 */
+  --preview-size: 80px;
+
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 2px solid rgba(99, 102, 241, 0.3);
   border-radius: 16px;
   padding: 1.5rem;
-  text-align: center;
   color: white;
   min-width: 140px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 
+  /* 가로 배치 유지 + 세로 중앙 정렬 */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+
   .title {
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center; /* 텍스트 수직 중앙 */
+    height: var(--preview-size); /* 프리뷰와 동일 높이 */
     opacity: 0.9;
     font-weight: 600;
     color: #6366f1;
+    white-space: nowrap; /* 필요 시 한 줄 고정 */
+    flex: 0 1 auto;
   }
 
   .preview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 3px;
-    margin: 0 auto;
-    width: 80px;
-    height: 80px;
+    margin: 0;
+    width: var(--preview-size);
+    height: var(--preview-size);
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 8px;
+    /* place-items: center;  <= (삭제) 이게 있으면 셀 크기가 0으로 줄어듦 */
+    flex: 0 0 auto;
+  }
+
+  /* 각 그리드 아이템이 칸을 꽉 채우도록 강제 */
+  .preview > * {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px; /* PreviewCell과 동일 라운드 유지(옵션) */
   }
 
   @media (max-width: 768px) {
     min-width: 120px;
     padding: 1rem;
     border-radius: 12px;
-
-    .preview {
-      width: 60px;
-      height: 60px;
-    }
+    gap: 0.6rem;
+    --preview-size: 60px;
   }
 
   @media (max-width: 480px) {
     min-width: 100px;
     padding: 0.8rem;
     border-radius: 10px;
+    gap: 0.5rem;
+    --preview-size: 50px;
 
     .preview {
-      width: 50px;
-      height: 50px;
       gap: 2px;
     }
   }
@@ -478,18 +497,9 @@ const ControlsPanel = styled.div`
   color: white;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 
-  .title {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    opacity: 0.9;
-    text-align: center;
-    font-weight: 600;
-    color: #6366f1;
-  }
-
   .controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.8rem;
   }
 
@@ -498,7 +508,7 @@ const ControlsPanel = styled.div`
     border-radius: 12px;
 
     .controls {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 0.6rem;
     }
   }
@@ -646,7 +656,6 @@ const OverlayContent = styled.div`
     margin: 1rem;
     border-radius: 20px;
     max-height: calc(100vh - 2rem);
-    overflow-y: auto;
 
     .overlay-title {
       font-size: 1.8rem;
@@ -852,7 +861,6 @@ const StatGrid = styled.div`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.6rem;
     margin: 1rem 0;
   }
@@ -1314,6 +1322,79 @@ const BlockFaller: React.FC = () => {
     selectedDifficulty,
   ]);
 
+  // ▶ 하드드롭: 즉시 최하단으로 이동 후 고정
+  const hardDrop = useCallback(() => {
+    if (!currentBlock || gameState !== 'playing') return;
+
+    // 1) 갈 수 있는 최하단 y 계산
+    let drop = 0;
+    while (isValidPosition(currentBlock, board, { x: 0, y: drop + 1 })) {
+      drop++;
+    }
+
+    // 2) 최하단 위치로 이동한 블록을 보드에 즉시 고정
+    const landed: Block = {
+      ...currentBlock,
+      position: { x: currentBlock.position.x, y: currentBlock.position.y + drop },
+    };
+    const lockedBoard = placeBlock(landed, board);
+
+    // 3) 라인 처리 및 점수 갱신(기존 dropBlock의 고정 분기와 동일 로직)
+    const { linesCleared } = clearLines(lockedBoard);
+    const basePoints = linesCleared * 100 * stats.level;
+    const tetrisBonus = linesCleared === 4 ? 800 : 0;
+    const difficultyBonus = Math.round(basePoints * (selectedDifficulty.speedIncrease / 100));
+    const points = basePoints + tetrisBonus + difficultyBonus;
+
+    setStats(prev => {
+      const newLines = prev.lines + linesCleared;
+      const newLevel = Math.floor(newLines / 10) + 1;
+      const newScore = prev.score + points;
+      const newTetrisCount = prev.tetrisCount + (linesCleared === 4 ? 1 : 0);
+      const efficiency =
+        totalBlocksRef.current > 0 ? Math.round((newLines / totalBlocksRef.current) * 100) : 0;
+      const newHighScore = Math.max(prev.highScore, newScore);
+      if (newHighScore > prev.highScore) {
+        localStorage.setItem('block-faller-high-score', newHighScore.toString());
+      }
+      return {
+        score: newScore,
+        level: newLevel,
+        lines: newLines,
+        highScore: newHighScore,
+        efficiency,
+        tetrisCount: newTetrisCount,
+      };
+    });
+
+    // 4) 속도 재계산(기존 방식 유지)
+    dropIntervalRef.current = Math.max(
+      50,
+      selectedDifficulty.initialSpeed - (stats.level - 1) * selectedDifficulty.speedIncrease
+    );
+
+    // 5) 다음 블록 세팅 또는 게임오버
+    if (nextBlock && isValidPosition(nextBlock, lockedBoard)) {
+      setCurrentBlock(nextBlock);
+      setNextBlock(createRandomBlock());
+      setBoard(lockedBoard);
+    } else {
+      setGameState('gameOver');
+      setBoard(lockedBoard);
+    }
+  }, [
+    currentBlock,
+    gameState,
+    isValidPosition,
+    board,
+    placeBlock,
+    clearLines,
+    stats.level,
+    selectedDifficulty,
+    nextBlock,
+    createRandomBlock,
+  ]);
+
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (gameState !== 'playing') return;
@@ -1329,7 +1410,8 @@ const BlockFaller: React.FC = () => {
           break;
         case 'ArrowDown':
           event.preventDefault();
-          moveBlock('down');
+          // ⬇️ 즉시 하드드롭
+          hardDrop();
           break;
         case 'ArrowUp':
         case ' ':
@@ -1342,7 +1424,7 @@ const BlockFaller: React.FC = () => {
           break;
       }
     },
-    [gameState, moveBlock, rotatePiece]
+    [gameState, moveBlock, rotatePiece, hardDrop]
   );
 
   const startGame = () => {
@@ -1485,7 +1567,6 @@ const BlockFaller: React.FC = () => {
             </NextBlock>
 
             <ControlsPanel>
-              <div className="title">조작</div>
               <div className="controls">
                 <ControlButton onClick={() => moveBlock('left')}>
                   ←<br />
@@ -1500,7 +1581,8 @@ const BlockFaller: React.FC = () => {
                   <br />
                   회전
                 </ControlButton>
-                <ControlButton onClick={() => moveBlock('down')}>
+                {/* ⬇️ 버튼: 하드드롭으로 변경 */}
+                <ControlButton onClick={hardDrop}>
                   <ArrowDown size={16} />
                   <br />
                   하강
@@ -1526,7 +1608,8 @@ const BlockFaller: React.FC = () => {
             <br />
             <br />
             <strong>조작법:</strong>
-            <br />• 화살표 키: 이동 및 하강 • 위 화살표/스페이스: 회전 • P키: 일시정지
+            <br />• 화살표 키: 이동 및 하강(⬇️: 즉시 바닥) • 위 화살표/스페이스: 회전 • P키:
+            일시정지
           </div>
 
           <DifficultySelector>

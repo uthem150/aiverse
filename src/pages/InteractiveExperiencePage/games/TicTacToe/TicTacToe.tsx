@@ -743,7 +743,6 @@ const GameOverlay = styled.div<GameOverlayProps>`
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
-  overflow-y: auto;
 
   @media (max-width: 480px) {
     padding: 0.5rem;
@@ -770,7 +769,6 @@ const OverlayContent = styled.div`
     0 25px 50px rgba(0, 0, 0, 0.5),
     0 0 100px rgba(59, 130, 246, 0.2);
   max-height: 90vh;
-  overflow-y: auto;
 
   &:before {
     content: '';

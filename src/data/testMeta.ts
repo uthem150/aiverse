@@ -479,14 +479,6 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogTitle: '🎨 컬러 매치 게임',
     ogDescription: '당신의 색상 감각은 얼마나 뛰어날까요? 지금 바로 확인해보세요!',
   },
-  'flappy-game': {
-    title: '플래피 게임 | AIverse-phi - 장애물 피하기 게임',
-    description:
-      '화면을 클릭하여 캐릭터를 날아오르게 하고, 장애물을 피해 최대한 멀리 나아가는 아케이드 게임입니다.',
-    keywords: '플래피 게임, 장애물 피하기, 아케이드 게임, 웹 게임, 컨트롤 게임',
-    ogTitle: '🐦 플래피 게임',
-    ogDescription: '장애물을 피해 더 멀리 날아보세요! 당신의 컨트롤 실력은?',
-  },
   'math-quiz': {
     title: '수학 퀴즈 게임 | AIverse-phi - 두뇌 훈련 퀴즈',
     description:

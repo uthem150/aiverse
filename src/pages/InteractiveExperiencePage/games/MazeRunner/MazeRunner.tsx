@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowLeft, Navigation, Timer, Trophy, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Navigation, RotateCcw } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
 
@@ -16,29 +16,20 @@ const playerGlow = keyframes`
 `;
 
 const goalPulse = keyframes`
-  0%, 100% { 
+  0%, 100% {
     box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
     transform: scale(1);
   }
-  50% { 
+  50% {
     box-shadow: 0 0 30px rgba(34, 197, 94, 1);
     transform: scale(1.1);
   }
 `;
 
 const pathReveal = keyframes`
-  0% { 
-    background: #fbbf24; 
-    transform: scale(0.8);
-  }
-  50% {
-    background: #f59e0b;
-    transform: scale(1.1);
-  }
-  100% { 
-    background: #92400e; 
-    transform: scale(1);
-  }
+  0% { background: #fbbf24; transform: scale(0.8); }
+  50% { background: #f59e0b; transform: scale(1.1); }
+  100% { background: #92400e; transform: scale(1); }
 `;
 
 const victoryGlow = keyframes`
@@ -49,67 +40,34 @@ const victoryGlow = keyframes`
 `;
 
 const resultAppear = keyframes`
-  0% {
-    transform: scale(0.5) translateY(50px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(-10px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+  50% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 `;
 
 const tierGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
 `;
 
 const statsReveal = keyframes`
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 `;
 
 const buttonHover = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 `;
 
 const difficultyPulse = keyframes`
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 `;
 
 const mazeGenerate = keyframes`
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
 `;
 
 // 난이도 설정
@@ -176,8 +134,37 @@ const TIERS: TierInfo[] = [
   { name: '탐험가', emoji: '🧭', color: '#808080', minScore: 0 },
 ];
 
+/** ===== 점수/효율 계산 보일러플레이트 통일 ===== */
+const optimalMovesFor = (size: number) => Math.floor(size * 1.5); // 근사 최단 이동 수
+const difficultyMultiplierFor = (name: string) =>
+  name === '지옥' ? 3 : name === '어려움' ? 2.5 : name === '보통' ? 2 : 1.5;
+
+const timeBonusFor = (timeSec: number, diff: Difficulty) =>
+  Math.max(0, (300 - timeSec) * 10) * diff.timeBonus;
+
+// 이동 보너스 기준: optimalMoves * 2 ~= size * 3 (일관성 유지)
+const moveBonusFor = (moves: number, size: number, diff: Difficulty) =>
+  Math.max(0, (optimalMovesFor(size) * 2 - moves) * 5) * diff.moveBonus;
+
+// 효율성: 0~100%로 클램프
+const efficiencyFor = (moves: number, size: number) => {
+  const optimal = optimalMovesFor(size);
+  const eff = Math.round((optimal / Math.max(1, moves)) * 100);
+  return Math.max(0, Math.min(100, eff));
+};
+
+const totalScoreFor = (timeSec: number, moves: number, diff: Difficulty, size: number) => {
+  const tb = timeBonusFor(timeSec, diff);
+  const mb = moveBonusFor(moves, size, diff);
+  const ef = efficiencyFor(moves, size);
+  const dm = difficultyMultiplierFor(diff.name);
+  return Math.round((tb + mb + ef * 50 + 1000) * dm);
+};
+/** ============================================ */
+
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -261,7 +248,6 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
@@ -277,7 +263,6 @@ const StatsPanel = styled.div`
     flex-wrap: wrap;
     justify-content: center;
   }
-
   @media (max-width: 480px) {
     gap: 0.75rem;
   }
@@ -287,8 +272,8 @@ const Stat = styled.div<{ highlight?: boolean }>`
   text-align: center;
   color: white;
 
-  ${props =>
-    props.highlight &&
+  ${p =>
+    p.highlight &&
     css`
       animation: ${playerMove} 0.5s ease;
     `}
@@ -298,11 +283,10 @@ const Stat = styled.div<{ highlight?: boolean }>`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: ${props => (props.highlight ? '#fbbf24' : '#22c55e')};
+    color: ${p => (p.highlight ? '#fbbf24' : '#22c55e')};
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
   }
 
@@ -314,7 +298,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .stat-label {
       font-size: 0.65rem;
@@ -340,7 +323,6 @@ const GameArea = styled.div`
     gap: 1.5rem;
     margin-top: 140px;
   }
-
   @media (max-width: 480px) {
     padding: 0.75rem;
     gap: 1rem;
@@ -361,7 +343,6 @@ const MazeContainer = styled.div`
     padding: 1rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem;
     border-radius: 10px;
@@ -370,7 +351,7 @@ const MazeContainer = styled.div`
 
 const MazeGrid = styled.div<{ size: number }>`
   display: grid;
-  grid-template-columns: repeat(${props => props.size}, 1fr);
+  grid-template-columns: repeat(${p => p.size}, 1fr);
   gap: 1px;
   background: #0f172a;
   border: 3px solid #1e293b;
@@ -382,7 +363,6 @@ const MazeGrid = styled.div<{ size: number }>`
     gap: 0px;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     border-radius: 8px;
   }
@@ -392,73 +372,63 @@ const MazeCell = styled.div<{
   type: 'wall' | 'path' | 'start' | 'end' | 'player' | 'visited';
   size: number;
 }>`
-  width: ${props => Math.max(15, Math.min(30, 400 / props.size))}px;
-  height: ${props => Math.max(15, Math.min(30, 400 / props.size))}px;
+  width: ${p => Math.max(15, Math.min(30, 400 / p.size))}px;
+  height: ${p => Math.max(15, Math.min(30, 400 / p.size))}px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: ${props => Math.max(10, Math.min(20, 300 / props.size))}px;
+  font-size: ${p => Math.max(10, Math.min(20, 300 / p.size))}px;
   font-weight: bold;
   position: relative;
   transition: all 0.3s ease;
   border-radius: 2px;
 
-  background: ${props => {
-    switch (props.type) {
-      case 'wall':
-        return '#1e293b';
-      case 'path':
-        return '#f3f4f6';
-      case 'start':
-        return '#3b82f6';
-      case 'end':
-        return '#10b981';
-      case 'player':
-        return '#ef4444';
-      case 'visited':
-        return '#fbbf24';
-      default:
-        return '#f3f4f6';
-    }
-  }};
+  background: ${p =>
+    p.type === 'wall'
+      ? '#1e293b'
+      : p.type === 'path'
+        ? '#f3f4f6'
+        : p.type === 'start'
+          ? '#3b82f6'
+          : p.type === 'end'
+            ? '#10b981'
+            : p.type === 'player'
+              ? '#ef4444'
+              : '#fbbf24'};
 
-  ${props =>
-    props.type === 'player' &&
+  ${p =>
+    p.type === 'player' &&
     css`
       animation:
         ${playerMove} 0.4s ease,
         ${playerGlow} 2s ease-in-out infinite;
       z-index: 10;
     `}
-
-  ${props =>
-    props.type === 'end' &&
+  ${p =>
+    p.type === 'end' &&
     css`
       animation: ${goalPulse} 2s ease-in-out infinite;
     `}
-
-  ${props =>
-    props.type === 'visited' &&
+  ${p =>
+    p.type === 'visited' &&
     css`
       animation: ${pathReveal} 0.6s ease;
     `}
-
-  ${props =>
-    props.type === 'start' &&
+  ${p =>
+    p.type === 'start' &&
     css`
       box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
     `}
 
   @media (max-width: 768px) {
-    width: ${props => Math.max(12, Math.min(25, 320 / props.size))}px;
-    height: ${props => Math.max(12, Math.min(25, 320 / props.size))}px;
-    font-size: ${props => Math.max(8, Math.min(16, 250 / props.size))}px;
+    width: ${p => Math.max(12, Math.min(25, 320 / p.size))}px;
+    height: ${p => Math.max(12, Math.min(25, 320 / p.size))}px;
+    font-size: ${p => Math.max(8, Math.min(16, 250 / p.size))}px;
   }
-
   @media (max-width: 480px) {
-    width: ${props => Math.max(10, Math.min(20, 280 / props.size))}px;
-    height: ${props => Math.max(10, Math.min(20, 280 / props.size))}px;
-    font-size: ${props => Math.max(6, Math.min(14, 200 / props.size))}px;
+    width: ${p => Math.max(10, Math.min(20, 280 / p.size))}px;
+    height: ${p => Math.max(10, Math.min(20, 280 / p.size))}px;
+    font-size: ${p => Math.max(6, Math.min(14, 200 / p.size))}px;
   }
 `;
 
@@ -468,11 +438,9 @@ const ControlPanel = styled.div`
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
   }
-
   @media (max-width: 480px) {
     gap: 0.6rem;
   }
@@ -497,7 +465,7 @@ const ControlButton = styled.button`
     ${css`
       animation: ${buttonHover} 0.6s ease-in-out;
     `}
-    background: rgba(34, 197, 94, 0.3);
+    background: rgba(34,197,94,0.3);
   }
 
   @media (max-width: 768px) {
@@ -505,7 +473,6 @@ const ControlButton = styled.button`
     font-size: 0.9rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     font-size: 0.8rem;
@@ -538,7 +505,6 @@ const DirectionControls = styled.div`
       transform: translateY(-2px);
       box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
     }
-
     &:active {
       transform: translateY(0);
       ${css`
@@ -565,7 +531,6 @@ const DirectionControls = styled.div`
 
   @media (max-width: 768px) {
     gap: 0.6rem;
-
     .direction-btn {
       width: 50px;
       height: 50px;
@@ -573,10 +538,8 @@ const DirectionControls = styled.div`
       border-radius: 10px;
     }
   }
-
   @media (max-width: 480px) {
     gap: 0.5rem;
-
     .direction-btn {
       width: 45px;
       height: 45px;
@@ -586,22 +549,21 @@ const DirectionControls = styled.div`
   }
 `;
 
+/** ====== 오버레이(결과/설명) - 모바일 무스크롤 대응 ====== */
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
 
   @media (max-width: 480px) {
-    padding: 1rem;
+    padding: max(env(safe-area-inset-top), 8px) 8px max(env(safe-area-inset-bottom), 8px);
+    height: 100dvh; /* 모바일 브라우저 UI 변동 대응 */
   }
 `;
 
@@ -621,8 +583,8 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
     0 25px 50px rgba(0, 0, 0, 0.5),
     0 0 100px rgba(34, 197, 94, 0.2);
 
-  ${props =>
-    props.isVictory &&
+  ${p =>
+    p.isVictory &&
     css`
       animation:
         ${victoryGlow} 3s ease-in-out infinite,
@@ -632,65 +594,57 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
   &:before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    inset: -2px;
     border-radius: 24px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
 
   .overlay-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 800;
     background: linear-gradient(45deg, #fff, #f1f5f9);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .overlay-text {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2.5rem;
-    line-height: 1.7;
+    margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
   @media (max-width: 768px) {
-    padding: 1.8rem 1.3rem;
+    padding: 1.6rem 1.2rem;
     margin: 1rem;
     border-radius: 20px;
-    max-height: calc(100vh - 2rem);
-    overflow-y: auto;
+  }
 
-    .overlay-title {
-      font-size: 1.8rem;
-      margin-bottom: 1.2rem;
-    }
+  /* 모바일 컴팩트: 스크롤 없이 보기 좋게 */
+  @media (max-width: 480px) {
+    padding: 1rem 0.8rem;
+    margin: 0;
+    border-radius: 16px;
+    width: calc(100% - 0px);
+    max-width: 480px;
+    transform: scale(0.98);
+    transform-origin: center top;
 
     .overlay-text {
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
+      font-size: 0.92rem;
+      margin-bottom: 1.2rem;
     }
   }
 
-  @media (max-width: 480px) {
-    padding: 1.5rem 1rem;
-    margin: 0.5rem;
-    border-radius: 16px;
-    max-height: calc(100vh - 1rem);
-
-    .overlay-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
+  /* 매우 작은 세로 높이 대응 */
+  @media (max-width: 480px) and (max-height: 700px) {
+    transform: scale(0.94);
     .overlay-text {
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.8rem;
     }
   }
 `;
@@ -700,18 +654,17 @@ const DifficultySelector = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 2rem 0;
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.8rem;
-    margin: 1.5rem 0;
+    margin: 1.2rem 0;
   }
 `;
 
 const DifficultyCard = styled.button<{ selected: boolean }>`
-  background: ${props =>
-    props.selected ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'rgba(255, 255, 255, 0.05)'};
-  border: 2px solid ${props => (props.selected ? '#22c55e' : 'rgba(255, 255, 255, 0.1)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'rgba(255,255,255,0.05)'};
+  border: 2px solid ${p => (p.selected ? '#22c55e' : 'rgba(255,255,255,0.1)')};
   border-radius: 12px;
   padding: 1rem;
   color: white;
@@ -719,8 +672,8 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   transition: all 0.3s ease;
   text-align: left;
 
-  ${props =>
-    props.selected &&
+  ${p =>
+    p.selected &&
     css`
       animation: ${difficultyPulse} 2s ease-in-out infinite;
     `}
@@ -739,7 +692,6 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
-
   .difficulty-desc {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -748,11 +700,9 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   @media (max-width: 480px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .difficulty-header {
       font-size: 1rem;
     }
-
     .difficulty-desc {
       font-size: 0.85rem;
     }
@@ -763,33 +713,32 @@ const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
-  border: 2px solid ${props => props.color};
+  background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
+  border: 2px solid ${p => p.color};
   border-radius: 16px;
   padding: 0.8rem 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: ${props => props.color};
-  text-shadow: 0 0 20px ${props => props.color}80;
+  color: ${p => p.color};
+  text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
 
   @media (max-width: 768px) {
     padding: 0.6rem 1.2rem;
-    font-size: 1.4rem;
-    margin-bottom: 1.2rem;
-    border-radius: 12px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
+  }
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.9rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
     border-radius: 10px;
-    gap: 0.3rem;
+    gap: 0.35rem;
   }
 `;
 
+/** 점수 내역: 모바일에서 2열 그리드로 바꿔 세로 길이 축소 */
 const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -805,9 +754,25 @@ const ScoreBreakdown = styled.div`
   }
 
   @media (max-width: 480px) {
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: 0.8rem;
+    margin: 0.9rem 0;
     border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.6rem;
+    row-gap: 0.2rem;
+
+    & > div {
+      padding: 0.35rem 0;
+      border-bottom: none !important;
+    } /* ScoreItem border 제거 */
+    & > div:last-child {
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(34, 197, 94, 0.3) !important;
+      font-size: 1rem !important;
+    }
   }
 `;
 
@@ -817,7 +782,7 @@ const ScoreItem = styled.div<{ delay?: number }>`
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
@@ -832,7 +797,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
   }
-
   .score-value {
     color: #22c55e;
     font-weight: 600;
@@ -840,20 +804,16 @@ const ScoreItem = styled.div<{ delay?: number }>`
   }
 
   @media (max-width: 480px) {
-    padding: 0.4rem 0;
-
-    &:last-child {
-      font-size: 1.1rem;
-      margin-top: 0.4rem;
-      padding-top: 0.8rem;
-    }
-
     .score-label {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
-
     .score-value {
       font-size: 0.9rem;
+    }
+    &:last-child {
+      font-size: 1rem;
+      margin-top: 0.4rem;
+      padding-top: 0.6rem;
     }
   }
 `;
@@ -863,17 +823,15 @@ const StatGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 1.5rem 0;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
-
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 0.6rem;
-    margin: 1rem 0;
-  }
+    margin: 0.9rem 0;
+  } /* 2열 유지로 높이 절약 */
 `;
 
 const StatCard = styled.div<{ delay?: number }>`
@@ -882,7 +840,7 @@ const StatCard = styled.div<{ delay?: number }>`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
     font-size: 0.8rem;
@@ -891,7 +849,6 @@ const StatCard = styled.div<{ delay?: number }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
@@ -902,28 +859,23 @@ const StatCard = styled.div<{ delay?: number }>`
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .stat-title {
       font-size: 0.75rem;
       margin-bottom: 0.4rem;
     }
-
     .stat-number {
       font-size: 1.2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem;
     border-radius: 8px;
-
     .stat-title {
-      font-size: 0.7rem;
-      margin-bottom: 0.3rem;
+      font-size: 0.68rem;
+      margin-bottom: 0.25rem;
     }
-
     .stat-number {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
   }
 `;
@@ -933,34 +885,30 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   border: 1px solid rgba(34, 197, 94, 0.3);
   border-radius: 12px;
   padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  margin: 1.2rem 0;
   color: #22c55e;
   font-weight: 600;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
 
   @media (max-width: 768px) {
     padding: 0.8rem 1.2rem;
-    margin: 1.2rem 0;
-    border-radius: 10px;
+    margin: 1rem 0;
     font-size: 0.95rem;
   }
-
   @media (max-width: 480px) {
-    padding: 0.6rem 1rem;
-    margin: 1rem 0;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+    margin: 0.8rem 0;
+    font-size: 0.88rem;
   }
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  background: ${props =>
-    props.variant === 'secondary'
-      ? 'rgba(255, 255, 255, 0.1)'
+  background: ${p =>
+    p.variant === 'secondary'
+      ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #22c55e, #16a34a)'};
-  border: ${props =>
-    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
@@ -989,20 +937,16 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
       width 0.6s,
       height 0.6s;
   }
-
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(34, 197, 94, 0.4);
     ${css`
       animation: ${buttonHover} 0.6s ease-in-out;
-    `}
-
-    &:before {
+    `} &:before {
       width: 300px;
       height: 300px;
     }
   }
-
   &:active {
     transform: translateY(-1px);
   }
@@ -1013,16 +957,11 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     margin: 0.4rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-    margin: 0.3rem;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    margin: 0.25rem;
     border-radius: 10px;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
   }
 `;
 
@@ -1040,7 +979,6 @@ const Instructions = styled.div`
     font-size: 0.8rem;
     padding: 0.8rem;
   }
-
   @media (max-width: 480px) {
     font-size: 0.75rem;
     padding: 0.6rem;
@@ -1048,7 +986,6 @@ const Instructions = styled.div`
 `;
 
 type CellType = 'wall' | 'path' | 'start' | 'end';
-
 interface Position {
   x: number;
   y: number;
@@ -1065,7 +1002,7 @@ interface GameStats {
 
 const MazeRunner: React.FC = () => {
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'completed'>('setup');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>(DIFFICULTIES[1]); // 보통이 기본값
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>(DIFFICULTIES[1]); // 보통
   const [maze, setMaze] = useState<CellType[][]>([]);
   const [playerPos, setPlayerPos] = useState<Position>({ x: 1, y: 1 });
   const [visitedCells, setVisitedCells] = useState<Set<string>>(new Set());
@@ -1080,36 +1017,23 @@ const MazeRunner: React.FC = () => {
     efficiency: 0,
   });
   const [startTime, setStartTime] = useState<number>(0);
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 티어 계산 함수
+  // 티어 계산
   const calculateTier = (finalStats: GameStats): TierInfo => {
-    const optimalMoves = Math.floor(selectedDifficulty.size * 1.5); // 최적 이동 수 추정
-    const timeBonus = Math.max(0, (300 - finalStats.time) * 10) * selectedDifficulty.timeBonus;
-    const moveBonus =
-      Math.max(0, (optimalMoves * 2 - finalStats.moves) * 5) * selectedDifficulty.moveBonus;
-    const efficiencyBonus = finalStats.efficiency * 50;
-    const difficultyMultiplier =
-      selectedDifficulty.name === '지옥'
-        ? 3
-        : selectedDifficulty.name === '어려움'
-          ? 2.5
-          : selectedDifficulty.name === '보통'
-            ? 2
-            : 1.5;
-
-    const totalScore = (timeBonus + moveBonus + efficiencyBonus + 1000) * difficultyMultiplier;
-
+    const totalScore = totalScoreFor(
+      finalStats.time,
+      finalStats.moves,
+      selectedDifficulty,
+      selectedDifficulty.size
+    );
     for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
+      if (totalScore >= tier.minScore) return tier;
     }
     return TIERS[TIERS.length - 1];
   };
 
-  // 미로 생성 알고리즘 (Recursive Backtracking)
+  // 미로 생성 (Recursive Backtracking)
   const generateMaze = useCallback((size: number): CellType[][] => {
     const maze: CellType[][] = Array(size)
       .fill(null)
@@ -1120,120 +1044,90 @@ const MazeRunner: React.FC = () => {
 
     const stack: Position[] = [];
     const start: Position = { x: 1, y: 1 };
-
     maze[start.y][start.x] = 'path';
     visited[start.y][start.x] = true;
     stack.push(start);
 
     const directions = [
-      { x: 0, y: -2 }, // 위
-      { x: 2, y: 0 }, // 오른쪽
-      { x: 0, y: 2 }, // 아래
-      { x: -2, y: 0 }, // 왼쪽
+      { x: 0, y: -2 },
+      { x: 2, y: 0 },
+      { x: 0, y: 2 },
+      { x: -2, y: 0 },
     ];
 
     while (stack.length > 0) {
       const current = stack[stack.length - 1];
       const neighbors: Position[] = [];
-
       for (const dir of directions) {
-        const nx = current.x + dir.x;
-        const ny = current.y + dir.y;
-
-        if (nx > 0 && nx < size - 1 && ny > 0 && ny < size - 1 && !visited[ny][nx]) {
+        const nx = current.x + dir.x,
+          ny = current.y + dir.y;
+        if (nx > 0 && nx < size - 1 && ny > 0 && ny < size - 1 && !visited[ny][nx])
           neighbors.push({ x: nx, y: ny });
-        }
       }
-
       if (neighbors.length > 0) {
         const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-
-        // 현재 셀과 다음 셀 사이의 벽 제거
         const wallX = current.x + (next.x - current.x) / 2;
         const wallY = current.y + (next.y - current.y) / 2;
-
         maze[wallY][wallX] = 'path';
         maze[next.y][next.x] = 'path';
         visited[next.y][next.x] = true;
-
         stack.push(next);
       } else {
         stack.pop();
       }
     }
 
-    // 시작점과 끝점 설정
     maze[1][1] = 'start';
     maze[size - 2][size - 2] = 'end';
-
     return maze;
   }, []);
 
   const movePlayer = useCallback(
     (direction: 'up' | 'down' | 'left' | 'right') => {
       if (gameState !== 'playing') return;
-
-      const directions = {
+      const dirMap = {
         up: { x: 0, y: -1 },
         down: { x: 0, y: 1 },
         left: { x: -1, y: 0 },
         right: { x: 1, y: 0 },
       };
+      const newPos = { x: playerPos.x + dirMap[direction].x, y: playerPos.y + dirMap[direction].y };
 
-      const newPos = {
-        x: playerPos.x + directions[direction].x,
-        y: playerPos.y + directions[direction].y,
-      };
-
-      // 경계 및 벽 충돌 검사
+      // 경계/벽 체크
       if (
         newPos.x < 0 ||
         newPos.x >= maze[0].length ||
         newPos.y < 0 ||
         newPos.y >= maze.length ||
         maze[newPos.y][newPos.x] === 'wall'
-      ) {
+      )
         return;
-      }
 
       setPlayerPos(newPos);
       setStats(prev => ({ ...prev, moves: prev.moves + 1 }));
 
-      // 방문한 셀 추가
       const cellKey = `${newPos.x},${newPos.y}`;
       setVisitedCells(prev => new Set([...prev, cellKey]));
 
-      // 도착점 도달 확인
       if (maze[newPos.y][newPos.x] === 'end') {
         const finalTime = Math.floor((Date.now() - startTime) / 1000);
-        const optimalMoves = Math.floor(selectedDifficulty.size * 1.5);
-        const efficiency = Math.max(0, Math.round((optimalMoves / (stats.moves + 1)) * 100));
 
         setStats(prev => {
-          const newStats = {
-            ...prev,
-            time: finalTime,
-            moves: prev.moves + 1,
-            efficiency,
-          };
+          const newMoves = prev.moves + 1; // 최종 이동 반영
+          const newEfficiency = efficiencyFor(newMoves, selectedDifficulty.size); // 0~100%
+          const newStats = { ...prev, time: finalTime, moves: newMoves, efficiency: newEfficiency };
 
-          // 최고 기록 업데이트
+          // 최고 기록 저장
           if (finalTime < prev.bestTime || prev.bestTime === 999) {
             newStats.bestTime = finalTime;
             localStorage.setItem(`maze-best-time-${selectedDifficulty.name}`, finalTime.toString());
           }
-
-          if (newStats.moves < prev.bestMoves || prev.bestMoves === 999) {
-            newStats.bestMoves = newStats.moves;
-            localStorage.setItem(
-              `maze-best-moves-${selectedDifficulty.name}`,
-              newStats.moves.toString()
-            );
+          if (newMoves < prev.bestMoves || prev.bestMoves === 999) {
+            newStats.bestMoves = newMoves;
+            localStorage.setItem(`maze-best-moves-${selectedDifficulty.name}`, newMoves.toString());
           }
-
           newStats.gamesCompleted = prev.gamesCompleted + 1;
           localStorage.setItem('maze-games-completed', newStats.gamesCompleted.toString());
-
           return newStats;
         });
 
@@ -1241,7 +1135,7 @@ const MazeRunner: React.FC = () => {
         if (timerRef.current) clearInterval(timerRef.current);
       }
     },
-    [gameState, playerPos, maze, startTime, selectedDifficulty, stats.moves]
+    [gameState, playerPos, maze, startTime, selectedDifficulty]
   );
 
   const handleKeyPress = useCallback(
@@ -1279,7 +1173,6 @@ const MazeRunner: React.FC = () => {
   const startGame = () => {
     const size = selectedDifficulty.size;
     const newMaze = generateMaze(size);
-
     setMaze(newMaze);
     setPlayerPos({ x: 1, y: 1 });
     setVisitedCells(new Set(['1,1']));
@@ -1297,8 +1190,7 @@ const MazeRunner: React.FC = () => {
         localStorage.getItem(`maze-best-moves-${selectedDifficulty.name}`) || '999'
       ),
     }));
-
-    // 타이머 시작
+    // 타이머
     timerRef.current = setInterval(() => {
       setStats(prev => ({ ...prev, time: prev.time + 1 }));
     }, 1000);
@@ -1317,11 +1209,12 @@ const MazeRunner: React.FC = () => {
     }
   }, [gameState, handleKeyPress]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
+    },
+    []
+  );
 
   const handleBackClick = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -1351,6 +1244,15 @@ const MazeRunner: React.FC = () => {
   };
 
   const currentTier = calculateTier(stats);
+  const dm = difficultyMultiplierFor(selectedDifficulty.name);
+  const timeBonus = timeBonusFor(stats.time, selectedDifficulty);
+  const moveBonus = moveBonusFor(stats.moves, selectedDifficulty.size, selectedDifficulty);
+  const totalScore = totalScoreFor(
+    stats.time,
+    stats.moves,
+    selectedDifficulty,
+    selectedDifficulty.size
+  );
 
   return (
     <GameContainer>
@@ -1479,17 +1381,11 @@ const MazeRunner: React.FC = () => {
           <ScoreBreakdown>
             <ScoreItem delay={1}>
               <span className="score-label">⏱️ 시간 보너스</span>
-              <span className="score-value">
-                {Math.max(0, (300 - stats.time) * 10) * selectedDifficulty.timeBonus}점
-              </span>
+              <span className="score-value">{timeBonus}점</span>
             </ScoreItem>
             <ScoreItem delay={2}>
               <span className="score-label">🚶 이동 보너스</span>
-              <span className="score-value">
-                {Math.max(0, (Math.floor(selectedDifficulty.size * 3) - stats.moves) * 5) *
-                  selectedDifficulty.moveBonus}
-                점
-              </span>
+              <span className="score-value">{moveBonus}점</span>
             </ScoreItem>
             <ScoreItem delay={3}>
               <span className="score-label">🎯 효율 보너스</span>
@@ -1501,35 +1397,12 @@ const MazeRunner: React.FC = () => {
             </ScoreItem>
             <ScoreItem delay={5}>
               <span className="score-label">🔥 난이도 배수</span>
-              <span className="score-value">
-                x
-                {selectedDifficulty.name === '지옥'
-                  ? 3
-                  : selectedDifficulty.name === '어려움'
-                    ? 2.5
-                    : selectedDifficulty.name === '보통'
-                      ? 2
-                      : 1.5}
-              </span>
+              <span className="score-value">x{dm}</span>
             </ScoreItem>
             <ScoreItem delay={6}>
               <span className="score-label">💎 총 점수</span>
               <span className="score-value" style={{ color: currentTier.color }}>
-                {Math.round(
-                  (Math.max(0, (300 - stats.time) * 10) * selectedDifficulty.timeBonus +
-                    Math.max(0, (Math.floor(selectedDifficulty.size * 3) - stats.moves) * 5) *
-                      selectedDifficulty.moveBonus +
-                    stats.efficiency * 50 +
-                    1000) *
-                    (selectedDifficulty.name === '지옥'
-                      ? 3
-                      : selectedDifficulty.name === '어려움'
-                        ? 2.5
-                        : selectedDifficulty.name === '보통'
-                          ? 2
-                          : 1.5)
-                )}
-                점
+                {totalScore}점
               </span>
             </ScoreItem>
           </ScoreBreakdown>
@@ -1569,7 +1442,7 @@ const MazeRunner: React.FC = () => {
                       : '🚶 첫 탈출 축하해요! 계속 도전해보세요!'}
           </PerformanceMessage>
 
-          <div style={{ marginTop: '2rem' }}>
+          <div style={{ marginTop: '0.8rem' }}>
             <ActionButton onClick={startGame}>
               <RotateCcw size={20} />
               다시 도전

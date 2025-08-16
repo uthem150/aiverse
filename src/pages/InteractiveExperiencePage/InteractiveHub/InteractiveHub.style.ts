@@ -35,7 +35,6 @@ export const ExperienceContainer = styled.div`
     #0f0f23 100%
   );
   position: relative;
-  overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;

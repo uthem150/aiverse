@@ -151,18 +151,6 @@ export const testCategories: TestCategory[] = [
         participantCount: 19800,
       },
       {
-        id: 'flappy-game',
-        title: '🐦 플래피 버드 | AIverse-phi - 타이밍 반응 게임',
-        description: '장애물을 피해 새를 최대한 멀리 날려보세요. 정교한 타이밍 조절이 핵심입니다.',
-        thumbnail: '/images/flappy-game.jpg',
-        category: 'interactive-experience',
-        difficulty: 'hard',
-        estimatedTime: 5,
-        isNew: false,
-        isHot: false,
-        participantCount: 25000,
-      },
-      {
         id: 'math-quiz',
         title: '🧮 수학 퀴즈 | AIverse-phi - 암산 능력 테스트',
         description:

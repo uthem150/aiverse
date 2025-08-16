@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 // 애니메이션 정의
 const cardFlip = keyframes`
@@ -11,18 +12,9 @@ const cardFlip = keyframes`
 `;
 
 const cardAppear = keyframes`
-  0% { 
-    transform: scale(0) rotate(180deg);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.1) rotate(90deg);
-    opacity: 0.8;
-  }
-  100% { 
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
+  0%   { transform: scale(0.96) rotate(6deg);  opacity: 0; }
+  60%  { transform: scale(1.02) rotate(1deg);  opacity: 0.9; }
+  100% { transform: scale(1)    rotate(0deg);  opacity: 1; }
 `;
 
 const cardMatch = keyframes`
@@ -123,37 +115,14 @@ interface Difficulty {
   pairs: number;
   time: number;
   description: string;
+  cols: number;
 }
 
 const DIFFICULTIES: Difficulty[] = [
-  {
-    name: '쉬움',
-    emoji: '🐤',
-    pairs: 6,
-    time: 90,
-    description: '6쌍의 카드, 90초',
-  },
-  {
-    name: '보통',
-    emoji: '🧠',
-    pairs: 8,
-    time: 120,
-    description: '8쌍의 카드, 120초',
-  },
-  {
-    name: '어려움',
-    emoji: '🔥',
-    pairs: 12,
-    time: 150,
-    description: '12쌍의 카드, 150초',
-  },
-  {
-    name: '지옥',
-    emoji: '💀',
-    pairs: 16,
-    time: 180,
-    description: '16쌍의 카드, 180초',
-  },
+  { name: '쉬움', emoji: '🐤', pairs: 6, time: 90, description: '3×4 배치, 90초', cols: 4 },
+  { name: '보통', emoji: '🧠', pairs: 8, time: 120, description: '4×4 배치, 120초', cols: 4 },
+  { name: '어려움', emoji: '🔥', pairs: 12, time: 150, description: '4×6 배치, 150초', cols: 6 }, // 24장 = 6열×4행
+  { name: '지옥', emoji: '💀', pairs: 18, time: 180, description: '6×6 배치, 180초', cols: 6 }, // 36장 = 6열×6행
 ];
 
 // 티어 시스템
@@ -166,17 +135,18 @@ interface TierInfo {
 
 const TIERS: TierInfo[] = [
   { name: '레전드', emoji: '👑', color: '#FFD700', minScore: 10000 },
-  { name: '마스터', emoji: '💎', color: '#00CED1', minScore: 7500 },
-  { name: '다이아몬드', emoji: '💠', color: '#4169E1', minScore: 5500 },
-  { name: '플래티넘', emoji: '⭐', color: '#C0C0C0', minScore: 4000 },
-  { name: '골드', emoji: '🥇', color: '#FFD700', minScore: 2800 },
-  { name: '실버', emoji: '🥈', color: '#C0C0C0', minScore: 1800 },
-  { name: '브론즈', emoji: '🥉', color: '#CD7F32', minScore: 1000 },
+  { name: '마스터', emoji: '💎', color: '#00CED1', minScore: 8500 },
+  { name: '다이아몬드', emoji: '💠', color: '#4169E1', minScore: 7500 },
+  { name: '플래티넘', emoji: '⭐', color: '#C0C0C0', minScore: 6000 },
+  { name: '골드', emoji: '🥇', color: '#FFD700', minScore: 4800 },
+  { name: '실버', emoji: '🥈', color: '#C0C0C0', minScore: 3800 },
+  { name: '브론즈', emoji: '🥉', color: '#CD7F32', minScore: 2000 },
   { name: '비기너', emoji: '🎯', color: '#808080', minScore: 0 },
 ];
 
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -350,42 +320,34 @@ const GameArea = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  margin-top: 120px;
+  margin-top: 1rem;
 
   @media (max-width: 768px) {
     padding: 1rem;
-    margin-top: 140px;
+    margin-top: 1rem;
   }
 
   @media (max-width: 480px) {
     padding: 0.75rem;
-    margin-top: 120px;
+    margin-top: 1rem;
   }
 `;
 
-const CardGrid = styled.div<{ gridSize: number }>`
+const CardGrid = styled.div<{ cols: number }>`
   display: grid;
-  grid-template-columns: repeat(
-    ${props => {
-      if (props.gridSize <= 12) return Math.ceil(Math.sqrt(props.gridSize));
-      if (props.gridSize <= 16) return 4;
-      return Math.ceil(Math.sqrt(props.gridSize));
-    }},
-    1fr
-  );
+  grid-template-columns: repeat(${props => props.cols}, 1fr);
   gap: 1rem;
-  max-width: 600px;
   width: 100%;
+  max-width: 720px; /* 6열 기준 넉넉하게 */
   justify-items: center;
 
   @media (max-width: 768px) {
     gap: 0.8rem;
-    max-width: 500px;
+    max-width: 560px;
   }
-
   @media (max-width: 480px) {
     gap: 0.5rem;
-    max-width: 350px;
+    max-width: 360px;
   }
 `;
 
@@ -416,7 +378,8 @@ const Card = styled.div<{
   position: relative;
   overflow: hidden;
 
-  animation: ${cardAppear} 0.6s ease ${props => (props.delay || 0) * 0.05}s both;
+  will-change: transform, opacity;
+  animation: ${cardAppear} 0.28s ease ${props => (props.delay || 0) * 0.03}s both;
 
   ${props =>
     props.isFlipped &&
@@ -434,7 +397,7 @@ const Card = styled.div<{
   ${props =>
     props.isWrong &&
     css`
-      animation: ${cardWrong} 0.6s ease;
+      animation: ${cardWrong} 0.3s ease-out;
       background: linear-gradient(135deg, #ef4444, #dc2626) !important;
     `}
 
@@ -460,12 +423,8 @@ const Card = styled.div<{
     opacity: ${props => (props.isMatched ? 0.7 : 0)};
     transition: opacity 0.3s ease;
   }
-
   &::after {
-    content: ${props => {
-      if (props.isFlipped || props.isMatched) return props.emoji;
-      return '❓';
-    }};
+    content: '${props => (props.isFlipped || props.isMatched ? props.emoji : '❓')}';
     color: white;
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -581,7 +540,6 @@ const OverlayContent = styled.div`
     margin: 1rem;
     border-radius: 20px;
     max-height: calc(100vh - 2rem);
-    overflow-y: auto;
 
     .overlay-title {
       font-size: 1.8rem;
@@ -1011,6 +969,7 @@ const MemoryCards: React.FC = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const gameStartTimeRef = useRef(0);
   const totalAttemptsRef = useRef(0);
+  const navigate = useNavigate();
 
   // 티어 계산 함수
   const calculateTier = (finalStats: GameStats): TierInfo => {
@@ -1130,7 +1089,7 @@ const MemoryCards: React.FC = () => {
             );
             setWrongCards([]);
             setFlippedCards([]);
-          }, 1000);
+          }, 400);
         }
       }
     },
@@ -1217,7 +1176,7 @@ const MemoryCards: React.FC = () => {
 
   const handleBackClick = () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    console.log('게임 목록으로 돌아가기');
+    navigate(-1);
   };
 
   const currentTier = calculateTier(stats);
@@ -1254,7 +1213,7 @@ const MemoryCards: React.FC = () => {
 
       {gameState === 'playing' && (
         <GameArea>
-          <CardGrid gridSize={selectedDifficulty.pairs * 2}>
+          <CardGrid cols={selectedDifficulty.cols}>
             {cards.map((card, index) => (
               <Card
                 key={card.id}

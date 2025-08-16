@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import styled from '@emotion/styled';
@@ -9,7 +9,7 @@ const slideIn = keyframes`
   100% { transform: translateY(0); opacity: 1; }
 `;
 
-const correctPulse = keyframes`
+const correctPulse = keyframes` 
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
@@ -320,7 +320,6 @@ const OverlayContent = styled.div`
   color: white;
   max-width: 600px;
   width: 90%;
-  overflow-y: auto;
 
   .title {
     font-size: 2rem;

@@ -75,7 +75,6 @@ import InteractiveHub from '@/pages/InteractiveExperiencePage/InteractiveHub/Int
 import MemoryCards from '@/pages/InteractiveExperiencePage/games/MemoryCards/MemoryCards';
 import ColorMatch from '@/pages/InteractiveExperiencePage/games/ColorMatch/ColorMatch';
 import BlockFaller from '@/pages/InteractiveExperiencePage/games/BlockFaller/BlockFaller';
-import FlappyGame from '@/pages/InteractiveExperiencePage/games/FlappyGame/FlappyGame';
 import MathQuiz from '@/pages/InteractiveExperiencePage/games/MathQuiz/MathQuiz';
 import MazeRunner from '@/pages/InteractiveExperiencePage/games/MazeRunner/MazeRunner';
 import ReactionTest from '@/pages/InteractiveExperiencePage/games/ReactionTest/ReactionTest';
@@ -128,10 +127,6 @@ export const router = createBrowserRouter([
       {
         path: 'interactive/color-match',
         element: <ColorMatch />,
-      },
-      {
-        path: 'interactive/flappy-game',
-        element: <FlappyGame />,
       },
       {
         path: 'interactive/math-quiz',

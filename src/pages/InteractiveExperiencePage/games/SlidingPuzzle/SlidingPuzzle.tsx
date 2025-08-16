@@ -23,7 +23,8 @@ const celebrationBounce = keyframes`
 `;
 
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
   display: flex;
   flex-direction: column;
@@ -90,8 +91,10 @@ const StatsPanel = styled.div`
 const Stat = styled.div<{ highlight?: boolean }>`
   text-align: center;
   color: white;
-  
-  ${props => props.highlight && `
+
+  ${props =>
+    props.highlight &&
+    `
     animation: ${celebrationBounce} 0.6s ease;
   `}
 
@@ -104,12 +107,16 @@ const Stat = styled.div<{ highlight?: boolean }>`
   .value {
     font-size: 1.2rem;
     font-weight: bold;
-    color: ${props => props.highlight ? '#fbbf24' : 'white'};
+    color: ${props => (props.highlight ? '#fbbf24' : 'white')};
   }
 
   @media (max-width: 768px) {
-    .label { font-size: 0.7rem; }
-    .value { font-size: 1rem; }
+    .label {
+      font-size: 0.7rem;
+    }
+    .value {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -138,8 +145,10 @@ const PuzzleBoard = styled.div<{ size: number; isComplete: boolean }>`
   border-radius: 20px;
   border: 3px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  
-  ${props => props.isComplete && `
+
+  ${props =>
+    props.isComplete &&
+    `
     animation: ${puzzleComplete} 1s ease-in-out infinite;
   `}
 
@@ -149,20 +158,25 @@ const PuzzleBoard = styled.div<{ size: number; isComplete: boolean }>`
   }
 `;
 
-const Tile = styled.div<{ 
-  size: number; 
+const Tile = styled.div<{
+  size: number;
   isEmpty: boolean;
   isMoveable: boolean;
   number: number;
 }>`
   width: ${props => 100 - props.size * 5}px;
   height: ${props => 100 - props.size * 5}px;
-  background: ${props => props.isEmpty 
-    ? 'transparent' 
-    : `linear-gradient(135deg, 
-        ${props.number <= props.size * props.size / 3 ? '#ef4444, #dc2626' :
-          props.number <= props.size * props.size * 2 / 3 ? '#f59e0b, #d97706' :
-          '#10b981, #059669'})`};
+  background: ${props =>
+    props.isEmpty
+      ? 'transparent'
+      : `linear-gradient(135deg, 
+        ${
+          props.number <= (props.size * props.size) / 3
+            ? '#ef4444, #dc2626'
+            : props.number <= (props.size * props.size * 2) / 3
+              ? '#f59e0b, #d97706'
+              : '#10b981, #059669'
+        })`};
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -170,14 +184,17 @@ const Tile = styled.div<{
   font-size: ${props => (100 - props.size * 5) * 0.4}px;
   font-weight: bold;
   color: white;
-  cursor: ${props => props.isMoveable ? 'pointer' : 'default'};
+  cursor: ${props => (props.isMoveable ? 'pointer' : 'default')};
   transition: all 0.3s ease;
-  border: ${props => props.isEmpty ? 'none' : '2px solid rgba(255, 255, 255, 0.3)'};
-  box-shadow: ${props => props.isEmpty ? 'none' : '0 4px 15px rgba(0, 0, 0, 0.2)'};
+  border: ${props => (props.isEmpty ? 'none' : '2px solid rgba(255, 255, 255, 0.3)')};
+  box-shadow: ${props => (props.isEmpty ? 'none' : '0 4px 15px rgba(0, 0, 0, 0.2)')};
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   user-select: none;
 
-  ${props => props.isMoveable && !props.isEmpty && `
+  ${props =>
+    props.isMoveable &&
+    !props.isEmpty &&
+    `
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -185,7 +202,9 @@ const Tile = styled.div<{
     }
   `}
 
-  ${props => !props.isEmpty && `
+  ${props =>
+    !props.isEmpty &&
+    `
     &:active {
       animation: ${tileSlide} 0.2s ease;
     }
@@ -213,18 +232,25 @@ const ControlPanel = styled.div`
 const ControlButton = styled.button<{ variant?: 'primary' | 'secondary' | 'success' }>`
   background: ${props => {
     switch (props.variant) {
-      case 'primary': return 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
-      case 'success': return 'linear-gradient(135deg, #10b981, #059669)';
-      default: return 'rgba(255, 255, 255, 0.2)';
+      case 'primary':
+        return 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+      case 'success':
+        return 'linear-gradient(135deg, #10b981, #059669)';
+      default:
+        return 'rgba(255, 255, 255, 0.2)';
     }
   }};
-  border: 2px solid ${props => {
-    switch (props.variant) {
-      case 'primary': return '#3b82f6';
-      case 'success': return '#10b981';
-      default: return 'rgba(255, 255, 255, 0.3)';
-    }
-  }};
+  border: 2px solid
+    ${props => {
+      switch (props.variant) {
+        case 'primary':
+          return '#3b82f6';
+        case 'success':
+          return '#10b981';
+        default:
+          return 'rgba(255, 255, 255, 0.3)';
+      }
+    }};
   border-radius: 8px;
   padding: 0.8rem 1.5rem;
   color: white;
@@ -265,10 +291,9 @@ const DifficultySelector = styled.div`
 `;
 
 const DifficultyButton = styled.button<{ selected?: boolean }>`
-  background: ${props => props.selected 
-    ? 'linear-gradient(135deg, #f59e0b, #d97706)' 
-    : 'rgba(255, 255, 255, 0.2)'};
-  border: 2px solid ${props => props.selected ? '#f59e0b' : 'rgba(255, 255, 255, 0.3)'};
+  background: ${props =>
+    props.selected ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'rgba(255, 255, 255, 0.2)'};
+  border: 2px solid ${props => (props.selected ? '#f59e0b' : 'rgba(255, 255, 255, 0.3)')};
   border-radius: 8px;
   padding: 0.8rem 1.5rem;
   color: white;
@@ -277,9 +302,8 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${props => props.selected 
-      ? 'linear-gradient(135deg, #d97706, #b45309)' 
-      : 'rgba(255, 255, 255, 0.3)'};
+    background: ${props =>
+      props.selected ? 'linear-gradient(135deg, #d97706, #b45309)' : 'rgba(255, 255, 255, 0.3)'};
     transform: translateY(-2px);
   }
 
@@ -289,60 +313,73 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
+/* ===== Overlay: 모바일 최적화 ===== */
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  height: 100dvh; /* 모바일 주소창 변화 대응 */
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 `;
 
 const OverlayContent = styled.div`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  padding: 3rem 2rem;
+  padding: 2rem;
   text-align: center;
   color: white;
   max-width: 500px;
-  width: 90%;
+  width: min(92vw, 500px);
+  max-height: 84dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
 
   .title {
-    font-size: 2rem;
+    font-size: clamp(1.4rem, 4.5vw, 2rem);
     font-weight: bold;
-    margin-bottom: 1rem;
   }
 
   .description {
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
     line-height: 1.6;
-    margin-bottom: 2rem;
     opacity: 0.9;
+    overflow: auto; /* 내용이 길어도 페이지 자체 스크롤 없이 내부에서만 스크롤 */
   }
 
-  @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
-    .title { font-size: 1.6rem; }
-    .description { font-size: 1rem; }
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+`;
+
+const ButtonsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
   }
 `;
 
 const ActionButton = styled.button`
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   border: none;
-  border-radius: 8px;
-  padding: 1rem 2rem;
+  border-radius: 10px;
+  padding: 0.9rem 1.4rem;
   color: white;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  margin: 0.5rem;
   transition: all 0.3s ease;
 
   &:hover {
@@ -351,8 +388,9 @@ const ActionButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
   }
 `;
 
@@ -365,6 +403,7 @@ interface GameStats {
 }
 
 type PuzzleSize = 3 | 4 | 5;
+type CompletionType = 'win' | 'reveal' | null;
 
 const SlidingPuzzle: React.FC = () => {
   const navigate = useNavigate();
@@ -372,6 +411,8 @@ const SlidingPuzzle: React.FC = () => {
   const [puzzleSize, setPuzzleSize] = useState<PuzzleSize>(3);
   const [board, setBoard] = useState<number[]>([]);
   const [emptyIndex, setEmptyIndex] = useState<number>(0);
+  const [completionType, setCompletionType] = useState<CompletionType>(null);
+
   const [stats, setStats] = useState<GameStats>({
     moves: 0,
     time: 0,
@@ -379,16 +420,14 @@ const SlidingPuzzle: React.FC = () => {
     bestTime: parseInt(localStorage.getItem(`puzzle-${puzzleSize}-best-time`) || '999'),
     gamesCompleted: parseInt(localStorage.getItem('puzzle-games-completed') || '0'),
   });
-  const [startTime, setStartTime] = useState<number>(0);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const startTimeRef = useRef<number>(0);
 
   const createSolvedBoard = useCallback((size: PuzzleSize) => {
     const board = [];
-    for (let i = 1; i < size * size; i++) {
-      board.push(i);
-    }
-    board.push(0); // 빈 공간
+    for (let i = 1; i < size * size; i++) board.push(i);
+    board.push(0);
     return board;
   }, []);
 
@@ -398,26 +437,17 @@ const SlidingPuzzle: React.FC = () => {
     const size = Math.sqrt(newBoard.length);
 
     for (let i = 0; i < iterations; i++) {
-      const possibleMoves = [];
+      const possibleMoves: number[] = [];
       const row = Math.floor(emptyPos / size);
       const col = emptyPos % size;
-
-      // 위
       if (row > 0) possibleMoves.push(emptyPos - size);
-      // 아래
       if (row < size - 1) possibleMoves.push(emptyPos + size);
-      // 왼쪽
       if (col > 0) possibleMoves.push(emptyPos - 1);
-      // 오른쪽
       if (col < size - 1) possibleMoves.push(emptyPos + 1);
-
       const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-      
-      // 타일 교환
       [newBoard[emptyPos], newBoard[randomMove]] = [newBoard[randomMove], newBoard[emptyPos]];
       emptyPos = randomMove;
     }
-
     return { board: newBoard, emptyIndex: emptyPos };
   }, []);
 
@@ -433,62 +463,69 @@ const SlidingPuzzle: React.FC = () => {
     const col = index % size;
     const emptyRow = Math.floor(emptyIndex / size);
     const emptyCol = emptyIndex % size;
-
-    // 같은 행에서 인접한 경우
     if (row === emptyRow && Math.abs(col - emptyCol) === 1) return true;
-    // 같은 열에서 인접한 경우
     if (col === emptyCol && Math.abs(row - emptyRow) === 1) return true;
-
     return false;
   }, []);
 
-  const moveTile = useCallback((index: number) => {
-    if (gameState !== 'playing') return;
-    if (!canMoveTile(index, emptyIndex, puzzleSize)) return;
-
-    const newBoard = [...board];
-    [newBoard[index], newBoard[emptyIndex]] = [newBoard[emptyIndex], newBoard[index]];
-    
-    setBoard(newBoard);
-    setEmptyIndex(index);
-    setStats(prev => ({ ...prev, moves: prev.moves + 1 }));
-
-    // 완료 확인
-    if (isSolved(newBoard)) {
-      const finalTime = Math.floor((Date.now() - startTime) / 1000);
-      setStats(prev => {
-        const newStats = { ...prev, time: finalTime };
-        
-        // 최고 기록 업데이트
-        if (prev.moves < prev.bestMoves || prev.bestMoves === 999) {
-          newStats.bestMoves = prev.moves;
-          localStorage.setItem(`puzzle-${puzzleSize}-best-moves`, prev.moves.toString());
-        }
-        
-        if (finalTime < prev.bestTime || prev.bestTime === 999) {
-          newStats.bestTime = finalTime;
-          localStorage.setItem(`puzzle-${puzzleSize}-best-time`, finalTime.toString());
-        }
-
-        newStats.gamesCompleted = prev.gamesCompleted + 1;
-        localStorage.setItem('puzzle-games-completed', newStats.gamesCompleted.toString());
-
-        return newStats;
-      });
-      
-      setGameState('completed');
-      if (timerRef.current) clearInterval(timerRef.current);
+  const clearTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-  }, [gameState, board, emptyIndex, puzzleSize, canMoveTile, isSolved, startTime]);
+  };
+
+  const moveTile = useCallback(
+    (index: number) => {
+      if (gameState !== 'playing') return;
+      if (!canMoveTile(index, emptyIndex, puzzleSize)) return;
+
+      const newBoard = [...board];
+      [newBoard[index], newBoard[emptyIndex]] = [newBoard[emptyIndex], newBoard[index]];
+
+      const movesAfter = stats.moves + 1;
+
+      setBoard(newBoard);
+      setEmptyIndex(index);
+      setStats(prev => ({ ...prev, moves: movesAfter }));
+
+      if (isSolved(newBoard)) {
+        const finalTime = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        clearTimer();
+        setCompletionType('win');
+        setGameState('completed');
+
+        setStats(prev => {
+          const newStats = { ...prev, time: finalTime };
+          if (movesAfter < prev.bestMoves || prev.bestMoves === 999) {
+            newStats.bestMoves = movesAfter;
+            localStorage.setItem(`puzzle-${puzzleSize}-best-moves`, movesAfter.toString());
+          }
+          if (finalTime < prev.bestTime || prev.bestTime === 999) {
+            newStats.bestTime = finalTime;
+            localStorage.setItem(`puzzle-${puzzleSize}-best-time`, finalTime.toString());
+          }
+          newStats.gamesCompleted = prev.gamesCompleted + 1;
+          localStorage.setItem('puzzle-games-completed', newStats.gamesCompleted.toString());
+          return newStats;
+        });
+      }
+    },
+    [gameState, board, emptyIndex, puzzleSize, canMoveTile, isSolved, stats.moves]
+  );
 
   const startNewGame = () => {
+    clearTimer();
     const solvedBoard = createSolvedBoard(puzzleSize);
     const { board: shuffledBoard, emptyIndex: newEmptyIndex } = shuffleBoard(solvedBoard);
-    
+
     setBoard(shuffledBoard);
     setEmptyIndex(newEmptyIndex);
     setGameState('playing');
-    setStartTime(Date.now());
+    setCompletionType(null);
+
+    startTimeRef.current = Date.now();
+
     setStats(prev => ({
       ...prev,
       moves: 0,
@@ -497,33 +534,32 @@ const SlidingPuzzle: React.FC = () => {
       bestTime: parseInt(localStorage.getItem(`puzzle-${puzzleSize}-best-time`) || '999'),
     }));
 
-    // 타이머 시작
     timerRef.current = setInterval(() => {
-      setStats(prev => ({ ...prev, time: Math.floor((Date.now() - startTime) / 1000) }));
+      const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
+      setStats(prev => ({ ...prev, time: elapsed }));
     }, 1000);
   };
 
   const resetGame = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
+    clearTimer();
     setGameState('setup');
+    setCompletionType(null);
   };
 
   const solvePuzzle = () => {
+    // 해답 보기: 기록 갱신/축하 금지
+    clearTimer();
     const solvedBoard = createSolvedBoard(puzzleSize);
     setBoard(solvedBoard);
     setEmptyIndex(solvedBoard.indexOf(0));
+    setCompletionType('reveal');
     setGameState('completed');
-    if (timerRef.current) clearInterval(timerRef.current);
   };
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
+  useEffect(() => clearTimer, []);
 
   const handleBackClick = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
+    clearTimer();
     navigate(-1);
   };
 
@@ -535,9 +571,12 @@ const SlidingPuzzle: React.FC = () => {
 
   const getDifficultyName = (size: PuzzleSize) => {
     switch (size) {
-      case 3: return '쉬움 (3×3)';
-      case 4: return '보통 (4×4)';
-      case 5: return '어려움 (5×5)';
+      case 3:
+        return '쉬움 (3×3)';
+      case 4:
+        return '보통 (4×4)';
+      case 5:
+        return '어려움 (5×5)';
     }
   };
 
@@ -564,7 +603,7 @@ const SlidingPuzzle: React.FC = () => {
             <div className="label">최고기록</div>
             <div className="value">{stats.bestMoves === 999 ? '-' : stats.bestMoves}</div>
           </Stat>
-          <Stat highlight={gameState === 'completed'}>
+          <Stat highlight={gameState === 'completed' && completionType === 'win'}>
             <div className="label">완료한 게임</div>
             <div className="value">{stats.gamesCompleted}</div>
           </Stat>
@@ -573,7 +612,7 @@ const SlidingPuzzle: React.FC = () => {
 
       {gameState !== 'setup' && (
         <GameArea>
-          <PuzzleBoard size={puzzleSize} isComplete={isCompleted}>
+          <PuzzleBoard size={puzzleSize} isComplete={isCompleted && completionType === 'win'}>
             {board.map((number, index) => (
               <Tile
                 key={index}
@@ -590,8 +629,7 @@ const SlidingPuzzle: React.FC = () => {
 
           <ControlPanel>
             <ControlButton onClick={startNewGame} variant="primary">
-              <Shuffle size={16} />
-              새 게임
+              <Shuffle size={16} />새 게임
             </ControlButton>
             <ControlButton onClick={resetGame}>
               <RotateCcw size={16} />
@@ -619,7 +657,7 @@ const SlidingPuzzle: React.FC = () => {
             <br />
             난이도를 선택하세요:
           </div>
-          
+
           <DifficultySelector>
             {[3, 4, 5].map(size => (
               <DifficultyButton
@@ -631,39 +669,59 @@ const SlidingPuzzle: React.FC = () => {
               </DifficultyButton>
             ))}
           </DifficultySelector>
-          
-          <ActionButton onClick={startNewGame}>게임 시작</ActionButton>
-          <ActionButton onClick={handleBackClick}>뒤로 가기</ActionButton>
+
+          <ButtonsRow>
+            <ActionButton onClick={startNewGame}>게임 시작</ActionButton>
+            <ActionButton onClick={handleBackClick}>뒤로 가기</ActionButton>
+          </ButtonsRow>
         </OverlayContent>
       </GameOverlay>
 
       <GameOverlay show={gameState === 'completed'}>
         <OverlayContent>
-          <div className="title">🎉 퍼즐 완성!</div>
+          <div className="title">{completionType === 'win' ? '🎉 퍼즐 완성!' : '🔎 해답 확인'}</div>
+
           <div className="description">
-            <strong>축하합니다!</strong>
-            <br />
-            움직임: {stats.moves}번
-            <br />
-            시간: {formatTime(stats.time)}
-            <br />
-            <br />
-            <strong>최고 기록:</strong>
-            <br />
-            최소 움직임: {stats.bestMoves === 999 ? '기록 없음' : `${stats.bestMoves}번`}
-            <br />
-            최단 시간: {stats.bestTime === 999 ? '기록 없음' : formatTime(stats.bestTime)}
-            <br />
-            <br />
-            {stats.moves <= puzzleSize * puzzleSize * 2
-              ? '🏆 완벽한 해결!'
-              : stats.moves <= puzzleSize * puzzleSize * 4
-                ? '⭐ 훌륭한 실력!'
-                : '👍 잘했어요!'}
+            {completionType === 'win' ? (
+              <>
+                <strong>축하합니다!</strong>
+                <br />
+                움직임: {stats.moves}번
+                <br />
+                시간: {formatTime(stats.time)}
+                <br />
+                <br />
+                <strong>최고 기록:</strong>
+                <br />
+                최소 움직임: {stats.bestMoves === 999 ? '기록 없음' : `${stats.bestMoves}번`}
+                <br />
+                최단 시간: {stats.bestTime === 999 ? '기록 없음' : formatTime(stats.bestTime)}
+                <br />
+                <br />
+                {stats.moves <= puzzleSize * puzzleSize * 2
+                  ? '🏆 완벽한 해결!'
+                  : stats.moves <= puzzleSize * puzzleSize * 4
+                    ? '⭐ 훌륭한 실력!'
+                    : '👍 잘했어요!'}
+              </>
+            ) : (
+              <>
+                현재 퍼즐의 <strong>정답 배치</strong>를 보여줬어요.
+                <br />이 화면은 연습용이며 <strong>기록은 저장되지 않습니다.</strong>
+                <br />
+                <br />
+                난이도를 바꾸거나 새 게임으로 도전해 보세요!
+              </>
+            )}
           </div>
-          <ActionButton onClick={startNewGame}>다시 하기</ActionButton>
-          <ActionButton onClick={resetGame}>난이도 변경</ActionButton>
-          <ActionButton onClick={handleBackClick}>게임 목록</ActionButton>
+
+          <ButtonsRow>
+            <ActionButton onClick={startNewGame}>
+              {completionType === 'win' ? '다시 하기' : '새 게임'}
+            </ActionButton>
+            <ActionButton onClick={resetGame}>난이도 변경</ActionButton>
+            <ActionButton onClick={handleBackClick}>게임 목록</ActionButton>
+          </ButtonsRow>
         </OverlayContent>
       </GameOverlay>
     </GameContainer>
