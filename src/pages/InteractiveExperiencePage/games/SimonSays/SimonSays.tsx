@@ -50,7 +50,8 @@ const buttonHover = keyframes`
 /*          UI           */
 /* ===================== */
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -325,30 +326,6 @@ const CenterDisplay = styled.div`
   }
 `;
 
-const StatusDisplay = styled.div`
-  text-align: center;
-  color: white;
-
-  .main {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0.4rem;
-    background: linear-gradient(45deg, #fff, #f1f5f9);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .sub {
-    opacity: 0.85;
-  }
-
-  @media (max-width: 768px) {
-    .main {
-      font-size: 1.2rem;
-    }
-  }
-`;
-
 /* ======= Buttons ======= */
 const ControlPanel = styled.div`
   display: flex;
@@ -533,12 +510,9 @@ const ScoreItem = styled.div<{ delay?: number }>`
 
 const StatGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.7rem;
   margin: 0.8rem 0;
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const StatCard = styled.div<{ delay?: number }>`

@@ -6,102 +6,69 @@ import { useNavigate } from 'react-router-dom';
 
 // 애니메이션 정의 (css로 래핑)
 const clickPulse = keyframes`
-  0% { 
-    transform: scale(1); 
+  0% {
+    transform: scale(1);
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
   }
-  50% { 
-    transform: scale(0.95); 
+  50% {
+    transform: scale(0.95);
     box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
   }
-  100% { 
-    transform: scale(1); 
+  100% {
+    transform: scale(1);
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
   }
 `;
 
 const comboGlow = keyframes`
-  0%, 100% { 
+  0%, 100% {
     box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
     border-color: rgba(249, 115, 22, 0.6);
   }
-  50% { 
+  50% {
     box-shadow: 0 0 50px rgba(249, 115, 22, 0.8);
     border-color: rgba(249, 115, 22, 1);
   }
 `;
 
 const recordBreak = keyframes`
-  0% { 
-    transform: scale(1); 
-  }
-  25% { 
-    transform: scale(1.1) rotate(1deg); 
-  }
-  50% { 
-    transform: scale(1.05) rotate(-1deg); 
-  }
-  75% { 
-    transform: scale(1.15) rotate(1deg); 
-  }
-  100% { 
-    transform: scale(1) rotate(0deg); 
-  }
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1) rotate(1deg); }
+  50% { transform: scale(1.05) rotate(-1deg); }
+  75% { transform: scale(1.15) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
 `;
 
 const speedBoost = keyframes`
-  0%, 100% { 
+  0%, 100% {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     transform: scale(1);
   }
-  50% { 
+  50% {
     background: linear-gradient(135deg, #f59e0b, #d97706);
     transform: scale(1.05);
   }
 `;
 
 const resultAppear = keyframes`
-  0% {
-    transform: scale(0.5) translateY(50px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(-10px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+  50% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 `;
 
 const tierGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
 `;
 
 const statsReveal = keyframes`
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 `;
 
 const buttonHover = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 `;
 
 const GameContainer = styled.div`
@@ -148,7 +115,6 @@ const Header = styled.div`
     flex-direction: column;
     gap: 0.75rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
@@ -173,13 +139,11 @@ const BackButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
   }
-
   @media (max-width: 768px) {
     padding: 0.5rem 0.8rem;
     font-size: 0.85rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
@@ -201,7 +165,6 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
@@ -211,13 +174,11 @@ const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   @media (max-width: 480px) {
     gap: 0.75rem;
   }
@@ -229,9 +190,8 @@ const Stat = styled.div<{ highlight?: boolean }>`
   transition: all 0.3s ease;
   border-radius: 8px;
   padding: 0.5rem;
-
-  ${props =>
-    props.highlight &&
+  ${p =>
+    p.highlight &&
     css`
       animation: ${recordBreak} 0.6s ease;
     `}
@@ -241,28 +201,24 @@ const Stat = styled.div<{ highlight?: boolean }>`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: ${props => (props.highlight ? '#fbbf24' : '#ef4444')};
+    color: ${p => (p.highlight ? '#fbbf24' : '#ef4444')};
   }
 
   @media (max-width: 768px) {
     .stat-label {
       font-size: 0.7rem;
     }
-
     .stat-value {
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .stat-label {
       font-size: 0.65rem;
     }
-
     .stat-value {
       font-size: 0.9rem;
     }
@@ -284,18 +240,13 @@ const GameArea = styled.div`
     padding: 1rem;
     gap: 1.5rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.75rem;
     gap: 1rem;
   }
 `;
 
-const ClickZone = styled.div<{
-  isActive: boolean;
-  isCombo: boolean;
-  clicks: number;
-}>`
+const ClickZone = styled.div<{ isActive: boolean; isCombo: boolean; clicks: number }>`
   width: 320px;
   height: 320px;
   background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -305,7 +256,7 @@ const ClickZone = styled.div<{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: ${props => (props.isActive ? 'pointer' : 'not-allowed')};
+  cursor: ${p => (p.isActive ? 'pointer' : 'not-allowed')};
   transition: all 0.1s ease;
   user-select: none;
   position: relative;
@@ -313,16 +264,16 @@ const ClickZone = styled.div<{
     0 20px 40px rgba(239, 68, 68, 0.3),
     inset 0 0 50px rgba(255, 255, 255, 0.1);
 
-  /* ✅ 터치/제스처는 클릭 영역에서만 막고, 전역 스크롤/클릭은 허용 */
-  touch-action: none; /* 팬/줌 비활성화 */
+  /* 터치/제스처는 클릭 영역에서만 제한 */
+  touch-action: none;
   -ms-touch-action: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: contain;
 
-  ${props =>
-    props.isActive &&
+  ${p =>
+    p.isActive &&
     css`
       &:hover {
         transform: scale(1.02);
@@ -331,20 +282,17 @@ const ClickZone = styled.div<{
           0 25px 50px rgba(239, 68, 68, 0.4),
           inset 0 0 60px rgba(255, 255, 255, 0.2);
       }
-
       &:active {
         animation: ${clickPulse} 0.15s ease;
       }
     `}
-
-  ${props =>
-    props.isCombo &&
+  ${p =>
+    p.isCombo &&
     css`
       animation: ${comboGlow} 0.5s ease-in-out infinite;
     `}
-
-  ${props =>
-    !props.isActive &&
+  ${p =>
+    !p.isActive &&
     css`
       opacity: 0.6;
       background: linear-gradient(135deg, #6b7280, #4b5563);
@@ -369,14 +317,12 @@ const ClickZone = styled.div<{
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 0.5rem;
   }
-
   .click-count {
     font-size: 3.5rem;
     font-weight: 800;
     color: white;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
-
   .click-instruction {
     font-size: 1.1rem;
     color: white;
@@ -389,32 +335,25 @@ const ClickZone = styled.div<{
   @media (max-width: 768px) {
     width: 280px;
     height: 280px;
-
     .click-text {
       font-size: 1.8rem;
     }
-
     .click-count {
       font-size: 3rem;
     }
-
     .click-instruction {
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     width: 240px;
     height: 240px;
-
     .click-text {
       font-size: 1.5rem;
     }
-
     .click-count {
       font-size: 2.5rem;
     }
-
     .click-instruction {
       font-size: 0.9rem;
     }
@@ -427,11 +366,9 @@ const GameModeSelector = styled.div`
   margin-bottom: 2rem;
   flex-wrap: wrap;
   justify-content: center;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
   }
-
   @media (max-width: 480px) {
     gap: 0.6rem;
     margin-bottom: 1.5rem;
@@ -439,29 +376,26 @@ const GameModeSelector = styled.div`
 `;
 
 const ModeButton = styled.button<{ selected?: boolean }>`
-  background: ${props =>
-    props.selected ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'rgba(255, 255, 255, 0.1)'};
-  border: 2px solid ${props => (props.selected ? '#ef4444' : 'rgba(255, 255, 255, 0.3)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'rgba(255,255,255,0.1)'};
+  border: 2px solid ${p => (p.selected ? '#ef4444' : 'rgba(255,255,255,0.3)')};
   border-radius: 12px;
   padding: 0.8rem 1.5rem;
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-
   &:hover {
-    background: ${props =>
-      props.selected ? 'linear-gradient(135deg, #dc2626, #b91c1c)' : 'rgba(255, 255, 255, 0.2)'};
+    background: ${p =>
+      p.selected ? 'linear-gradient(135deg, #dc2626, #b91c1c)' : 'rgba(255,255,255,0.2)'};
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
   }
-
   @media (max-width: 768px) {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
@@ -479,9 +413,8 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
   min-width: 220px;
   border: 2px solid rgba(239, 68, 68, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-
-  ${props =>
-    props.isHighSpeed &&
+  ${p =>
+    p.isHighSpeed &&
     css`
       animation: ${speedBoost} 1s ease-in-out infinite;
     `}
@@ -493,14 +426,12 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .speed-value {
     font-size: 2.5rem;
     font-weight: 800;
-    color: ${props => (props.isHighSpeed ? '#fbbf24' : 'white')};
+    color: ${p => (p.isHighSpeed ? '#fbbf24' : 'white')};
     text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
   }
-
   .speed-unit {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -510,16 +441,13 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
   @media (max-width: 768px) {
     padding: 1.2rem 1.5rem;
     min-width: 180px;
-
     .speed-value {
       font-size: 2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 1rem 1.2rem;
     min-width: 150px;
-
     .speed-value {
       font-size: 1.8rem;
     }
@@ -535,12 +463,10 @@ const ProgressBar = styled.div`
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
-
   @media (max-width: 768px) {
     max-width: 350px;
     height: 14px;
   }
-
   @media (max-width: 480px) {
     max-width: 280px;
     height: 12px;
@@ -548,7 +474,7 @@ const ProgressBar = styled.div`
 `;
 
 const ProgressFill = styled.div<{ progress: number }>`
-  width: ${props => props.progress}%;
+  width: ${p => p.progress}%;
   height: 100%;
   background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
   transition: width 0.1s linear;
@@ -567,22 +493,19 @@ const ComboIndicator = styled.div<{ show: boolean; combo: number }>`
   border-radius: 20px;
   font-weight: 700;
   font-size: 1.2rem;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${p => (p.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
   box-shadow: 0 10px 30px rgba(249, 158, 11, 0.4);
   border: 2px solid rgba(255, 255, 255, 0.3);
-
   &::before {
-    content: '${props => props.combo}x COMBO!';
+    content: '${p => p.combo}x COMBO!';
   }
-
   @media (max-width: 768px) {
     top: -50px;
     font-size: 1.1rem;
     padding: 0.6rem 1.2rem;
   }
-
   @media (max-width: 480px) {
     top: -45px;
     font-size: 1rem;
@@ -600,14 +523,12 @@ const Countdown = styled.div<{ show: boolean }>`
   color: #ef4444;
   text-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
   z-index: 500;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${p => (p.show ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: none;
-
   @media (max-width: 768px) {
     font-size: 4rem;
   }
-
   @media (max-width: 480px) {
     font-size: 3rem;
   }
@@ -621,14 +542,12 @@ const GameOverlay = styled.div<{ show: boolean }>`
   bottom: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
-
   -webkit-overflow-scrolling: touch;
-
   @media (max-width: 480px) {
     padding: 1rem;
   }
@@ -644,7 +563,6 @@ const OverlayContent = styled.div`
   max-width: 600px;
   width: 100%;
   position: relative;
-
   animation: ${resultAppear} 0.8s ease-out;
   box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
@@ -672,7 +590,6 @@ const OverlayContent = styled.div`
     margin-bottom: 1.5rem;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
-
   .overlay-text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
@@ -684,28 +601,23 @@ const OverlayContent = styled.div`
     padding: 1.8rem 1.3rem;
     margin: 1rem;
     border-radius: 20px;
-
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
     }
-
     .overlay-text {
       font-size: 0.95rem;
       margin-bottom: 2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
-
     .overlay-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
     }
-
     .overlay-text {
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
@@ -718,15 +630,15 @@ const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
-  border: 2px solid ${props => props.color};
+  background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
+  border: 2px solid ${p => p.color};
   border-radius: 16px;
   padding: 0.8rem 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: ${props => props.color};
-  text-shadow: 0 0 20px ${props => props.color}80;
+  color: ${p => p.color};
+  text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
 
   @media (max-width: 768px) {
@@ -735,7 +647,6 @@ const TierBadge = styled.div<{ color: string }>`
     margin-bottom: 1.2rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
@@ -752,13 +663,11 @@ const ScoreBreakdown = styled.div`
   padding: 1.5rem;
   margin: 1.5rem 0;
   backdrop-filter: blur(10px);
-
   @media (max-width: 768px) {
     padding: 1.2rem;
     margin: 1.2rem 0;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 1rem;
     margin: 1rem 0;
@@ -772,7 +681,7 @@ const ScoreItem = styled.div<{ delay?: number }>`
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
@@ -782,12 +691,10 @@ const ScoreItem = styled.div<{ delay?: number }>`
     margin-top: 0.5rem;
     padding-top: 1rem;
   }
-
   .score-label {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
   }
-
   .score-value {
     color: #fff;
     font-weight: 600;
@@ -795,17 +702,14 @@ const ScoreItem = styled.div<{ delay?: number }>`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0;
-
     &:last-child {
       font-size: 1.1rem;
       margin-top: 0.4rem;
       padding-top: 0.8rem;
     }
-
     .score-label {
       font-size: 0.85rem;
     }
-
     .score-value {
       font-size: 0.9rem;
     }
@@ -817,12 +721,10 @@ const StatGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 1.5rem 0;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
-
   @media (max-width: 480px) {
     gap: 0.6rem;
     margin: 1rem 0;
@@ -835,7 +737,7 @@ const StatCard = styled.div<{ delay?: number }>`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
     font-size: 0.8rem;
@@ -844,7 +746,6 @@ const StatCard = styled.div<{ delay?: number }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
@@ -855,26 +756,21 @@ const StatCard = styled.div<{ delay?: number }>`
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .stat-title {
       font-size: 0.75rem;
       margin-bottom: 0.4rem;
     }
-
     .stat-number {
       font-size: 1.2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem;
     border-radius: 8px;
-
     .stat-title {
       font-size: 0.7rem;
       margin-bottom: 0.3rem;
     }
-
     .stat-number {
       font-size: 1.1rem;
     }
@@ -889,7 +785,7 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   margin: 1.5rem 0;
   color: #ef4444;
   font-weight: 600;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 
   @media (max-width: 768px) {
@@ -898,7 +794,6 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
     border-radius: 10px;
     font-size: 0.95rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     margin: 1rem 0;
@@ -908,12 +803,11 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  background: ${props =>
-    props.variant === 'secondary'
-      ? 'rgba(255, 255, 255, 0.1)'
+  background: ${p =>
+    p.variant === 'secondary'
+      ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-  border: ${props =>
-    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
@@ -939,18 +833,15 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
       width 0.6s,
       height 0.6s;
   }
-
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
     animation: ${buttonHover} 0.6s ease-in-out;
-
     &:before {
       width: 300px;
       height: 300px;
     }
   }
-
   &:active {
     transform: translateY(-1px);
   }
@@ -961,13 +852,11 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     margin: 0.4rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
     margin: 0.3rem;
     border-radius: 10px;
-
     &:hover {
       transform: translateY(-2px);
     }
@@ -1003,21 +892,9 @@ interface TierInfo {
 
 // 상수 정의
 const GAME_MODES: Record<GameMode, ModeSettings> = {
-  sprint: {
-    duration: 10,
-    name: '스프린트',
-    description: '10초 동안 최대한 많이 클릭',
-  },
-  endurance: {
-    duration: 30,
-    name: '지구력',
-    description: '30초 동안 꾸준한 클릭 유지',
-  },
-  precision: {
-    duration: 60,
-    name: '정밀도',
-    description: '60초 동안 정확하고 빠른 클릭',
-  },
+  sprint: { duration: 10, name: '스프린트', description: '10초 동안 최대한 많이 클릭' },
+  endurance: { duration: 30, name: '지구력', description: '30초 동안 꾸준한 클릭 유지' },
+  precision: { duration: 60, name: '정밀도', description: '60초 동안 정확하고 빠른 클릭' },
 };
 
 const TIERS: TierInfo[] = [
@@ -1047,8 +924,9 @@ const SpeedClicker: React.FC = () => {
     maxCombo: 0,
     accuracy: 100,
   });
-  const [clickTimes, setClickTimes] = useState<number[]>([]);
-  const clickTimesRef = useRef<number[]>([]); // 최신 클릭타임 참조
+
+  // ✅ 클릭 타임라인은 ref만 사용
+  const clickTimesRef = useRef<number[]>([]);
   const navigate = useNavigate();
 
   const [showCombo, setShowCombo] = useState(false);
@@ -1087,20 +965,13 @@ const SpeedClicker: React.FC = () => {
 
   // 티어 계산 함수
   const calculateTier = (finalStats: GameStats): TierInfo => {
-    const modeMultiplier = {
-      sprint: 1,
-      endurance: 0.8,
-      precision: 0.6,
-    } as const;
-
+    const modeMultiplier = { sprint: 1, endurance: 0.8, precision: 0.6 } as const;
     const adjustedCPS = finalStats.maxCps * modeMultiplier[gameMode];
     const comboBonus = finalStats.maxCombo * 0.1;
     const accuracyBonus = (finalStats.accuracy / 100) * 2;
     const totalScore = adjustedCPS + comboBonus + accuracyBonus;
 
-    for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) return tier;
-    }
+    for (const tier of TIERS) if (totalScore >= tier.minScore) return tier;
     return TIERS[TIERS.length - 1];
   };
 
@@ -1108,19 +979,18 @@ const SpeedClicker: React.FC = () => {
     if (gameStateRef.current !== 'playing') return;
 
     const now = Date.now();
-    const timeSinceLastClick = now - (clickTimesRef.current.at(-1) ?? 0);
+    const last = clickTimesRef.current.at(-1) ?? 0;
+    const timeSinceLastClick = now - last;
 
-    setClickTimes(prev => {
-      const newTimes = [...prev, now].filter(time => now - time <= 5000);
-      clickTimesRef.current = newTimes; // ✅ ref 갱신 (interval에서 사용)
-      return newTimes;
-    });
+    // ref 갱신 (최근 5초만 보관)
+    const newTimes = [...clickTimesRef.current, now].filter(t => now - t <= 5000);
+    clickTimesRef.current = newTimes;
 
     setStats(prev => {
       const newClicks = prev.clicks + 1;
       const newTotalClicks = prev.totalClicks + 1;
 
-      let newCombo = prev.combo;
+      let newCombo: number;
       if (timeSinceLastClick < 500) {
         newCombo = prev.combo + 1;
         if (newCombo >= 10 && newCombo % 5 === 0) {
@@ -1174,12 +1044,11 @@ const SpeedClicker: React.FC = () => {
       maxCombo: 0,
       accuracy: 100,
     });
-    setClickTimes([]);
+    // ref 초기화
     clickTimesRef.current = [];
-    // 마지막 클릭 시간은 배열의 끝으로 대체
 
     countdownRef.current = setInterval(() => {
-      if (runId !== runIdRef.current) return; // ✅ 최신 실행만 동작
+      if (runId !== runIdRef.current) return;
       setCountdown(prev => {
         if (prev <= 1) {
           if (countdownRef.current) {
@@ -1197,7 +1066,6 @@ const SpeedClicker: React.FC = () => {
                   clearInterval(gameTimerRef.current);
                   gameTimerRef.current = null;
                 }
-                // 상태 가드 (이중 전환 방지)
                 if (gameStateRef.current === 'playing' && runId === runIdRef.current) {
                   setGameState('finished');
                 }
@@ -1231,7 +1099,6 @@ const SpeedClicker: React.FC = () => {
   };
 
   const endGame = useCallback(() => {
-    // 게임 종료 시점에만 개인 기록 갱신
     setPersonalBest(prev => {
       const best = prev[gameMode];
       if (stats.clicks > best) {
@@ -1242,7 +1109,6 @@ const SpeedClicker: React.FC = () => {
   }, [stats.clicks, gameMode]);
 
   const resetGame = () => {
-    // ✅ 이전 실행 무효화 + 타이머 정리
     runIdRef.current += 1;
     clearTimers();
     setShowCombo(false);
@@ -1261,7 +1127,6 @@ const SpeedClicker: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      // 언마운트 시 남은 콜백 무효화 및 정리
       runIdRef.current += 1;
       clearTimers();
     };
@@ -1332,9 +1197,9 @@ const SpeedClicker: React.FC = () => {
                 clicks={stats.clicks}
                 role="button"
                 tabIndex={0}
-                onPointerDown={handleClick} // ✅ 포인터 이벤트로 통합 (모바일/PC 모두)
+                onPointerDown={handleClick}
                 onKeyDown={handleKeyDown}
-                onContextMenu={e => e.preventDefault()} // 모바일 롱프레스 메뉴 방지
+                onContextMenu={e => e.preventDefault()}
               >
                 <div className="click-text">
                   {isGameActive ? 'CLICK!' : gameState === 'countdown' ? '준비...' : '완료'}
@@ -1363,12 +1228,9 @@ const SpeedClicker: React.FC = () => {
             <br />
             <br />
             <strong>팁:</strong>
-            <br />
-            • 일정한 리듬으로 클릭하세요
-            <br />
-            • 모바일에서는 터치가 더 빠를 수 있습니다
-            <br />
-            • 손목을 사용하지 말고 손가락을 사용하세요
+            <br />• 일정한 리듬으로 클릭하세요
+            <br />• 모바일에서는 터치가 더 빠를 수 있습니다
+            <br />• 손목을 사용하지 말고 손가락을 사용하세요
             <br />
             <br />
             게임 모드를 선택하세요:

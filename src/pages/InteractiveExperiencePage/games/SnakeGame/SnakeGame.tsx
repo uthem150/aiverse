@@ -30,65 +30,24 @@ const foodSpawn = keyframes`
   100% { transform: scale(1) rotate(360deg); opacity: 1; }
 `;
 
-const gameOver = keyframes`
-  0% { transform: scale(1); background: #10b981; }
-  25% { transform: scale(1.1) rotate(2deg); background: #ef4444; }
-  50% { transform: scale(0.9) rotate(-2deg); background: #dc2626; }
-  75% { transform: scale(1.1) rotate(2deg); background: #ef4444; }
-  100% { transform: scale(1) rotate(0deg); background: #10b981; }
-`;
-
-const resultAppear = keyframes`
-  0% {
-    transform: scale(0.5) translateY(50px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(-10px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-`;
-
 const tierGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
 `;
 
 const statsReveal = keyframes`
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 `;
 
 const buttonHover = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 `;
 
 const difficultyPulse = keyframes`
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 `;
 
 const comboEffect = keyframes`
@@ -100,6 +59,13 @@ const comboEffect = keyframes`
 const boardPulse = keyframes`
   0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
   50% { border-color: rgba(16, 185, 129, 0.6); }
+`;
+
+/* 결과 오버레이 등장 애니메이션 */
+const resultAppear = keyframes`
+  0%   { opacity: 0; transform: translateY(12px) scale(0.98); filter: blur(4px); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.01); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 `;
 
 // 난이도 설정
@@ -195,7 +161,6 @@ const Header = styled.div`
     flex-direction: column;
     gap: 0.75rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
@@ -229,7 +194,6 @@ const BackButton = styled.button`
     font-size: 0.85rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
@@ -251,7 +215,6 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
@@ -261,13 +224,11 @@ const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   @media (max-width: 480px) {
     gap: 0.75rem;
   }
@@ -277,8 +238,8 @@ const Stat = styled.div<{ highlight?: boolean }>`
   text-align: center;
   color: white;
 
-  ${props =>
-    props.highlight &&
+  ${p =>
+    p.highlight &&
     css`
       animation: ${foodEaten} 0.8s ease;
     `}
@@ -288,11 +249,10 @@ const Stat = styled.div<{ highlight?: boolean }>`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: ${props => (props.highlight ? '#fbbf24' : '#10b981')};
+    color: ${p => (p.highlight ? '#fbbf24' : '#10b981')};
     text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
   }
 
@@ -304,7 +264,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .stat-label {
       font-size: 0.65rem;
@@ -330,7 +289,6 @@ const GameArea = styled.div`
     gap: 1.5rem;
     margin-top: 140px;
   }
-
   @media (max-width: 480px) {
     padding: 0.75rem;
     gap: 1rem;
@@ -339,8 +297,8 @@ const GameArea = styled.div`
 `;
 
 const GameBoard = styled.div<{ size: number; isActive: boolean }>`
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
+  width: ${p => p.size}px;
+  height: ${p => p.size}px;
   background: rgba(255, 255, 255, 0.05);
   border: 4px solid rgba(16, 185, 129, 0.3);
   border-radius: 16px;
@@ -351,22 +309,21 @@ const GameBoard = styled.div<{ size: number; isActive: boolean }>`
   animation: ${gameStart} 0.8s ease-out;
   backdrop-filter: blur(10px);
 
-  ${props =>
-    props.isActive &&
+  ${p =>
+    p.isActive &&
     css`
       animation: ${boardPulse} 2s ease-in-out infinite;
     `}
 
   @media (max-width: 768px) {
-    width: ${props => Math.min(props.size, 350)}px;
-    height: ${props => Math.min(props.size, 350)}px;
+    width: ${p => Math.min(p.size, 350)}px;
+    height: ${p => Math.min(p.size, 350)}px;
     border: 3px solid rgba(16, 185, 129, 0.3);
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
-    width: ${props => Math.min(props.size, 280)}px;
-    height: ${props => Math.min(props.size, 280)}px;
+    width: ${p => Math.min(p.size, 280)}px;
+    height: ${p => Math.min(p.size, 280)}px;
     border: 2px solid rgba(16, 185, 129, 0.3);
     border-radius: 10px;
   }
@@ -382,26 +339,24 @@ const SnakeSegment = styled.div<{
   index: number;
 }>`
   position: absolute;
-  left: ${props => (props.x * props.boardSize) / props.gridSize}px;
-  top: ${props => (props.y * props.boardSize) / props.gridSize}px;
-  width: ${props => props.boardSize / props.gridSize - 2}px;
-  height: ${props => props.boardSize / props.gridSize - 2}px;
-  background: ${props =>
-    props.isHead
+  left: ${p => (p.x * p.boardSize) / p.gridSize}px;
+  top: ${p => (p.y * p.boardSize) / p.gridSize}px;
+  width: ${p => p.boardSize / p.gridSize - 2}px;
+  height: ${p => p.boardSize / p.gridSize - 2}px;
+  background: ${p =>
+    p.isHead
       ? 'linear-gradient(135deg, #fbbf24, #f59e0b)'
-      : `linear-gradient(135deg, #10b981, #059669)`};
-  border-radius: ${props => (props.isHead ? '60%' : '8px')};
+      : 'linear-gradient(135deg, #10b981, #059669)'};
+  border-radius: ${p => (p.isHead ? '60%' : '8px')};
   border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: ${props =>
-    props.isHead ? '0 0 15px rgba(251, 191, 36, 0.6)' : '0 0 8px rgba(16, 185, 129, 0.4)'};
+  box-shadow: ${p => (p.isHead ? '0 0 15px rgba(251,191,36,0.6)' : '0 0 8px rgba(16,185,129,0.4)')};
   transition: all 0.2s ease;
-  z-index: ${props => (props.isHead ? 10 : 9 - props.index)};
+  z-index: ${p => (p.isHead ? 10 : 9 - p.index)};
 
-  ${props =>
-    props.isHead &&
+  ${p =>
+    p.isHead &&
     css`
       animation: ${snakeMove} 0.3s ease;
-
       &::before {
         content: '';
         position: absolute;
@@ -413,7 +368,6 @@ const SnakeSegment = styled.div<{
         border-radius: 50%;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       }
-
       &::after {
         content: '';
         position: absolute;
@@ -427,7 +381,7 @@ const SnakeSegment = styled.div<{
       }
     `}
 
-  @media (max-width: 768px) {
+  @media (max-width:768px) {
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 `;
@@ -441,24 +395,23 @@ const Food = styled.div<{
   isNew: boolean;
 }>`
   position: absolute;
-  left: ${props => (props.x * props.boardSize) / props.gridSize}px;
-  top: ${props => (props.y * props.boardSize) / props.gridSize}px;
-  width: ${props => props.boardSize / props.gridSize - 2}px;
-  height: ${props => props.boardSize / props.gridSize - 2}px;
+  left: ${p => (p.x * p.boardSize) / p.gridSize}px;
+  top: ${p => (p.y * p.boardSize) / p.gridSize}px;
+  width: ${p => p.boardSize / p.gridSize - 2}px;
+  height: ${p => p.boardSize / p.gridSize - 2}px;
   background: linear-gradient(135deg, #ef4444, #dc2626);
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
   border: 2px solid rgba(255, 255, 255, 0.3);
   z-index: 15;
 
-  ${props =>
-    props.isEaten &&
+  ${p =>
+    p.isEaten &&
     css`
       animation: ${foodEaten} 0.5s ease;
     `}
-
-  ${props =>
-    props.isNew &&
+  ${p =>
+    p.isNew &&
     css`
       animation: ${foodSpawn} 0.4s ease;
     `}
@@ -469,7 +422,7 @@ const Food = styled.div<{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: ${props => (props.boardSize / props.gridSize) * 0.6}px;
+    font-size: ${p => (p.boardSize / p.gridSize) * 0.6}px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
@@ -489,29 +442,25 @@ const ComboIndicator = styled.div<{ show: boolean }>`
   text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
   z-index: 200;
   pointer-events: none;
-  opacity: ${props => (props.show ? 1 : 0)};
-
-  ${props =>
-    props.show &&
+  opacity: ${p => (p.show ? 1 : 0)};
+  ${p =>
+    p.show &&
     css`
       animation: ${comboEffect} 1s ease-out;
     `}
-
-  @media (max-width: 480px) {
+  @media (max-width:480px) {
     font-size: 2rem;
   }
 `;
 
 const ControlButtons = styled.div`
   display: none;
-
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.8rem;
     width: 180px;
   }
-
   @media (max-width: 480px) {
     gap: 0.6rem;
     width: 150px;
@@ -531,25 +480,18 @@ const ControlButton = styled.button<{ position: 'up' | 'down' | 'left' | 'right'
   align-items: center;
   justify-content: center;
 
-  ${props =>
-    props.position === 'empty' &&
-    `
-    background: transparent;
-    border: none;
-    cursor: default;
-  `}
+  ${p => p.position === 'empty' && `background: transparent; border: none; cursor: default;`}
 
-  ${props => props.position === 'up' && `grid-column: 2;`}
-  ${props => props.position === 'left' && `grid-column: 1;`}
-  ${props => props.position === 'right' && `grid-column: 3;`}
-  ${props => props.position === 'down' && `grid-column: 2;`}
+  ${p => p.position === 'up' && `grid-column: 2;`}
+  ${p => p.position === 'left' && `grid-column: 1;`}
+  ${p => p.position === 'right' && `grid-column: 3;`}
+  ${p => p.position === 'down' && `grid-column: 2;`}
 
   &:hover:not([disabled]) {
     background: rgba(16, 185, 129, 0.3);
     transform: translateY(-3px);
     box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
   }
-
   &:active {
     transform: translateY(-1px);
   }
@@ -569,12 +511,11 @@ const GameOverlay = styled.div<{ show: boolean }>`
   bottom: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
-
   @media (max-width: 480px) {
     padding: 1rem;
   }
@@ -631,29 +572,24 @@ const OverlayContent = styled.div`
     margin: 1rem;
     border-radius: 20px;
     max-height: calc(100vh - 2rem);
-
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
     }
-
     .overlay-text {
       font-size: 0.95rem;
       margin-bottom: 2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
     max-height: calc(100vh - 1rem);
-
     .overlay-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
     }
-
     .overlay-text {
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
@@ -666,7 +602,6 @@ const DifficultySelector = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 2rem 0;
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -675,9 +610,9 @@ const DifficultySelector = styled.div`
 `;
 
 const DifficultyCard = styled.button<{ selected: boolean }>`
-  background: ${props =>
-    props.selected ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255, 255, 255, 0.05)'};
-  border: 2px solid ${props => (props.selected ? '#10b981' : 'rgba(255, 255, 255, 0.1)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255,255,255,0.05)'};
+  border: 2px solid ${p => (p.selected ? '#10b981' : 'rgba(255,255,255,0.1)')};
   border-radius: 12px;
   padding: 1rem;
   color: white;
@@ -685,8 +620,8 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   transition: all 0.3s ease;
   text-align: left;
 
-  ${props =>
-    props.selected &&
+  ${p =>
+    p.selected &&
     css`
       animation: ${difficultyPulse} 2s ease-in-out infinite;
     `}
@@ -705,7 +640,6 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
-
   .difficulty-desc {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -714,11 +648,9 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   @media (max-width: 480px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .difficulty-header {
       font-size: 1rem;
     }
-
     .difficulty-desc {
       font-size: 0.85rem;
     }
@@ -729,15 +661,15 @@ const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
-  border: 2px solid ${props => props.color};
+  background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
+  border: 2px solid ${p => p.color};
   border-radius: 16px;
   padding: 0.8rem 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: ${props => props.color};
-  text-shadow: 0 0 20px ${props => props.color}80;
+  color: ${p => p.color};
+  text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
 
   @media (max-width: 768px) {
@@ -746,7 +678,6 @@ const TierBadge = styled.div<{ color: string }>`
     margin-bottom: 1.2rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
@@ -769,7 +700,6 @@ const ScoreBreakdown = styled.div`
     margin: 1.2rem 0;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 1rem;
     margin: 1rem 0;
@@ -783,7 +713,7 @@ const ScoreItem = styled.div<{ delay?: number }>`
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
@@ -798,7 +728,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
   }
-
   .score-value {
     color: #10b981;
     font-weight: 600;
@@ -807,17 +736,14 @@ const ScoreItem = styled.div<{ delay?: number }>`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0;
-
     &:last-child {
       font-size: 1.1rem;
       margin-top: 0.4rem;
       padding-top: 0.8rem;
     }
-
     .score-label {
       font-size: 0.85rem;
     }
-
     .score-value {
       font-size: 0.9rem;
     }
@@ -829,12 +755,10 @@ const StatGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 1.5rem 0;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.6rem;
@@ -848,7 +772,7 @@ const StatCard = styled.div<{ delay?: number }>`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
     font-size: 0.8rem;
@@ -857,7 +781,6 @@ const StatCard = styled.div<{ delay?: number }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
@@ -868,26 +791,21 @@ const StatCard = styled.div<{ delay?: number }>`
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .stat-title {
       font-size: 0.75rem;
       margin-bottom: 0.4rem;
     }
-
     .stat-number {
       font-size: 1.2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem;
     border-radius: 8px;
-
     .stat-title {
       font-size: 0.7rem;
       margin-bottom: 0.3rem;
     }
-
     .stat-number {
       font-size: 1.1rem;
     }
@@ -902,7 +820,7 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   margin: 1.5rem 0;
   color: #10b981;
   font-weight: 600;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 
   @media (max-width: 768px) {
@@ -911,7 +829,6 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
     border-radius: 10px;
     font-size: 0.95rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     margin: 1rem 0;
@@ -921,12 +838,11 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  background: ${props =>
-    props.variant === 'secondary'
-      ? 'rgba(255, 255, 255, 0.1)'
+  background: ${p =>
+    p.variant === 'secondary'
+      ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #10b981, #059669)'};
-  border: ${props =>
-    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
@@ -959,7 +875,6 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     ${css`
       animation: ${buttonHover} 0.6s ease-in-out;
     `}
-
     &:before {
       width: 300px;
       height: 300px;
@@ -976,13 +891,11 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     margin: 0.4rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
     margin: 0.3rem;
     border-radius: 10px;
-
     &:hover {
       transform: translateY(-2px);
     }
@@ -1051,9 +964,7 @@ const SnakeGame: React.FC = () => {
       difficultyMultiplier;
 
     for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
+      if (totalScore >= tier.minScore) return tier;
     }
     return TIERS[TIERS.length - 1];
   };
@@ -1066,7 +977,7 @@ const SnakeGame: React.FC = () => {
           x: Math.floor(Math.random() * selectedDifficulty.gridSize),
           y: Math.floor(Math.random() * selectedDifficulty.gridSize),
         };
-      } while (currentSnake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+      } while (currentSnake.some(s => s.x === newFood.x && s.y === newFood.y));
 
       setFoodNew(true);
       setTimeout(() => setFoodNew(false), 400);
@@ -1108,7 +1019,7 @@ const SnakeGame: React.FC = () => {
       }
 
       // 자기 몸 충돌 체크
-      if (currentSnake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+      if (currentSnake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
         setGameState('finished');
         return currentSnake;
       }
@@ -1121,7 +1032,7 @@ const SnakeGame: React.FC = () => {
         setTimeout(() => setFoodEaten(false), 500);
 
         const now = Date.now();
-        const timeSinceLastFood = now - lastFoodTimeRef.current;
+        // 사용하지 않는 변수 제거
         lastFoodTimeRef.current = now;
 
         setFood(generateFood(newSnake));
@@ -1195,42 +1106,27 @@ const SnakeGame: React.FC = () => {
 
   const handleDirectionChange = (newDirection: 'up' | 'down' | 'left' | 'right') => {
     if (gameState !== 'playing') return;
-
-    const oppositeDirections = {
-      up: 'down',
-      down: 'up',
-      left: 'right',
-      right: 'left',
-    };
-
-    if (direction !== oppositeDirections[newDirection]) {
-      setDirection(newDirection);
-    }
+    const opposite = { up: 'down', down: 'up', left: 'right', right: 'left' } as const;
+    if (direction !== opposite[newDirection]) setDirection(newDirection);
   };
 
-  const handleTouchStart = (event: React.TouchEvent) => {
-    const touch = event.touches[0];
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    touchStartRef.current = { x: t.clientX, y: t.clientY };
   };
 
-  const handleTouchEnd = (event: React.TouchEvent) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStartRef.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartRef.current.x;
+    const dy = t.clientY - touchStartRef.current.y;
+    const min = 30;
 
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - touchStartRef.current.x;
-    const deltaY = touch.clientY - touchStartRef.current.y;
-    const minSwipeDistance = 30;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (Math.abs(deltaX) > minSwipeDistance) {
-        handleDirectionChange(deltaX > 0 ? 'right' : 'left');
-      }
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (Math.abs(dx) > min) handleDirectionChange(dx > 0 ? 'right' : 'left');
     } else {
-      if (Math.abs(deltaY) > minSwipeDistance) {
-        handleDirectionChange(deltaY > 0 ? 'down' : 'up');
-      }
+      if (Math.abs(dy) > min) handleDirectionChange(dy > 0 ? 'down' : 'up');
     }
-
     touchStartRef.current = null;
   };
 
@@ -1279,7 +1175,6 @@ const SnakeGame: React.FC = () => {
     } else {
       if (gameLoopRef.current) clearInterval(gameLoopRef.current);
     }
-
     return () => {
       if (gameLoopRef.current) clearInterval(gameLoopRef.current);
     };
@@ -1306,8 +1201,7 @@ const SnakeGame: React.FC = () => {
     <GameContainer>
       <Header>
         <BackButton onClick={handleBackClick}>
-          <ArrowLeft size={16} />
-          게임 목록
+          <ArrowLeft size={16} /> 게임 목록
         </BackButton>
         <Title>🐍 스네이크</Title>
         <StatsPanel>
@@ -1404,16 +1298,16 @@ const SnakeGame: React.FC = () => {
           </div>
 
           <DifficultySelector>
-            {DIFFICULTIES.map(difficulty => (
+            {DIFFICULTIES.map(d => (
               <DifficultyCard
-                key={difficulty.name}
-                selected={selectedDifficulty.name === difficulty.name}
-                onClick={() => setSelectedDifficulty(difficulty)}
+                key={d.name}
+                selected={selectedDifficulty.name === d.name}
+                onClick={() => setSelectedDifficulty(d)}
               >
                 <div className="difficulty-header">
-                  {difficulty.emoji} {difficulty.name}
+                  {d.emoji} {d.name}
                 </div>
-                <div className="difficulty-desc">{difficulty.description}</div>
+                <div className="difficulty-desc">{d.description}</div>
               </DifficultyCard>
             ))}
           </DifficultySelector>
@@ -1432,11 +1326,9 @@ const SnakeGame: React.FC = () => {
             게임이 일시정지되었습니다.
             <br />
             <br />
-            현재 점수: {stats.score}점
-            <br />뱀 길이: {stats.length}
+            현재 점수: {stats.score}점<br />뱀 길이: {stats.length}
             <br />
-            생존 시간: {stats.survivalTime}초
-            <br />
+            생존 시간: {stats.survivalTime}초<br />
             난이도: {selectedDifficulty.emoji} {selectedDifficulty.name}
           </div>
           <ActionButton onClick={() => setGameState('playing')}>게임 계속</ActionButton>
