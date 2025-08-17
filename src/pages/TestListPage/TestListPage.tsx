@@ -203,14 +203,14 @@ const TestListPage = () => {
             테스트
           </Typography>
         </div>
-        <div className="stat">
+        {/* <div className="stat">
           <Typography variant="h5" color="#8B5CF6">
             {Math.floor(totalParticipants / 10000)}만+
           </Typography>
           <Typography variant="caption" color="#6B7280">
             참여자
           </Typography>
-        </div>
+        </div> */}
         <div className="stat">
           <Typography variant="h5" color="#06B6D4">
             {avgMinutes}분

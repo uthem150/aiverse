@@ -19,6 +19,7 @@ import TestCard from '@/components/features/TestCard/TestCard';
 import { testCategories } from '@/data/tests';
 import { useNavigate } from 'react-router-dom';
 import Footer from '@/components/layout/Footer/Footer';
+import SplitText from '@/components/reactBits/SplitText/SplitText';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -57,9 +58,48 @@ const HomePage = () => {
     <StyledHomePage>
       {/* Hero Section */}
       <StyledHeroSection>
-        <Typography variant="h1" align="center" responsive>
-          🤖 AIverse에 오신 것을 환영합니다
-        </Typography>
+        <SplitText
+          text="🤖 Welcome! 🤖"
+          // 크기: rem 기반 + 유동
+          fontSize={'clamp(1rem, calc(1rem + 2vw), 3rem)'}
+          lineHeight={1.05}
+          fontWeight={800}
+          textAlign="center"
+          // 그라데이션(왼→오)
+          gradient={'linear-gradient(90deg, #6aa8ff 0%, #8e6cff 50%, #ff7ab9 100%)'}
+          // 애니메이션
+          splitType="chars"
+          delay={70}
+          duration={0.5}
+          ease="power3.out"
+          from={{ opacity: 0, y: 18 }}
+          to={{ opacity: 1, y: 0 }}
+          loop
+          yoyo
+          repeatDelay={1}
+          pauseWhenOffscreen={true}
+        />
+        <SplitText
+          text="Aiverse-phi"
+          // 크기: rem 기반 + 유동
+          fontSize={'clamp(1rem, calc(1rem + 2vw), 3rem)'}
+          lineHeight={1.05}
+          fontWeight={800}
+          textAlign="center"
+          // 그라데이션(왼→오)
+          gradient={'linear-gradient(90deg, #6aa8ff 0%, #8e6cff 50%, #ff7ab9 100%)'}
+          // 애니메이션
+          splitType="chars"
+          delay={70}
+          duration={0.5}
+          ease="power3.out"
+          from={{ opacity: 0, y: 18 }}
+          to={{ opacity: 1, y: 0 }}
+          loop
+          yoyo
+          repeatDelay={1}
+          pauseWhenOffscreen={true}
+        />
         <Typography variant="body1" align="center" color="#6B7280">
           AI의 모든 것을 체험하고 발견하는 공간 • 전 세계 300만 명 이상 참여한 인기 테스트들
         </Typography>

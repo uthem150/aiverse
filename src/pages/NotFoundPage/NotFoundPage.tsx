@@ -24,7 +24,7 @@ const NotFoundPage = () => {
           요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.
         </Typography>
         <Typography variant="body2" align="center" color="#6B7280">
-          AIverse에서 다른 흥미로운 테스트들을 만나보세요!
+          AIverse-phi에서 다른 흥미로운 테스트들을 만나보세요!
         </Typography>
       </StyledErrorMessage>
 
