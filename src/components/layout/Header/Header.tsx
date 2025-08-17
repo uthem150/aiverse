@@ -1,8 +1,7 @@
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Home, Sparkles, MousePointer2, Rocket } from 'lucide-react';
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Sparkles } from 'lucide-react';
 import {
   Logo,
   Nav,
@@ -16,7 +15,8 @@ import { useThemeStore } from '@/stores/themeStore';
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDarkMode, toggleTheme } = useThemeStore();
+
+  const { isDarkMode, toggleTheme, enableSplashCursor, toggleSplashCursor } = useThemeStore();
 
   // 체험관 관련 경로들 정의
   const isInInteractiveHub = () => {
@@ -36,13 +36,8 @@ const Header: React.FC = () => {
     }
   };
 
-  const getButtonText = () => {
-    return isInInteractiveHub() ? '홈으로' : '체험관';
-  };
-
-  const getButtonIcon = () => {
-    return isInInteractiveHub() ? <Home size={18} /> : <Sparkles size={18} />;
-  };
+  const getButtonText = () => (isInInteractiveHub() ? '홈으로' : '체험관');
+  const getButtonIcon = () => (isInInteractiveHub() ? <Home size={18} /> : <Rocket size={18} />);
 
   return (
     <StyledHeader>
@@ -54,6 +49,18 @@ const Header: React.FC = () => {
             {getButtonIcon()}
             {getButtonText()}
           </NavButton>
+
+          {/* 스플래시 커서 토글 버튼 */}
+          <StyledThemeButton
+            onClick={toggleSplashCursor}
+            aria-label={`스플래시 커서 ${enableSplashCursor ? '끄기' : '켜기'}`}
+            aria-pressed={enableSplashCursor}
+            title={`Splash Cursor ${enableSplashCursor ? 'On' : 'Off'}`}
+          >
+            {enableSplashCursor ? <Sparkles size={20} /> : <MousePointer2 size={20} />}
+          </StyledThemeButton>
+
+          {/* 다크모드 토글 버튼 */}
           <StyledThemeButton onClick={toggleTheme} aria-label="다크 모드 토글">
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </StyledThemeButton>
