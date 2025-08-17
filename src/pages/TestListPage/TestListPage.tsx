@@ -123,10 +123,10 @@ const TestListPage = () => {
   };
 
   // 11) 통계
-  const totalParticipants = useMemo(
-    () => filteredTests.reduce((sum, test) => sum + (test.participantCount || 0), 0),
-    [filteredTests]
-  );
+  // const totalParticipants = useMemo(
+  //   () => filteredTests.reduce((sum, test) => sum + (test.participantCount || 0), 0),
+  //   [filteredTests]
+  // );
 
   const avgMinutes = useMemo(() => {
     if (!filteredTests.length) return 0;
