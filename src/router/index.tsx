@@ -102,6 +102,10 @@ export const router = createBrowserRouter([
         path: 'tests/:category',
         element: <TestListPage />,
       },
+      {
+        path: 'search',
+        element: <TestListPage />, // /search?q=...&cat=...&sort=... 지원
+      },
       // 인터랙티브 체험관
       {
         path: 'interactive-hub',
