@@ -500,18 +500,6 @@ const OverlayContent = styled.div`
   }
 `;
 
-const DifficultySelector = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem; /* PC 간격 줄임 */
-  margin: 0.8rem 0; /* PC 마진 줄임 */
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-    margin: 1.5rem 0;
-  }
-`;
-
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
