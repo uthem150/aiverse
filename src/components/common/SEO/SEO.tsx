@@ -1,6 +1,6 @@
 // src/components/common/SEO/SEO.tsx
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useMatches } from 'react-router-dom';
 import { getTestMeta, getTestThumbnailUrl } from '@/data/testMeta';
 
 interface SEOProps {
@@ -24,21 +24,20 @@ const SEO = ({
   image,
   url,
   type,
-  siteName = 'AIverse-phi', // 브랜딩 통일
+  siteName = 'AIverse-phi',
   twitterCard = 'summary_large_image',
   disableAutoDetection = false,
 }: SEOProps) => {
   const location = useLocation();
+  // 훅은 조건 없이 항상 호출
+  const matches = useMatches();
 
-  // 현재 경로에서 테스트/인터랙티브 ID 추출
-  //  - /test/:id         -> id
-  //  - /interactive/:id  -> id
-  //  - /interactive-hub  -> 별도 처리
+  // 404 여부: handle 플래그로 안전하게 판단
+  const is404 = matches.some((m: any) => m?.handle?.is404 === true);
+
+  // 경로에서 /test/:id, /interactive/:id의 id 추출
   const getIdFromPath = () => {
-    const path = location.pathname; // e.g. "/interactive/speed-clicker"
-    const segments = path.split('/').filter(Boolean); // ["interactive","speed-clicker"]
-
-    // /test/:id, /interactive/:id 패턴
+    const segments = location.pathname.split('/').filter(Boolean);
     if ((segments[0] === 'test' || segments[0] === 'interactive') && segments[1]) {
       return segments[1];
     }
@@ -47,7 +46,18 @@ const SEO = ({
 
   // 자동 메타데이터 추론
   const getAutoMetadata = () => {
-    // 비활성화 시 홈 기본값 고정
+    // 404 전용 기본 메타
+    if (is404) {
+      return {
+        autoTitle: '404 - 페이지를 찾을 수 없습니다 | AIverse-phi',
+        autoDescription:
+          '요청하신 페이지를 찾을 수 없습니다. 홈으로 이동하거나 검색을 이용해 원하는 콘텐츠를 찾아보세요.',
+        autoKeywords: '404, 페이지를 찾을 수 없습니다, not found',
+        autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
+        autoType: 'website' as const,
+      };
+    }
+
     if (disableAutoDetection) {
       return {
         autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
@@ -60,7 +70,7 @@ const SEO = ({
       };
     }
 
-    // 개별 상세: /test/:id, /interactive/:id
+    // 상세 페이지
     const pathId = getIdFromPath();
     if (pathId) {
       const meta = getTestMeta(pathId);
@@ -74,9 +84,9 @@ const SEO = ({
       };
     }
 
-    // 인터랙티브 허브: /interactive-hub
+    // 인터랙티브 허브
     if (location.pathname === '/interactive-hub') {
-      const meta = getTestMeta('interactive-hub'); // (수정) 기존의 잘못된 'interactive-experience' -> 'interactive-hub'
+      const meta = getTestMeta('interactive-hub');
       return {
         autoTitle: meta.title,
         autoDescription: meta.description,
@@ -86,8 +96,12 @@ const SEO = ({
       };
     }
 
-    // 카테고리/목록: /tests, /tests/:category
-    if (location.pathname === '/tests' || location.pathname.startsWith('/tests/')) {
+    // 목록/검색
+    if (
+      location.pathname === '/tests' ||
+      location.pathname.startsWith('/tests/') ||
+      location.pathname === '/search'
+    ) {
       return {
         autoTitle: '테스트 목록 - AIverse-phi',
         autoDescription:
@@ -111,7 +125,7 @@ const SEO = ({
       };
     }
 
-    // 기본값(기타 정적 페이지)
+    // 기본값
     return {
       autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
       autoDescription:
@@ -133,6 +147,9 @@ const SEO = ({
   const finalType = type || autoType;
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
 
+  // 404일 때만 noindex, 평소엔 index
+  const robotsValue = is404 ? 'noindex, follow' : 'index, follow';
+
   return (
     <Helmet>
       {/* 기본 메타 */}
@@ -151,7 +168,7 @@ const SEO = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="AIverse-phi 대표 이미지" />
 
-      {/* Twitter Card */}
+      {/* Twitter */}
       <meta name="twitter:card" content={twitterCard} />
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
@@ -159,8 +176,9 @@ const SEO = ({
       <meta name="twitter:image:alt" content="AIverse-phi 대표 이미지" />
       <meta name="twitter:site" content="@aiverse" />
 
-      {/* 추가 */}
-      <meta name="robots" content="index, follow" />
+      {/* robots */}
+      <meta name="robots" content={robotsValue} />
+      <meta name="googlebot" content={robotsValue} />
       <meta name="author" content="AIverse-phi" />
 
       {/* Canonical */}

@@ -369,6 +369,7 @@ export const router = createBrowserRouter([
       {
         path: '*',
         element: <NotFoundPage />,
+        handle: { is404: true },
       },
     ],
   },
