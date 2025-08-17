@@ -6,9 +6,13 @@ import SEO from '@/components/common/SEO/SEO';
 import StructuredData from '@/components/common/StructuredData/StructuredData';
 import { initGA, trackPageView } from '@/utils/analytics';
 import SplashCursor from '@/components/reactBits/SplashCursor/SplashCursor';
+import { useThemeStore } from '@/stores/themeStore';
 
 const Layout = () => {
   const location = useLocation();
+
+  // 사용자 설정 가져오기
+  const enableSplashCursor = useThemeStore(s => s.enableSplashCursor);
 
   // 🚀 GA 초기화 (한 번만 실행)
   useEffect(() => {
@@ -56,8 +60,10 @@ const Layout = () => {
       {/* 구조화 데이터 */}
       <StructuredData testId={testId} />
 
-      {/* 조건부 커서 효과 - 체험관과 게임 페이지가 아닐 때만 활성화 */}
-      {!useSpecialLayout && <SplashCursor />}
+      {/* 조건부 커서 효과
+          1) 인터랙티브/게임 페이지는 비활성
+          2) 사용자 설정(enableSplashCursor)이 true일 때만 렌더 */}
+      {!useSpecialLayout && enableSplashCursor && <SplashCursor />}
 
       <StyledLayout>
         <Header />

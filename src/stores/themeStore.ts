@@ -7,8 +7,14 @@ import { darkTheme } from '@/styles/themes/darkTheme';
 
 interface ThemeState {
   currentTheme: Theme; // 현재 적용 중인 테마
-  isDarkMode: boolean; // 현재 다크 모드 사용 여부
-  useLowVision: boolean; // 저시력 모드 사용 여부
+  isDarkMode: boolean; // 다크 모드 여부
+  useLowVision: boolean; // 저시력 모드 여부
+
+  // SplashCursor 효과 온/오프
+  enableSplashCursor: boolean;
+  toggleSplashCursor: () => void;
+  setSplashCursor: (enabled: boolean) => void;
+
   toggleTheme: () => void; // 테마 라이트/다크로 전환하는 함수
   setDarkMode: (isDark: boolean) => void; // 다크 모드 여부 명시적으로 설정하는 함수
 }
@@ -22,7 +28,15 @@ export const useThemeStore = create<ThemeState>()(
       isDarkMode: false, // 기본값은 다크 모드 비활성화
       useLowVision: false, // 기본값은 저시력 모드 비활성화
 
-      // 현재 모드의 반대값으로 테마를 전환
+      // 기본값은 on
+      enableSplashCursor: true,
+      toggleSplashCursor: () => {
+        set({ enableSplashCursor: !get().enableSplashCursor });
+      },
+      setSplashCursor: (enabled: boolean) => {
+        set({ enableSplashCursor: enabled });
+      },
+
       toggleTheme: () => {
         const { isDarkMode } = get(); // 현재 다크모드 여부 가져오기
         const newIsDarkMode = !isDarkMode; // 현재값의 반전 (on/off)
@@ -59,6 +73,7 @@ export const useThemeStore = create<ThemeState>()(
         // 저장할 상태 중 일부만 선택 (테마 객체 전체가 아닌 플래그만 저장)
         isDarkMode: state.isDarkMode,
         useLowVision: state.useLowVision,
+        enableSplashCursor: state.enableSplashCursor,
       }),
     }
   )
