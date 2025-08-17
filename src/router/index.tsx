@@ -84,6 +84,10 @@ import SnakeGame from '@/pages/InteractiveExperiencePage/games/SnakeGame/SnakeGa
 import SpeedClicker from '@/pages/InteractiveExperiencePage/games/SpeedClicker/SpeedClicker';
 import TicTacToe from '@/pages/InteractiveExperiencePage/games/TicTacToe/TicTacToe';
 import WhackAMole from '@/pages/InteractiveExperiencePage/games/WhackAMole/WhackAMole';
+import PrivacyPage from '@/pages/Legal/PrivacyPage/PrivacyPage';
+import TermsPage from '@/pages/Legal/TermsPage/TermsPage';
+import AboutPage from '@/pages/Legal/AboutPage/AboutPage';
+import ContactPage from '@/pages/Legal/ContactPage/ContactPage';
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: 'tests/:category',
         element: <TestListPage />,
+      },
+      {
+        path: 'search',
+        element: <TestListPage />, // /search?q=...&cat=...&sort=... 지원
       },
       // 인터랙티브 체험관
       {
@@ -362,9 +370,16 @@ export const router = createBrowserRouter([
         path: 'test/overseas-football-team-test',
         element: <OverseasFootballTeamTestPage />,
       },
+
+      // 정책, 회사 정보 페이지
+      { path: 'privacy', element: <PrivacyPage /> },
+      { path: 'terms', element: <TermsPage /> },
+      { path: 'about', element: <AboutPage /> },
+      { path: 'contact', element: <ContactPage /> },
       {
         path: '*',
         element: <NotFoundPage />,
+        handle: { is404: true },
       },
     ],
   },

@@ -1,3 +1,65 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "version": 2,
+  "trailingSlash": false,
+  "cleanUrls": true,
+
+  "headers": [
+    {
+      "source": "/assets/(.*)\\.(js|css)$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/images/(.*)\\.(png|jpg|jpeg|webp|gif|svg)$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/(robots.txt|sitemap.xml)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
+      "source": "/(index.html)?",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" }
+      ]
+    },
+
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+      ]
+    },
+
+    {
+      "source": "/(?!test/face-emotion-test)(.*)",
+      "headers": [
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+
+    {
+      "source": "/test/face-emotion-test",
+      "headers": [
+        { "key": "Permissions-Policy", "value": "camera=(self), microphone=(self), geolocation=()" }
+      ]
+    }
+  ],
+
+  "rewrites": [
+    { "source": "/(robots.txt|sitemap.xml|favicon.ico)", "destination": "/$1" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/images/(.*)", "destination": "/images/$1" },
+
+
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
