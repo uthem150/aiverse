@@ -4,7 +4,7 @@ import { useLocation, useMatches } from 'react-router-dom';
 import { getTestMeta, getTestThumbnailUrl } from '@/data/testMeta';
 
 interface SEOProps {
-  // 수동 설정(우선순위 최상)
+  // 수동 설정(수동이 최우선)
   title?: string;
   description?: string;
   keywords?: string;
@@ -13,10 +13,16 @@ interface SEOProps {
   type?: 'website' | 'article';
   siteName?: string;
   twitterCard?: 'summary' | 'summary_large_image';
-  // 자동 추론 비활성화
+  // 자동 추론 비활성화 (강제로 홈 기본값)
   disableAutoDetection?: boolean;
 }
 
+/**
+ * SEO
+ * - 라우트/URL을 보고 메타 자동 완성
+ * - 404(route handle.is404)에서는 noindex, follow 적용
+ * - 프리뷰 전체 noindex가 필요하면 VITE_NOINDEX=1 설정
+ */
 const SEO = ({
   title,
   description,
@@ -29,24 +35,30 @@ const SEO = ({
   disableAutoDetection = false,
 }: SEOProps) => {
   const location = useLocation();
-  // 훅은 조건 없이 항상 호출
+
+  // 훅은 조건 없이 항상 호출해야 함(React Hooks 규칙)
   const matches = useMatches();
 
-  // 404 여부: handle 플래그로 안전하게 판단
+  // 404 여부: 라우터에서 NotFound 라우트에 handle: { is404: true }를 지정했다는 가정
   const is404 = matches.some((m: any) => m?.handle?.is404 === true);
 
-  // 경로에서 /test/:id, /interactive/:id의 id 추출
+  // 프리뷰 환경에서 전체 noindex를 강제로 켤지 여부 (옵션)
+  // Vite: import.meta.env.VITE_NOINDEX === '1' 이면 전체 noindex
+  const isPreviewNoindex =
+    typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_NOINDEX === '1';
+
+  // 경로에서 상세 ID 추출: /test/:id, /interactive/:id
   const getIdFromPath = () => {
-    const segments = location.pathname.split('/').filter(Boolean);
+    const segments = location.pathname.split('/').filter(Boolean); // ['interactive','speed-clicker']
     if ((segments[0] === 'test' || segments[0] === 'interactive') && segments[1]) {
       return segments[1];
     }
     return null;
   };
 
-  // 자동 메타데이터 추론
+  // 자동 메타 생성
   const getAutoMetadata = () => {
-    // 404 전용 기본 메타
+    // 404 전용
     if (is404) {
       return {
         autoTitle: '404 - 페이지를 찾을 수 없습니다 | AIverse-phi',
@@ -58,6 +70,7 @@ const SEO = ({
       };
     }
 
+    // 자동 추론 끄기(홈 기본값으로 고정)
     if (disableAutoDetection) {
       return {
         autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
@@ -70,7 +83,7 @@ const SEO = ({
       };
     }
 
-    // 상세 페이지
+    // 상세 페이지(/test/:id | /interactive/:id) → testMeta 기반
     const pathId = getIdFromPath();
     if (pathId) {
       const meta = getTestMeta(pathId);
@@ -84,7 +97,7 @@ const SEO = ({
       };
     }
 
-    // 인터랙티브 허브
+    // 인터랙티브 허브/하위 고정 페이지들
     if (location.pathname === '/interactive-hub') {
       const meta = getTestMeta('interactive-hub');
       return {
@@ -95,8 +108,37 @@ const SEO = ({
         autoType: 'website' as const,
       };
     }
+    if (location.pathname === '/interactive/games') {
+      return {
+        autoTitle: '인터랙티브 게임 모음 - AIverse-phi',
+        autoDescription:
+          '반응속도·기억력·공간 지각력·색상 인지 등 두뇌활동 무료 게임 모음. 브라우저에서 바로 플레이하세요.',
+        autoKeywords:
+          '인터랙티브 게임, 웹 게임, 반응속도 테스트, 기억력 게임, 공간 지각력 게임, 두뇌활동 무료게임',
+        autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
+        autoType: 'website' as const,
+      };
+    }
+    if (location.pathname === '/interactive/cursor') {
+      return {
+        autoTitle: '커서 인터랙션 체험 - AIverse-phi',
+        autoDescription: '플루이드·스플래시 등 다양한 커서 효과를 브라우저에서 체험해보세요.',
+        autoKeywords: '커서 효과, 마우스 트레일, 인터랙티브, 웹 애니메이션',
+        autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
+        autoType: 'website' as const,
+      };
+    }
+    if (location.pathname === '/interactive/background') {
+      return {
+        autoTitle: '배경 인터랙션 체험 - AIverse-phi',
+        autoDescription: '파티클·갤럭시 등 몰입형 배경 효과를 체험해보세요.',
+        autoKeywords: '배경 효과, 파티클, WebGL, 인터랙션',
+        autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
+        autoType: 'website' as const,
+      };
+    }
 
-    // 목록/검색
+    // 테스트 목록/카테고리/검색
     if (
       location.pathname === '/tests' ||
       location.pathname.startsWith('/tests/') ||
@@ -105,8 +147,8 @@ const SEO = ({
       return {
         autoTitle: '테스트 목록 - AIverse-phi',
         autoDescription:
-          'AI 분석·성격·연애·라이프스타일 등 다양한 테스트를 카테고리별로 탐색하세요.',
-        autoKeywords: 'AI 테스트 목록, MBTI 테스트, 성격 분석, 연애 테스트, 테스트 카테고리',
+          'AI 분석·성격·연애·라이프스타일 등 다양한 테스트를 카테고리별로 탐색하고 검색하세요.',
+        autoKeywords: 'AI 테스트 목록, MBTI 테스트, 성격 분석, 연애 테스트, 테스트 카테고리, 검색',
         autoImage: 'https://aiverse-phi.vercel.app/images/aiverse-og-image.png',
         autoType: 'website' as const,
       };
@@ -125,7 +167,7 @@ const SEO = ({
       };
     }
 
-    // 기본값
+    // 기본값 (그 외 정적/동적 경로)
     return {
       autoTitle: 'AIverse-phi - AI의 모든 것을 체험하다',
       autoDescription:
@@ -145,10 +187,17 @@ const SEO = ({
   const finalKeywords = keywords || autoKeywords;
   const finalImage = image || autoImage;
   const finalType = type || autoType;
-  const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
 
-  // 404일 때만 noindex, 평소엔 index
-  const robotsValue = is404 ? 'noindex, follow' : 'index, follow';
+  const currentUrl =
+    url ||
+    (typeof window !== 'undefined' ? window.location.href : 'https://aiverse-phi.vercel.app/');
+
+  // robots 정책: 404만 noindex, 프리뷰 강제 noindex 옵션
+  const robotsValue = isPreviewNoindex
+    ? 'noindex, nofollow'
+    : is404
+      ? 'noindex, follow'
+      : 'index, follow';
 
   return (
     <Helmet>
@@ -176,7 +225,7 @@ const SEO = ({
       <meta name="twitter:image:alt" content="AIverse-phi 대표 이미지" />
       <meta name="twitter:site" content="@aiverse" />
 
-      {/* robots */}
+      {/* 색인 정책 */}
       <meta name="robots" content={robotsValue} />
       <meta name="googlebot" content={robotsValue} />
       <meta name="author" content="AIverse-phi" />

@@ -18,6 +18,7 @@ import Button from '@/components/common/Button/Button';
 import TestCard from '@/components/features/TestCard/TestCard';
 import { testCategories } from '@/data/tests';
 import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/layout/Footer/Footer';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -202,6 +203,7 @@ const HomePage = () => {
           </StyledTestGrid>
         </StyledSection>
       )}
+      <Footer />
     </StyledHomePage>
   );
 };
