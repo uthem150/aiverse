@@ -24,6 +24,8 @@ import {
   StatGrid,
   StatCard,
   PerformanceMessage,
+  DifficultySelector,
+  DifficultyButton,
 } from './TargetShooter.style';
 
 // TargetCursor 추가
@@ -35,6 +37,7 @@ interface TargetData {
   y: number;
   size: number;
   appearTime: number;
+  lifetime: number; // 난이도별 타겟 생존시간
 }
 
 interface HitEffectData {
@@ -54,7 +57,7 @@ interface GameStats {
   score: number;
   hits: number;
   misses: number;
-  totalShots: number; // 전체 클릭 수 (명중 + 실패)
+  totalShots: number;
   totalTargets: number;
   averageReactionTime: number;
   accuracy: number;
@@ -79,15 +82,45 @@ const TIERS: TierInfo[] = [
   { name: '브론즈', emoji: '🥉', color: '#E17055', minScore: 0 },
 ];
 
-const GAME_DURATION = 60; // 60초
-const TARGET_LIFETIME = 2000; // 2초
+// ▶ 게임시간 45초
+const GAME_DURATION = 45;
 
-// 화면 크기에 따른 타겟 사이즈 조정
-const getTargetSizes = () => {
+// 난이도 프리셋
+const DIFFICULTIES = {
+  easy: {
+    key: 'easy' as const,
+    name: '쉬움',
+    spawnMin: 1000,
+    spawnMax: 1800,
+    lifetime: 2200,
+    sizeScale: 1.15,
+  },
+  medium: {
+    key: 'medium' as const,
+    name: '보통',
+    spawnMin: 800,
+    spawnMax: 1500,
+    lifetime: 2000,
+    sizeScale: 1.0,
+  },
+  hard: {
+    key: 'hard' as const,
+    name: '어려움',
+    spawnMin: 600,
+    spawnMax: 1200,
+    lifetime: 1600,
+    sizeScale: 0.9,
+  },
+};
+
+// 화면 크기에 따른 타겟 사이즈 (난이도 스케일 반영)
+const getTargetSizes = (scale = 1) => {
   const isMobile = window.innerWidth <= 768;
+  const baseMin = isMobile ? 25 : 40;
+  const baseMax = isMobile ? 50 : 80;
   return {
-    MIN_TARGET_SIZE: isMobile ? 25 : 40,
-    MAX_TARGET_SIZE: isMobile ? 50 : 80,
+    MIN_TARGET_SIZE: Math.max(16, Math.round(baseMin * scale)),
+    MAX_TARGET_SIZE: Math.max(24, Math.round(baseMax * scale)),
   };
 };
 
@@ -96,6 +129,7 @@ const TargetShooter: React.FC = () => {
   const [gameState, setGameState] = useState<'waiting' | 'countdown' | 'playing' | 'finished'>(
     'waiting'
   );
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [countdown, setCountdown] = useState(3);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [targets, setTargets] = useState<TargetData[]>([]);
@@ -115,42 +149,38 @@ const TargetShooter: React.FC = () => {
   const targetIdRef = useRef(0);
   const effectIdRef = useRef(0);
   const reactionTimes = useRef<number[]>([]);
-  // 타이머 ID들을 관리하기 위한 ref 추가
   const targetTimersRef = useRef<Set<NodeJS.Timeout>>(new Set());
-  const gameStateRef = useRef(gameState);
 
-  // gameState를 ref로도 추적
+  // 최신 gameState를 ref로 추적
+  const gameStateRef = useRef(gameState);
   useEffect(() => {
     gameStateRef.current = gameState;
   }, [gameState]);
 
-  // 모든 타겟 타이머 정리 함수
   const clearAllTargetTimers = useCallback(() => {
     targetTimersRef.current.forEach(timer => clearTimeout(timer));
     targetTimersRef.current.clear();
   }, []);
 
-  // 티어 계산 함수
+  // 티어 계산
   const calculateTier = (finalStats: GameStats): TierInfo => {
-    // 종합 점수 계산 (점수 + 명중률 보너스 + 반응속도 보너스)
-    const accuracyBonus = finalStats.accuracy * 10; // 명중률 1%당 10점
-    const speedBonus = Math.max(0, (1000 - finalStats.averageReactionTime) / 10); // 반응속도 보너스
+    const accuracyBonus = finalStats.accuracy * 10;
+    const speedBonus = Math.max(0, (1000 - finalStats.averageReactionTime) / 10);
     const totalScore = finalStats.score + accuracyBonus + speedBonus;
 
     for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
+      if (totalScore >= tier.minScore) return tier;
     }
-    return TIERS[TIERS.length - 1]; // 브론즈
+    return TIERS[TIERS.length - 1];
   };
 
   // 타겟 생성
   const createTarget = useCallback(() => {
     if (!gameAreaRef.current || gameStateRef.current !== 'playing') return;
 
+    const cfg = DIFFICULTIES[difficulty];
     const area = gameAreaRef.current.getBoundingClientRect();
-    const { MIN_TARGET_SIZE, MAX_TARGET_SIZE } = getTargetSizes();
+    const { MIN_TARGET_SIZE, MAX_TARGET_SIZE } = getTargetSizes(cfg.sizeScale);
     const size = MIN_TARGET_SIZE + Math.random() * (MAX_TARGET_SIZE - MIN_TARGET_SIZE);
     const margin = size / 2;
 
@@ -160,85 +190,81 @@ const TargetShooter: React.FC = () => {
       y: margin + Math.random() * (area.height - size - margin * 2),
       size,
       appearTime: Date.now(),
+      lifetime: cfg.lifetime,
     };
 
     setTargets(prev => [...prev, newTarget]);
     setStats(prev => ({ ...prev, totalTargets: prev.totalTargets + 1 }));
 
-    // 타이머 생성 및 관리
     const timer = setTimeout(() => {
-      // 게임이 여전히 진행 중인지 확인
       if (gameStateRef.current === 'playing') {
         setTargets(prev => {
           const exists = prev.find(t => t.id === newTarget.id);
           if (exists) {
-            // 타겟이 아직 존재한다면 놓친 것으로 처리
             setStats(prevStats => ({ ...prevStats, misses: prevStats.misses + 1 }));
           }
           return prev.filter(t => t.id !== newTarget.id);
         });
       }
-      // 타이머 제거
       targetTimersRef.current.delete(timer);
-    }, TARGET_LIFETIME);
+    }, cfg.lifetime);
 
-    // 🔥 타이머 추가
     targetTimersRef.current.add(timer);
-  }, []);
+  }, [difficulty]);
 
-  // 타겟 클릭 처리
-  const handleTargetClick = useCallback((target: TargetData, event: React.MouseEvent) => {
-    event.stopPropagation();
+  // 타겟 클릭
+  const handleTargetClick = useCallback(
+    (target: TargetData, event: React.MouseEvent) => {
+      event.stopPropagation();
 
-    const reactionTime = Date.now() - target.appearTime;
-    reactionTimes.current.push(reactionTime);
+      const reactionTime = Date.now() - target.appearTime;
+      reactionTimes.current.push(reactionTime);
 
-    // 타겟 제거
-    setTargets(prev => prev.filter(t => t.id !== target.id));
+      setTargets(prev => prev.filter(t => t.id !== target.id));
 
-    // 점수 계산 (크기가 작을수록, 반응시간이 빠를수록 높은 점수)
-    const { MAX_TARGET_SIZE } = getTargetSizes();
-    const sizeBonus = Math.round((MAX_TARGET_SIZE - target.size) / 2);
-    const speedBonus = Math.max(0, Math.round((TARGET_LIFETIME - reactionTime) / 10));
-    const baseScore = 100;
-    const totalScore = baseScore + sizeBonus + speedBonus;
+      const { MAX_TARGET_SIZE } = getTargetSizes(DIFFICULTIES[difficulty].sizeScale);
+      const sizeBonus = Math.round((MAX_TARGET_SIZE - target.size) / 2);
+      const speedBonus = Math.max(0, Math.round((target.lifetime - reactionTime) / 10));
+      const baseScore = 100;
+      const totalScore = baseScore + sizeBonus + speedBonus;
 
-    // 히트 이펙트 생성
-    const effectId = ++effectIdRef.current;
-    setHitEffects(prev => [...prev, { id: effectId, x: target.x, y: target.y }]);
-    setTimeout(() => {
-      setHitEffects(prev => prev.filter(e => e.id !== effectId));
-    }, 500);
+      const effectId = ++effectIdRef.current;
+      setHitEffects(prev => [...prev, { id: effectId, x: target.x, y: target.y }]);
+      setTimeout(() => {
+        setHitEffects(prev => prev.filter(e => e.id !== effectId));
+      }, 500);
 
-    // 스코어 플로트 생성
-    const scoreId = ++effectIdRef.current;
-    setScoreFloats(prev => [...prev, { id: scoreId, x: target.x, y: target.y, score: totalScore }]);
-    setTimeout(() => {
-      setScoreFloats(prev => prev.filter(s => s.id !== scoreId));
-    }, 1000);
-
-    // 통계 업데이트
-    setStats(prev => {
-      const newHits = prev.hits + 1;
-      const newTotalShots = prev.totalShots + 1;
-      const newScore = prev.score + totalScore;
-      const avgReactionTime =
-        reactionTimes.current.reduce((a, b) => a + b, 0) / reactionTimes.current.length;
-      // 정확한 명중률 계산: 전체 클릭 중 성공한 비율
-      const accuracy = newTotalShots > 0 ? (newHits / newTotalShots) * 100 : 0;
-
-      return {
+      const scoreId = ++effectIdRef.current;
+      setScoreFloats(prev => [
         ...prev,
-        score: newScore,
-        hits: newHits,
-        totalShots: newTotalShots,
-        averageReactionTime: Math.round(avgReactionTime),
-        accuracy: Math.round(accuracy * 10) / 10, // 소수점 1자리
-      };
-    });
-  }, []);
+        { id: scoreId, x: target.x, y: target.y, score: totalScore },
+      ]);
+      setTimeout(() => {
+        setScoreFloats(prev => prev.filter(s => s.id !== scoreId));
+      }, 1000);
 
-  // 빈 공간 클릭 처리 (미스)
+      setStats(prev => {
+        const newHits = prev.hits + 1;
+        const newTotalShots = prev.totalShots + 1;
+        const newScore = prev.score + totalScore;
+        const avgReactionTime =
+          reactionTimes.current.reduce((a, b) => a + b, 0) / reactionTimes.current.length;
+        const accuracy = newTotalShots > 0 ? (newHits / newTotalShots) * 100 : 0;
+
+        return {
+          ...prev,
+          score: newScore,
+          hits: newHits,
+          totalShots: newTotalShots,
+          averageReactionTime: Math.round(avgReactionTime),
+          accuracy: Math.round(accuracy * 10) / 10,
+        };
+      });
+    },
+    [difficulty]
+  );
+
+  // 빈 공간 클릭(미스)
   const handleMissClick = useCallback(() => {
     if (gameState !== 'playing') return;
 
@@ -258,6 +284,7 @@ const TargetShooter: React.FC = () => {
   const startGame = () => {
     setGameState('countdown');
     setCountdown(3);
+    setTimeLeft(GAME_DURATION);
 
     const countdownInterval = setInterval(() => {
       setCountdown(prev => {
@@ -273,7 +300,6 @@ const TargetShooter: React.FC = () => {
 
   // 게임 재시작
   const restartGame = () => {
-    // 🔥 모든 타이머 정리
     clearAllTargetTimers();
 
     setGameState('waiting');
@@ -295,7 +321,7 @@ const TargetShooter: React.FC = () => {
     reactionTimes.current = [];
   };
 
-  // 게임 타이머
+  // 타이머
   useEffect(() => {
     if (gameState !== 'playing') return;
 
@@ -303,9 +329,7 @@ const TargetShooter: React.FC = () => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           setGameState('finished');
-          // 게임 종료 시 모든 타겟 타이머 정리
           clearAllTargetTimers();
-          // 남은 타겟들은 놓친 것으로 처리하지 않음 (이미 게임 종료)
           setTargets([]);
           return 0;
         }
@@ -316,29 +340,21 @@ const TargetShooter: React.FC = () => {
     return () => clearInterval(timer);
   }, [gameState, clearAllTargetTimers]);
 
-  // 타겟 생성 타이머
+  // 타겟 생성 타이머 (난이도별 간격)
   useEffect(() => {
     if (gameState !== 'playing') return;
 
-    const interval = setInterval(
-      () => {
-        createTarget();
-      },
-      800 + Math.random() * 1200
-    ); // 0.8~2초 간격
+    const cfg = DIFFICULTIES[difficulty];
+    const intervalMs = cfg.spawnMin + Math.random() * (cfg.spawnMax - cfg.spawnMin);
+    const interval = setInterval(() => createTarget(), intervalMs);
 
     return () => clearInterval(interval);
-  }, [gameState, createTarget]);
+  }, [gameState, difficulty, createTarget]);
 
-  // 컴포넌트 언마운트 시 모든 타이머 정리
-  useEffect(() => {
-    return () => {
-      clearAllTargetTimers();
-    };
-  }, [clearAllTargetTimers]);
+  // 언마운트 시 정리
+  useEffect(() => () => clearAllTargetTimers(), [clearAllTargetTimers]);
 
   const handleBackClick = () => {
-    //  페이지 이동 시에도 타이머 정리
     clearAllTargetTimers();
     navigate(-1);
   };
@@ -349,7 +365,6 @@ const TargetShooter: React.FC = () => {
   return (
     <>
       <GameContainer>
-        {/* 타겟 커서 효과 - 게임 플레이 중일 때만 */}
         {gameState === 'playing' && <TargetCursor />}
 
         <Header>
@@ -379,7 +394,6 @@ const TargetShooter: React.FC = () => {
         </Header>
 
         <GameArea ref={gameAreaRef} onClick={handleMissClick}>
-          {/* 타겟들 */}
           {targets.map(target => (
             <Target
               key={target.id}
@@ -390,12 +404,10 @@ const TargetShooter: React.FC = () => {
             />
           ))}
 
-          {/* 히트 이펙트들 */}
           {hitEffects.map(effect => (
             <HitEffect key={effect.id} x={effect.x} y={effect.y} />
           ))}
 
-          {/* 스코어 플로트들 */}
           {scoreFloats.map(scoreFloat => (
             <ScoreFloat
               key={scoreFloat.id}
@@ -406,37 +418,51 @@ const TargetShooter: React.FC = () => {
           ))}
         </GameArea>
 
-        {/* 카운트다운 */}
         <Countdown show={gameState === 'countdown'}>
           {countdown > 0 ? countdown : 'START!'}
         </Countdown>
 
-        {/* 진행률 바 */}
         {gameState === 'playing' && (
           <ProgressBar>
             <ProgressFill progress={progress} />
           </ProgressBar>
         )}
 
-        {/* 게임 시작 오버레이 */}
+        {/* 시작 오버레이 */}
         <GameOverlay show={gameState === 'waiting'}>
           <OverlayContent>
             <div className="overlay-title">🎯 타겟 슈팅</div>
             <div className="overlay-text">
-              화면에 나타나는 타겟들을 최대한 빠르고 정확하게 클릭하세요!
+              화면에 나타나는 타겟을 빠르고 정확하게 클릭하세요.
               <br />
-              작은 타겟일수록, 빠른 반응일수록 높은 점수를 얻습니다.
+              난이도에 따라 타겟 크기·생존시간·생성속도가 달라집니다.
               <br />
-              타겟이 아닌 부분을 클릭하면 명중률이 감소합니다.
+              타겟이 아닌 곳을 클릭하면 명중률이 떨어집니다.
               <br />
-              60초 동안 최고 점수에 도전해보세요!
+              <strong>게임 시간: 45초</strong>
             </div>
+
+            <DifficultySelector>
+              {([DIFFICULTIES.easy, DIFFICULTIES.medium, DIFFICULTIES.hard] as const).map(cfg => (
+                <DifficultyButton
+                  key={cfg.key}
+                  selected={difficulty === cfg.key}
+                  onClick={() => setDifficulty(cfg.key)}
+                  aria-pressed={difficulty === cfg.key}
+                >
+                  {cfg.name}
+                </DifficultyButton>
+              ))}
+            </DifficultySelector>
+
             <ActionButton onClick={startGame}>게임 시작</ActionButton>
-            <ActionButton onClick={handleBackClick}>뒤로 가기</ActionButton>
+            <ActionButton variant="secondary" onClick={handleBackClick}>
+              뒤로 가기
+            </ActionButton>
           </OverlayContent>
         </GameOverlay>
 
-        {/* 게임 종료 오버레이 */}
+        {/* 종료 오버레이 */}
         <GameOverlay show={gameState === 'finished'}>
           <OverlayContent>
             <div className="overlay-title">🏆 게임 완료!</div>
@@ -496,14 +522,14 @@ const TargetShooter: React.FC = () => {
 
             <PerformanceMessage delay={9}>
               {stats.accuracy >= 90 && stats.averageReactionTime <= 850
-                ? '🏆 완벽한 실력입니다! 진정한 타겟 마스터!'
+                ? '🏆 완벽한 실력! 진정한 타겟 마스터'
                 : stats.accuracy >= 75 && stats.averageReactionTime <= 900
-                  ? '🎉 훌륭한 성과입니다! 상위권 실력자!'
+                  ? '🎉 훌륭한 성과! 상위권 실력자'
                   : stats.accuracy >= 60 && stats.averageReactionTime <= 1000
-                    ? '👍 좋은 실력이네요! 꾸준히 발전하고 있어요!'
+                    ? '👍 좋은 실력, 꾸준히 성장 중'
                     : stats.accuracy >= 40
-                      ? '💪 조금 더 연습하면 크게 향상될 거예요!'
-                      : '🎯 차근차근 연습해서 실력을 키워보세요!'}
+                      ? '💪 조금만 더 연습하면 크게 향상'
+                      : '🎯 차근차근 연습해보자'}
             </PerformanceMessage>
 
             <div style={{ marginTop: '2rem' }}>

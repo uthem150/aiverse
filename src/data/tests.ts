@@ -101,7 +101,7 @@ export const testCategories: TestCategory[] = [
     tests: [
       {
         id: 'target-shooter',
-        title: '🎯 타겟 슈팅 게임 | AIverse-phi - 반응속도 측정',
+        title: '🎯 타겟 슈팅 게임 - 반응속도 측정',
         description: '순발력과 정확성에 자신 있나요? 지금 바로 반응속도를 테스트해보세요!',
         thumbnail: '/images/target-shooter.jpg',
         category: 'interactive-experience',
@@ -113,7 +113,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'orb-collector',
-        title: '🔮 오브 컬렉터 게임 | AIverse-phi - 마우스 컨트롤 게임',
+        title: '🔮 오브 컬렉터 게임 - 마우스 컨트롤 게임',
         description:
           '마우스로 떠다니는 마법의 오브들을 수집하여 점수를 획득하는 인터랙티브 게임입니다.',
         thumbnail: '/images/orb-collector.jpg',
@@ -126,7 +126,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'block-faller',
-        title: '🧱 블록 쌓기 게임 | AIverse-phi - 공간 지각 능력 테스트',
+        title: '🧱 블록 쌓기 게임 (테트리스) 공간 지각 능력 테스트',
         description:
           '떨어지는 블록을 차곡차곡 쌓아보세요! 당신의 공간 지각 능력과 순발력을 시험합니다.',
         thumbnail: '/images/block-faller.jpg',
@@ -139,7 +139,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'color-match',
-        title: '🎨 색깔 맞추기 | AIverse-phi - 색상 인지 능력 테스트',
+        title: '🎨 색깔 맞추기 - 색상 인지 능력 테스트',
         description:
           '제시된 색상과 동일한 색상을 빠르게 찾아보세요. 당신의 색상 인지 능력을 확인해볼 시간입니다.',
         thumbnail: '/images/color-match.jpg',
@@ -152,7 +152,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'math-quiz',
-        title: '🧮 수학 퀴즈 | AIverse-phi - 암산 능력 테스트',
+        title: '🧮 수학 퀴즈 - 암산 능력 테스트',
         description:
           '제한 시간 안에 빠르게 수학 문제를 풀어보세요. 당신의 두뇌 회전 속도를 시험합니다.',
         thumbnail: '/images/math-quiz.jpg',
@@ -165,7 +165,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'maze-runner',
-        title: '🧩 미로 탈출 | AIverse-phi - 길 찾기 능력 테스트',
+        title: '🧩 미로 탈출 - 길 찾기 능력 테스트',
         description:
           '복잡한 미로를 탐험하고 출구를 찾아보세요. 당신의 공간 지각과 길 찾기 능력을 활용할 시간입니다.',
         thumbnail: '/images/maze-runner.jpg',
@@ -178,7 +178,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'memory-cards',
-        title: '🃏 기억력 카드 게임 | AIverse-phi - 단기 기억력 테스트',
+        title: '🃏 기억력 카드 게임 - 단기 기억력 테스트',
         description:
           '뒤집어진 카드들 중 같은 그림을 찾아 맞추는 게임입니다. 당신의 단기 기억력을 최대로 활용해보세요.',
         thumbnail: '/images/memory-cards.jpg',
@@ -191,7 +191,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'reaction-test',
-        title: '⚡️ 반응 속도 테스트 | AIverse-phi - 순발력 측정',
+        title: '⚡️ 반응 속도 테스트 - 순발력 측정',
         description:
           '화면의 색이 바뀌는 순간, 얼마나 빨리 클릭할 수 있나요? 당신의 순수한 반응 속도를 측정해보세요.',
         thumbnail: '/images/reaction-test.jpg',
@@ -204,7 +204,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'simon-says',
-        title: '🧠 사이먼 게임 | AIverse-phi - 패턴 기억력 테스트',
+        title: '🧠 사이먼 게임 - 패턴 기억력 테스트',
         description:
           '컴퓨터가 보여주는 색상과 소리의 순서를 기억하고 그대로 따라 해보세요. 기억력의 한계에 도전하세요!',
         thumbnail: '/images/simon-says.jpg',
@@ -217,7 +217,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'sliding-puzzle',
-        title: '🖼️ 슬라이딩 퍼즐 | AIverse-phi - 논리력 테스트',
+        title: '🖼️ 슬라이딩 퍼즐 - 논리력 테스트',
         description:
           '흩어진 그림 조각들을 움직여 원래의 그림을 완성시켜보세요. 당신의 논리적 사고력이 필요합니다.',
         thumbnail: '/images/sliding-puzzle.jpg',
@@ -230,7 +230,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'snake-game',
-        title: '🐍 스네이크 게임 | AIverse-phi - 클래식 아케이드',
+        title: '🐍 스네이크 게임 - 클래식 아케이드',
         description:
           '먹이를 먹고 점점 길어지는 뱀을 조종하세요! 벽이나 자신의 몸에 부딪히지 않게 조심해야 합니다.',
         thumbnail: '/images/snake-game.jpg',
@@ -243,7 +243,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'speed-clicker',
-        title: '🖱️ 스피드 클리커 | AIverse-phi - CPS 측정',
+        title: '🖱️ 스피드 클리커 - CPS 측정',
         description:
           '제한된 시간 동안 얼마나 많이 클릭할 수 있는지 측정해보세요. 당신의 CPS(Clicks Per Second)를 확인하세요.',
         thumbnail: '/images/speed-clicker.jpg',
@@ -256,7 +256,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'tic-tac-toe',
-        title: '⭕️❌ 틱택토 | AIverse-phi - 전략 게임',
+        title: '⭕️❌ 틱택토 - 전략 게임',
         description:
           '친구 또는 컴퓨터와 틱택토 한판! 간단하지만 깊이 있는 전략으로 승리를 쟁취하세요.',
         thumbnail: '/images/tic-tac-toe.jpg',
@@ -269,7 +269,7 @@ export const testCategories: TestCategory[] = [
       },
       {
         id: 'whack-a-mole',
-        title: '🔨 두더지 잡기 | AIverse-phi - 순발력 게임',
+        title: '🔨 두더지 잡기 - 순발력 게임',
         description:
           '구멍에서 튀어나오는 두더지를 망치로 잡아보세요! 빠르고 정확한 순발력이 요구됩니다.',
         thumbnail: '/images/whack-a-mole.jpg',

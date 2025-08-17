@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom';
 import { ArrowLeft, Calculator, Brain, Send } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 /* =========================
  * Animations
@@ -952,6 +953,7 @@ const MathQuiz: React.FC = () => {
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [showCombo, setShowCombo] = useState(false);
   const [questionStartTime, setQuestionStartTime] = useState(0);
+  const navigate = useNavigate();
 
   // 결과 스냅샷
   const [finalStats, setFinalStats] = useState<GameStats | null>(null);
@@ -1196,7 +1198,7 @@ const MathQuiz: React.FC = () => {
   const handleBackClick = () => {
     if (gameTimerRef.current) clearInterval(gameTimerRef.current);
     if (questionTimerRef.current) clearTimeout(questionTimerRef.current);
-    console.log('게임 목록으로 돌아가기');
+    navigate(-1);
   };
 
   // 표시 데이터 (오버레이는 스냅샷 우선)
@@ -1299,13 +1301,15 @@ const MathQuiz: React.FC = () => {
             ))}
           </DifficultySelector>
 
-          <ActionButton onClick={startGame}>
-            <Calculator size={20} />
-            게임 시작
-          </ActionButton>
-          <ActionButton variant="secondary" onClick={handleBackClick}>
-            뒤로 가기
-          </ActionButton>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <ActionButton onClick={startGame}>
+              <Calculator size={20} />
+              게임 시작
+            </ActionButton>
+            <ActionButton variant="secondary" onClick={handleBackClick}>
+              뒤로 가기
+            </ActionButton>
+          </div>
         </OverlayContent>
       </GameOverlay>
 

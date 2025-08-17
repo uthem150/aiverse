@@ -4,73 +4,40 @@ import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
-// 애니메이션 정의 (css로 래핑)
+/* ===== Animations ===== */
 const clickPulse = keyframes`
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  50% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-  }
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  50% { transform: scale(0.95); box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 `;
-
-const comboGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
-    border-color: rgba(249, 115, 22, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 50px rgba(249, 115, 22, 0.8);
-    border-color: rgba(249, 115, 22, 1);
-  }
-`;
-
 const recordBreak = keyframes`
-  0% { transform: scale(1); }
-  25% { transform: scale(1.1) rotate(1deg); }
-  50% { transform: scale(1.05) rotate(-1deg); }
-  75% { transform: scale(1.15) rotate(1deg); }
+  0% { transform: scale(1); } 25% { transform: scale(1.1) rotate(1deg); }
+  50% { transform: scale(1.05) rotate(-1deg); } 75% { transform: scale(1.15) rotate(1deg); }
   100% { transform: scale(1) rotate(0deg); }
 `;
-
 const speedBoost = keyframes`
-  0%, 100% {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    transform: scale(1);
-  }
-  50% {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    transform: scale(1.05);
-  }
+  0%, 100% { background: linear-gradient(135deg, #ef4444, #dc2626); transform: scale(1); }
+  50% { background: linear-gradient(135deg, #f59e0b, #d97706); transform: scale(1.05); }
 `;
-
 const resultAppear = keyframes`
   0% { transform: scale(0.5) translateY(50px); opacity: 0; }
   50% { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
   100% { transform: scale(1) translateY(0); opacity: 1; }
 `;
-
 const tierGlow = keyframes`
   0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
   50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
 `;
-
 const statsReveal = keyframes`
   0% { transform: translateX(-30px); opacity: 0; }
   100% { transform: translateX(0); opacity: 1; }
 `;
-
 const buttonHover = keyframes`
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 `;
 
+/* ===== Styled ===== */
 const GameContainer = styled.div`
   height: 100%;
   flex: 1;
@@ -81,21 +48,16 @@ const GameContainer = styled.div`
   position: relative;
   overflow: hidden;
   user-select: none;
-
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background:
       radial-gradient(circle at 30% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 70% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
     pointer-events: none;
   }
 `;
-
 const Header = styled.div`
   position: fixed;
   top: 0;
@@ -109,7 +71,6 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   @media (max-width: 768px) {
     padding: 0.75rem 1rem;
     flex-direction: column;
@@ -120,20 +81,18 @@ const Header = styled.div`
     gap: 0.5rem;
   }
 `;
-
 const BackButton = styled.button`
   background: rgba(239, 68, 68, 0.1);
   border: 2px solid rgba(239, 68, 68, 0.3);
   border-radius: 12px;
   padding: 0.8rem 1.2rem;
-  color: white;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
   &:hover {
     background: rgba(239, 68, 68, 0.2);
     transform: translateY(-2px);
@@ -151,7 +110,6 @@ const BackButton = styled.button`
     gap: 0.3rem;
   }
 `;
-
 const Title = styled.h1`
   font-size: 1.8rem;
   font-weight: 700;
@@ -161,7 +119,6 @@ const Title = styled.h1`
   -webkit-text-fill-color: transparent;
   margin: 0;
   text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
@@ -169,7 +126,6 @@ const Title = styled.h1`
     font-size: 1.1rem;
   }
 `;
-
 const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
@@ -183,10 +139,9 @@ const StatsPanel = styled.div`
     gap: 0.75rem;
   }
 `;
-
 const Stat = styled.div<{ highlight?: boolean }>`
   text-align: center;
-  color: white;
+  color: #fff;
   transition: all 0.3s ease;
   border-radius: 8px;
   padding: 0.5rem;
@@ -195,7 +150,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
     css`
       animation: ${recordBreak} 0.6s ease;
     `}
-
   .stat-label {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
@@ -206,7 +160,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
     font-weight: 700;
     color: ${p => (p.highlight ? '#fbbf24' : '#ef4444')};
   }
-
   @media (max-width: 768px) {
     .stat-label {
       font-size: 0.7rem;
@@ -224,7 +177,6 @@ const Stat = styled.div<{ highlight?: boolean }>`
     }
   }
 `;
-
 const GameArea = styled.div`
   flex: 1;
   display: flex;
@@ -235,7 +187,6 @@ const GameArea = styled.div`
   gap: 2rem;
   margin-top: 1rem;
   position: relative;
-
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1.5rem;
@@ -245,8 +196,7 @@ const GameArea = styled.div`
     gap: 1rem;
   }
 `;
-
-const ClickZone = styled.div<{ isActive: boolean; isCombo: boolean; clicks: number }>`
+const ClickZone = styled.div<{ isActive: boolean; clicks: number }>`
   width: 320px;
   height: 320px;
   background: linear-gradient(135deg, #ef4444, #dc2626);
@@ -263,15 +213,12 @@ const ClickZone = styled.div<{ isActive: boolean; isCombo: boolean; clicks: numb
   box-shadow:
     0 20px 40px rgba(239, 68, 68, 0.3),
     inset 0 0 50px rgba(255, 255, 255, 0.1);
-
-  /* 터치/제스처는 클릭 영역에서만 제한 */
   touch-action: none;
   -ms-touch-action: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: contain;
-
   ${p =>
     p.isActive &&
     css`
@@ -287,51 +234,40 @@ const ClickZone = styled.div<{ isActive: boolean; isCombo: boolean; clicks: numb
       }
     `}
   ${p =>
-    p.isCombo &&
-    css`
-      animation: ${comboGlow} 0.5s ease-in-out infinite;
-    `}
-  ${p =>
     !p.isActive &&
     css`
       opacity: 0.6;
       background: linear-gradient(135deg, #6b7280, #4b5563);
     `}
-
   &::before {
     content: '';
     position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
+    inset: -5px;
     border-radius: 50%;
     background: linear-gradient(45deg, rgba(239, 68, 68, 0.3), rgba(249, 115, 22, 0.3));
     z-index: -1;
   }
-
   .click-text {
     font-size: 2.2rem;
     font-weight: 700;
-    color: white;
+    color: #fff;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 0.5rem;
   }
   .click-count {
     font-size: 3.5rem;
     font-weight: 800;
-    color: white;
+    color: #fff;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
   .click-instruction {
     font-size: 1.1rem;
-    color: white;
+    color: #fff;
     opacity: 0.9;
     margin-top: 0.5rem;
     text-align: center;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
-
   @media (max-width: 768px) {
     width: 280px;
     height: 280px;
@@ -359,7 +295,6 @@ const ClickZone = styled.div<{ isActive: boolean; isCombo: boolean; clicks: numb
     }
   }
 `;
-
 const GameModeSelector = styled.div`
   display: flex;
   gap: 1rem;
@@ -374,20 +309,19 @@ const GameModeSelector = styled.div`
     margin-bottom: 1.5rem;
   }
 `;
-
 const ModeButton = styled.button<{ selected?: boolean }>`
   background: ${p =>
-    p.selected ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'rgba(255,255,255,0.1)'};
-  border: 2px solid ${p => (p.selected ? '#ef4444' : 'rgba(255,255,255,0.3)')};
+    p.selected ? 'linear-gradient(135deg,#ef4444,#dc2626)' : 'rgba(255,255,255,.1)'};
+  border: 2px solid ${p => (p.selected ? '#ef4444' : 'rgba(255,255,255,.3)')};
   border-radius: 12px;
   padding: 0.8rem 1.5rem;
-  color: white;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
     background: ${p =>
-      p.selected ? 'linear-gradient(135deg, #dc2626, #b91c1c)' : 'rgba(255,255,255,0.2)'};
+      p.selected ? 'linear-gradient(135deg,#dc2626,#b91c1c)' : 'rgba(255,255,255,.2)'};
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
   }
@@ -402,14 +336,13 @@ const ModeButton = styled.button<{ selected?: boolean }>`
     border-radius: 8px;
   }
 `;
-
 const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 1.5rem 2rem;
   text-align: center;
-  color: white;
+  color: #fff;
   min-width: 220px;
   border: 2px solid rgba(239, 68, 68, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -418,7 +351,6 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
     css`
       animation: ${speedBoost} 1s ease-in-out infinite;
     `}
-
   .speed-label {
     font-size: 1rem;
     opacity: 0.8;
@@ -429,7 +361,7 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
   .speed-value {
     font-size: 2.5rem;
     font-weight: 800;
-    color: ${p => (p.isHighSpeed ? '#fbbf24' : 'white')};
+    color: ${p => (p.isHighSpeed ? '#fbbf24' : '#fff')};
     text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
   }
   .speed-unit {
@@ -437,7 +369,6 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
     opacity: 0.8;
     margin-top: 0.2rem;
   }
-
   @media (max-width: 768px) {
     padding: 1.2rem 1.5rem;
     min-width: 180px;
@@ -453,7 +384,6 @@ const SpeedDisplay = styled.div<{ isHighSpeed: boolean }>`
     }
   }
 `;
-
 const ProgressBar = styled.div`
   width: 100%;
   max-width: 500px;
@@ -472,7 +402,6 @@ const ProgressBar = styled.div`
     height: 12px;
   }
 `;
-
 const ProgressFill = styled.div<{ progress: number }>`
   width: ${p => p.progress}%;
   height: 100%;
@@ -481,65 +410,9 @@ const ProgressFill = styled.div<{ progress: number }>`
   border-radius: 6px;
   box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 `;
-
-const ComboIndicator = styled.div<{ show: boolean; combo: number }>`
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 1.2rem;
-  opacity: ${p => (p.show ? 1 : 0)};
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  box-shadow: 0 10px 30px rgba(249, 158, 11, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  &::before {
-    content: '${p => p.combo}x COMBO!';
-  }
-  @media (max-width: 768px) {
-    top: -50px;
-    font-size: 1.1rem;
-    padding: 0.6rem 1.2rem;
-  }
-  @media (max-width: 480px) {
-    top: -45px;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-`;
-
-const Countdown = styled.div<{ show: boolean }>`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 5rem;
-  font-weight: 800;
-  color: #ef4444;
-  text-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
-  z-index: 500;
-  opacity: ${p => (p.show ? 1 : 0)};
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  @media (max-width: 768px) {
-    font-size: 4rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 3rem;
-  }
-`;
-
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
   display: ${p => (p.show ? 'flex' : 'none')};
@@ -552,7 +425,6 @@ const GameOverlay = styled.div<{ show: boolean }>`
     padding: 1rem;
   }
 `;
-
 const OverlayContent = styled.div`
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
   backdrop-filter: blur(30px);
@@ -567,19 +439,14 @@ const OverlayContent = styled.div`
   box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
     0 0 100px rgba(239, 68, 68, 0.2);
-
   &:before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    inset: -2px;
     border-radius: 24px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
-
   .overlay-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -596,7 +463,6 @@ const OverlayContent = styled.div`
     margin-bottom: 2.5rem;
     line-height: 1.7;
   }
-
   @media (max-width: 768px) {
     padding: 1.8rem 1.3rem;
     margin: 1rem;
@@ -624,8 +490,6 @@ const OverlayContent = styled.div`
     }
   }
 `;
-
-// 티어 시스템
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
@@ -640,7 +504,6 @@ const TierBadge = styled.div<{ color: string }>`
   color: ${p => p.color};
   text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
-
   @media (max-width: 768px) {
     padding: 0.6rem 1.2rem;
     font-size: 1.4rem;
@@ -655,7 +518,6 @@ const TierBadge = styled.div<{ color: string }>`
     gap: 0.3rem;
   }
 `;
-
 const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -674,7 +536,6 @@ const ScoreBreakdown = styled.div`
     border-radius: 10px;
   }
 `;
-
 const ScoreItem = styled.div<{ delay?: number }>`
   display: flex;
   justify-content: space-between;
@@ -682,7 +543,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
-
   &:last-child {
     border-bottom: none;
     font-size: 1.2rem;
@@ -699,7 +559,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
     color: #fff;
     font-weight: 600;
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0;
     &:last-child {
@@ -715,7 +574,6 @@ const ScoreItem = styled.div<{ delay?: number }>`
     }
   }
 `;
-
 const StatGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -730,7 +588,6 @@ const StatGrid = styled.div`
     margin: 1rem 0;
   }
 `;
-
 const StatCard = styled.div<{ delay?: number }>`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -738,7 +595,6 @@ const StatCard = styled.div<{ delay?: number }>`
   padding: 1rem;
   text-align: center;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
-
   .stat-title {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.6);
@@ -752,7 +608,6 @@ const StatCard = styled.div<{ delay?: number }>`
     color: #ef4444;
     text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
   }
-
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
@@ -776,7 +631,6 @@ const StatCard = styled.div<{ delay?: number }>`
     }
   }
 `;
-
 const PerformanceMessage = styled.div<{ delay?: number }>`
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -787,7 +641,6 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   font-weight: 600;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-
   @media (max-width: 768px) {
     padding: 0.8rem 1.2rem;
     margin: 1.2rem 0;
@@ -801,16 +654,13 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
     font-size: 0.9rem;
   }
 `;
-
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   background: ${p =>
-    p.variant === 'secondary'
-      ? 'rgba(255,255,255,0.1)'
-      : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
+    p.variant === 'secondary' ? 'rgba(255,255,255,.1)' : 'linear-gradient(135deg,#ef4444,#dc2626)'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
-  color: white;
+  color: #fff;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -818,7 +668,6 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   margin: 0.5rem;
   position: relative;
   overflow: hidden;
-
   &:before {
     content: '';
     position: absolute;
@@ -845,7 +694,6 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   &:active {
     transform: translateY(-1px);
   }
-
   @media (max-width: 768px) {
     padding: 0.7rem 1.3rem;
     font-size: 0.95rem;
@@ -863,8 +711,8 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   }
 `;
 
-// 타입 정의
-type GameMode = 'sprint' | 'endurance' | 'precision';
+/* ===== Types / Constants ===== */
+type GameMode = 't10' | 't30' | 't60';
 
 interface GameStats {
   clicks: number;
@@ -872,9 +720,6 @@ interface GameStats {
   cps: number;
   maxCps: number;
   totalClicks: number;
-  combo: number;
-  maxCombo: number;
-  accuracy: number;
 }
 
 interface ModeSettings {
@@ -890,11 +735,10 @@ interface TierInfo {
   minScore: number;
 }
 
-// 상수 정의
 const GAME_MODES: Record<GameMode, ModeSettings> = {
-  sprint: { duration: 10, name: '스프린트', description: '10초 동안 최대한 많이 클릭' },
-  endurance: { duration: 30, name: '지구력', description: '30초 동안 꾸준한 클릭 유지' },
-  precision: { duration: 60, name: '정밀도', description: '60초 동안 정확하고 빠른 클릭' },
+  t10: { duration: 10, name: '10초 챌린지', description: '순간 스피드 테스트' },
+  t30: { duration: 30, name: '30초 챌린지', description: '지속 스피드 연습' },
+  t60: { duration: 60, name: '60초 챌린지', description: '스피드 + 지구력 종합' },
 };
 
 const TIERS: TierInfo[] = [
@@ -908,40 +752,38 @@ const TIERS: TierInfo[] = [
   { name: '브론즈', emoji: '🥉', color: '#E17055', minScore: 0 },
 ];
 
+/* ===== Component ===== */
 const SpeedClicker: React.FC = () => {
   const [gameState, setGameState] = useState<'setup' | 'countdown' | 'playing' | 'finished'>(
     'setup'
   );
-  const [gameMode, setGameMode] = useState<GameMode>('sprint');
+  const [gameMode, setGameMode] = useState<GameMode>('t10');
   const [countdown, setCountdown] = useState(3);
   const [stats, setStats] = useState<GameStats>({
     clicks: 0,
-    timeLeft: GAME_MODES.sprint.duration,
+    timeLeft: GAME_MODES.t10.duration,
     cps: 0,
     maxCps: 0,
     totalClicks: 0,
-    combo: 0,
-    maxCombo: 0,
-    accuracy: 100,
   });
 
-  // ✅ 클릭 타임라인은 ref만 사용
   const clickTimesRef = useRef<number[]>([]);
+  const playStartRef = useRef<number>(0);
+
   const navigate = useNavigate();
 
-  const [showCombo, setShowCombo] = useState(false);
   const [personalBest, setPersonalBest] = useState<Record<GameMode, number>>({
-    sprint: 0,
-    endurance: 0,
-    precision: 0,
+    t10: 0,
+    t30: 0,
+    t60: 0,
   });
 
-  // ✅ 브라우저/Node 모두 안전한 타이머 타입
+  // timers
   const gameTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const cpsUpdateRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // ✅ 실행 식별자(runId)와 상태 ref
+  // run guard
   const runIdRef = useRef(0);
   const gameStateRef = useRef(gameState);
   useEffect(() => {
@@ -963,60 +805,34 @@ const SpeedClicker: React.FC = () => {
     }
   };
 
-  // 티어 계산 함수
-  const calculateTier = (finalStats: GameStats): TierInfo => {
-    const modeMultiplier = { sprint: 1, endurance: 0.8, precision: 0.6 } as const;
-    const adjustedCPS = finalStats.maxCps * modeMultiplier[gameMode];
-    const comboBonus = finalStats.maxCombo * 0.1;
-    const accuracyBonus = (finalStats.accuracy / 100) * 2;
-    const totalScore = adjustedCPS + comboBonus + accuracyBonus;
-
-    for (const tier of TIERS) if (totalScore >= tier.minScore) return tier;
+  // Tier: 10s는 순간 스피드 비중↑, 60s는 평균(지구력) 비중↑
+  const calculateTier = (final: GameStats): TierInfo => {
+    const avgCps = final.clicks / GAME_MODES[gameMode].duration;
+    const weights =
+      gameMode === 't10'
+        ? { max: 0.7, avg: 0.3 }
+        : gameMode === 't30'
+          ? { max: 0.5, avg: 0.5 }
+          : { max: 0.4, avg: 0.6 }; // t60
+    const score = final.maxCps * weights.max + avgCps * weights.avg;
+    for (const t of TIERS) if (score >= t.minScore) return t;
     return TIERS[TIERS.length - 1];
   };
 
   const handleClick = useCallback(() => {
     if (gameStateRef.current !== 'playing') return;
-
     const now = Date.now();
-    const last = clickTimesRef.current.at(-1) ?? 0;
-    const timeSinceLastClick = now - last;
 
-    // ref 갱신 (최근 5초만 보관)
+    // 최근 5초만 유지
     const newTimes = [...clickTimesRef.current, now].filter(t => now - t <= 5000);
     clickTimesRef.current = newTimes;
 
-    setStats(prev => {
-      const newClicks = prev.clicks + 1;
-      const newTotalClicks = prev.totalClicks + 1;
-
-      let newCombo: number;
-      if (timeSinceLastClick < 500) {
-        newCombo = prev.combo + 1;
-        if (newCombo >= 10 && newCombo % 5 === 0) {
-          setShowCombo(true);
-          setTimeout(() => setShowCombo(false), 1000);
-        }
-      } else {
-        newCombo = 1;
-      }
-
-      const newMaxCombo = Math.max(prev.maxCombo, newCombo);
-
-      const targetInterval = gameMode === 'sprint' ? 100 : gameMode === 'endurance' ? 150 : 200;
-      const accuracyScore = Math.max(0, 100 - Math.abs(timeSinceLastClick - targetInterval) / 10);
-      const newAccuracy = Math.round((prev.accuracy * (newClicks - 1) + accuracyScore) / newClicks);
-
-      return {
-        ...prev,
-        clicks: newClicks,
-        totalClicks: newTotalClicks,
-        combo: newCombo,
-        maxCombo: newMaxCombo,
-        accuracy: newAccuracy,
-      };
-    });
-  }, [gameMode]);
+    setStats(prev => ({
+      ...prev,
+      clicks: prev.clicks + 1,
+      totalClicks: prev.totalClicks + 1,
+    }));
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (gameStateRef.current !== 'playing') return;
@@ -1027,24 +843,20 @@ const SpeedClicker: React.FC = () => {
   };
 
   const startGame = () => {
-    // ✅ 이전 타이머 정리 & 이번 실행 식별
     clearTimers();
     runIdRef.current += 1;
     const runId = runIdRef.current;
+    const totalDuration = GAME_MODES[gameMode].duration;
 
     setGameState('countdown');
     setCountdown(3);
     setStats({
       clicks: 0,
-      timeLeft: GAME_MODES[gameMode].duration,
+      timeLeft: totalDuration,
       cps: 0,
       maxCps: 0,
       totalClicks: 0,
-      combo: 0,
-      maxCombo: 0,
-      accuracy: 100,
     });
-    // ref 초기화
     clickTimesRef.current = [];
 
     countdownRef.current = setInterval(() => {
@@ -1057,38 +869,36 @@ const SpeedClicker: React.FC = () => {
           }
           setGameState('playing');
 
+          playStartRef.current = Date.now();
+
+          // 벽시계 기반 남은 시간 계산 (깜빡임/중복 setInterval 방지)
           gameTimerRef.current = setInterval(() => {
             if (runId !== runIdRef.current) return;
-            setStats(prevStats => {
-              const newTimeLeft = prevStats.timeLeft - 1;
-              if (newTimeLeft <= 0) {
-                if (gameTimerRef.current) {
-                  clearInterval(gameTimerRef.current);
-                  gameTimerRef.current = null;
-                }
-                if (gameStateRef.current === 'playing' && runId === runIdRef.current) {
-                  setGameState('finished');
-                }
-                return { ...prevStats, timeLeft: 0 };
-              }
-              return { ...prevStats, timeLeft: newTimeLeft };
-            });
-          }, 1000);
+            const elapsed = Math.floor((Date.now() - playStartRef.current) / 1000);
+            const remaining = Math.max(0, totalDuration - elapsed);
 
-          // ✅ CPS 업데이트 (stale closure 방지: ref 사용)
+            setStats(prev =>
+              prev.timeLeft === remaining ? prev : { ...prev, timeLeft: remaining }
+            );
+
+            if (remaining <= 0) {
+              if (gameTimerRef.current) {
+                clearInterval(gameTimerRef.current);
+                gameTimerRef.current = null;
+              }
+              if (gameStateRef.current === 'playing' && runId === runIdRef.current)
+                setGameState('finished');
+            }
+          }, 200);
+
+          // CPS 계산 (1초 창 기준)
           cpsUpdateRef.current = setInterval(() => {
             if (runId !== runIdRef.current) return;
-
             const now = Date.now();
-            const recentClicks = clickTimesRef.current.filter(time => now - time <= 1000);
-            const currentCps = recentClicks.length;
-            // 메모리 관리: 5초 이전 클릭 제거
+            const recent = clickTimesRef.current.filter(t => now - t <= 1000);
+            const cps = recent.length;
             clickTimesRef.current = clickTimesRef.current.filter(t => now - t <= 5000);
-
-            setStats(prevStats => {
-              const newMaxCps = Math.max(prevStats.maxCps, currentCps);
-              return { ...prevStats, cps: currentCps, maxCps: newMaxCps };
-            });
+            setStats(prev => ({ ...prev, cps, maxCps: Math.max(prev.maxCps, cps) }));
           }, 100);
 
           return 0;
@@ -1099,22 +909,16 @@ const SpeedClicker: React.FC = () => {
   };
 
   const endGame = useCallback(() => {
-    setPersonalBest(prev => {
-      const best = prev[gameMode];
-      if (stats.clicks > best) {
-        return { ...prev, [gameMode]: stats.clicks };
-      }
-      return prev;
-    });
+    setPersonalBest(prev =>
+      stats.clicks > prev[gameMode] ? { ...prev, [gameMode]: stats.clicks } : prev
+    );
   }, [stats.clicks, gameMode]);
 
   const resetGame = () => {
     runIdRef.current += 1;
     clearTimers();
-    setShowCombo(false);
     setGameState('setup');
   };
-
   const handleBackClick = () => {
     runIdRef.current += 1;
     clearTimers();
@@ -1124,13 +928,13 @@ const SpeedClicker: React.FC = () => {
   useEffect(() => {
     if (gameState === 'finished') endGame();
   }, [gameState, endGame]);
-
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       runIdRef.current += 1;
       clearTimers();
-    };
-  }, []);
+    },
+    []
+  );
 
   const progress =
     stats.timeLeft > 0
@@ -1145,8 +949,7 @@ const SpeedClicker: React.FC = () => {
     <GameContainer>
       <Header>
         <BackButton onClick={handleBackClick}>
-          <ArrowLeft size={16} />
-          게임 목록
+          <ArrowLeft size={16} /> 게임 목록
         </BackButton>
         <Title>⚡ 스피드 클리커</Title>
         <StatsPanel>
@@ -1159,10 +962,6 @@ const SpeedClicker: React.FC = () => {
             <div className="stat-value">{stats.maxCps}</div>
           </Stat>
           <Stat>
-            <div className="stat-label">콤보</div>
-            <div className="stat-value">{stats.combo}</div>
-          </Stat>
-          <Stat>
             <div className="stat-label">시간</div>
             <div className="stat-value">{stats.timeLeft}s</div>
           </Stat>
@@ -1171,9 +970,24 @@ const SpeedClicker: React.FC = () => {
 
       {(gameState === 'playing' || gameState === 'countdown') && (
         <GameArea>
-          <Countdown show={gameState === 'countdown'}>
+          <div
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: gameState === 'countdown' ? '5rem' : '0',
+              fontWeight: 800,
+              color: '#ef4444',
+              textShadow: '0 0 30px rgba(239,68,68,.8)',
+              opacity: gameState === 'countdown' ? 1 : 0,
+              transition: 'opacity .3s ease',
+              pointerEvents: 'none',
+              zIndex: 500,
+            }}
+          >
             {countdown > 0 ? countdown : 'START!'}
-          </Countdown>
+          </div>
 
           <div
             style={{
@@ -1190,26 +1004,21 @@ const SpeedClicker: React.FC = () => {
               <div className="speed-unit">CPS</div>
             </SpeedDisplay>
 
-            <div style={{ position: 'relative' }}>
-              <ClickZone
-                isActive={isGameActive}
-                isCombo={stats.combo >= 10}
-                clicks={stats.clicks}
-                role="button"
-                tabIndex={0}
-                onPointerDown={handleClick}
-                onKeyDown={handleKeyDown}
-                onContextMenu={e => e.preventDefault()}
-              >
-                <div className="click-text">
-                  {isGameActive ? 'CLICK!' : gameState === 'countdown' ? '준비...' : '완료'}
-                </div>
-                <div className="click-count">{stats.clicks}</div>
-                <div className="click-instruction">{isGameActive ? '빠르게 클릭하세요!' : ''}</div>
-              </ClickZone>
-
-              <ComboIndicator show={showCombo} combo={stats.combo} />
-            </div>
+            <ClickZone
+              isActive={isGameActive}
+              clicks={stats.clicks}
+              role="button"
+              tabIndex={0}
+              onPointerDown={handleClick}
+              onKeyDown={handleKeyDown}
+              onContextMenu={e => e.preventDefault()}
+            >
+              <div className="click-text">
+                {isGameActive ? 'CLICK!' : gameState === 'countdown' ? '준비...' : '완료'}
+              </div>
+              <div className="click-count">{stats.clicks}</div>
+              <div className="click-instruction">{isGameActive ? '빠르게 클릭하세요!' : ''}</div>
+            </ClickZone>
           </div>
 
           <ProgressBar>
@@ -1224,13 +1033,15 @@ const SpeedClicker: React.FC = () => {
           <div className="overlay-text">
             제한된 시간 내에 최대한 많이 클릭하세요!
             <br />
-            연속 클릭으로 콤보를 쌓고 높은 CPS를 달성해보세요.
+            모드는 10초 / 30초 / 60초 챌린지이며,
+            <br />
+            60초 모드는 스피드와 지구력을 동시에 테스트합니다.
             <br />
             <br />
             <strong>팁:</strong>
             <br />• 일정한 리듬으로 클릭하세요
             <br />• 모바일에서는 터치가 더 빠를 수 있습니다
-            <br />• 손목을 사용하지 말고 손가락을 사용하세요
+            <br />• 손목 대신 손가락을 사용하세요
             <br />
             <br />
             게임 모드를 선택하세요:
@@ -1240,10 +1051,7 @@ const SpeedClicker: React.FC = () => {
             {(Object.keys(GAME_MODES) as GameMode[]).map(mode => (
               <ModeButton key={mode} selected={gameMode === mode} onClick={() => setGameMode(mode)}>
                 <div>{GAME_MODES[mode].name}</div>
-                <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
-                  {GAME_MODES[mode].duration}초
-                </div>
-                <div style={{ fontSize: '0.7rem', opacity: 0.7 }}>최고: {personalBest[mode]}</div>
+                <div style={{ fontSize: '.7rem', opacity: 0.7 }}>최고: {personalBest[mode]}</div>
               </ModeButton>
             ))}
           </GameModeSelector>
@@ -1273,14 +1081,12 @@ const SpeedClicker: React.FC = () => {
               <span className="score-value">{stats.maxCps} clicks/sec</span>
             </ScoreItem>
             <ScoreItem delay={3}>
-              <span className="score-label">🔥 최대 콤보</span>
-              <span className="score-value">{stats.maxCombo}연속</span>
+              <span className="score-label">📊 평균 CPS</span>
+              <span className="score-value">
+                {Math.round((stats.clicks / GAME_MODES[gameMode].duration) * 10) / 10}
+              </span>
             </ScoreItem>
             <ScoreItem delay={4}>
-              <span className="score-label">🎯 정확도</span>
-              <span className="score-value">{stats.accuracy}%</span>
-            </ScoreItem>
-            <ScoreItem delay={5}>
               <span className="score-label">🏆 개인 기록</span>
               <span className="score-value" style={{ color: currentTier.color }}>
                 {personalBest[gameMode]}번
@@ -1294,10 +1100,8 @@ const SpeedClicker: React.FC = () => {
               <div className="stat-number">{GAME_MODES[gameMode].name}</div>
             </StatCard>
             <StatCard delay={7}>
-              <div className="stat-title">평균 CPS</div>
-              <div className="stat-number">
-                {Math.round((stats.clicks / GAME_MODES[gameMode].duration) * 10) / 10}
-              </div>
+              <div className="stat-title">지속 시간</div>
+              <div className="stat-number">{GAME_MODES[gameMode].duration}s</div>
             </StatCard>
             <StatCard delay={8}>
               <div className="stat-title">신기록 여부</div>
@@ -1308,10 +1112,6 @@ const SpeedClicker: React.FC = () => {
                     ? '🏆 동점'
                     : '❌'}
               </div>
-            </StatCard>
-            <StatCard delay={9}>
-              <div className="stat-title">클릭 효율</div>
-              <div className="stat-number">{Math.round(stats.accuracy)}%</div>
             </StatCard>
           </StatGrid>
 

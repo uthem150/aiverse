@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Play, Pause, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Play, RefreshCcw, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
 
@@ -573,6 +573,8 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 
   &:before {
     content: '';
@@ -1008,7 +1010,7 @@ const SimonSays: React.FC = () => {
 
           <ControlPanel>
             <ControlButton onClick={restartGame}>
-              <Pause size={16} />
+              <RefreshCcw size={16} />
               다시 시작
             </ControlButton>
             <ControlButton

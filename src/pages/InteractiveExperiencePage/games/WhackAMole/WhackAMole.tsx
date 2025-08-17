@@ -2,128 +2,75 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
-// 애니메이션 정의 (css로 래핑)
+// ======================= Animations =======================
 const moleAppear = keyframes`
-  0% { 
-    transform: translateY(100%) scale(0.8); 
-    opacity: 0;
-  }
-  20% { 
-    transform: translateY(0%) scale(1.1); 
-    opacity: 1;
-  }
-  80% { 
-    transform: translateY(0%) scale(1); 
-    opacity: 1;
-  }
-  100% { 
-    transform: translateY(100%) scale(0.8); 
-    opacity: 0;
-  }
+  0%   { transform: translate(-50%, 100%) scale(0.8); opacity: 0; }
+  20%  { transform: translate(-50%, -10%) scale(1.1); opacity: 1; }
+  80%  { transform: translate(-50%, 0%)   scale(1.0); opacity: 1; }
+  100% { transform: translate(-50%, 100%) scale(0.8); opacity: 0; }
 `;
 
 const moleHit = keyframes`
-  0% { 
-    transform: translateY(0%) scale(1); 
-    opacity: 1;
-  }
-  50% { 
-    transform: translateY(-30%) scale(1.3) rotate(10deg); 
-    opacity: 0.8;
-  }
-  100% { 
-    transform: translateY(100%) scale(0.6) rotate(-10deg); 
-    opacity: 0;
-  }
+  0%   { transform: translate(-50%, 0%)   scale(1)   rotate(0deg);   opacity: 1;   filter: brightness(1) saturate(1); }
+  50%  { transform: translate(-50%, -30%) scale(1.3) rotate(10deg);  opacity: 0.9; filter: brightness(1.35) saturate(1.35); }
+  100% { transform: translate(-50%, 100%) scale(0.6) rotate(-10deg); opacity: 0;   filter: brightness(0.9)  saturate(0.9); }
 `;
 
 const holeGlow = keyframes`
-  0% { 
-    box-shadow: 0 0 0 rgba(34, 197, 94, 0.5);
-  }
-  50% { 
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.8), 0 0 60px rgba(34, 197, 94, 0.4);
-  }
-  100% { 
-    box-shadow: 0 0 0 rgba(34, 197, 94, 0.5);
-  }
+  0%   { box-shadow: 0 0 0 rgba(34, 197, 94, 0.5); }
+  50%  { box-shadow: 0 0 30px rgba(34, 197, 94, 0.8), 0 0 60px rgba(34, 197, 94, 0.4); }
+  100% { box-shadow: 0 0 0 rgba(34, 197, 94, 0.5); }
 `;
 
 const comboFlash = keyframes`
-  0% { 
-    background: linear-gradient(135deg, #059669, #047857);
-    transform: scale(1);
-  }
-  50% { 
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    transform: scale(1.1);
-  }
-  100% { 
-    background: linear-gradient(135deg, #059669, #047857);
-    transform: scale(1);
-  }
+  0%   { background: linear-gradient(135deg, #059669, #047857); transform: scale(1); }
+  50%  { background: linear-gradient(135deg, #f59e0b, #d97706); transform: scale(1.1); }
+  100% { background: linear-gradient(135deg, #059669, #047857); transform: scale(1); }
 `;
 
 const resultAppear = keyframes`
-  0% {
-    transform: scale(0.5) translateY(50px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(-10px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+  0%   { transform: scale(0.5) translateY(50px); opacity: 0; }
+  50%  { transform: scale(1.05) translateY(-10px); opacity: 0.8; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 `;
 
 const tierGlow = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
-  }
+  0%,100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+  50%     { box-shadow: 0 0 40px rgba(255,255,255,0.6); }
 `;
 
 const statsReveal = keyframes`
-  0% {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0%   { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0);     opacity: 1; }
 `;
 
 const buttonHover = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
 `;
 
 const scoreFloat = keyframes`
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(-30px) scale(1.2);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(-60px) scale(0.8);
-    opacity: 0;
-  }
+  0%   { transform: translateY(0)   scale(1);   opacity: 1;   }
+  50%  { transform: translateY(-30px) scale(1.2); opacity: 0.9; }
+  100% { transform: translateY(-60px) scale(0.8); opacity: 0;   }
 `;
 
+const screenShake = keyframes`
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -2px); }
+  100% { transform: translate(0, 0); }
+`;
+
+const hitRing = keyframes`
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0;   }
+`;
+
+// ======================= Layout =======================
 const GameContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #0f172a 0%, #059669 30%, #047857 70%, #065f46 100%);
@@ -137,10 +84,7 @@ const GameContainer = styled.div`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background:
       radial-gradient(circle at 30% 20%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 70% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
@@ -167,7 +111,6 @@ const Header = styled.div`
     flex-direction: column;
     gap: 0.75rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 0.75rem;
     gap: 0.5rem;
@@ -198,7 +141,6 @@ const BackButton = styled.button`
     font-size: 0.85rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
@@ -220,7 +162,6 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
@@ -230,13 +171,11 @@ const StatsPanel = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-
   @media (max-width: 768px) {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   @media (max-width: 480px) {
     gap: 0.75rem;
   }
@@ -249,10 +188,10 @@ const Stat = styled.div<{ highlight?: boolean }>`
   border-radius: 8px;
   padding: 0.5rem;
 
-  ${props =>
-    props.highlight &&
+  ${({ highlight }) =>
+    highlight &&
     css`
-      animation: ${comboFlash} 0.5s ease;
+      animation: ${comboFlash} 0.35s ease;
     `}
 
   .stat-label {
@@ -260,35 +199,31 @@ const Stat = styled.div<{ highlight?: boolean }>`
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.2rem;
   }
-
   .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: ${props => (props.highlight ? '#fbbf24' : '#22c55e')};
+    color: ${p => (p.highlight ? '#fbbf24' : '#22c55e')};
   }
 
   @media (max-width: 768px) {
     .stat-label {
       font-size: 0.7rem;
     }
-
     .stat-value {
       font-size: 1rem;
     }
   }
-
   @media (max-width: 480px) {
     .stat-label {
       font-size: 0.65rem;
     }
-
     .stat-value {
       font-size: 0.9rem;
     }
   }
 `;
 
-const GameArea = styled.div`
+const GameArea = styled.div<{ shake: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -298,11 +233,22 @@ const GameArea = styled.div`
   margin-top: 120px;
   position: relative;
 
+  ${({ shake }) =>
+    shake &&
+    css`
+      animation: ${screenShake} 120ms ease-out;
+    `}
+
+  overscroll-behavior: contain;
+  touch-action: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+  }
   @media (max-width: 768px) {
     padding: 1rem;
     margin-top: 140px;
   }
-
   @media (max-width: 480px) {
     padding: 0.75rem;
     margin-top: 120px;
@@ -327,7 +273,6 @@ const GameBoard = styled.div`
     padding: 1.5rem;
     border-radius: 20px;
   }
-
   @media (max-width: 480px) {
     gap: 1rem;
     padding: 1rem;
@@ -335,62 +280,107 @@ const GameBoard = styled.div`
   }
 `;
 
+/** ================== CLIPPED HOLE (updated) ================== */
 const Hole = styled.div<{ hasHit: boolean }>`
   position: relative;
   width: 120px;
   height: 120px;
-  background: radial-gradient(circle, #1f2937 0%, #111827 100%);
   border-radius: 50%;
-  border: 4px solid #6b5b3b;
-  overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
 
-  ${props =>
-    props.hasHit &&
+  /* 핵심: 바깥으로 나가는 두더지 클리핑 */
+  overflow: hidden;
+  isolation: isolate; /* 새 스택 컨텍스트로 레이어 제어 */
+
+  /* 내부 깊이감 */
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    #0e1a2b 0%,
+    #0b1320 55%,
+    #070c13 75%,
+    #05080d 100%
+  );
+  border: none;
+  box-shadow:
+    inset 0 14px 28px rgba(0, 0, 0, 0.85),
+    inset 0 -8px 12px rgba(0, 0, 0, 0.55);
+
+  ${({ hasHit }) =>
+    hasHit &&
     css`
       animation: ${holeGlow} 0.5s ease;
     `}
 
-  &:before {
+  /* 윗 림(림은 두더지 위) */
+  &::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 30%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    inset: -2px;
     border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    background: radial-gradient(
+      ellipse at 50% 35%,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(0, 0, 0, 0.35) 60%,
+      rgba(0, 0, 0, 0.65) 80%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
   }
 
-  &:after {
+  /* 바깥 그림자(보드 착시) */
+  &::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
+    left: 50%;
     bottom: -2px;
+    transform: translateX(-50%);
+    width: 88%;
+    height: 26%;
     border-radius: 50%;
-    background: linear-gradient(45deg, rgba(101, 69, 34, 0.3), rgba(139, 69, 19, 0.3));
-    z-index: -1;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%);
+    filter: blur(1.5px);
+    pointer-events: none;
+    z-index: 1;
   }
 
   @media (max-width: 768px) {
     width: 100px;
     height: 100px;
   }
-
   @media (max-width: 480px) {
     width: 80px;
     height: 80px;
   }
 `;
 
+const HitRing = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140%;
+  height: 140%;
+  border: 3px solid rgba(34, 197, 94, 0.85);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: ${hitRing} 360ms ease-out forwards;
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.8));
+  z-index: 3; /* 림(2)보다 위 */
+`;
+
+const hitAnim = css`
+  animation: ${moleHit} 0.5s ease-out forwards;
+`;
+const appearAnimDynamic = (ms: number) => css`
+  animation: ${moleAppear} ${ms}ms ease-in-out forwards;
+`;
+
 const Mole = styled.div<{
   isVisible: boolean;
   isHit: boolean;
   moleType: 'normal' | 'fast' | 'bonus';
+  appearMs: number;
 }>`
   position: absolute;
   bottom: 0;
@@ -398,6 +388,7 @@ const Mole = styled.div<{
   transform: translateX(-50%);
   width: 80px;
   height: 100px;
+  z-index: 1; /* 림 아래 */
   background: ${props => {
     switch (props.moleType) {
       case 'fast':
@@ -410,17 +401,21 @@ const Mole = styled.div<{
   }};
   border-radius: 50% 50% 30% 30%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
+  transition: all 0.25s ease;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  will-change: transform, opacity, filter;
 
-  ${props => css`
-    animation: ${props.isVisible
-      ? props.isHit
-        ? `${moleHit} 0.5s ease-out forwards`
-        : `${moleAppear} 2s ease-in-out forwards`
-      : 'none'};
-  `}
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  ${({ isVisible, isHit, appearMs }) =>
+    isVisible
+      ? isHit
+        ? hitAnim
+        : appearAnimDynamic(appearMs)
+      : css`
+          animation: none;
+        `}
 
   &:before {
     content: '';
@@ -433,7 +428,6 @@ const Mole = styled.div<{
     border-radius: 50%;
     box-shadow: 28px 0 0 #1f2937;
   }
-
   &:after {
     content: '';
     position: absolute;
@@ -451,7 +445,6 @@ const Mole = styled.div<{
     css`
       &::before {
         content: '👑';
-        position: absolute;
         top: -15px;
         left: 50%;
         transform: translateX(-50%);
@@ -463,13 +456,11 @@ const Mole = styled.div<{
         filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.8));
       }
     `}
-
   ${props =>
     props.moleType === 'fast' &&
     css`
       &::before {
         content: '⚡';
-        position: absolute;
         top: -10px;
         left: 50%;
         transform: translateX(-50%);
@@ -483,35 +474,30 @@ const Mole = styled.div<{
     `}
 
   &:hover {
-    transform: translateX(-50%) scale(1.1);
+    transform: translateX(-50%) scale(1.08);
   }
 
   @media (max-width: 768px) {
     width: 65px;
     height: 80px;
-
     &:before {
       width: 8px;
       height: 8px;
       box-shadow: 22px 0 0 #1f2937;
     }
-
     &:after {
       width: 6px;
       height: 4px;
     }
   }
-
   @media (max-width: 480px) {
     width: 55px;
     height: 70px;
-
     &:before {
       width: 6px;
       height: 6px;
       box-shadow: 18px 0 0 #1f2937;
     }
-
     &:after {
       width: 5px;
       height: 3px;
@@ -519,27 +505,21 @@ const Mole = styled.div<{
   }
 `;
 
-const ScoreFloat = styled.div<{ x: number; y: number; score: number; type: string }>`
+const ScoreFloat = styled.div<{ x: number; y: number; type: string }>`
   position: absolute;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  color: ${props =>
-    props.type === 'bonus' ? '#fbbf24' : props.type === 'fast' ? '#ef4444' : '#22c55e'};
+  left: ${p => p.x}px;
+  top: ${p => p.y}px;
+  color: ${p => (p.type === 'bonus' ? '#fbbf24' : p.type === 'fast' ? '#ef4444' : '#22c55e')};
   font-size: 1.8rem;
   font-weight: 700;
   pointer-events: none;
   z-index: 30;
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
   animation: ${scoreFloat} 1.2s ease-out forwards;
-
-  &:before {
-    content: '+${props => props.score}';
-  }
-
+  will-change: transform, opacity;
   @media (max-width: 768px) {
     font-size: 1.4rem;
   }
-
   @media (max-width: 480px) {
     font-size: 1.2rem;
   }
@@ -547,18 +527,14 @@ const ScoreFloat = styled.div<{ x: number; y: number; score: number; type: strin
 
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
-
   @media (max-width: 480px) {
     padding: 1rem;
   }
@@ -583,10 +559,7 @@ const OverlayContent = styled.div`
   &:before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    inset: -2px;
     border-radius: 24px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
@@ -602,7 +575,6 @@ const OverlayContent = styled.div`
     margin-bottom: 1.5rem;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
-
   .overlay-text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
@@ -614,29 +586,24 @@ const OverlayContent = styled.div`
     padding: 1.8rem 1.3rem;
     margin: 1rem;
     border-radius: 20px;
-
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
     }
-
     .overlay-text {
       font-size: 0.95rem;
       margin-bottom: 2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
     max-height: 85vh;
-
     .overlay-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
     }
-
     .overlay-text {
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
@@ -644,20 +611,19 @@ const OverlayContent = styled.div`
   }
 `;
 
-// 티어 시스템
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, ${props => props.color}20, ${props => props.color}40);
-  border: 2px solid ${props => props.color};
+  background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
+  border: 2px solid ${p => p.color};
   border-radius: 16px;
   padding: 0.8rem 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: ${props => props.color};
-  text-shadow: 0 0 20px ${props => props.color}80;
+  color: ${p => p.color};
+  text-shadow: 0 0 20px ${p => p.color}80;
   animation: ${tierGlow} 2s ease-in-out infinite;
 
   @media (max-width: 768px) {
@@ -666,7 +632,6 @@ const TierBadge = styled.div<{ color: string }>`
     margin-bottom: 1.2rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
@@ -683,13 +648,11 @@ const ScoreBreakdown = styled.div`
   padding: 1.5rem;
   margin: 1.5rem 0;
   backdrop-filter: blur(10px);
-
   @media (max-width: 768px) {
     padding: 1.2rem;
     margin: 1.2rem 0;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 1rem;
     margin: 1rem 0;
@@ -703,7 +666,7 @@ const ScoreItem = styled.div<{ delay?: number }>`
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
@@ -713,12 +676,10 @@ const ScoreItem = styled.div<{ delay?: number }>`
     margin-top: 0.5rem;
     padding-top: 1rem;
   }
-
   .score-label {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
   }
-
   .score-value {
     color: #fff;
     font-weight: 600;
@@ -726,17 +687,14 @@ const ScoreItem = styled.div<{ delay?: number }>`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0;
-
     &:last-child {
       font-size: 1.1rem;
       margin-top: 0.4rem;
       padding-top: 0.8rem;
     }
-
     .score-label {
       font-size: 0.85rem;
     }
-
     .score-value {
       font-size: 0.9rem;
     }
@@ -748,12 +706,10 @@ const StatGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 1.5rem 0;
-
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
-
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.6rem;
@@ -767,7 +723,7 @@ const StatCard = styled.div<{ delay?: number }>`
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
     font-size: 0.8rem;
@@ -776,7 +732,6 @@ const StatCard = styled.div<{ delay?: number }>`
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
   .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
@@ -787,26 +742,19 @@ const StatCard = styled.div<{ delay?: number }>`
   @media (max-width: 768px) {
     padding: 0.8rem;
     border-radius: 10px;
-
     .stat-title {
       font-size: 0.75rem;
-      margin-bottom: 0.4rem;
     }
-
     .stat-number {
       font-size: 1.2rem;
     }
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem;
     border-radius: 8px;
-
     .stat-title {
       font-size: 0.7rem;
-      margin-bottom: 0.3rem;
     }
-
     .stat-number {
       font-size: 1.1rem;
     }
@@ -821,16 +769,14 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
   margin: 1.5rem 0;
   color: #22c55e;
   font-weight: 600;
-  animation: ${statsReveal} 0.6s ease-out ${props => (props.delay || 0) * 0.1}s both;
+  animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-
   @media (max-width: 768px) {
     padding: 0.8rem 1.2rem;
     margin: 1.2rem 0;
     border-radius: 10px;
     font-size: 0.95rem;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     margin: 1rem 0;
@@ -840,12 +786,11 @@ const PerformanceMessage = styled.div<{ delay?: number }>`
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  background: ${props =>
-    props.variant === 'secondary'
-      ? 'rgba(255, 255, 255, 0.1)'
+  background: ${p =>
+    p.variant === 'secondary'
+      ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #22c55e, #16a34a)'};
-  border: ${props =>
-    props.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none'};
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
   border-radius: 14px;
   padding: 1rem 2rem;
   color: white;
@@ -871,18 +816,15 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
       width 0.6s,
       height 0.6s;
   }
-
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(34, 197, 94, 0.4);
     animation: ${buttonHover} 0.6s ease-in-out;
-
     &:before {
       width: 300px;
       height: 300px;
     }
   }
-
   &:active {
     transform: translateY(-1px);
   }
@@ -893,13 +835,11 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     margin: 0.4rem;
     border-radius: 12px;
   }
-
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
     margin: 0.3rem;
     border-radius: 10px;
-
     &:hover {
       transform: translateY(-2px);
     }
@@ -910,12 +850,10 @@ const DifficultySelector = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0.8rem;
   }
-
   @media (max-width: 480px) {
     gap: 0.6rem;
     margin-bottom: 1.5rem;
@@ -923,9 +861,9 @@ const DifficultySelector = styled.div`
 `;
 
 const DifficultyButton = styled.button<{ selected?: boolean }>`
-  background: ${props =>
-    props.selected ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'rgba(255, 255, 255, 0.1)'};
-  border: 2px solid ${props => (props.selected ? '#22c55e' : 'rgba(255, 255, 255, 0.3)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'rgba(255,255,255,0.1)'};
+  border: 2px solid ${p => (p.selected ? '#22c55e' : 'rgba(255,255,255,0.3)')};
   border-radius: 12px;
   padding: 0.8rem 1.5rem;
   color: white;
@@ -934,8 +872,8 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${props =>
-      props.selected ? 'linear-gradient(135deg, #16a34a, #15803d)' : 'rgba(255, 255, 255, 0.2)'};
+    background: ${p =>
+      p.selected ? 'linear-gradient(135deg, #16a34a, #15803d)' : 'rgba(255,255,255,0.2)'};
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
   }
@@ -945,7 +883,6 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
     font-size: 0.9rem;
     border-radius: 10px;
   }
-
   @media (max-width: 480px) {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
@@ -953,15 +890,16 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-// 인터페이스 정의
+// ======================= Types & Constants =======================
 interface MoleData {
   id: number;
   holeIndex: number;
   isVisible: boolean;
   isHit: boolean;
   type: 'normal' | 'fast' | 'bonus';
-  timeoutId: NodeJS.Timeout;
+  timeoutId: ReturnType<typeof setTimeout>;
   points: number;
+  appearMs: number;
 }
 
 interface GameStats {
@@ -981,7 +919,6 @@ interface TierInfo {
   minScore: number;
 }
 
-// 상수 정의
 const GAME_DURATION = 60;
 const TOTAL_HOLES = 9;
 
@@ -997,32 +934,20 @@ const TIERS: TierInfo[] = [
 ];
 
 const DIFFICULTIES = {
-  easy: {
-    name: '쉬움',
-    moleSpeed: 2500,
-    spawnRate: 1500,
-    specialChance: 0.1,
-  },
-  medium: {
-    name: '보통',
-    moleSpeed: 2000,
-    spawnRate: 1200,
-    specialChance: 0.15,
-  },
-  hard: {
-    name: '어려움',
-    moleSpeed: 1500,
-    spawnRate: 800,
-    specialChance: 0.2,
-  },
-};
+  easy: { name: '쉬움', moleSpeed: 2500, spawnRate: 1500, specialChance: 0.1 },
+  medium: { name: '보통', moleSpeed: 2000, spawnRate: 1200, specialChance: 0.15 },
+  hard: { name: '어려움', moleSpeed: 1700, spawnRate: 650, specialChance: 0.22 },
+} as const;
 
+// ======================= Component =======================
 const WhackAMole: React.FC = () => {
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'finished'>('setup');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [moles, setMoles] = useState<MoleData[]>([]);
-  const [scoreFloats, setScoreFloats] = useState<any[]>([]);
+  const [scoreFloats, setScoreFloats] = useState<
+    { id: number; x: number; y: number; score: number; type: string }[]
+  >([]);
   const [holeHits, setHoleHits] = useState<boolean[]>(new Array(TOTAL_HOLES).fill(false));
   const [stats, setStats] = useState<GameStats>({
     score: 0,
@@ -1033,86 +958,126 @@ const WhackAMole: React.FC = () => {
     accuracy: 0,
     specialHits: 0,
   });
+  const [shake, setShake] = useState(false);
 
   const moleIdRef = useRef(0);
   const scoreIdRef = useRef(0);
   const gameAreaRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-  // 티어 계산 함수
+  // WebAudio
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const playHit = useCallback(() => {
+    const Ctx = (window as any).AudioContext || (window as any).webkitAudioContext;
+    const ctx: AudioContext = audioCtxRef.current ?? new Ctx();
+    audioCtxRef.current = ctx;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(320, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.12);
+
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.5, ctx.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.14);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.15);
+  }, []);
+
   const calculateTier = (finalStats: GameStats): TierInfo => {
     const accuracyBonus = finalStats.accuracy * 2;
     const comboBonus = finalStats.maxCombo * 5;
     const specialBonus = finalStats.specialHits * 10;
     const totalScore = finalStats.score + accuracyBonus + comboBonus + specialBonus;
-
-    for (const tier of TIERS) {
-      if (totalScore >= tier.minScore) {
-        return tier;
-      }
-    }
+    for (const tier of TIERS) if (totalScore >= tier.minScore) return tier;
     return TIERS[TIERS.length - 1];
   };
 
   const getRandomHole = useCallback(() => {
-    const availableHoles = Array.from({ length: TOTAL_HOLES }, (_, i) => i).filter(
-      index => !moles.some(mole => mole.holeIndex === index && mole.isVisible)
+    const available = Array.from({ length: TOTAL_HOLES }, (_, i) => i).filter(
+      index => !moles.some(m => m.holeIndex === index && m.isVisible)
     );
-
-    if (availableHoles.length === 0) return Math.floor(Math.random() * TOTAL_HOLES);
-    return availableHoles[Math.floor(Math.random() * availableHoles.length)];
+    if (available.length === 0) return Math.floor(Math.random() * TOTAL_HOLES);
+    return available[Math.floor(Math.random() * available.length)];
   }, [moles]);
 
-  const spawnMole = useCallback(() => {
+  const spawnSingleMole = useCallback(() => {
     if (gameState !== 'playing') return;
 
     const config = DIFFICULTIES[difficulty];
     const holeIndex = getRandomHole();
 
-    let moleType: 'normal' | 'fast' | 'bonus' = 'normal';
+    let moleType: MoleData['type'] = 'normal';
     let points = 10;
-    let speed = config.moleSpeed;
 
     const rand = Math.random();
-    if (rand < config.specialChance * 0.3) {
+    if (rand < config.specialChance * 0.33) {
       moleType = 'bonus';
       points = 50;
-      speed = config.moleSpeed * 1.2;
     } else if (rand < config.specialChance) {
       moleType = 'fast';
       points = 25;
-      speed = config.moleSpeed * 0.7;
     }
 
+    let speed = config.moleSpeed * (difficulty === 'hard' ? 0.75 : 1);
+    if (moleType === 'bonus') speed *= 1.05;
+    if (moleType === 'fast') speed *= 0.65;
+
+    const appearMs = Math.max(380, Math.floor(speed * 0.8));
+
+    const id = ++moleIdRef.current;
+    const timeoutId = setTimeout(() => {
+      setMoles(prev => prev.map(m => (m.id === id ? { ...m, isVisible: false } : m)));
+      setStats(prev => ({
+        ...prev,
+        misses: prev.misses + 1,
+        combo: 0,
+        accuracy:
+          prev.hits + prev.misses + 1 > 0 ? (prev.hits / (prev.hits + prev.misses + 1)) * 100 : 0,
+      }));
+      setTimeout(() => {
+        setMoles(prev => prev.filter(m => m.id !== id));
+      }, 400);
+    }, speed);
+
     const newMole: MoleData = {
-      id: ++moleIdRef.current,
+      id,
       holeIndex,
       isVisible: true,
       isHit: false,
       type: moleType,
       points,
-      timeoutId: setTimeout(() => {
-        setMoles(prev => prev.map(m => (m.id === newMole.id ? { ...m, isVisible: false } : m)));
-
-        setStats(prev => ({
-          ...prev,
-          misses: prev.misses + 1,
-          combo: 0,
-          accuracy:
-            prev.hits + prev.misses + 1 > 0 ? (prev.hits / (prev.hits + prev.misses + 1)) * 100 : 0,
-        }));
-
-        setTimeout(() => {
-          setMoles(prev => prev.filter(m => m.id !== newMole.id));
-        }, 500);
-      }, speed),
+      timeoutId,
+      appearMs,
     };
-
     setMoles(prev => [...prev, newMole]);
-  }, [gameState, difficulty, getRandomHole]);
+  }, [difficulty, gameState, getRandomHole]);
+
+  const spawnMole = useCallback(() => {
+    if (gameState !== 'playing') return;
+    if (difficulty === 'hard') {
+      const burstCount = 2 + Math.floor(Math.random() * 2); // 2 or 3
+      for (let i = 0; i < burstCount; i++) {
+        const offset = 120 + Math.floor(Math.random() * 80);
+        setTimeout(spawnSingleMole, i * offset);
+      }
+    } else {
+      spawnSingleMole();
+    }
+  }, [difficulty, gameState, spawnSingleMole]);
 
   const handleMoleClick = useCallback(
     (mole: MoleData) => {
-      if (!mole.isVisible || mole.isHit || gameState !== 'playing') return;
+      if (mole.isHit || gameState !== 'playing') return;
+
+      playHit();
+      setShake(true);
+      setTimeout(() => setShake(false), 140);
 
       clearTimeout(mole.timeoutId);
 
@@ -1120,39 +1085,39 @@ const WhackAMole: React.FC = () => {
         prev.map(m => (m.id === mole.id ? { ...m, isHit: true, isVisible: false } : m))
       );
 
-      const newHoleHits = [...holeHits];
-      newHoleHits[mole.holeIndex] = true;
-      setHoleHits(newHoleHits);
-      setTimeout(() => {
-        setHoleHits(prev => {
-          const updated = [...prev];
-          updated[mole.holeIndex] = false;
-          return updated;
-        });
-      }, 500);
+      setHoleHits(prev => {
+        const next = [...prev];
+        next[mole.holeIndex] = true;
+        setTimeout(() => {
+          setHoleHits(p => {
+            const u = [...p];
+            u[mole.holeIndex] = false;
+            return u;
+          });
+        }, 480);
+        return next;
+      });
 
       if (gameAreaRef.current) {
         const holes = gameAreaRef.current.querySelectorAll('div[data-hole]');
-        const holeElement = holes[mole.holeIndex] as HTMLElement;
-        if (holeElement) {
-          const rect = holeElement.getBoundingClientRect();
+        const holeElem = holes[mole.holeIndex] as HTMLElement;
+        if (holeElem) {
+          const rect = holeElem.getBoundingClientRect();
           const containerRect = gameAreaRef.current.getBoundingClientRect();
-
-          const scoreId = ++scoreIdRef.current;
+          const id = ++scoreIdRef.current;
           setScoreFloats(prev => [
             ...prev,
             {
-              id: scoreId,
+              id,
               x: rect.left - containerRect.left + rect.width / 2,
               y: rect.top - containerRect.top + rect.height / 2,
               score: mole.points,
               type: mole.type,
             },
           ]);
-
           setTimeout(() => {
-            setScoreFloats(prev => prev.filter(s => s.id !== scoreId));
-          }, 1200);
+            setScoreFloats(prev => prev.filter(s => s.id !== id));
+          }, 1100);
         }
       }
 
@@ -1179,67 +1144,57 @@ const WhackAMole: React.FC = () => {
 
       setTimeout(() => {
         setMoles(prev => prev.filter(m => m.id !== mole.id));
-      }, 500);
+      }, 400);
     },
-    [gameState, holeHits]
+    [gameState, playHit]
   );
 
   const startGame = () => {
     setGameState('playing');
     setTimeLeft(GAME_DURATION);
-    setStats({
-      score: 0,
-      hits: 0,
-      misses: 0,
-      combo: 0,
-      maxCombo: 0,
-      accuracy: 0,
-      specialHits: 0,
-    });
+    setStats({ score: 0, hits: 0, misses: 0, combo: 0, maxCombo: 0, accuracy: 0, specialHits: 0 });
     setMoles([]);
     setScoreFloats([]);
     setHoleHits(new Array(TOTAL_HOLES).fill(false));
   };
 
   const restartGame = () => {
-    moles.forEach(mole => clearTimeout(mole.timeoutId));
+    moles.forEach(m => clearTimeout(m.timeoutId));
     setGameState('setup');
   };
 
   const handleBackClick = () => {
-    moles.forEach(mole => clearTimeout(mole.timeoutId));
-    // navigate(-1); // 실제 프로젝트에서는 navigate 사용
-    console.log('Back to game list');
+    moles.forEach(m => clearTimeout(m.timeoutId));
+    navigate(-1);
   };
 
+  // 타이머
   useEffect(() => {
-    if (gameState === 'playing') {
-      const timer = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            setGameState('finished');
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
+    if (gameState !== 'playing') return;
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          setGameState('finished');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
   }, [gameState]);
 
+  // 스폰 루프
   useEffect(() => {
-    if (gameState === 'playing') {
-      const config = DIFFICULTIES[difficulty];
-      const interval = setInterval(spawnMole, config.spawnRate);
-      return () => clearInterval(interval);
-    }
+    if (gameState !== 'playing') return;
+    const { spawnRate } = DIFFICULTIES[difficulty];
+    const interval = setInterval(spawnMole, spawnRate);
+    return () => clearInterval(interval);
   }, [gameState, difficulty, spawnMole]);
 
+  // 끝났을 때 잔여 타임아웃 정리
   useEffect(() => {
-    if (gameState === 'finished') {
-      moles.forEach(mole => clearTimeout(mole.timeoutId));
-    }
+    if (gameState !== 'finished') return;
+    moles.forEach(m => clearTimeout(m.timeoutId));
   }, [gameState, moles]);
 
   const currentTier = calculateTier(stats);
@@ -1248,8 +1203,7 @@ const WhackAMole: React.FC = () => {
     <GameContainer>
       <Header>
         <BackButton onClick={handleBackClick}>
-          <ArrowLeft size={16} />
-          게임 목록
+          <ArrowLeft size={16} /> 게임 목록
         </BackButton>
         <Title>🔨 두더지 잡기</Title>
         <StatsPanel>
@@ -1273,18 +1227,25 @@ const WhackAMole: React.FC = () => {
       </Header>
 
       {gameState === 'playing' && (
-        <GameArea ref={gameAreaRef}>
+        <GameArea ref={gameAreaRef} shake={shake}>
           <GameBoard>
             {Array.from({ length: TOTAL_HOLES }, (_, index) => {
               const mole = moles.find(m => m.holeIndex === index && m.isVisible);
               return (
                 <Hole key={index} hasHit={holeHits[index]} data-hole={index}>
+                  {holeHits[index] && <HitRing />}
                   {mole && (
                     <Mole
                       isVisible={mole.isVisible}
                       isHit={mole.isHit}
                       moleType={mole.type}
-                      onClick={() => handleMoleClick(mole)}
+                      appearMs={mole.appearMs}
+                      onPointerDown={e => {
+                        e.stopPropagation();
+                        handleMoleClick(mole);
+                      }}
+                      onMouseDown={() => handleMoleClick(mole)}
+                      onContextMenu={e => e.preventDefault()}
                     />
                   )}
                 </Hole>
@@ -1292,14 +1253,10 @@ const WhackAMole: React.FC = () => {
             })}
           </GameBoard>
 
-          {scoreFloats.map(scoreFloat => (
-            <ScoreFloat
-              key={scoreFloat.id}
-              x={scoreFloat.x}
-              y={scoreFloat.y}
-              score={scoreFloat.score}
-              type={scoreFloat.type}
-            />
+          {scoreFloats.map(sf => (
+            <ScoreFloat key={sf.id} x={sf.x} y={sf.y} type={sf.type}>
+              +{sf.score}
+            </ScoreFloat>
           ))}
         </GameArea>
       )}
@@ -1315,7 +1272,7 @@ const WhackAMole: React.FC = () => {
             <br />
             <strong>특수 두더지:</strong>
             <br />
-            ⚡ 빠른 두더지: 25점 (빠르게 사라짐)
+            ⚡ 빠른 두더지: 25점 (매우 빠르게 사라짐)
             <br />
             👑 보너스 두더지: 50점
             <br />

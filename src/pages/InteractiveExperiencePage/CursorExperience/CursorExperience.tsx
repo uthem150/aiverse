@@ -22,9 +22,8 @@ import SplashCursor from '@/components/reactBits/SplashCursor/SplashCursor';
 import BlobCursor from '@/components/reactBits/BlobCursor/BlobCursor';
 import Ribbons from '@/components/reactBits/Ribbons/Ribbons';
 import MetaBalls from '@/components/reactBits/MetaBalls/MetaBalls';
-import PixelTrail from '@/components/reactBits/PixelTrail/PixelTrail';
 
-type CursorType = 'fluid' | 'splash' | 'ribbon' | 'meta-balls' | 'pixel-trail' | 'none';
+type CursorType = 'fluid' | 'splash' | 'ribbon' | 'meta-balls' | 'none';
 
 const CursorExperience: React.FC = () => {
   const navigate = useNavigate();
@@ -55,12 +54,6 @@ const CursorExperience: React.FC = () => {
       icon: '💦',
       name: '메타 볼',
       description: '나눠졌다 합쳐졌다 재밌는 메타볼을 체험해보세요.',
-    },
-    {
-      type: 'pixel-trail' as CursorType,
-      icon: '🟦',
-      name: '픽셀 트레일',
-      description: '움직임을 따라다니는, 픽셀 트레일을 체험해보세요',
     },
     {
       type: 'none' as CursorType,
@@ -169,27 +162,6 @@ const CursorExperience: React.FC = () => {
               enableTransparency={true}
               clumpFactor={1}
               speed={0.3}
-            />
-          </div>
-        )}
-        {activeCursor === 'pixel-trail' && (
-          <div
-            style={{
-              position: 'fixed',
-              top: '0%',
-              left: '0%',
-              width: '100%',
-              height: '100%',
-              zIndex: 100,
-            }}
-          >
-            <PixelTrail
-              gridSize={40}
-              trailSize={0.08}
-              maxAge={250}
-              interpolate={5}
-              color="#5227FF"
-              gooeyFilter={{ id: 'custom-goo-filter', strength: 2 }}
             />
           </div>
         )}

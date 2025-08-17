@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft, Brain, User, Trophy, RotateCcw } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 // 애니메이션들
 const cellFill = keyframes`
@@ -113,7 +114,8 @@ const cellHover = keyframes`
 
 // 스타일 컴포넌트들
 const GameContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
+  flex: 1;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   display: flex;
   flex-direction: column;
@@ -746,8 +748,6 @@ const GameOverlay = styled.div<GameOverlayProps>`
 
   @media (max-width: 480px) {
     padding: 0.5rem;
-    align-items: flex-start;
-    padding-top: 2rem;
   }
 `;
 
@@ -1198,6 +1198,7 @@ const TicTacToe: React.FC = () => {
   });
   const [aiThinking, setAiThinking] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
 
   const thinkingTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -1470,7 +1471,7 @@ const TicTacToe: React.FC = () => {
     if (thinkingTimeoutRef.current) {
       clearTimeout(thinkingTimeoutRef.current);
     }
-    console.log('뒤로 가기 버튼 클릭');
+    navigate(-1);
   };
 
   const getDifficultyName = (diff: Difficulty) => {

@@ -464,11 +464,11 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogDescription: '순발력과 정확성에 자신 있나요? 지금 바로 반응속도를 테스트해보세요!',
   },
   'block-faller': {
-    title: '블록 폴러 게임 | AIverse-phi - 클래식 블록 퍼즐',
+    title: '블록 폴러 게임 (테트리스) | AIverse-phi - 클래식 블록 퍼즐',
     description:
       '떨어지는 블록을 쌓아 라인을 완성하고 점수를 획득하는 중독성 강한 클래식 퍼즐 게임입니다.',
-    keywords: '블록 폴러, 블록 퍼즐, 테트리스, 웹 게임, 고전 게임',
-    ogTitle: '🧱 블록 폴러 게임',
+    keywords: '테트리스, 블록 폴러, 블록 퍼즐, 테트리스, 웹 게임, 고전 게임',
+    ogTitle: '🧱 테트리스 게임',
     ogDescription: '떨어지는 블록을 완벽하게 쌓아 최고 점수에 도전하세요!',
   },
   'color-match': {
