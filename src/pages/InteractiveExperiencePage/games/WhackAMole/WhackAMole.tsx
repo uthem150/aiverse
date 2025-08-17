@@ -544,10 +544,11 @@ const OverlayContent = styled.div`
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
   backdrop-filter: blur(30px);
   border: 2px solid rgba(34, 197, 94, 0.4);
-  border-radius: 24px;
-  padding: 3rem 2.5rem;
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
-  max-width: 600px;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -560,32 +561,34 @@ const OverlayContent = styled.div`
     content: '';
     position: absolute;
     inset: -2px;
-    border-radius: 24px;
+    border-radius: 20px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
 
   .overlay-title {
-    font-size: 2.5rem;
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: 800;
     background: linear-gradient(45deg, #fff, #f1f5f9);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
+
   .overlay-text {
-    font-size: 1.1rem;
+    font-size: 0.9rem; /* PC 텍스트 더 작게 */
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2.5rem;
-    line-height: 1.7;
+    margin-bottom: 0.8rem; /* 마진 더 줄임 */
+    line-height: 1.4; /* 라인 높이 더 줄임 */
   }
 
   @media (max-width: 768px) {
     padding: 1.8rem 1.3rem;
     margin: 1rem;
     border-radius: 20px;
+    max-height: calc(100vh - 2rem);
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
@@ -595,11 +598,12 @@ const OverlayContent = styled.div`
       margin-bottom: 2rem;
     }
   }
+
   @media (max-width: 480px) {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     border-radius: 16px;
-    max-height: 85vh;
+    max-height: calc(100vh - 1rem);
     .overlay-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
@@ -614,13 +618,13 @@ const OverlayContent = styled.div`
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem; /* 간격 줄임 */
   background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
   border: 2px solid ${p => p.color};
-  border-radius: 16px;
-  padding: 0.8rem 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.4rem 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin-bottom: 0.6rem; /* 마진 더 줄임 */
+  font-size: 1.2rem; /* PC 폰트 더 작게 */
   font-weight: 700;
   color: ${p => p.color};
   text-shadow: 0 0 20px ${p => p.color}80;
@@ -644,9 +648,9 @@ const TierBadge = styled.div<{ color: string }>`
 const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   backdrop-filter: blur(10px);
   @media (max-width: 768px) {
     padding: 1.2rem;
@@ -664,27 +668,26 @@ const ScoreItem = styled.div<{ delay?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0; /* PC 패딩 더 많이 줄임 */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
-
   &:last-child {
     border-bottom: none;
-    font-size: 1.2rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 700;
     color: #22c55e;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
+    margin-top: 0.3rem; /* 마진 더 줄임 */
+    padding-top: 0.6rem; /* 패딩 더 줄임 */
   }
   .score-label {
     color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
+    font-size: 0.8rem; /* PC 폰트 더 작게 */
   }
   .score-value {
     color: #fff;
     font-weight: 600;
+    font-size: 0.85rem; /* PC 폰트 더 작게 */
   }
-
   @media (max-width: 480px) {
     padding: 0.4rem 0;
     &:last-child {
@@ -704,14 +707,13 @@ const ScoreItem = styled.div<{ delay?: number }>`
 const StatGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 1.5rem 0;
+  gap: 0.6rem; /* PC 간격 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
   }
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.6rem;
     margin: 1rem 0;
   }
@@ -720,20 +722,19 @@ const StatGrid = styled.div`
 const StatCard = styled.div<{ delay?: number }>`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem; /* PC 패딩 더 줄임 */
   text-align: center;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
-
   .stat-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem; /* PC 폰트 더 작게 */
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem; /* 마진 더 줄임 */
     text-transform: uppercase;
     letter-spacing: 1px;
   }
   .stat-number {
-    font-size: 1.4rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 700;
     color: #22c55e;
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
@@ -744,6 +745,7 @@ const StatCard = styled.div<{ delay?: number }>`
     border-radius: 10px;
     .stat-title {
       font-size: 0.75rem;
+      margin-bottom: 0.4rem;
     }
     .stat-number {
       font-size: 1.2rem;
@@ -754,6 +756,7 @@ const StatCard = styled.div<{ delay?: number }>`
     border-radius: 8px;
     .stat-title {
       font-size: 0.7rem;
+      margin-bottom: 0.3rem;
     }
     .stat-number {
       font-size: 1.1rem;
@@ -764,11 +767,12 @@ const StatCard = styled.div<{ delay?: number }>`
 const PerformanceMessage = styled.div<{ delay?: number }>`
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
   border: 1px solid rgba(34, 197, 94, 0.3);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem 1rem; /* PC 패딩 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   color: #22c55e;
   font-weight: 600;
+  font-size: 0.85rem; /* PC 폰트 더 작게 */
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
   @media (max-width: 768px) {
@@ -790,18 +794,17 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
     p.variant === 'secondary'
       ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #22c55e, #16a34a)'};
-  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
-  border-radius: 14px;
-  padding: 1rem 2rem;
+  border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,.3)' : 'none')};
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.6rem 1.2rem; /* PC 패딩 더 줄임 */
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem; /* PC 폰트 더 작게 */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin: 0.5rem;
+  margin: 0.3rem; /* 마진 더 줄임 */
   position: relative;
   overflow: hidden;
-
   &:before {
     content: '';
     position: absolute;
@@ -819,8 +822,9 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 35px rgba(34, 197, 94, 0.4);
-    animation: ${buttonHover} 0.6s ease-in-out;
-    &:before {
+    ${css`
+      animation: ${buttonHover} 0.6s ease-in-out;
+    `} &:before {
       width: 300px;
       height: 300px;
     }
@@ -828,7 +832,6 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   &:active {
     transform: translateY(-1px);
   }
-
   @media (max-width: 768px) {
     padding: 0.7rem 1.3rem;
     font-size: 0.95rem;
@@ -850,6 +853,9 @@ const DifficultySelector = styled.div`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0.8rem;
@@ -919,7 +925,7 @@ interface TierInfo {
   minScore: number;
 }
 
-const GAME_DURATION = 60;
+const GAME_DURATION = 1;
 const TOTAL_HOLES = 9;
 
 const TIERS: TierInfo[] = [

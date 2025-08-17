@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowLeft, Navigation, RotateCcw } from 'lucide-react';
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 // 애니메이션 정의
 const playerMove = keyframes`
@@ -571,10 +572,11 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
   backdrop-filter: blur(30px);
   border: 2px solid rgba(34, 197, 94, 0.4);
-  border-radius: 24px;
-  padding: 3rem 2.5rem;
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
-  max-width: 600px;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -595,33 +597,45 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
     content: '';
     position: absolute;
     inset: -2px;
-    border-radius: 24px;
+    border-radius: 20px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
 
   .overlay-title {
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: 800;
     background: linear-gradient(45deg, #fff, #f1f5f9);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .overlay-text {
-    font-size: 1.05rem;
+    font-size: 0.9rem; /* PC 텍스트 더 작게 */
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    margin-bottom: 0.8rem; /* 마진 더 줄임 */
+    line-height: 1.4; /* 라인 높이 더 줄임 */
   }
 
   @media (max-width: 768px) {
     padding: 1.6rem 1.2rem;
     margin: 1rem;
     border-radius: 20px;
+    max-height: 85vh;
+
+    .overlay-title {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .overlay-text {
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
   }
 
   /* 모바일 컴팩트: 스크롤 없이 보기 좋게 */
@@ -633,6 +647,7 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
     max-width: 480px;
     transform: scale(0.98);
     transform-origin: center top;
+    max-height: 85vh;
 
     .overlay-text {
       font-size: 0.92rem;
@@ -652,8 +667,8 @@ const OverlayContent = styled.div<{ isVictory?: boolean }>`
 const DifficultySelector = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 2rem 0;
+  gap: 0.8rem; /* PC 간격 줄임 */
+  margin: 0.8rem 0; /* PC 마진 줄임 */
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 0.8rem;
@@ -665,8 +680,8 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   background: ${p =>
     p.selected ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'rgba(255,255,255,0.05)'};
   border: 2px solid ${p => (p.selected ? '#22c55e' : 'rgba(255,255,255,0.1)')};
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem; /* PC 패딩 줄임 */
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -687,13 +702,13 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
   .difficulty-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.1rem;
+    gap: 0.4rem; /* 간격 줄임 */
+    font-size: 0.95rem; /* PC 폰트 줄임 */
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem; /* 마진 줄임 */
   }
   .difficulty-desc {
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* PC 폰트 줄임 */
     opacity: 0.8;
   }
 
@@ -712,13 +727,13 @@ const DifficultyCard = styled.button<{ selected: boolean }>`
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem; /* 간격 줄임 */
   background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
   border: 2px solid ${p => p.color};
-  border-radius: 16px;
-  padding: 0.8rem 1.5rem;
-  margin-bottom: 1.2rem;
-  font-size: 1.6rem;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.4rem 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin-bottom: 0.6rem; /* 마진 더 줄임 */
+  font-size: 1.2rem; /* PC 폰트 더 작게 */
   font-weight: 700;
   color: ${p => p.color};
   text-shadow: 0 0 20px ${p => p.color}80;
@@ -738,13 +753,12 @@ const TierBadge = styled.div<{ color: string }>`
   }
 `;
 
-/** 점수 내역: 모바일에서 2열 그리드로 바꿔 세로 길이 축소 */
 const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   backdrop-filter: blur(10px);
 
   @media (max-width: 768px) {
@@ -780,26 +794,27 @@ const ScoreItem = styled.div<{ delay?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0; /* PC 패딩 더 많이 줄임 */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
-    font-size: 1.2rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 700;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
+    margin-top: 0.3rem; /* 마진 더 줄임 */
+    padding-top: 0.6rem; /* 패딩 더 줄임 */
     border-top: 2px solid rgba(34, 197, 94, 0.3);
   }
 
   .score-label {
     color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
+    font-size: 0.8rem; /* PC 폰트 더 작게 */
   }
   .score-value {
     color: #22c55e;
     font-weight: 600;
+    font-size: 0.85rem; /* PC 폰트 더 작게 */
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
   }
 
@@ -821,8 +836,8 @@ const ScoreItem = styled.div<{ delay?: number }>`
 const StatGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 1.5rem 0;
+  gap: 0.6rem; /* PC 간격 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
@@ -837,20 +852,20 @@ const StatGrid = styled.div`
 const StatCard = styled.div<{ delay?: number }>`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem; /* PC 패딩 더 줄임 */
   text-align: center;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem; /* PC 폰트 더 작게 */
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem; /* 마진 더 줄임 */
     text-transform: uppercase;
     letter-spacing: 1px;
   }
   .stat-number {
-    font-size: 1.4rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 700;
     color: #22c55e;
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
@@ -883,11 +898,12 @@ const StatCard = styled.div<{ delay?: number }>`
 const PerformanceMessage = styled.div<{ delay?: number }>`
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
   border: 1px solid rgba(34, 197, 94, 0.3);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  margin: 1.2rem 0;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem 1rem; /* PC 패딩 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   color: #22c55e;
   font-weight: 600;
+  font-size: 0.85rem; /* PC 폰트 더 작게 */
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
 
@@ -909,19 +925,19 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
       ? 'rgba(255,255,255,0.1)'
       : 'linear-gradient(135deg, #22c55e, #16a34a)'};
   border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,0.3)' : 'none')};
-  border-radius: 14px;
-  padding: 1rem 2rem;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.6rem 1.2rem; /* PC 패딩 더 줄임 */
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem; /* PC 폰트 더 작게 */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin: 0.5rem;
+  margin: 0.3rem; /* 마진 더 줄임 */
   position: relative;
   overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem; /* 간격 줄임 */
 
   &:before {
     content: '';
@@ -1018,6 +1034,7 @@ const MazeRunner: React.FC = () => {
   });
   const [startTime, setStartTime] = useState<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   // 티어 계산
   const calculateTier = (finalStats: GameStats): TierInfo => {
@@ -1218,7 +1235,7 @@ const MazeRunner: React.FC = () => {
 
   const handleBackClick = () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    console.log('게임 목록으로 돌아가기');
+    navigate(-1);
   };
 
   const getCellType = (
@@ -1442,7 +1459,14 @@ const MazeRunner: React.FC = () => {
                       : '🚶 첫 탈출 축하해요! 계속 도전해보세요!'}
           </PerformanceMessage>
 
-          <div style={{ marginTop: '0.8rem' }}>
+          <div
+            style={{
+              marginTop: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <ActionButton onClick={startGame}>
               <RotateCcw size={20} />
               다시 도전

@@ -34,14 +34,6 @@ const GameExperience: React.FC = () => {
       const features = [];
       if (game.isNew) features.push('✨ NEW');
       if (game.isHot) features.push('🔥 HOT');
-      if (game.difficulty) {
-        const difficultyMap = {
-          easy: '쉬움',
-          medium: '보통',
-          hard: '어려움',
-        };
-        features.push(`난이도: ${difficultyMap[game.difficulty] || game.difficulty}`);
-      }
       if (game.estimatedTime) features.push(`약 ${game.estimatedTime}분`);
 
       return {

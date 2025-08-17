@@ -49,6 +49,30 @@ const streakGlow = keyframes`
   50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
 `;
 
+const resultAppear = keyframes`
+  0% {
+    transform: scale(0.5) translateY(50px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) translateY(-10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+`;
+
+const tierGlow = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+`;
+
 const GameContainer = styled.div<{ flashType?: 'correct' | 'wrong' | null }>`
   flex: 1;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -299,45 +323,69 @@ const ColorButton = styled.button<{ color: string; isDisabled?: boolean }>`
 
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
   display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 2rem;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const OverlayContent = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(102, 126, 234, 0.4);
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
   color: white;
-  max-width: 600px;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
   width: 90%;
+  position: relative;
+  overflow: hidden;
+  animation: ${resultAppear} 0.8s ease-out;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(102, 126, 234, 0.2);
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    z-index: -1;
+    animation: ${tierGlow} 3s ease-in-out infinite;
+  }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
+    background: linear-gradient(45deg, #fff, #f1f5f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
+    font-size: 0.85rem; /* PC 텍스트 더 작게 */
+    line-height: 1.3; /* 라인 높이 더 줄임 */
+    margin-bottom: 0.8rem; /* 마진 더 줄임 */
     opacity: 0.9;
   }
 
   @media (max-width: 768px) {
     padding: 1.5rem 1rem;
     border-radius: 15px;
-    /* max-height: 85vh; */
+    max-height: 85vh;
 
     .title {
       font-size: 1.4rem;
@@ -353,6 +401,7 @@ const OverlayContent = styled.div`
   @media (max-width: 480px) {
     padding: 1rem 0.8rem;
     width: 95%;
+    max-height: 85vh;
 
     .title {
       font-size: 1.2rem;
@@ -369,13 +418,13 @@ const OverlayContent = styled.div`
 const ActionButton = styled.button`
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
-  border-radius: 8px;
-  padding: 1rem 2rem;
+  border-radius: 6px; /* 더 작게 */
+  padding: 0.6rem 1.2rem; /* PC 패딩 더 줄임 */
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem; /* PC 폰트 더 작게 */
   font-weight: 600;
   cursor: pointer;
-  margin: 0.5rem;
+  margin: 0.3rem; /* 마진 더 줄임 */
   transition: all 0.3s ease;
 
   &:hover {
@@ -690,8 +739,8 @@ const ColorMatch: React.FC = () => {
             {/* 등급 표시 */}
             <div
               style={{
-                fontSize: isMobile ? '1.8rem' : '2.5rem',
-                marginBottom: isMobile ? '0.7rem' : '1rem',
+                fontSize: isMobile ? '1.4rem' : '1.8rem' /* PC 크기 줄임 */,
+                marginBottom: isMobile ? '0.5rem' : '0.6rem' /* 마진 줄임 */,
                 color: gradeInfo.color,
                 textShadow: '0 2px 4px rgba(0,0,0,0.5)',
               }}
@@ -700,8 +749,8 @@ const ColorMatch: React.FC = () => {
             </div>
             <div
               style={{
-                fontSize: isMobile ? '1rem' : '1.3rem',
-                marginBottom: isMobile ? '1rem' : '1.5rem',
+                fontSize: isMobile ? '0.9rem' : '1rem' /* PC 크기 줄임 */,
+                marginBottom: isMobile ? '0.8rem' : '0.8rem' /* 마진 줄임 */,
                 fontWeight: 'bold',
                 color: gradeInfo.color,
               }}
@@ -712,9 +761,9 @@ const ColorMatch: React.FC = () => {
             {/* 최종 점수 */}
             <div
               style={{
-                fontSize: isMobile ? '1rem' : '1.2em',
+                fontSize: isMobile ? '0.9rem' : '1rem' /* PC 크기 줄임 */,
                 color: '#4CAF50',
-                marginBottom: isMobile ? '0.8rem' : '1rem',
+                marginBottom: isMobile ? '0.6rem' : '0.6rem' /* 마진 줄임 */,
               }}
             >
               <strong>최종 점수: {stats.score}점</strong>
@@ -724,11 +773,13 @@ const ColorMatch: React.FC = () => {
             <div
               style={{
                 textAlign: 'left',
-                marginBottom: isMobile ? '1rem' : '1.5rem',
-                fontSize: isMobile ? '0.85rem' : '1rem',
+                marginBottom: isMobile ? '0.8rem' : '0.8rem' /* 마진 줄임 */,
+                fontSize: isMobile ? '0.8rem' : '0.85rem' /* PC 크기 줄임 */,
               }}
             >
-              <div style={{ marginBottom: '0.3rem' }}>
+              <div style={{ marginBottom: '0.2rem' }}>
+                {' '}
+                {/* 마진 줄임 */}
                 📊 <strong>상세 결과</strong>
               </div>
               <div>
@@ -746,12 +797,13 @@ const ColorMatch: React.FC = () => {
             <div
               style={{
                 textAlign: 'left',
-                marginBottom: isMobile ? '1rem' : '1.5rem',
-                fontSize: isMobile ? '0.85rem' : '1rem',
+                marginBottom: isMobile ? '0.8rem' : '0.8rem' /* 마진 줄임 */,
+                fontSize: isMobile ? '0.8rem' : '0.85rem' /* PC 크기 줄임 */,
               }}
             >
-              <div style={{ marginBottom: '0.3rem' }}>
-                ⚡ <strong>성능 분석</strong>
+              <div style={{ marginBottom: '0.2rem' }}>
+                {' '}
+                {/* 마진 줄임 */}⚡ <strong>성능 분석</strong>
               </div>
               <div>
                 • 집중력:{' '}
@@ -787,11 +839,11 @@ const ColorMatch: React.FC = () => {
             <div
               style={{
                 backgroundColor: 'rgba(255,255,255,0.1)',
-                padding: isMobile ? '10px' : '15px',
-                borderRadius: isMobile ? '8px' : '10px',
-                marginBottom: isMobile ? '1rem' : '1.5rem',
+                padding: isMobile ? '8px' : '10px' /* PC 패딩 줄임 */,
+                borderRadius: isMobile ? '6px' : '8px' /* PC 라운드 줄임 */,
+                marginBottom: isMobile ? '0.8rem' : '0.8rem' /* 마진 줄임 */,
                 border: `2px solid ${gradeInfo.color}`,
-                fontSize: isMobile ? '0.85rem' : '1rem',
+                fontSize: isMobile ? '0.8rem' : '0.85rem' /* PC 크기 줄임 */,
               }}
             >
               <strong>🎯 종합 평가</strong>
@@ -816,10 +868,10 @@ const ColorMatch: React.FC = () => {
               <div
                 style={{
                   backgroundColor: 'rgba(255, 243, 205, 0.2)',
-                  padding: isMobile ? '10px' : '15px',
-                  borderRadius: isMobile ? '8px' : '10px',
-                  marginBottom: isMobile ? '1rem' : '1.5rem',
-                  fontSize: isMobile ? '0.8rem' : '1rem',
+                  padding: isMobile ? '8px' : '10px' /* PC 패딩 줄임 */,
+                  borderRadius: isMobile ? '6px' : '8px' /* PC 라운드 줄임 */,
+                  marginBottom: isMobile ? '0.8rem' : '0.8rem' /* 마진 줄임 */,
+                  fontSize: isMobile ? '0.75rem' : '0.8rem' /* PC 크기 줄임 */,
                 }}
               >
                 <strong>💡 집중력 향상 팁</strong>

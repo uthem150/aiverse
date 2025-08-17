@@ -391,17 +391,14 @@ const OverlayContent = styled.div`
   background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(124, 58, 237, 0.1));
   backdrop-filter: blur(30px);
   border: 2px solid rgba(147, 51, 234, 0.4);
-  border-radius: 24px;
-  padding: 2rem 1.6rem;
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
-  max-width: 720px;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
   width: 100%;
-
-  /* 핵심: 결과창이 화면을 넘지 않도록 뷰포트 기준으로 제한 */
-  max-height: 90svh;
-  overflow: hidden;
-
   position: relative;
+  overflow: hidden;
   animation: ${resultAppear} 0.8s ease-out;
   box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.5),
@@ -411,151 +408,275 @@ const OverlayContent = styled.div`
     content: '';
     position: absolute;
     inset: -2px;
-    border-radius: 24px;
+    border-radius: 20px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
 
   .overlay-title {
-    font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: 800;
     background: linear-gradient(45deg, #fff, #f1f5f9);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
 
   .overlay-text {
-    font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+    font-size: 0.85rem; /* PC 텍스트 더 작게 */
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 1.2rem;
-    line-height: 1.6;
+    margin-bottom: 0.8rem; /* 마진 더 줄임 */
+    line-height: 1.3; /* 라인 높이 더 줄임 */
   }
 
   @media (max-width: 768px) {
     padding: 1.2rem 1rem;
     border-radius: 20px;
+    .overlay-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .overlay-text {
+      font-size: 1.05rem;
+      margin-bottom: 1.2rem;
+    }
   }
   @media (max-width: 480px) {
     padding: 1rem 0.8rem;
     border-radius: 16px;
+    .overlay-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .overlay-text {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
   }
 `;
 
 const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem; /* 간격 줄임 */
   background: linear-gradient(135deg, ${p => p.color}20, ${p => p.color}40);
   border: 2px solid ${p => p.color};
-  border-radius: 14px;
-  padding: 0.6rem 1rem;
-  margin-bottom: 0.8rem;
-  font-size: clamp(1.05rem, 2.5vw, 1.6rem);
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.4rem 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin-bottom: 0.6rem; /* 마진 더 줄임 */
+  font-size: 1.2rem; /* PC 폰트 더 작게 */
   font-weight: 800;
   color: ${p => p.color};
   text-shadow: 0 0 20px ${p => p.color}80;
+
+  @media (max-width: 768px) {
+    padding: 0.6rem 1rem;
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.8rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+  }
 `;
 
 const ResultScrollArea = styled.div`
-  /* 모바일에서만 내부 스크롤 허용(기본은 접힘 상태라 스크롤 안 보임) */
-  max-height: 56svh;
+  max-height: 56vh; /* PC 높이 줄임 */
   overflow-y: auto;
-  padding-right: 4px; /* 스크롤바 여백 */
+  padding-right: 4px;
   margin: 0 auto;
 
-  /* 데스크톱은 여유 공간 */
   @media (min-width: 481px) {
-    max-height: 62svh;
+    max-height: 60vh; /* PC에서 조금 더 여유 */
+  }
+  @media (max-width: 768px) {
+    max-height: 56vh;
+  }
+  @media (max-width: 480px) {
+    max-height: 52vh;
   }
 `;
 
 const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 0.9rem;
-  margin: 0.8rem 0;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem; /* PC 패딩 더 많이 줄임 */
+  margin: 0.5rem 0; /* 마진 더 줄임 */
   backdrop-filter: blur(10px);
+
+  @media (max-width: 768px) {
+    padding: 0.9rem;
+    margin: 0.8rem 0;
+  }
+  @media (max-width: 480px) {
+    padding: 0.7rem;
+    margin: 0.6rem 0;
+  }
 `;
 
 const ScoreItem = styled.div<{ delay?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0;
+  padding: 0.25rem 0; /* PC 패딩 더 많이 줄임 */
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.08}s both;
 
   &:last-child {
     border-bottom: none;
-    font-size: 1.05rem;
+    font-size: 0.95rem; /* PC 폰트 더 작게 */
     font-weight: 800;
-    margin-top: 0.4rem;
-    padding-top: 0.7rem;
+    margin-top: 0.3rem; /* 마진 더 줄임 */
+    padding-top: 0.5rem; /* 패딩 더 줄임 */
     border-top: 2px solid rgba(147, 51, 234, 0.25);
   }
   .score-label {
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.92rem;
+    font-size: 0.8rem; /* PC 폰트 더 작게 */
   }
   .score-value {
     color: #9333ea;
     font-weight: 700;
+    font-size: 0.85rem; /* PC 폰트 더 작게 */
     text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0;
+    &:last-child {
+      font-size: 1.05rem;
+      margin-top: 0.4rem;
+      padding-top: 0.7rem;
+    }
+    .score-label {
+      font-size: 0.92rem;
+    }
+    .score-value {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 480px) {
+    padding: 0.3rem 0;
+    &:last-child {
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      padding-top: 0.6rem;
+    }
+    .score-label {
+      font-size: 0.85rem;
+    }
+    .score-value {
+      font-size: 0.9rem;
+    }
   }
 `;
 
 const StatGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.7rem;
-  margin: 0.8rem 0;
+  gap: 0.5rem; /* PC 간격 더 줄임 */
+  margin: 0.5rem 0; /* 마진 더 줄임 */
+
+  @media (max-width: 768px) {
+    gap: 0.7rem;
+    margin: 0.8rem 0;
+  }
+  @media (max-width: 480px) {
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
 `;
 
 const StatCard = styled.div<{ delay?: number }>`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 0.7rem;
+  border-radius: 8px; /* 더 작게 */
+  padding: 0.5rem; /* PC 패딩 더 줄임 */
   text-align: center;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.08}s both;
 
   .stat-title {
-    font-size: 0.72rem;
+    font-size: 0.65rem; /* PC 폰트 더 작게 */
     color: rgba(255, 255, 255, 0.65);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem; /* 마진 더 줄임 */
   }
   .stat-number {
-    font-size: 1.08rem;
+    font-size: 0.95rem; /* PC 폰트 더 작게 */
     font-weight: 800;
     color: #9333ea;
     text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem;
+    border-radius: 10px;
+    .stat-title {
+      font-size: 0.72rem;
+      margin-bottom: 0.3rem;
+    }
+    .stat-number {
+      font-size: 1.08rem;
+    }
+  }
+  @media (max-width: 480px) {
+    padding: 0.6rem;
+    border-radius: 8px;
+    .stat-title {
+      font-size: 0.68rem;
+      margin-bottom: 0.25rem;
+    }
+    .stat-number {
+      font-size: 1rem;
+    }
   }
 `;
 
 const PerformanceMessage = styled.div<{ delay?: number }>`
   background: linear-gradient(135deg, rgba(147, 51, 234, 0.08), rgba(124, 58, 237, 0.08));
   border: 1px solid rgba(147, 51, 234, 0.3);
-  border-radius: 10px;
-  padding: 0.7rem 0.9rem;
-  margin: 0.7rem 0;
+  border-radius: 8px; /* 더 작게 */
+  padding: 0.5rem 0.7rem; /* PC 패딩 더 줄임 */
+  margin: 0.5rem 0; /* 마진 더 줄임 */
   color: #a855f7;
   font-weight: 700;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.08}s both;
   text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
-  font-size: 0.95rem;
+  font-size: 0.8rem; /* PC 폰트 더 작게 */
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.9rem;
+    margin: 0.7rem 0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.8rem;
+    margin: 0.6rem 0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
 `;
 
 const ActionRow = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem; /* PC 간격 더 줄임 */
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 0.6rem;
+  margin-top: 0.4rem; /* 마진 더 줄임 */
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  @media (max-width: 480px) {
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
 `;
 
 const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
@@ -564,10 +685,10 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
       ? 'rgba(255, 255, 255, 0.1)'
       : 'linear-gradient(135deg, #9333ea, #7c3aed)'};
   border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255, 255, 255, 0.3)' : 'none')};
-  border-radius: 12px;
-  padding: 0.7rem 1.1rem;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.5rem 0.9rem; /* PC 패딩 더 줄임 */
   color: white;
-  font-size: 0.95rem;
+  font-size: 0.8rem; /* PC 폰트 더 작게 */
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -601,6 +722,17 @@ const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
   }
   &:active {
     transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    border-radius: 12px;
+  }
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
   }
 `;
 

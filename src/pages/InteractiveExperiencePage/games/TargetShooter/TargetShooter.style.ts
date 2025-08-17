@@ -460,10 +460,11 @@ export const OverlayContent = styled.div`
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
   backdrop-filter: blur(30px);
   border: 2px solid rgba(239, 68, 68, 0.4);
-  border-radius: 24px;
-  padding: 3rem 2.5rem;
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
-  max-width: 600px;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -476,15 +477,15 @@ export const OverlayContent = styled.div`
     content: '';
     position: absolute;
     inset: -2px;
-    border-radius: 24px;
+    border-radius: 20px;
     z-index: -1;
     animation: ${tierGlow} 3s ease-in-out infinite;
   }
 
   .overlay-title {
-    font-size: 2.5rem;
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: 900;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
     background: linear-gradient(45deg, #fff, #f1f5f9);
     -webkit-background-clip: text;
     background-clip: text;
@@ -492,16 +493,17 @@ export const OverlayContent = styled.div`
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.55);
   }
   .overlay-text {
-    font-size: 1.1rem;
+    font-size: 0.9rem; /* PC 텍스트 더 작게 */
     color: rgba(255, 255, 255, 0.92);
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
+    line-height: 1.4; /* 라인 높이 더 줄임 */
   }
 
   @media (max-width: 768px) {
     padding: 1.8rem 1.3rem;
     margin: 1rem;
     border-radius: 20px;
+    max-height: 85vh;
     .overlay-title {
       font-size: 1.8rem;
       margin-bottom: 1.2rem;
@@ -530,13 +532,13 @@ export const OverlayContent = styled.div`
 export const TierBadge = styled.div<{ color: string }>`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem; /* 간격 줄임 */
   background: linear-gradient(135deg, ${p => p.color}22, ${p => p.color}44);
   border: 2px solid ${p => p.color};
-  border-radius: 16px;
-  padding: 0.8rem 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.4rem 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin-bottom: 0.6rem; /* 마진 더 줄임 */
+  font-size: 1.2rem; /* PC 폰트 더 작게 */
   font-weight: 800;
   color: ${p => p.color};
   text-shadow: 0 0 20px ${p => p.color}88;
@@ -560,10 +562,11 @@ export const TierBadge = styled.div<{ color: string }>`
 export const ScoreBreakdown = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.8rem; /* PC 패딩 더 많이 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   backdrop-filter: blur(10px);
+
   @media (max-width: 768px) {
     padding: 1.2rem;
     margin: 1.2rem 0;
@@ -580,27 +583,28 @@ export const ScoreItem = styled.div<{ delay?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0; /* PC 패딩 더 많이 줄임 */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   &:last-child {
     border-bottom: none;
-    font-size: 1.2rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 800;
     color: #ef4444;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
+    margin-top: 0.3rem; /* 마진 더 줄임 */
+    padding-top: 0.6rem; /* 패딩 더 줄임 */
     text-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
   }
 
   .score-label {
     color: rgba(255, 255, 255, 0.82);
-    font-size: 0.95rem;
+    font-size: 0.8rem; /* PC 폰트 더 작게 */
   }
   .score-value {
     color: #fff;
     font-weight: 700;
+    font-size: 0.85rem; /* PC 폰트 더 작게 */
   }
 
   @media (max-width: 480px) {
@@ -622,8 +626,9 @@ export const ScoreItem = styled.div<{ delay?: number }>`
 export const StatGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 1.5rem 0;
+  gap: 0.6rem; /* PC 간격 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
+
   @media (max-width: 768px) {
     gap: 0.8rem;
     margin: 1.2rem 0;
@@ -637,20 +642,20 @@ export const StatGrid = styled.div`
 export const StatCard = styled.div<{ delay?: number }>`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem; /* PC 패딩 더 줄임 */
   text-align: center;
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
   .stat-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem; /* PC 폰트 더 작게 */
     color: rgba(255, 255, 255, 0.64);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem; /* 마진 더 줄임 */
     text-transform: uppercase;
     letter-spacing: 1px;
   }
   .stat-number {
-    font-size: 1.4rem;
+    font-size: 1rem; /* PC 폰트 더 작게 */
     font-weight: 800;
     color: #ef4444;
     text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
@@ -683,11 +688,12 @@ export const StatCard = styled.div<{ delay?: number }>`
 export const PerformanceMessage = styled.div<{ delay?: number }>`
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
   border: 1px solid rgba(34, 197, 94, 0.3);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  border-radius: 10px; /* 더 작게 */
+  padding: 0.6rem 1rem; /* PC 패딩 더 줄임 */
+  margin: 0.6rem 0; /* 마진 더 줄임 */
   color: #22c55e;
   font-weight: 700;
+  font-size: 0.85rem; /* PC 폰트 더 작게 */
   text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
   animation: ${statsReveal} 0.6s ease-out ${p => (p.delay || 0) * 0.1}s both;
 
@@ -711,14 +717,14 @@ export const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>
       ? 'rgba(255,255,255,.1)'
       : 'linear-gradient(135deg, #ef4444, #dc2626)'};
   border: ${p => (p.variant === 'secondary' ? '2px solid rgba(255,255,255,.3)' : 'none')};
-  border-radius: 14px;
-  padding: 1rem 2rem;
+  border-radius: 12px; /* 더 작게 */
+  padding: 0.6rem 1.2rem; /* PC 패딩 더 줄임 */
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 0.9rem; /* PC 폰트 더 작게 */
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin: 0.5rem;
+  margin: 0.3rem; /* 마진 더 줄임 */
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow, background;
@@ -767,7 +773,6 @@ export const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>
     }
   }
 `;
-
 export const Countdown = styled.div<{ show: boolean }>`
   position: fixed;
   top: 50%;
@@ -857,19 +862,15 @@ export const DifficultyButton = styled.button<{ selected?: boolean }>`
   font-weight: 700;
   color: #fff;
   cursor: pointer;
-  border: 2px solid
-    ${p => (p.selected ? 'rgba(239,68,68,0.9)' : 'rgba(255,255,255,0.3)')};
-  background:
-    ${p =>
-      p.selected
-        ? 'linear-gradient(135deg, #ef4444, #dc2626)'
-        : 'rgba(255,255,255,0.1)'};
+  border: 2px solid ${p => (p.selected ? 'rgba(239,68,68,0.9)' : 'rgba(255,255,255,0.3)')};
+  background: ${p =>
+    p.selected ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'rgba(255,255,255,0.1)'};
   box-shadow: ${p => (p.selected ? '0 10px 26px rgba(239,68,68,.35)' : 'none')};
   transition: all 0.25s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(239,68,68,.25);
+    box-shadow: 0 10px 22px rgba(239, 68, 68, 0.25);
   }
 
   @media (max-width: 480px) {

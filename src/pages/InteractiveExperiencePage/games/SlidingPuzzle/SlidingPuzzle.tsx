@@ -310,44 +310,94 @@ const DifficultyButton = styled.button<{ selected?: boolean }>`
 const GameOverlay = styled.div<{ show: boolean }>`
   position: fixed;
   inset: 0;
-  height: 100dvh;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
   display: ${p => (p.show ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
+  padding: 2rem;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const OverlayContent = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 2rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(99, 102, 241, 0.4);
+  border-radius: 20px; /* 더 작게 */
+  padding: 1.2rem 1.5rem; /* PC 패딩 더 많이 줄임 */
   text-align: center;
   color: white;
-  max-width: 500px;
-  width: min(92vw, 500px);
-  max-height: 84dvh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 1rem;
+  max-width: 550px; /* 최대 너비 줄임 */
+  max-height: 90vh; /* 높이 여유 더 주기 */
+  width: min(92vw, 550px);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(99, 102, 241, 0.2);
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    z-index: -1;
+    background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  }
 
   .title {
-    font-size: clamp(1.4rem, 4.5vw, 2rem);
+    font-size: 1.6rem; /* PC 타이틀 더 작게 */
     font-weight: bold;
+    margin-bottom: 0.6rem; /* 마진 더 줄임 */
+    background: linear-gradient(45deg, #fff, #f1f5f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
+
   .description {
-    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-    line-height: 1.6;
+    font-size: 0.85rem; /* PC 텍스트 더 작게 */
+    line-height: 1.3; /* 라인 높이 더 줄임 */
     opacity: 0.9;
+    margin-bottom: 0.8rem; /* 마진 더 줄임 */
     overflow: auto;
   }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    max-height: 85vh;
+
+    .title {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .description {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+  }
+
   @media (max-width: 480px) {
     padding: 1.25rem;
     border-radius: 16px;
+    max-height: 85vh;
+
+    .title {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
   }
 `;
 
@@ -355,7 +405,8 @@ const ButtonsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.4rem; /* PC 간격 더 줄임 */
+
   @media (max-width: 480px) {
     gap: 0.5rem;
   }
@@ -364,25 +415,31 @@ const ButtonsRow = styled.div`
 const ActionButton = styled.button`
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   border: none;
-  border-radius: 10px;
-  padding: 0.9rem 1.4rem;
+  border-radius: 8px; /* 더 작게 */
+  padding: 0.6rem 1.2rem; /* PC 패딩 더 줄임 */
   color: white;
-  font-size: 1rem;
+  font-size: 0.9rem; /* PC 폰트 더 작게 */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
   }
+
   @media (max-width: 768px) {
     padding: 0.7rem 1.1rem;
     font-size: 0.95rem;
     border-radius: 8px;
   }
-`;
 
-/* ====== 해답 미리보기 패널 (보드를 가리지 않음) ====== */
+  @media (max-width: 480px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+`; /* ====== 해답 미리보기 패널 (보드를 가리지 않음) ====== */
 const SolutionPanel = styled.div`
   position: relative;
   background: rgba(255, 255, 255, 0.12);

@@ -48,7 +48,7 @@ interface GameStats {
   totalOrbs: number;
 }
 
-const GAME_DURATION = 90; // 90초
+const GAME_DURATION = 45;
 const ORB_COLORS = [
   '#8b5cf6', // purple
   '#ec4899', // pink
