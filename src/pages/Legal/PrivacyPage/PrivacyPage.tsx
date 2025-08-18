@@ -1,6 +1,6 @@
 import Typography from '@/components/common/Typography/Typography';
 import SEO from '@/components/common/SEO/SEO';
-import { StyledPage, StyledHero, StyledSection, StyledCard, StyledMeta } from './PrivacyPage.style';
+import { StyledPage, StyledHero, StyledSection, StyledCard } from './PrivacyPage.style';
 
 const PrivacyPage = () => {
   return (

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Mail, Twitter, ArrowRightCircle, Gamepad2, ListChecks } from 'lucide-react';
+import { ArrowRightCircle, Gamepad2, ListChecks } from 'lucide-react';
 import Typography from '@/components/common/Typography/Typography';
 import {
   StyledFooter,

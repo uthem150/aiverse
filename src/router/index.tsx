@@ -87,7 +87,7 @@ import WhackAMole from '@/pages/InteractiveExperiencePage/games/WhackAMole/Whack
 import PrivacyPage from '@/pages/Legal/PrivacyPage/PrivacyPage';
 import TermsPage from '@/pages/Legal/TermsPage/TermsPage';
 import AboutPage from '@/pages/Legal/AboutPage/AboutPage';
-import ContactPage from '@/pages/Legal/ContactPage/ContactPage';
+// import ContactPage from '@/pages/Legal/ContactPage/ContactPage';
 
 export const router = createBrowserRouter([
   {
