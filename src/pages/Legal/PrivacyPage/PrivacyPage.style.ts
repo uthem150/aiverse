@@ -35,6 +35,9 @@ export const StyledHero = styled.section`
 `;
 
 export const StyledSection = styled.section`
+  display: flex;
+  flex-direction:column;
+  gap:1rem;
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['3xl']};
 
   @media (max-width: 768px) {

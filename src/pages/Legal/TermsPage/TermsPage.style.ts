@@ -28,6 +28,9 @@ export const StyledHero = styled.section`
 
 export const StyledSection = styled.section`
   margin-bottom: ${({ theme }) => (theme as Theme).spacing['3xl']};
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const StyledCard = styled.div`

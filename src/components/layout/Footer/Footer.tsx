@@ -27,12 +27,12 @@ const Footer = () => {
               AIverse-phi
             </div>
             <Typography variant="body2" color="#6B7280">
-              AI 얼굴 분석과 성격·연애·라이프스타일 테스트, 그리고 두뇌활동 무료 게임을 한 곳에서.
-              재미있게 놀면서 나를 발견하세요!
+              AI 얼굴 분석과 성격·연애·라이프스타일 테스트, 무료 두뇌활동 게임을 한 곳에서. 재미있게
+              놀면서 나를 발견하세요!
             </Typography>
 
             <StyledSocialRow aria-label="소셜 링크">
-              <a
+              {/* <a
                 href="mailto:hello@aiverse.dev"
                 aria-label="이메일 보내기"
                 rel="nofollow noopener"
@@ -57,7 +57,7 @@ const Footer = () => {
                 title="GitHub"
               >
                 <Github size={18} />
-              </a>
+              </a> */}
             </StyledSocialRow>
           </StyledBrand>
 
@@ -90,9 +90,9 @@ const Footer = () => {
             <StyledLink>
               <Link to="/about">소개</Link>
             </StyledLink>
-            <StyledLink>
+            {/* <StyledLink>
               <Link to="/contact">연락처</Link>
-            </StyledLink>
+            </StyledLink> */}
           </StyledCol>
 
           {/* Legal */}
@@ -112,7 +112,7 @@ const Footer = () => {
           <div className="right">
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>
-            <a href="mailto:hello@aiverse.dev">hello@aiverse.dev</a>
+            {/* <a href="mailto:hello@aiverse.dev">hello@aiverse.dev</a> */}
           </div>
         </StyledBottomBar>
       </StyledFooterInner>
