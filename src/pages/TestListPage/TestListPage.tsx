@@ -101,7 +101,7 @@ const TestListPage = () => {
     const test = allTests.find(t => t.id === testId);
     if (test?.category === 'interactive-experience') {
       navigate(`/interactive/${testId}`);
-    } else {
+  } else {
       navigate(`/test/${testId}`);
     }
   };

@@ -20,6 +20,7 @@ import { testCategories } from '@/data/tests';
 import { useNavigate } from 'react-router-dom';
 import Footer from '@/components/layout/Footer/Footer';
 import SplitText from '@/components/reactBits/SplitText/SplitText';
+import { useMemo } from 'react';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -42,8 +43,17 @@ const HomePage = () => {
   // **동적으로 계산된 카테고리 개수**
   const totalCategories = testCategories.length;
 
+  const allTests = useMemo(() => {
+    return testCategories.flatMap(cat => cat.tests);
+  }, []);
+
   const handleTestClick = (testId: string) => {
-    navigate(`/test/${testId}`);
+    const test = allTests.find(t => t.id === testId);
+    if (test?.category === 'interactive-experience') {
+      navigate(`/interactive/${testId}`);
+    } else {
+      navigate(`/test/${testId}`);
+    }
   };
 
   const handleCategoryClick = (categoryId: string) => {
