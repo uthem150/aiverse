@@ -670,7 +670,6 @@ const DifficultySelector = styled.div`
   gap: 0.8rem; /* PC 간격 줄임 */
   margin: 0.8rem 0; /* PC 마진 줄임 */
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.8rem;
     margin: 1.2rem 0;
   }

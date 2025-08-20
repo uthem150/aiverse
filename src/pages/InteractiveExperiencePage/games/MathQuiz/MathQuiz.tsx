@@ -770,7 +770,6 @@ const StatGrid = styled.div`
     margin: 1.2rem 0;
   }
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.6rem;
     margin: 1rem 0;
   }

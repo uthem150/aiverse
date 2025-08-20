@@ -575,7 +575,6 @@ const DifficultySelector = styled.div`
   margin: 0.8rem 0; /* PC 마진 줄임 */
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.8rem;
     margin: 1.5rem 0;
   }
@@ -744,7 +743,6 @@ const StatGrid = styled.div`
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
     gap: 0.6rem;
     margin: 1rem 0;
   }
