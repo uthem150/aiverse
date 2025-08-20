@@ -3,7 +3,6 @@ import { Camera, RotateCcw, Zap, TrendingUp } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
-import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledImageUpload,
@@ -40,11 +39,22 @@ const FaceGradeTestPage = () => {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
-  const [loadingStep, setLoadingStep] = useState('라이브러리 로딩 중...');
-  const [modelError, setModelError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showShareResult, setShowShareResult] = useState(false);
-  const isComponentMountedRef = useRef(true);
+
+  // TensorFlow.js 모델 로드 확인
+  useEffect(() => {
+    const checkModels = () => {
+      if (window.tmImage && window.tf) {
+        setIsModelReady(true);
+      } else {
+        // 모델이 로드되지 않았으면 1초 후 다시 확인
+        setTimeout(checkModels, 1000);
+      }
+    };
+
+    checkModels();
+  }, []);
 
   const gradeInfo = {
     최상위천상계: {
@@ -82,8 +92,8 @@ const FaceGradeTestPage = () => {
         '당신은 대부분의 사람들이 속하는 평범한 인간계의 외모를 가졌습니다. 하지만 평범함 속에 특별함이 숨어있습니다. 어떤 스타일이든 무난하게 잘 소화하며, 친근하고 편안한 인상을 줍니다. 평균적인 외모이지만, 당신만의 개성과 매력을 살린다면 얼마든지 더 빛나는 존재가 될 수 있습니다. 이는 외모보다 당신의 내면이 더욱 중요한 가치를 지니고 있음을 의미합니다.',
       emoji: '😊',
     },
-    하위권인간계: {
-      title: '하위권 인간계',
+    못생긴인간계: {
+      title: '못생긴 인간계',
       color: '#EF4444',
       description:
         '아쉽게도 평균보다 조금 떨어지는 외모라는 평가를 받을 수 있습니다. 하지만 외모는 절대적인 것이 아닙니다! 당신만의 장점을 찾아내고, 패션이나 자기계발을 통해 충분히 매력적인 사람으로 거듭날 수 있습니다. 긍정적인 마음과 노력은 그 어떤 외모보다 강력한 무기가 될 것입니다. 당신은 여전히 무궁무진한 가능성을 가진 소중한 존재입니다.',
@@ -98,71 +108,7 @@ const FaceGradeTestPage = () => {
     },
   };
 
-  // TensorFlow.js 및 Teachable Machine 로드
-  useEffect(() => {
-    let isCancelled = false;
-
-    const loadModelsAndLibraries = async (): Promise<void> => {
-      try {
-        setLoadingStep('TensorFlow.js 로딩 중...');
-
-        const loader = AILibraryLoader.getInstance();
-        await loader.loadTensorFlow();
-
-        if (isCancelled || !isComponentMountedRef.current) return;
-
-        setLoadingStep('Teachable Machine 로딩 중...');
-        await loader.loadTeachableMachine();
-
-        if (isCancelled || !isComponentMountedRef.current) return;
-
-        // 최종 확인
-        if (loader.isTeachableMachineReady()) {
-          console.log('✅ All libraries ready for Face Grade Test');
-          setIsModelReady(true);
-          setModelError(null);
-          setLoadingStep('완료!');
-        } else {
-          throw new Error('라이브러리 로딩은 완료되었지만 초기화되지 않았습니다.');
-        }
-      } catch (error) {
-        console.error('❌ Library loading failed:', error);
-        if (!isCancelled && isComponentMountedRef.current) {
-          const errorMessage = error instanceof Error ? error.message : '라이브러리 로드 실패';
-          setModelError(errorMessage);
-          setIsModelReady(false);
-        }
-      }
-    };
-
-    const timer = setTimeout(() => {
-      if (!isCancelled) {
-        loadModelsAndLibraries().catch(error => {
-          console.error('Async loading error:', error);
-          if (!isCancelled && isComponentMountedRef.current) {
-            setModelError('라이브러리 로딩 중 예기치 못한 오류가 발생했습니다.');
-          }
-        });
-      }
-    }, 500);
-
-    return () => {
-      isCancelled = true;
-      clearTimeout(timer);
-    };
-  }, []);
-
-  // 컴포넌트 언마운트 시 정리
-  useEffect(() => {
-    isComponentMountedRef.current = true;
-
-    return () => {
-      console.log('🚪 FaceGradeTest unmounting...');
-      isComponentMountedRef.current = false;
-    };
-  }, []);
-
-  const handleGenderSelect = (gender: 'male' | 'female'): void => {
+  const handleGenderSelect = (gender: 'male' | 'female') => {
     setSelectedGender(gender);
     setStep('upload');
 
@@ -170,7 +116,7 @@ const FaceGradeTestPage = () => {
     trackTestStart('face-grade-test');
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -182,7 +128,7 @@ const FaceGradeTestPage = () => {
     }
   };
 
-  const analyzeImage = async (): Promise<void> => {
+  const analyzeImage = async () => {
     if (!selectedImage || !selectedGender || !isModelReady) {
       alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -197,22 +143,16 @@ const FaceGradeTestPage = () => {
           ? 'https://teachablemachine.withgoogle.com/models/sWJFOW_Of/'
           : 'https://teachablemachine.withgoogle.com/models/g3pMiZBPT/';
 
-      console.log('📦 Loading Teachable Machine model...');
-
       // 모델 로드
       const model = await window.tmImage.load(modelURL + 'model.json', modelURL + 'metadata.json');
-
-      console.log('✅ Model loaded, starting prediction...');
 
       // 이미지 요소 생성 및 예측
       const img = new Image();
       img.crossOrigin = 'anonymous';
 
-      img.onload = async (): Promise<void> => {
+      img.onload = async () => {
         try {
           const predictions = await model.predict(img);
-
-          console.log('✅ Prediction completed:', predictions);
 
           // 예측 결과 정렬
           const sortedPredictions = predictions
@@ -226,17 +166,15 @@ const FaceGradeTestPage = () => {
           const gradeKey = topGrade.className.replace(/\s/g, '') as keyof typeof gradeInfo;
           const gradeData = gradeInfo[gradeKey] || gradeInfo['인간계'];
 
-          if (isComponentMountedRef.current) {
-            setResult({
-              topGrade: gradeData.title,
-              confidence: Math.round(topGrade.probability * 100),
-              allGrades: sortedPredictions,
-              message: gradeData.description,
-              description: `AI가 분석한 결과 ${gradeData.emoji} ${gradeData.title}입니다!`,
-            });
+          setResult({
+            topGrade: gradeData.title,
+            confidence: Math.round(topGrade.probability * 100),
+            allGrades: sortedPredictions,
+            message: gradeData.description,
+            description: `AI가 분석한 결과 ${gradeData.emoji} ${gradeData.title}입니다!`,
+          });
 
-            setStep('result');
-          }
+          setStep('result');
         } catch (error) {
           console.error('Prediction failed:', error);
           alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -245,7 +183,7 @@ const FaceGradeTestPage = () => {
         }
       };
 
-      img.onerror = (): void => {
+      img.onerror = () => {
         setIsLoading(false);
         alert('이미지 로드에 실패했습니다. 다른 이미지를 시도해주세요.');
       };
@@ -258,7 +196,7 @@ const FaceGradeTestPage = () => {
     }
   };
 
-  const resetTest = (): void => {
+  const resetTest = () => {
     setStep('gender');
     setSelectedGender(null);
     setSelectedImage(null);
@@ -266,41 +204,16 @@ const FaceGradeTestPage = () => {
     setIsLoading(false);
   };
 
-  const shareResult = (): void => {
+  const shareResult = () => {
     setShowShareResult(true);
 
     // 공유 모달 열기 추적
     trackEvent('share_modal_open', 'engagement', 'face-grade-test');
   };
 
-  const closeShareResult = (): void => {
+  const closeShareResult = () => {
     setShowShareResult(false);
   };
-
-  // 모델 로드 오류 시
-  if (modelError) {
-    return (
-      <TestContainer
-        title="✨ AI 외모 등급 테스트"
-        description="라이브러리 로드 중 오류가 발생했습니다."
-      >
-        <StyledLoadingAnimation>
-          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
-            ⚠️
-          </div>
-          <Typography variant="h5" color="#EF4444">
-            로드 실패
-          </Typography>
-          <Typography variant="body2" color="#6B7280">
-            {modelError}
-          </Typography>
-          <Button variant="primary" onClick={() => window.location.reload()}>
-            페이지 새로고침
-          </Button>
-        </StyledLoadingAnimation>
-      </TestContainer>
-    );
-  }
 
   // 모델이 로드되지 않았을 때 로딩 표시
   if (!isModelReady) {
@@ -308,9 +221,9 @@ const FaceGradeTestPage = () => {
       <TestContainer title="✨ AI 외모 등급 테스트" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">{loadingStep}</Typography>
+          <Typography variant="body1">AI 모델 로딩 중...</Typography>
           <Typography variant="caption" color="#6B7280">
-            처음 방문 시 라이브러리 다운로드로 시간이 걸릴 수 있습니다 🤖
+            잠시만 기다려주세요 🤖
           </Typography>
         </StyledLoadingAnimation>
       </TestContainer>
@@ -347,7 +260,6 @@ const FaceGradeTestPage = () => {
           </StyledGenderSelector>
         </StyledTestStep>
       )}
-
       {/* Image Upload */}
       {step === 'upload' && (
         <StyledTestStep>
@@ -375,7 +287,6 @@ const FaceGradeTestPage = () => {
           />
         </StyledTestStep>
       )}
-
       {/* Analysis */}
       {step === 'analysis' && (
         <StyledTestStep>
@@ -416,7 +327,6 @@ const FaceGradeTestPage = () => {
           )}
         </StyledTestStep>
       )}
-
       {/* Results */}
       {step === 'result' && result && (
         <StyledTestStep>

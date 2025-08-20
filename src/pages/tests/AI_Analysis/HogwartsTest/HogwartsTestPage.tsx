@@ -3,7 +3,6 @@ import { RotateCcw, Zap, Crown } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
-import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledImageUpload,
@@ -30,47 +29,18 @@ const HogwartsTestPage = () => {
   const [result, setResult] = useState<HogwartsResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
-  const [modelError, setModelError] = useState<string | null>(null);
-  const [loadingStep, setLoadingStep] = useState('AI 라이브러리 로딩 중...');
   const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isMountedRef = useRef(true);
 
-  // AI 라이브러리 로딩
   useEffect(() => {
-    let cancel = false;
-    const loadLibraries = async () => {
-      try {
-        const loader = AILibraryLoader.getInstance();
-        setLoadingStep('TensorFlow.js 로딩 중...');
-        await loader.loadTensorFlow();
-        if (cancel || !isMountedRef.current) return;
-
-        setLoadingStep('Teachable Machine 로딩 중...');
-        await loader.loadTeachableMachine();
-        if (cancel || !isMountedRef.current) return;
-
-        if (loader.isTeachableMachineReady()) {
-          setIsModelReady(true);
-        } else {
-          throw new Error('AI 라이브러리 초기화 실패');
-        }
-      } catch (e) {
-        setModelError(e instanceof Error ? e.message : '알 수 없는 오류');
-        setIsModelReady(false);
+    const checkModels = () => {
+      if (window.tmImage && window.tf) {
+        setIsModelReady(true);
+      } else {
+        setTimeout(checkModels, 1000);
       }
     };
-    loadLibraries();
-    return () => {
-      cancel = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
+    checkModels();
   }, []);
 
   const houseInfo = {
@@ -144,21 +114,23 @@ const HogwartsTestPage = () => {
       img.onload = async () => {
         try {
           const predictions = await model.predict(img);
-          const sorted = predictions.sort((a: any, b: any) => b.probability - a.probability);
-          const top = sorted[0];
-          const house = top.className;
-          const info = houseInfo[house as keyof typeof houseInfo] || houseInfo['그리핀도르'];
+          const sortedPredictions = predictions.sort(
+            (a: any, b: any) => b.probability - a.probability
+          );
 
-          if (isMountedRef.current) {
-            setResult({
-              house,
-              confidence: Math.round(top.probability * 100),
-              description: info.description,
-              members: info.members,
-              message: `${info.emoji} 당신은 ${house} 기숙사입니다!`,
-            });
-            setStep('result');
-          }
+          const topPrediction = sortedPredictions[0];
+          const house = topPrediction.className;
+          const houseData = houseInfo[house as keyof typeof houseInfo] || houseInfo['그리핀도르'];
+
+          setResult({
+            house,
+            confidence: Math.round(topPrediction.probability * 100),
+            description: houseData.description,
+            members: houseData.members,
+            message: `${houseData.emoji} 당신은 ${house} 기숙사입니다!`,
+          });
+
+          setStep('result');
         } catch (error) {
           console.error('Prediction failed:', error);
           alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -171,6 +143,7 @@ const HogwartsTestPage = () => {
         setIsLoading(false);
         alert('이미지 로드에 실패했습니다. 다른 이미지를 시도해주세요.');
       };
+
       img.src = selectedImage;
     } catch (error) {
       console.error('Model loading failed:', error);
@@ -186,29 +159,13 @@ const HogwartsTestPage = () => {
     setIsLoading(false);
   };
 
-  const shareResult = () => setShowShareResult(true);
-  const closeShareResult = () => setShowShareResult(false);
+  const shareResult = () => {
+    setShowShareResult(true);
+  };
 
-  if (modelError) {
-    return (
-      <TestContainer title="🏰 AI 호그와트 기숙사 테스트" description="모델 로딩 실패">
-        <StyledLoadingAnimation>
-          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
-            ⚠️
-          </div>
-          <Typography variant="h5" color="#EF4444">
-            AI 로딩 오류
-          </Typography>
-          <Typography variant="body2" color="#6B7280">
-            {modelError}
-          </Typography>
-          <Button variant="primary" onClick={() => window.location.reload()}>
-            새로고침
-          </Button>
-        </StyledLoadingAnimation>
-      </TestContainer>
-    );
-  }
+  const closeShareResult = () => {
+    setShowShareResult(false);
+  };
 
   if (!isModelReady) {
     return (
@@ -218,10 +175,7 @@ const HogwartsTestPage = () => {
       >
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">{loadingStep}</Typography>
-          <Typography variant="caption" color="#6B7280">
-            잠시만 기다려주세요 🎩
-          </Typography>
+          <Typography variant="body1">AI 모델 로딩 중...</Typography>
         </StyledLoadingAnimation>
       </TestContainer>
     );
@@ -275,7 +229,8 @@ const HogwartsTestPage = () => {
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
             <Button variant="secondary" onClick={() => setStep('upload')}>
-              <RotateCcw size={16} /> 다시 선택
+              <RotateCcw size={16} />
+              다시 선택
             </Button>
             <Button
               variant="primary"
@@ -283,7 +238,8 @@ const HogwartsTestPage = () => {
               loading={isLoading}
               disabled={isLoading}
             >
-              <Zap size={16} /> {isLoading ? '마법사 기질 분석 중...' : '분석 시작'}
+              <Zap size={16} />
+              {isLoading ? '마법사 기질 분석 중...' : '분석 시작'}
             </Button>
           </div>
 

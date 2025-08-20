@@ -34,20 +34,6 @@
           "value": "max-age=63072000; includeSubDomains; preload"
         }
       ]
-    },
-
-    {
-      "source": "/((?!test/face-emotion-test).*)",
-      "headers": [
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
-      ]
-    },
-
-    {
-      "source": "/test/face-emotion-test(.*)",
-      "headers": [
-        { "key": "Permissions-Policy", "value": "camera=(self), microphone=(self), geolocation=()" }
-      ]
     }
   ],
 

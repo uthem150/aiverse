@@ -3,7 +3,6 @@ import { RotateCcw, Zap, Flower } from 'lucide-react';
 import TestContainer from '@/components/common/TestContainer/TestContainer';
 import Button from '@/components/common/Button/Button';
 import Typography from '@/components/common/Typography/Typography';
-import AILibraryLoader from '@/utils/aiLibraryLoader';
 import {
   StyledTestStep,
   StyledImageUpload,
@@ -34,50 +33,18 @@ const FlowerTestPage = () => {
   const [result, setResult] = useState<FlowerResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
-  const [modelError, setModelError] = useState<string | null>(null);
-  const [loadingStep, setLoadingStep] = useState('AI 라이브러리 로딩 중...');
   const [showShareResult, setShowShareResult] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    let cancel = false;
-
-    const loadLibraries = async () => {
-      try {
-        const loader = AILibraryLoader.getInstance();
-        setLoadingStep('TensorFlow.js 로딩 중...');
-        await loader.loadTensorFlow();
-
-        if (cancel || !isMountedRef.current) return;
-
-        setLoadingStep('Teachable Machine 로딩 중...');
-        await loader.loadTeachableMachine();
-
-        if (cancel || !isMountedRef.current) return;
-
-        if (loader.isTeachableMachineReady()) {
-          setIsModelReady(true);
-        } else {
-          throw new Error('AI 라이브러리 초기화 실패');
-        }
-      } catch (e) {
-        setModelError(e instanceof Error ? e.message : '알 수 없는 오류');
-        setIsModelReady(false);
+    const checkModels = () => {
+      if (window.tmImage && window.tf) {
+        setIsModelReady(true);
+      } else {
+        setTimeout(checkModels, 1000);
       }
     };
-
-    loadLibraries();
-    return () => {
-      cancel = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
+    checkModels();
   }, []);
 
   const flowerInfo = {
@@ -150,7 +117,7 @@ const FlowerTestPage = () => {
 
   const analyzeImage = async () => {
     if (!selectedImage || !selectedGender || !isModelReady) {
-      alert('모델이 아직 로드되지 않았습니다.');
+      alert('모델이 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
 
@@ -170,24 +137,28 @@ const FlowerTestPage = () => {
       img.onload = async () => {
         try {
           const predictions = await model.predict(img);
-          const sorted = predictions.sort((a: any, b: any) => b.probability - a.probability);
-          const top = sorted[0];
-          const flowerType = top.className;
-          const info = flowerInfo[flowerType as keyof typeof flowerInfo] || flowerInfo['민들레'];
+          const sortedPredictions = predictions.sort(
+            (a: any, b: any) => b.probability - a.probability
+          );
 
-          if (isMountedRef.current) {
-            setResult({
-              flowerType,
-              confidence: Math.round(top.probability * 100),
-              description: info.description,
-              celebrities: info.celebrities,
-              meaning: info.meaning,
-              message: `${info.emoji} 당신과 닮은 꽃은 ${flowerType}입니다!`,
-            });
-            setStep('result');
-          }
-        } catch {
-          alert('분석 중 오류가 발생했습니다.');
+          const topPrediction = sortedPredictions[0];
+          const flowerType = topPrediction.className;
+          const flowerData =
+            flowerInfo[flowerType as keyof typeof flowerInfo] || flowerInfo['민들레'];
+
+          setResult({
+            flowerType,
+            confidence: Math.round(topPrediction.probability * 100),
+            description: flowerData.description,
+            celebrities: flowerData.celebrities,
+            meaning: flowerData.meaning,
+            message: `${flowerData.emoji} 당신과 닮은 꽃은 ${flowerType}입니다!`,
+          });
+
+          setStep('result');
+        } catch (error) {
+          console.error('Prediction failed:', error);
+          alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
         } finally {
           setIsLoading(false);
         }
@@ -202,7 +173,7 @@ const FlowerTestPage = () => {
     } catch (error) {
       console.error('Model loading failed:', error);
       setIsLoading(false);
-      alert('모델 로드에 실패했습니다.');
+      alert('모델 로드에 실패했습니다. 네트워크 연결을 확인해주세요.');
     }
   };
 
@@ -222,36 +193,12 @@ const FlowerTestPage = () => {
     setShowShareResult(false);
   };
 
-  if (modelError) {
-    return (
-      <TestContainer title="🌸 AI 나와 닮은 꽃 찾기" description="모델 로딩 실패">
-        <StyledLoadingAnimation>
-          <div className="error-icon" style={{ fontSize: '48px', color: '#EF4444' }}>
-            ⚠️
-          </div>
-          <Typography variant="h5" color="#EF4444">
-            AI 로딩 오류
-          </Typography>
-          <Typography variant="body2" color="#6B7280">
-            {modelError}
-          </Typography>
-          <Button variant="primary" onClick={() => window.location.reload()}>
-            새로고침
-          </Button>
-        </StyledLoadingAnimation>
-      </TestContainer>
-    );
-  }
-
   if (!isModelReady) {
     return (
       <TestContainer title="🌸 AI 나와 닮은 꽃 찾기" description="AI 모델을 로드하는 중입니다...">
         <StyledLoadingAnimation>
           <div className="spinner" />
-          <Typography variant="body1">{loadingStep}</Typography>
-          <Typography variant="caption" color="#6B7280">
-            처음 방문 시 로딩에 시간이 걸릴 수 있어요 🌿
-          </Typography>
+          <Typography variant="body1">AI 모델 로딩 중...</Typography>
         </StyledLoadingAnimation>
       </TestContainer>
     );
@@ -328,9 +275,11 @@ const FlowerTestPage = () => {
               <img src={selectedImage} alt="업로드된 사진" />
             </StyledImagePreview>
           )}
+
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
             <Button variant="secondary" onClick={() => setStep('upload')}>
-              <RotateCcw size={16} /> 다시 선택
+              <RotateCcw size={16} />
+              다시 선택
             </Button>
             <Button
               variant="primary"
@@ -338,7 +287,8 @@ const FlowerTestPage = () => {
               loading={isLoading}
               disabled={isLoading}
             >
-              <Zap size={16} /> {isLoading ? '꽃 분석 중...' : '분석 시작'}
+              <Zap size={16} />
+              {isLoading ? '꽃 분석 중...' : '분석 시작'}
             </Button>
           </div>
 
@@ -360,6 +310,7 @@ const FlowerTestPage = () => {
           <Typography variant="h4" align="center">
             🌺 꽃 분석 완료!
           </Typography>
+
           <StyledResultSection>
             <StyledResultCard
               color={flowerInfo[result.flowerType as keyof typeof flowerInfo]?.color || '#6366F1'}

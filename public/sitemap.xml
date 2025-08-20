@@ -219,12 +219,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://aiverse-phi.vercel.app/test/face-emotion-test</loc>
-    <lastmod>2025-08-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://aiverse-phi.vercel.app/test/face-grade-test</loc>
     <lastmod>2025-08-17</lastmod>
     <changefreq>weekly</changefreq>

@@ -67,9 +67,6 @@ import OverseasFootballTeamTestPage from '@/pages/tests/SportsFan/overseasFootba
 import TetoEgneBasicTestPage from '@/pages/tests/TetoEgenTest/TetoEgneBasicTest/TetoEgneTestBasicPage';
 import TetoEgneMzTestPage from '@/pages/tests/TetoEgenTest/TetoEgneMzTest/TetoEgneMzTestPage';
 
-// 텐서플로우 테스트
-import FaceEmotionTestPage from '@/pages/tests/FaceEmotionTest/FaceEmotionTestPage';
-
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import InteractiveHub from '@/pages/InteractiveExperiencePage/InteractiveHub/InteractiveHub';
 import MemoryCards from '@/pages/InteractiveExperiencePage/games/MemoryCards/MemoryCards';
@@ -185,11 +182,6 @@ export const router = createBrowserRouter([
         element: <WhackAMole />,
       },
 
-      // 텐서플로우 테스트
-      {
-        path: 'test/face-emotion-test',
-        element: <FaceEmotionTestPage />,
-      },
       // AI 분석 테스트들
       {
         path: 'test/face-age-test',

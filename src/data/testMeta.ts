@@ -66,17 +66,6 @@ export const testMetaData: Record<string, TestMetaData> = {
     ogDescription: 'AI가 분석하는 당신의 동물상! 55만 명이 참여한 인기 테스트!',
   },
 
-  // 텐서플로우
-  'face-emotion-test': {
-    title: 'AI 얼굴 감정 인식 테스트 - AIverse-phi',
-    description:
-      'AI가 실시간으로 당신의 얼굴 표정을 분석하여 감정을 인식합니다! 기쁨, 화남, 슬픔, 놀람 등 다양한 감정을 AI가 정확하게 분석해드립니다.',
-    keywords: 'AI 감정 인식, 얼굴 감정 분석, 실시간 감정 테스트, AI 얼굴 분석, 표정 인식',
-    ogTitle: '🎭 AI 얼굴 감정 인식 테스트',
-    ogDescription:
-      'AI가 실시간으로 당신의 얼굴에서 감정을 읽습니다. 다양한 감정 상태를 지금 바로 체험해보세요!',
-  },
-
   // 연애 & 성격
   'love-style-test': {
     title: '💕 내 연애 스타일 테스트 - AIverse-phi',

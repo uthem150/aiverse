@@ -73,26 +73,6 @@ export const testCategories: TestCategory[] = [
     ],
   },
   {
-    id: 'ai-lab',
-    name: 'AI 실험실',
-    description: '실시간 카메라로 체험하는 최첨단 AI 기술',
-    icon: '🧪',
-    color: '#8B5CF6',
-    tests: [
-      {
-        id: 'face-emotion-test',
-        title: '실시간 감정 인식',
-        description: 'AI가 실시간으로 당신의 얼굴 표정을 분석해서 감정을 인식합니다',
-        thumbnail: '/images/thumbnail/face-emotion-test.jpg',
-        category: 'ai-lab',
-        difficulty: 'medium',
-        estimatedTime: 3,
-        isNew: true,
-        participantCount: 2500,
-      },
-    ],
-  },
-  {
     id: 'interactive-experience',
     name: '인터랙티브 게임 체험',
     description: '최신 웹 기술로 만든 몰입형 인터랙티브 게임',

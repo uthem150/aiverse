@@ -29,28 +29,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // face-api.js를 별도 청크로 분리
-          'face-api': ['face-api.js'],
-          // emotion 관련 라이브러리 분리
-          emotion: ['@emotion/react', '@emotion/styled'],
-          // react 관련 라이브러리 분리
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // 기타 라이브러리들
-          vendor: ['zustand', 'framer-motion', 'lucide-react'],
-        },
-      },
-    },
-    chunkSizeWarningLimit: 600,
-  },
-  // 정적 파일 최적화
-  assetsInclude: ['**/*.bin', '**/*.shard*', '**/*.json'],
-  // 외부 라이브러리 최적화
-  optimizeDeps: {
-    exclude: ['face-api.js'], // face-api.js는 사전 번들링 제외
-    include: ['@emotion/react', '@emotion/styled'], // emotion은 사전 번들링 포함
+    sourcemap: true,
   },
 });
