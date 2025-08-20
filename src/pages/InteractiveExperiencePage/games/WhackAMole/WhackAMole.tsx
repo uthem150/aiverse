@@ -925,7 +925,7 @@ interface TierInfo {
   minScore: number;
 }
 
-const GAME_DURATION = 1;
+const GAME_DURATION = 60;
 const TOTAL_HOLES = 9;
 
 const TIERS: TierInfo[] = [
