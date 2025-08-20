@@ -1,3 +1,5 @@
+import { testCategories } from '@/data/tests';
+
 interface TestMetaData {
   title: string;
   description: string;
@@ -574,14 +576,20 @@ export const getTestMeta = (testId: string): TestMetaData => {
 
 // 테스트별 썸네일 URL 생성 함수
 export const getTestThumbnailUrl = (testId: string): string => {
-  // 모든 testMetaData 키를 동적으로 가져와서 확인
-  const allTestIds = Object.keys(testMetaData);
-
-  if (allTestIds.includes(testId)) {
-    return `https://aiverse-phi.vercel.app/images/thumbnails/${testId}.png`;
+  // testCategories에서 해당 testId를 가진 테스트 찾기
+  for (const category of testCategories) {
+    const test = category.tests.find(test => test.id === testId);
+    if (test && test.thumbnail) {
+      // thumbnail이 이미 완전한 URL인지 확인
+      if (test.thumbnail.startsWith('http')) {
+        return test.thumbnail;
+      }
+      // 상대 경로인 경우 절대 URL로 변환
+      return `https://aiverse-phi.vercel.app${test.thumbnail}`;
+    }
   }
 
-  // 일치하는 ID가 없으면 기본 이미지 URL 반환
+  // testCategories에서 찾을 수 없는 경우, 기본 이미지 URL 반환
   return getDefaultSiteImage();
 };
 
