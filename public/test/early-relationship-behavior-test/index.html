@@ -1,123 +1,370 @@
-<!doctype html>
-<html lang="ko-KR">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/vite.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>초반 연애 행동 유형 테스트 - AIverse-phi</title>
+  <meta name="title" content="초반 연애 행동 유형 테스트 - AIverse-phi" />
+  <meta name="description" content="연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형을 알아보고 관계의 시작을 성공적으로 이끌어보세요." />
+  <meta name="keywords" content="연애 초반, 썸, 연애 행동, 연애 스타일, 연애 테스트" />
+  <meta name="author" content="AIverse Team" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aiverse-phi.vercel.app/test/early-relationship-behavior-test" />
+  <meta property="og:title" content="🥰 초반 연애 행동 유형 테스트" />
+  <meta property="og:description" content="연애 초반, 당신은 직진? 아니면 신중? 당신의 연애 시작 스타일!" />
+  <meta property="og:image" content="https://aiverse-phi.vercel.app/images/thumbnail/early-relationship-behavior-test.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="AIverse-phi" />
+  <meta property="og:locale" content="ko_KR" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://aiverse-phi.vercel.app/test/early-relationship-behavior-test" />
+  <meta name="twitter:title" content="🥰 초반 연애 행동 유형 테스트" />
+  <meta name="twitter:description" content="연애 초반, 당신은 직진? 아니면 신중? 당신의 연애 시작 스타일!" />
+  <meta name="twitter:image" content="https://aiverse-phi.vercel.app/images/thumbnail/early-relationship-behavior-test.jpg" />
+  <meta name="twitter:creator" content="@AIverse_phi" />
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#6366F1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AIverse-phi" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://aiverse-phi.vercel.app/test/early-relationship-behavior-test" />
+  
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
+  
+  <!-- Critical CSS for instant rendering -->
+  <style>
+    /* Critical CSS - 즉시 렌더링을 위한 최소 스타일 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     
-    <!-- 🎯 초반 연애 행동 유형 테스트 - AIverse-phi 전용 소셜 미디어 메타 태그 -->
-    <title>초반 연애 행동 유형 테스트 - AIverse-phi</title>
-    <meta name="description" content="연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형을 알아보고 관계의 시작을 성공적으로 이끌어보세요." />
-    <meta name="keywords" content="연애 초반, 썸, 연애 행동, 연애 스타일, 연애 테스트" />
-    <meta name="author" content="AIverse-phi" />
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #fff;
+    }
     
-    <!-- Open Graph -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="🥰 초반 연애 행동 유형 테스트">
-    <meta property="og:description" content="연애 초반, 당신은 직진? 아니면 신중? 당신의 연애 시작 스타일!">
-    <meta property="og:url" content="https://aiverse-phi.vercel.app/test/early-relationship-behavior-test">
-    <meta property="og:site_name" content="AIverse-phi">
-    <meta property="og:locale" content="ko_KR">
-    <meta property="og:image" content="https://aiverse-phi.vercel.app/images/thumbnail/early-relationship-behavior-test.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:alt" content="초반 연애 행동 유형 테스트 - AIverse-phi 썸네일">
+    .ssg-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.5s ease-in;
+    }
     
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@aiverse">
-    <meta name="twitter:title" content="🥰 초반 연애 행동 유형 테스트">
-    <meta name="twitter:description" content="연애 초반, 당신은 직진? 아니면 신중? 당신의 연애 시작 스타일!">
-    <meta name="twitter:image" content="https://aiverse-phi.vercel.app/images/thumbnail/early-relationship-behavior-test.jpg">
-    <meta name="twitter:image:alt" content="초반 연애 행동 유형 테스트 - AIverse-phi 썸네일">
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     
-    <!-- SEO -->
-    <link rel="canonical" href="https://aiverse-phi.vercel.app/test/early-relationship-behavior-test">
-    <meta name="robots" content="index,follow">
+    .ssg-content {
+      max-width: 800px;
+      text-align: center;
+      width: 100%;
+    }
     
-    <!-- React 앱 자동 리다이렉트 (일반 사용자용) -->
-    <!-- React 앱 로드를 위한 스크립트 -->
-    <script type="module" crossorigin src="/assets/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index.css">
+    .ssg-title {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     
-    <script>
-        // 소셜 크롤러는 JavaScript를 실행하지 않으므로 메타 태그만 읽음
-        // 일반 사용자는 React 앱이 로드되어 정적 컨텐츠를 교체
+    .ssg-description {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: #666;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    
+    .ssg-badges {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .ssg-badge {
+      padding: 0.375rem 0.875rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .badge-hot { background: linear-gradient(135deg, #ff6b6b, #ff5252); }
+    .badge-new { background: linear-gradient(135deg, #4ecdc4, #26a69a); }
+    .badge-info { background: linear-gradient(135deg, #94a3b8, #64748b); }
+    
+    .ssg-loading {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ssg-loading::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      to { left: 100%; }
+    }
+    
+    .ssg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .ssg-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .ssg-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    @media (max-width: 768px) {
+      .ssg-container { padding: 1rem; }
+      .ssg-badges { gap: 0.5rem; }
+      .ssg-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* 기본 전환 애니메이션 */
+    .ssg-container {
+      transition: opacity 0.3s ease-out;
+    }
+  </style>
+  
+  <!-- Progressive Enhancement Script -->
+  <script>
+    // React 앱 로딩 감지 및 부드러운 전환
+    window.addEventListener('DOMContentLoaded', function() {
+      let transitionCompleted = false;
+      
+      // React 앱이 마운트되었는지 확인
+      function checkReactMount() {
+        const root = document.getElementById('root');
+        const ssgContainer = document.querySelector('.ssg-container');
         
-        // React 앱이 로드되었는지 확인
-        document.addEventListener('DOMContentLoaded', function() {
-            // React 앱이 로드되면 로딩 메시지 숨김
-            setTimeout(function() {
-                const loadingDiv = document.getElementById('social-loading');
-                const reactRoot = document.getElementById('root');
-                
-                if (reactRoot && reactRoot.innerHTML.trim() !== '') {
-                    // React 앱이 로드되었으므로 로딩 메시지 숨김
-                    if (loadingDiv) {
-                        loadingDiv.style.display = 'none';
-                    }
-                }
-            }, 1000);
-        });
-    </script>
+        if (transitionCompleted) return;
+        
+        // React 앱의 실제 콘텐츠가 로드되었는지 확인
+        if (root && root.children.length > 0 && ssgContainer) {
+          // React Router가 로드되고 실제 컴포넌트가 렌더링되었는지 확인
+          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main, [class*="styled"], [class*="emotion"]');
+          
+          // 또는 React Router의 라우트 변경 감지
+          const hasRouterContent = root.querySelector('[data-testid], [role="main"], .test-container, .game-container');
+          
+          if ((hasReactContent && hasReactContent !== ssgContainer) || hasRouterContent) {
+            // React 앱이 완전히 마운트됨 - SSG 콘텐츠 숨기기
+            console.log('✅ React 앱 로드 완료 - SSG에서 전환');
+            ssgContainer.style.opacity = '0';
+            setTimeout(() => {
+              ssgContainer.style.display = 'none';
+              transitionCompleted = true;
+            }, 300);
+            return;
+          }
+        }
+        
+        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 20초)
+        if (!transitionCompleted && Date.now() - startTime < 20000) {
+          setTimeout(checkReactMount, 300);
+        } else if (!transitionCompleted) {
+          // 20초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
+          console.log('⚠️ React 앱 로드 실패 - SSG 콘텐츠 유지');
+          const loadingElement = ssgContainer?.querySelector('.ssg-loading');
+          if (loadingElement) {
+            loadingElement.innerHTML = 
+              '<h3 style="margin-bottom: 1rem; color: #374151;">🔄 페이지 새로고침을 시도해보세요</h3>' +
+              '<p style="color: #6b7280; margin-bottom: 1.5rem;">인터랙티브 기능이 로드되지 않았습니다.</p>' +
+              '<button onclick="window.location.reload()" style="background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer;">새로고침</button>';
+          }
+        }
+      }
+      
+      const startTime = Date.now();
+      
+      // React 번들 로딩 시작 (더 빠른 간격으로 체크)
+      setTimeout(checkReactMount, 100);
+    });
+    
+    // 성능 측정
+    window.addEventListener('load', function() {
+      if ('performance' in window) {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        console.log('SSG Page Load Time:', navigation.loadEventEnd - navigation.fetchStart, 'ms');
+      }
+    });
+  </script>
 </head>
 <body>
-    <!-- React 앱이 마운트될 위치 -->
-    <div id="root"></div>
-    
-    <!-- 소셜 크롤러를 위한 숨겨진 컨텐츠 (검색엔진 최적화) -->
-    <div style="display: none;">
-        <h1>초반 연애 행동 유형 테스트 - AIverse-phi</h1>
-        <p>연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형을 알아보고 관계의 시작을 성공적으로 이끌어보세요.</p>
-        <img src="https://aiverse-phi.vercel.app/images/thumbnail/early-relationship-behavior-test.jpg" alt="초반 연애 행동 유형 테스트 - AIverse-phi 썸네일">
-    </div>
-    
-    <!-- React 앱이 로드되기 전 대량 메시지 (일반 사용자용) -->
-    <div id="social-loading" style="
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-        z-index: 9999;
-    ">
-        <div style="text-align: center; max-width: 500px; padding: 20px;">
-            <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 2s infinite;">🤖</div>
-            <h2 style="font-size: 2rem; margin: 0 0 10px 0; font-weight: 700;">초반 연애 행동 유형 테스트 - AIverse-phi</h2>
-            <p style="font-size: 1.2rem; margin: 0 0 30px 0; opacity: 0.9;">연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형을 알아보고 관계의 시작을 성공적으로 이끌어보세요.</p>
-            
-            <div style="
-                width: 60px; 
-                height: 60px; 
-                border: 4px solid rgba(255,255,255,0.3);
-                border-top: 4px solid white;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 20px auto;
-            "></div>
-            
-            <p style="font-size: 1rem; opacity: 0.8; margin: 0;">잠시만 기다려주세요... 테스트를 준비하고 있어요! ✨</p>
+  <div id="root">
+    <!-- SSG Content - React 앱 로딩 전까지 표시 -->
+    <div class="ssg-container">
+      
+    <div class="ssg-content">
+      <h1 class="ssg-title">초반 연애 행동 유형 테스트</h1>
+      <p class="ssg-description">연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형은?</p>
+      
+      <div class="ssg-badges">
+        
+        
+        <span class="ssg-badge badge-info">⏱️ 6분</span>
+        <span class="ssg-badge badge-info">👥 18,000명 참여</span>
+      </div>
+      
+      <div class="ssg-loading">
+        <h3 style="margin-bottom: 1rem; color: #374151;">🚀 AI 테스트 준비 중...</h3>
+        <p style="color: #6b7280; margin-bottom: 1.5rem;">최고의 테스트 경험을 위해 AI 시스템을 로딩하고 있습니다.</p>
+        <div style="width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden;">
+          <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); transform: translateX(-100%); animation: progress 2s infinite;"></div>
+        </div>
+      </div>
+      
+      <div class="ssg-grid">
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">💕</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">카테고리</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">연애 & 성격</p>
         </div>
         
-        <style>
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            @keyframes bounce {
-                0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-                40% { transform: translateY(-10px); }
-                60% { transform: translateY(-5px); }
-            }
-        </style>
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">난이도</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">보통</p>
+        </div>
+        
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">테스트 유형</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">성격 분석</p>
+        </div>
+      </div>
+      
+      <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid #0284c7; border-radius: 12px; padding: 1.5rem; margin-top: 2rem;">
+        <h4 style="color: #0c4a6e; margin-bottom: 1rem;">💡 테스트 안내</h4>
+        <ul style="color: #0369a1; text-align: left; line-height: 1.8; margin: 0; padding-left: 1.5rem;">
+          <li><strong>소요시간:</strong> 약 6분</li>
+          <li><strong>참여방법:</strong> 간단한 질문에 답변하기</li>
+          <li><strong>결과공유:</strong> SNS 공유 가능</li>
+          <li><strong>비용:</strong> 완전 무료</li>
+        </ul>
+      </div>
     </div>
+    
+    <style>
+      @keyframes progress {
+        to { transform: translateX(100%); }
+      }
+    </style>
+  
+    </div>
+  </div>
+  
+  <!-- 구조화된 데이터 (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "초반 연애 행동 유형 테스트 - AIverse-phi",
+    "description": "연애 초반, 당신은 어떤 모습인가요? 내 연애 시동 유형을 알아보고 관계의 시작을 성공적으로 이끌어보세요.",
+    "url": "https://aiverse-phi.vercel.app/test/early-relationship-behavior-test",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KRW"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "AIverse Team",
+      "url": "https://aiverse-phi.vercel.app"
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": "2025-08-21",
+    "inLanguage": "ko-KR",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "General Public"
+    }
+  }
+  </script>
+  
+  <!-- FAQ 구조화된 데이터 -->
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "초반 연애 행동 유형 테스트 - AIverse-phi는 무료인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "네, 모든 테스트는 완전 무료로 제공됩니다."
+        }
+      },
+      {
+        "@type": "Question", 
+        "name": "결과는 정확한가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI 기술과 심리학 이론을 바탕으로 한 재미있는 테스트입니다. 엔터테인먼트 목적으로 즐겨주세요."
+        }
+      }
+    ]
+  }
+  </script>
+  
 </body>
 </html>

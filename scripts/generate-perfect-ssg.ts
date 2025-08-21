@@ -224,9 +224,12 @@ const createPerfectHTML = (testId: string, renderedContent: string, isGame = fal
         // React 앱의 실제 콘텐츠가 로드되었는지 확인
         if (root && root.children.length > 0 && ssgContainer) {
           // React Router가 로드되고 실제 컴포넌트가 렌더링되었는지 확인
-          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main');
+          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main, [class*="styled"], [class*="emotion"]');
           
-          if (hasReactContent && hasReactContent !== ssgContainer) {
+          // 또는 React Router의 라우트 변경 감지
+          const hasRouterContent = root.querySelector('[data-testid], [role="main"], .test-container, .game-container');
+          
+          if ((hasReactContent && hasReactContent !== ssgContainer) || hasRouterContent) {
             // React 앱이 완전히 마운트됨 - SSG 콘텐츠 숨기기
             console.log('✅ React 앱 로드 완료 - SSG에서 전환');
             ssgContainer.style.opacity = '0';
@@ -238,11 +241,11 @@ const createPerfectHTML = (testId: string, renderedContent: string, isGame = fal
           }
         }
         
-        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 10초)
-        if (!transitionCompleted && Date.now() - startTime < 10000) {
-          setTimeout(checkReactMount, 200);
+        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 20초)
+        if (!transitionCompleted && Date.now() - startTime < 20000) {
+          setTimeout(checkReactMount, 300);
         } else if (!transitionCompleted) {
-          // 10초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
+          // 20초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
           console.log('⚠️ React 앱 로드 실패 - SSG 콘텐츠 유지');
           const loadingElement = ssgContainer?.querySelector('.ssg-loading');
           if (loadingElement) {
@@ -477,14 +480,15 @@ const createEnhancedGameContent = (gameId: string) => {
 async function generatePerfectSSG() {
   console.log('🚀 Perfect Progressive Enhancement SSG 생성 시작...');
   
-  const distDir = path.join(process.cwd(), 'dist');
+  // Vercel 배포를 위해 public 폴더에 생성 (dist 대신)
+  const publicDir = path.join(process.cwd(), 'public');
   
-  // dist/test 디렉토리 생성
-  const testDir = path.join(distDir, 'test');
+  // public/test 디렉토리 생성
+  const testDir = path.join(publicDir, 'test');
   await fs.mkdir(testDir, { recursive: true });
   
-  // dist/interactive 디렉토리 생성
-  const interactiveDir = path.join(distDir, 'interactive');
+  // public/interactive 디렉토리 생성
+  const interactiveDir = path.join(publicDir, 'interactive');
   await fs.mkdir(interactiveDir, { recursive: true });
   
   let generatedCount = 0;
@@ -524,8 +528,8 @@ async function generatePerfectSSG() {
   
   console.log(`\n🎉 Perfect SSG 완료! 총 ${generatedCount}개 페이지 생성`);
   console.log('📁 생성된 구조:');
-  console.log('  └── dist/test/{testId}/index.html');
-  console.log('  └── dist/interactive/{gameId}/index.html');
+  console.log('  └── public/test/{testId}/index.html');
+  console.log('  └── public/interactive/{gameId}/index.html');
   console.log('\n✅ 이제 완벽한 SEO + UX + 성능을 모두 달성했습니다!');
   console.log('🔍 특징:');
   console.log('  • 리다이렉트 없는 Progressive Enhancement');
@@ -533,6 +537,7 @@ async function generatePerfectSSG() {
   console.log('  • 구조화된 데이터 (Schema.org)');
   console.log('  • 즉시 렌더링되는 정적 콘텐츠');
   console.log('  • React 앱으로 부드러운 전환');
+  console.log('\n🚀 Vercel 배포용: public 폴더에 생성 완료!');
 }
 
 // 스크립트 실행 (ES 모듈에서 항상 실행)
