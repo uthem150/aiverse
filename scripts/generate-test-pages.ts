@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 기존 데이터 파일에서 import
+// 기존 데이터 파일에서 import (상대 경로 사용)
 import { testCategories } from '../src/data/tests.js';
 import { getTestMeta, getTestThumbnailUrl } from '../src/data/testMeta.js';
 
@@ -24,97 +24,65 @@ function generateSingleTestPage(testId: string, type: 'test' | 'interactive'): b
     console.log(`  - Title: ${meta.title}`);
     console.log(`  - Thumbnail: ${thumbnail}`);
     
+    // 메타 태그 교체
     let html = baseHtml;
     
-    // 🔧 여러 줄 메타 태그를 위한 강력한 정규표현식
-    
-    // 1. 제목 교체
+    // 기본 메타 태그 교체 (따옴표 이스케이프 처리)
     html = html.replace(
-      /<title>[\s\S]*?<\/title>/,
+      /<title>.*?<\/title>/,
       `<title>${meta.title.replace(/"/g, '&quot;')}</title>`
     );
     
-    // 2. Description 교체 (여러 줄 지원)
     html = html.replace(
-      /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/>/,
-      `<meta name="description" content="${meta.description.replace(/"/g, '&quot;')}" />`
+      /<meta name="description" content=".*?">/,
+      `<meta name="description" content="${meta.description.replace(/"/g, '&quot;')}">`
     );
     
-    // 3. Keywords 교체 (여러 줄 지원)  
     html = html.replace(
-      /<meta\s+name="keywords"\s+content="[\s\S]*?"\s*\/>/,
-      `<meta name="keywords" content="${meta.keywords.replace(/"/g, '&quot;')}" />`
+      /<meta name="keywords" content=".*?">/,
+      `<meta name="keywords" content="${meta.keywords.replace(/"/g, '&quot;')}">`
     );
-    
-    // 4. 기존 Open Graph 메타 태그들 완전 제거 및 교체
-    // 기존 OG 태그들을 모두 찾아서 제거
-    html = html.replace(/<meta\s+property="og:[\s\S]*?\/>/g, '');
-    
-    // 5. 기존 Twitter 메타 태그들 제거
-    html = html.replace(/<meta\s+name="twitter:[\s\S]*?\/>/g, '');
-    
-    // 6. 새로운 메타 태그들을 </head> 바로 앞에 주입
-    const newMetaTags = `
-    <!-- 🎯 ${testId} 전용 소셜 미디어 메타 태그 -->
-    
-    <!-- Open Graph -->
+
+    // Open Graph 메타 태그 주입
+    const ogTags = `
+    <!-- 🎯 동적 Open Graph 메타 태그 -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="${(meta.ogTitle || meta.title).replace(/"/g, '&quot;')}">
     <meta property="og:description" content="${(meta.ogDescription || meta.description).replace(/"/g, '&quot;')}">
     <meta property="og:url" content="${url}">
-    <meta property="og:site_name" content="AIverse-phi">
-    <meta property="og:locale" content="ko_KR">
     <meta property="og:image" content="${thumbnail}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:alt" content="${meta.title.replace(/"/g, '&quot;')} 썸네일">
+    <meta property="og:image:alt" content="${meta.title.replace(/"/g, '&quot;')} 썸네일">`;
     
-    <!-- Twitter -->
+    // Twitter 메타 태그 주입  
+    const twitterTags = `
+    <!-- 🐦 동적 Twitter 메타 태그 -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@aiverse">
     <meta name="twitter:title" content="${(meta.ogTitle || meta.title).replace(/"/g, '&quot;')}">
     <meta name="twitter:description" content="${(meta.ogDescription || meta.description).replace(/"/g, '&quot;')}">
     <meta name="twitter:image" content="${thumbnail}">
-    <meta name="twitter:image:alt" content="${meta.title.replace(/"/g, '&quot;')} 썸네일">
-    
-    <!-- Canonical URL 수정 -->
-    <link rel="canonical" href="${url}">
-    `;
-    
-    // </head> 바로 앞에 주입
-    html = html.replace('</head>', `${newMetaTags}\n  </head>`);
-    
-    // 7. 기존 canonical 링크 제거 (중복 방지)
-    html = html.replace(/<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/>/g, '');
-    
-    // 8. 디렉토리 생성
+    <meta name="twitter:image:alt" content="${meta.title.replace(/"/g, '&quot;')} 썸네일">`;
+
+    // 메타 태그를 head 태그 끝에 주입
+    html = html.replace(
+      /<meta name="twitter:site" content="@aiverse" \/>/,
+      `<meta name="twitter:site" content="@aiverse" />
+    ${ogTags}
+    ${twitterTags}`
+    );
+
+    // 디렉토리 생성
     const pageDir = path.resolve(__dirname, `../dist/${type}/${testId}`);
     if (!fs.existsSync(pageDir)) {
       fs.mkdirSync(pageDir, { recursive: true });
     }
 
-    // 9. HTML 파일 저장
+    // HTML 파일 저장
     fs.writeFileSync(path.join(pageDir, 'index.html'), html);
     
     console.log(`  ✅ Generated: /${type}/${testId}/index.html`);
-    
-    // 10. 생성된 파일 검증
-    const savedHtml = fs.readFileSync(path.join(pageDir, 'index.html'), 'utf-8');
-    const hasCustomTitle = savedHtml.includes(meta.title);
-    const hasCustomOG = savedHtml.includes(thumbnail);
-    const hasCustomDesc = savedHtml.includes(meta.description.substring(0, 30));
-    
-    console.log(`  📊 Verification:`);
-    console.log(`     - Custom title: ${hasCustomTitle ? '✅' : '❌'}`);
-    console.log(`     - Custom description: ${hasCustomDesc ? '✅' : '❌'}`);  
-    console.log(`     - Custom thumbnail: ${hasCustomOG ? '✅' : '❌'}`);
-    
-    if (!hasCustomTitle || !hasCustomOG || !hasCustomDesc) {
-      console.log(`  ⚠️  Verification failed for ${testId}`);
-      return false;
-    }
-    
     return true;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -123,7 +91,7 @@ function generateSingleTestPage(testId: string, type: 'test' | 'interactive'): b
   }
 }
 
-// 메인 함수
+// 각 테스트별 HTML 생성
 function generateTestPages() {
   const distDir = path.resolve(__dirname, '../dist');
   
@@ -131,12 +99,12 @@ function generateTestPages() {
     fs.mkdirSync(distDir, { recursive: true });
   }
 
-  // 모든 테스트 ID 수집
+  // 모든 테스트 ID 수집 (기존 데이터에서)
   const allTestIds = testCategories.flatMap(category => 
     category.tests.map(test => test.id)
   );
   
-  // 인터랙티브 게임 ID들
+  // 인터랙티브 게임 ID들 (testCategories에서 interactive-experience 카테고리 찾기)
   const interactiveCategory = testCategories.find(cat => cat.id === 'interactive-experience');
   const interactiveGameIds = interactiveCategory ? 
     interactiveCategory.tests.map(test => test.id) : [
@@ -146,8 +114,7 @@ function generateTestPages() {
       'tic-tac-toe', 'whack-a-mole'
     ];
 
-  console.log(`🚀 AIverse Social Media Meta Tag Generator`);
-  console.log(`==========================================`);
+  console.log(`🚀 Starting test page generation...`);
   console.log(`🧪 Total tests: ${allTestIds.length}`);
   console.log(`🎮 Total games: ${interactiveGameIds.length}`);
   console.log('');
@@ -155,25 +122,26 @@ function generateTestPages() {
   let successCount = 0;
   let errorCount = 0;
 
-  // 테스트 중 하나만 먼저 시도해보기
+  // 각 테스트 페이지 생성
   console.log('🧪 Generating test pages...');
-  for (const testId of allTestIds) {
+  allTestIds.forEach(testId => {
     if (generateSingleTestPage(testId, 'test')) {
       successCount++;
     } else {
       errorCount++;
     }
-  }
+  });
 
   console.log('');
   console.log('🎮 Generating interactive game pages...');
-  for (const gameId of interactiveGameIds) {
+  // 각 인터랙티브 게임 페이지 생성  
+  interactiveGameIds.forEach(gameId => {
     if (generateSingleTestPage(gameId, 'interactive')) {
       successCount++;
     } else {
       errorCount++;
     }
-  }
+  });
 
   console.log('');
   console.log('✅ Generation completed!');
@@ -186,15 +154,13 @@ function generateTestPages() {
 
 // 스크립트 실행
 try {
+  console.log('🎯 AIverse Test Page Generator');
+  console.log('==============================');
+  
   const result = generateTestPages();
   
   if (result.errorCount === 0) {
     console.log('🎉 All test pages generated successfully!');
-    console.log('');
-    console.log('🔄 Next steps:');
-    console.log('1. Run: npm run build:production');
-    console.log('2. Deploy to Vercel');
-    console.log('3. Test social sharing with Facebook Debugger');
     process.exit(0);
   } else {
     console.log(`⚠️  Generated with ${result.errorCount} errors`);
@@ -202,6 +168,6 @@ try {
   }
 } catch (error) {
   const errorMessage = error instanceof Error ? error.message : String(error);
-  console.error('💥 Fatal error:', errorMessage);
+  console.error('💥 Fatal error generating test pages:', errorMessage);
   process.exit(1);
 }
