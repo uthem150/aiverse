@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-perfect-ssg": "tsx --tsconfig tsconfig.node.json scripts/generate-perfect-ssg.ts",
-    "build:production": "npm run generate-sitemap && npm run generate-perfect-ssg && tsc -b && vite build",
+    "build:production": "npm run generate-sitemap && tsc -b && vite build && npm run generate-perfect-ssg",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
