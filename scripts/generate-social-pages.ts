@@ -13,7 +13,7 @@ import { getTestMeta, getTestThumbnailUrl } from '../src/data/testMeta.js';
 function generateSocialHTML(testId: string, type: 'test' | 'interactive'): string {
   const meta = getTestMeta(testId);
   const thumbnail = getTestThumbnailUrl(testId);
-  const url = `https://aiverse-phi.vercel.app/${type}/${testId}`;
+  const url = `https://aiverse-phi.vercel.app/${type}/${testId}/`;
   const reactUrl = `https://aiverse-phi.vercel.app/${type}/${testId}`;
   
   return `<!doctype html>
@@ -54,88 +54,36 @@ function generateSocialHTML(testId: string, type: 'test' | 'interactive'): strin
     <link rel="canonical" href="${url}">
     <meta name="robots" content="index,follow">
     
-    <!-- React 앱 자동 리다이렉트 (일반 사용자용) -->
-    <!-- React 앱 로드를 위한 스크립트 -->
-    <script type="module" crossorigin src="/assets/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index.css">
-    
+    <!-- React 앱 자동 리다이렉트 (사용자용) -->
     <script>
         // 소셜 크롤러는 JavaScript를 실행하지 않으므로 메타 태그만 읽음
-        // 일반 사용자는 React 앱이 로드되어 정적 컨텐츠를 교체
-        
-        // React 앱이 로드되었는지 확인
-        document.addEventListener('DOMContentLoaded', function() {
-            // React 앱이 로드되면 로딩 메시지 숨김
-            setTimeout(function() {
-                const loadingDiv = document.getElementById('social-loading');
-                const reactRoot = document.getElementById('root');
-                
-                if (reactRoot && reactRoot.innerHTML.trim() !== '') {
-                    // React 앱이 로드되었으므로 로딩 메시지 숨김
-                    if (loadingDiv) {
-                        loadingDiv.style.display = 'none';
-                    }
-                }
+        // 일반 사용자는 React 앱으로 리다이렉트
+        if (typeof window !== 'undefined' && !navigator.userAgent.includes('bot')) {
+            setTimeout(() => {
+                window.location.href = '${reactUrl}';
             }, 1000);
-        });
+        }
     </script>
 </head>
 <body>
-    <!-- React 앱이 마운트될 위치 -->
-    <div id="root"></div>
-    
-    <!-- 소셜 크롤러를 위한 숨겨진 컨텐츠 (검색엔진 최적화) -->
+    <!-- 소셜 크롤러를 위한 숨겨진 컨텐츠 -->
     <div style="display: none;">
         <h1>${meta.title.replace(/"/g, '&quot;')}</h1>
         <p>${meta.description.replace(/"/g, '&quot;')}</p>
         <img src="${thumbnail}" alt="${meta.title.replace(/"/g, '&quot;')} 썸네일">
     </div>
     
-    <!-- React 앱이 로드되기 전 대량 메시지 (일반 사용자용) -->
-    <div id="social-loading" style="
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-        z-index: 9999;
-    ">
-        <div style="text-align: center; max-width: 500px; padding: 20px;">
-            <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 2s infinite;">🤖</div>
-            <h2 style="font-size: 2rem; margin: 0 0 10px 0; font-weight: 700;">${meta.title.replace(/"/g, '&quot;')}</h2>
-            <p style="font-size: 1.2rem; margin: 0 0 30px 0; opacity: 0.9;">${meta.description.replace(/"/g, '&quot;')}</p>
-            
-            <div style="
-                width: 60px; 
-                height: 60px; 
-                border: 4px solid rgba(255,255,255,0.3);
-                border-top: 4px solid white;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 20px auto;
-            "></div>
-            
-            <p style="font-size: 1rem; opacity: 0.8; margin: 0;">잠시만 기다려주세요... 테스트를 준비하고 있어요! ✨</p>
+    <!-- 사용자를 위한 로딩 화면 -->
+    <div style="text-align: center; padding: 50px; font-family: 'Pretendard', sans-serif;">
+        <h2>🔄 ${meta.title}로 이동 중...</h2>
+        <p>잠시 후 테스트 페이지로 이동합니다.</p>
+        <p style="margin-top: 20px;">
+            자동으로 이동하지 않으면 
+            <a href="${reactUrl}" style="color: #6366F1; text-decoration: none;">여기를 클릭</a>하세요.
+        </p>
+        <div style="margin-top: 30px;">
+            <img src="${thumbnail}" alt="${meta.title} 썸네일" style="max-width: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
         </div>
-        
-        <style>
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            @keyframes bounce {
-                0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-                40% { transform: translateY(-10px); }
-                60% { transform: translateY(-5px); }
-            }
-        </style>
     </div>
 </body>
 </html>`;
@@ -223,7 +171,7 @@ function generateAllSocialPages() {
     console.log('🔄 다음 단계:');
     console.log('1. Git에 커밋 & 푸시');
     console.log('2. Vercel 배포 대기');  
-    console.log('3. 소셜 공유 테스트: https://aiverse-phi.vercel.app/test/face-grade-test/');
+    console.log('3. 소셜 공유 테스트: https://aiverse-phi.vercel.app/test/deokjil-type-test/');
     console.log('4. Facebook Debugger: https://developers.facebook.com/tools/debug/');
   }
   
