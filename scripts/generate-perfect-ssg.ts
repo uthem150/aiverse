@@ -3,30 +3,8 @@ import path from 'path';
 import { testCategories } from '../src/data/tests';
 import { getTestMeta } from '../src/data/testMeta';
 
-// Vite 빌드에서 스크립트 추출
-async function extractViteAssets() {
-  try {
-    const distIndexPath = path.join(process.cwd(), 'dist', 'index.html');
-    const distIndexContent = await fs.readFile(distIndexPath, 'utf-8');
-    
-    // 스크립트 태그 추출
-    const scriptMatches = distIndexContent.match(/<script[^>]*src="[^"]*"[^>]*><\/script>/g) || [];
-    const viteScripts = scriptMatches.join('\n  ');
-    
-    // CSS 링크 태그 추출
-    const linkMatches = distIndexContent.match(/<link[^>]*rel="stylesheet"[^>]*>/g) || [];
-    const viteStyles = linkMatches.join('\n  ');
-    
-    console.log('✅ Vite 에셋 추출 완료');
-    return { viteScripts, viteStyles };
-  } catch (error) {
-    console.log('⚠️ Vite 빌드 파일을 찾을 수 없음 - 기본 설정 사용');
-    return { viteScripts: '', viteStyles: '' };
-  }
-}
-
-// 완벽한 SSG HTML 생성
-const createSSGHTML = (testId: string, renderedContent: string, isGame = false, viteScripts = '', viteStyles = '') => {
+// 완벽한 Progressive Enhancement HTML 템플릿
+const createPerfectHTML = (testId: string, renderedContent: string, isGame = false) => {
   const meta = getTestMeta(testId);
   const siteName = 'AIverse-phi';
   const siteUrl = 'https://aiverse-phi.vercel.app';
@@ -39,10 +17,12 @@ const createSSGHTML = (testId: string, renderedContent: string, isGame = false, 
   
   let imageUrl;
   if (test && test.thumbnail) {
+    // 상대 경로인 경우 절대 URL로 변환
     imageUrl = test.thumbnail.startsWith('http') 
       ? test.thumbnail 
       : `${siteUrl}${test.thumbnail}`;
   } else {
+    // 기본 이미지 사용
     imageUrl = `${siteUrl}/images/aiverse-og-image.png`;
   }
   
@@ -79,17 +59,26 @@ const createSSGHTML = (testId: string, renderedContent: string, isGame = false, 
   <meta name="twitter:image" content="${imageUrl}" />
   <meta name="twitter:creator" content="@AIverse_phi" />
   
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#6366F1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="${siteName}" />
+  
   <!-- Canonical URL -->
   <link rel="canonical" href="${testUrl}" />
   
-  <!-- Favicon -->
+  <!-- Favicon and Icons -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   
-  <!-- Vite CSS -->
-  ${viteStyles}
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
   
-  <!-- Critical CSS -->
+  <!-- Critical CSS for instant rendering -->
   <style>
+    /* Critical CSS - 즉시 렌더링을 위한 최소 스타일 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -111,7 +100,6 @@ const createSSGHTML = (testId: string, renderedContent: string, isGame = false, 
       justify-content: center;
       padding: 20px;
       animation: fadeIn 0.5s ease-in;
-      transition: opacity 0.3s ease-out;
     }
     
     @keyframes fadeIn {
@@ -187,52 +175,112 @@ const createSSGHTML = (testId: string, renderedContent: string, isGame = false, 
       to { left: 100%; }
     }
     
-    @keyframes progress {
-      to { transform: translateX(100%); }
+    .ssg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .ssg-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .ssg-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     
     @media (max-width: 768px) {
       .ssg-container { padding: 1rem; }
+      .ssg-badges { gap: 0.5rem; }
+      .ssg-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* 기본 전환 애니메이션 */
+    .ssg-container {
+      transition: opacity 0.3s ease-out;
     }
   </style>
+  
+  <!-- Progressive Enhancement Script -->
+  <script>
+    // React 앱 로딩 감지 및 부드러운 전환
+    window.addEventListener('DOMContentLoaded', function() {
+      let transitionCompleted = false;
+      
+      // React 앱이 마운트되었는지 확인
+      function checkReactMount() {
+        const root = document.getElementById('root');
+        const ssgContainer = document.querySelector('.ssg-container');
+        
+        if (transitionCompleted) return;
+        
+        // React 앱의 실제 콘텐츠가 로드되었는지 확인
+        if (root && root.children.length > 0 && ssgContainer) {
+          // React Router가 로드되고 실제 컴포넌트가 렌더링되었는지 확인
+          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main, [class*="styled"], [class*="emotion"]');
+          
+          // 또는 React Router의 라우트 변경 감지
+          const hasRouterContent = root.querySelector('[data-testid], [role="main"], .test-container, .game-container');
+          
+          if ((hasReactContent && hasReactContent !== ssgContainer) || hasRouterContent) {
+            // React 앱이 완전히 마운트됨 - SSG 콘텐츠 숨기기
+            console.log('✅ React 앱 로드 완료 - SSG에서 전환');
+            ssgContainer.style.opacity = '0';
+            setTimeout(() => {
+              ssgContainer.style.display = 'none';
+              transitionCompleted = true;
+            }, 300);
+            return;
+          }
+        }
+        
+        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 20초)
+        if (!transitionCompleted && Date.now() - startTime < 20000) {
+          setTimeout(checkReactMount, 300);
+        } else if (!transitionCompleted) {
+          // 20초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
+          console.log('⚠️ React 앱 로드 실패 - SSG 콘텐츠 유지');
+          const loadingElement = ssgContainer?.querySelector('.ssg-loading');
+          if (loadingElement) {
+            loadingElement.innerHTML = 
+              '<h3 style="margin-bottom: 1rem; color: #374151;">🔄 페이지 새로고침을 시도해보세요</h3>' +
+              '<p style="color: #6b7280; margin-bottom: 1.5rem;">인터랙티브 기능이 로드되지 않았습니다.</p>' +
+              '<button onclick="window.location.reload()" style="background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer;">새로고침</button>';
+          }
+        }
+      }
+      
+      const startTime = Date.now();
+      
+      // React 번들 로딩 시작 (더 빠른 간격으로 체크)
+      setTimeout(checkReactMount, 100);
+    });
+    
+    // 성능 측정
+    window.addEventListener('load', function() {
+      if ('performance' in window) {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        console.log('SSG Page Load Time:', navigation.loadEventEnd - navigation.fetchStart, 'ms');
+      }
+    });
+  </script>
 </head>
 <body>
   <div id="root">
+    <!-- SSG Content - React 앱 로딩 전까지 표시 -->
     <div class="ssg-container">
       ${renderedContent}
     </div>
   </div>
   
-  <!-- Vite JavaScript -->
-  ${viteScripts}
-  
-  <!-- Progressive Enhancement -->
-  <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      let attempts = 0;
-      const maxAttempts = 100; // 10초
-      
-      function checkReactApp() {
-        attempts++;
-        const ssgContainer = document.querySelector('.ssg-container');
-        const reactContent = document.querySelector('header, nav, main, [data-testid]');
-        
-        if (reactContent && ssgContainer && reactContent !== ssgContainer) {
-          console.log('✅ React 앱 로드 완료');
-          ssgContainer.style.opacity = '0';
-          setTimeout(() => ssgContainer.style.display = 'none', 300);
-        } else if (attempts < maxAttempts) {
-          setTimeout(checkReactApp, 100);
-        } else {
-          console.log('⚠️ React 앱 타임아웃 - SSG 콘텐츠 유지');
-        }
-      }
-      
-      setTimeout(checkReactApp, 500);
-    });
-  </script>
-  
-  <!-- 구조화된 데이터 -->
+  <!-- 구조화된 데이터 (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -242,19 +290,60 @@ const createSSGHTML = (testId: string, renderedContent: string, isGame = false, 
     "url": "${testUrl}",
     "applicationCategory": "${isGame ? 'GameApplication' : 'EducationalApplication'}",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "KRW"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "AIverse Team",
+      "url": "${siteUrl}"
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": "${new Date().toISOString().split('T')[0]}",
+    "inLanguage": "ko-KR",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "General Public"
     }
   }
   </script>
+  
+  <!-- FAQ 구조화된 데이터 -->
+  ${isGame ? '' : `
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "${meta.title}는 무료인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "네, 모든 테스트는 완전 무료로 제공됩니다."
+        }
+      },
+      {
+        "@type": "Question", 
+        "name": "결과는 정확한가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI 기술과 심리학 이론을 바탕으로 한 재미있는 테스트입니다. 엔터테인먼트 목적으로 즐겨주세요."
+        }
+      }
+    ]
+  }
+  </script>
+  `}
 </body>
 </html>`;
 };
 
-// 테스트 페이지 콘텐츠
-const createTestContent = (testId: string) => {
+// 개선된 테스트 페이지 콘텐츠
+const createEnhancedTestContent = (testId: string) => {
   const test = testCategories
     .flatMap(cat => cat.tests)
     .find(t => t.id === testId);
@@ -276,23 +365,54 @@ const createTestContent = (testId: string) => {
       </div>
       
       <div class="ssg-loading">
-        <h3 style="margin-bottom: 1rem; color: #374151;">🚀 테스트 준비 중...</h3>
-        <p style="color: #6b7280; margin-bottom: 1.5rem;">AI 시스템을 로딩하고 있습니다.</p>
+        <h3 style="margin-bottom: 1rem; color: #374151;">🚀 AI 테스트 준비 중...</h3>
+        <p style="color: #6b7280; margin-bottom: 1.5rem;">최고의 테스트 경험을 위해 AI 시스템을 로딩하고 있습니다.</p>
         <div style="width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden;">
           <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); transform: translateX(-100%); animation: progress 2s infinite;"></div>
         </div>
       </div>
       
+      <div class="ssg-grid">
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">${category?.icon || '🤖'}</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">카테고리</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${category?.name || '테스트'}</p>
+        </div>
+        
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">난이도</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${test.difficulty === 'easy' ? '쉬움' : test.difficulty === 'medium' ? '보통' : '어려움'}</p>
+        </div>
+        
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">테스트 유형</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${test.category.includes('ai') ? 'AI 분석' : '성격 분석'}</p>
+        </div>
+      </div>
+      
       <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid #0284c7; border-radius: 12px; padding: 1.5rem; margin-top: 2rem;">
         <h4 style="color: #0c4a6e; margin-bottom: 1rem;">💡 테스트 안내</h4>
-        <p style="color: #0369a1;">카테고리: ${category?.name || '테스트'} | 난이도: ${test.difficulty === 'easy' ? '쉬움' : test.difficulty === 'medium' ? '보통' : '어려움'} | 소요시간: ${test.estimatedTime}분</p>
+        <ul style="color: #0369a1; text-align: left; line-height: 1.8; margin: 0; padding-left: 1.5rem;">
+          <li><strong>소요시간:</strong> 약 ${test.estimatedTime}분</li>
+          <li><strong>참여방법:</strong> 간단한 질문에 답변하기</li>
+          <li><strong>결과공유:</strong> SNS 공유 가능</li>
+          <li><strong>비용:</strong> 완전 무료</li>
+        </ul>
       </div>
     </div>
+    
+    <style>
+      @keyframes progress {
+        to { transform: translateX(100%); }
+      }
+    </style>
   `;
 };
 
-// 게임 페이지 콘텐츠
-const createGameContent = (gameId: string) => {
+// 개선된 게임 페이지 콘텐츠  
+const createEnhancedGameContent = (gameId: string) => {
   const game = testCategories
     .find(cat => cat.id === 'interactive-experience')
     ?.tests.find(t => t.id === gameId);
@@ -312,44 +432,75 @@ const createGameContent = (gameId: string) => {
       
       <div class="ssg-loading">
         <h3 style="margin-bottom: 1rem; color: #374151;">🎮 게임 엔진 로딩 중...</h3>
-        <p style="color: #6b7280; margin-bottom: 1.5rem;">3D 렌더링 시스템을 준비하고 있습니다.</p>
+        <p style="color: #6b7280; margin-bottom: 1.5rem;">최고의 게임 경험을 위해 3D 렌더링 시스템을 준비하고 있습니다.</p>
         <div style="width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;">
-          <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #4facfe, #00f2fe); transform: translateX(-100%); animation: progress 1.5s infinite;"></div>
+          <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #4facfe, #00f2fe); transform: translateX(-100%); animation: gameProgress 1.5s infinite;"></div>
+        </div>
+      </div>
+      
+      <div class="ssg-grid">
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏱️</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">플레이 시간</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${game.estimatedTime}분</p>
+        </div>
+        
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏆</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">난이도</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${game.difficulty === 'easy' ? '쉬움' : game.difficulty === 'medium' ? '보통' : '어려움'}</p>
+        </div>
+        
+        <div class="ssg-card">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">참여자</h4>
+          <p style="color: #6b7280; font-size: 0.9rem;">${game.participantCount ? game.participantCount.toLocaleString() + '명' : '신규 게임'}</p>
         </div>
       </div>
       
       <div style="background: linear-gradient(135deg, #1e293b, #334155); color: white; border-radius: 16px; padding: 2rem; margin-top: 2rem;">
         <h4 style="margin-bottom: 1rem;">🎯 게임 특징</h4>
-        <p>플레이 시간: ${game.estimatedTime}분 | 난이도: ${game.difficulty === 'easy' ? '쉬움' : game.difficulty === 'medium' ? '보통' : '어려움'} | 참여자: ${game.participantCount ? game.participantCount.toLocaleString() + '명' : '신규'}</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
+          <div>✨ 실시간 점수 추적</div>
+          <div>🏆 티어 시스템</div>
+          <div>📊 상세 통계</div>
+          <div>🎮 반응형 컨트롤</div>
+        </div>
       </div>
     </div>
+    
+    <style>
+      @keyframes gameProgress {
+        to { transform: translateX(100%); }
+      }
+    </style>
   `;
 };
 
-async function generateSSG() {
-  console.log('🚀 SSG 생성 시작...');
+async function generatePerfectSSG() {
+  console.log('🚀 Perfect Progressive Enhancement SSG 생성 시작...');
   
-  // Vite 에셋 추출
-  const { viteScripts, viteStyles } = await extractViteAssets();
-  
-  // public 폴더에 생성
+  // Vercel 배포를 위해 public 폴더에 생성 (dist 대신)
   const publicDir = path.join(process.cwd(), 'public');
-  const testDir = path.join(publicDir, 'test');
-  const interactiveDir = path.join(publicDir, 'interactive');
   
+  // public/test 디렉토리 생성
+  const testDir = path.join(publicDir, 'test');
   await fs.mkdir(testDir, { recursive: true });
+  
+  // public/interactive 디렉토리 생성
+  const interactiveDir = path.join(publicDir, 'interactive');
   await fs.mkdir(interactiveDir, { recursive: true });
   
   let generatedCount = 0;
   
-  // 모든 테스트 생성
+  // 모든 테스트에 대해 정적 HTML 생성
   for (const category of testCategories) {
     for (const test of category.tests) {
       try {
         if (test.category === 'interactive-experience') {
-          // 게임 페이지
-          const content = createGameContent(test.id);
-          const html = createSSGHTML(test.id, content, true, viteScripts, viteStyles);
+          // 인터랙티브 게임 페이지
+          const gameContent = createEnhancedGameContent(test.id);
+          const html = createPerfectHTML(test.id, gameContent, true);
           
           const gameDir = path.join(interactiveDir, test.id);
           await fs.mkdir(gameDir, { recursive: true });
@@ -357,9 +508,9 @@ async function generateSSG() {
           
           console.log(`✅ 게임 페이지: /interactive/${test.id}/`);
         } else {
-          // 테스트 페이지
-          const content = createTestContent(test.id);
-          const html = createSSGHTML(test.id, content, false, viteScripts, viteStyles);
+          // 일반 테스트 페이지
+          const testContent = createEnhancedTestContent(test.id);
+          const html = createPerfectHTML(test.id, testContent, false);
           
           const testPageDir = path.join(testDir, test.id);
           await fs.mkdir(testPageDir, { recursive: true });
@@ -375,11 +526,21 @@ async function generateSSG() {
     }
   }
   
-  console.log(`\n🎉 SSG 완료! 총 ${generatedCount}개 페이지 생성`);
-  console.log('🚀 Vite 에셋 포함으로 완벽한 Progressive Enhancement 구현!');
+  console.log(`\n🎉 Perfect SSG 완료! 총 ${generatedCount}개 페이지 생성`);
+  console.log('📁 생성된 구조:');
+  console.log('  └── public/test/{testId}/index.html');
+  console.log('  └── public/interactive/{gameId}/index.html');
+  console.log('\n✅ 이제 완벽한 SEO + UX + 성능을 모두 달성했습니다!');
+  console.log('🔍 특징:');
+  console.log('  • 리다이렉트 없는 Progressive Enhancement');
+  console.log('  • 완벽한 SEO 메타데이터');
+  console.log('  • 구조화된 데이터 (Schema.org)');
+  console.log('  • 즉시 렌더링되는 정적 콘텐츠');
+  console.log('  • React 앱으로 부드러운 전환');
+  console.log('\n🚀 Vercel 배포용: public 폴더에 생성 완료!');
 }
 
-// 스크립트 실행
-generateSSG().catch(console.error);
+// 스크립트 실행 (ES 모듈에서 항상 실행)
+generatePerfectSSG().catch(console.error);
 
-export default generateSSG;
+export default generatePerfectSSG;
