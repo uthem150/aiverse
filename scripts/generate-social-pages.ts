@@ -14,6 +14,7 @@ function generateSocialHTML(testId: string, type: 'test' | 'interactive'): strin
   const meta = getTestMeta(testId);
   const thumbnail = getTestThumbnailUrl(testId);
   const url = `https://aiverse-phi.vercel.app/${type}/${testId}`;
+  const reactUrl = `https://aiverse-phi.vercel.app/${type}/${testId}`;
   
   return `<!doctype html>
 <html lang="ko-KR">
