@@ -31,26 +31,21 @@
   <meta name="twitter:image" content="https://aiverse-phi.vercel.app/images/thumbnail/orb-collector.jpg" />
   <meta name="twitter:creator" content="@AIverse_phi" />
   
-  <!-- Additional SEO -->
-  <meta name="theme-color" content="#6366F1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="AIverse-phi" />
-  
   <!-- Canonical URL -->
   <link rel="canonical" href="https://aiverse-phi.vercel.app/interactive/orb-collector" />
   
-  <!-- Favicon and Icons -->
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://www.google-analytics.com" />
+  <!-- Vite CSS -->
+  <link
+      href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  <link rel="stylesheet" crossorigin href="/assets/index-r3ANfahJ.css">
   
-  <!-- Critical CSS for instant rendering -->
+  <!-- Critical CSS -->
   <style>
-    /* Critical CSS - 즉시 렌더링을 위한 최소 스타일 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -72,6 +67,7 @@
       justify-content: center;
       padding: 20px;
       animation: fadeIn 0.5s ease-in;
+      transition: opacity 0.3s ease-out;
     }
     
     @keyframes fadeIn {
@@ -147,106 +143,17 @@
       to { left: 100%; }
     }
     
-    .ssg-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    
-    .ssg-card {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .ssg-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    @keyframes progress {
+      to { transform: translateX(100%); }
     }
     
     @media (max-width: 768px) {
       .ssg-container { padding: 1rem; }
-      .ssg-badges { gap: 0.5rem; }
-      .ssg-grid { grid-template-columns: 1fr; }
-    }
-    
-    /* 기본 전환 애니메이션 */
-    .ssg-container {
-      transition: opacity 0.3s ease-out;
     }
   </style>
-  
-  <!-- Progressive Enhancement Script -->
-  <script>
-    // React 앱 로딩 감지 및 부드러운 전환
-    window.addEventListener('DOMContentLoaded', function() {
-      let transitionCompleted = false;
-      
-      // React 앱이 마운트되었는지 확인
-      function checkReactMount() {
-        const root = document.getElementById('root');
-        const ssgContainer = document.querySelector('.ssg-container');
-        
-        if (transitionCompleted) return;
-        
-        // React 앱의 실제 콘텐츠가 로드되었는지 확인
-        if (root && root.children.length > 0 && ssgContainer) {
-          // React Router가 로드되고 실제 컴포넌트가 렌더링되었는지 확인
-          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main, [class*="styled"], [class*="emotion"]');
-          
-          // 또는 React Router의 라우트 변경 감지
-          const hasRouterContent = root.querySelector('[data-testid], [role="main"], .test-container, .game-container');
-          
-          if ((hasReactContent && hasReactContent !== ssgContainer) || hasRouterContent) {
-            // React 앱이 완전히 마운트됨 - SSG 콘텐츠 숨기기
-            console.log('✅ React 앱 로드 완료 - SSG에서 전환');
-            ssgContainer.style.opacity = '0';
-            setTimeout(() => {
-              ssgContainer.style.display = 'none';
-              transitionCompleted = true;
-            }, 300);
-            return;
-          }
-        }
-        
-        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 20초)
-        if (!transitionCompleted && Date.now() - startTime < 20000) {
-          setTimeout(checkReactMount, 300);
-        } else if (!transitionCompleted) {
-          // 20초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
-          console.log('⚠️ React 앱 로드 실패 - SSG 콘텐츠 유지');
-          const loadingElement = ssgContainer?.querySelector('.ssg-loading');
-          if (loadingElement) {
-            loadingElement.innerHTML = 
-              '<h3 style="margin-bottom: 1rem; color: #374151;">🔄 페이지 새로고침을 시도해보세요</h3>' +
-              '<p style="color: #6b7280; margin-bottom: 1.5rem;">인터랙티브 기능이 로드되지 않았습니다.</p>' +
-              '<button onclick="window.location.reload()" style="background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer;">새로고침</button>';
-          }
-        }
-      }
-      
-      const startTime = Date.now();
-      
-      // React 번들 로딩 시작 (더 빠른 간격으로 체크)
-      setTimeout(checkReactMount, 100);
-    });
-    
-    // 성능 측정
-    window.addEventListener('load', function() {
-      if ('performance' in window) {
-        const navigation = performance.getEntriesByType('navigation')[0];
-        console.log('SSG Page Load Time:', navigation.loadEventEnd - navigation.fetchStart, 'ms');
-      }
-    });
-  </script>
 </head>
 <body>
   <div id="root">
-    <!-- SSG Content - React 앱 로딩 전까지 표시 -->
     <div class="ssg-container">
       
     <div class="ssg-content">
@@ -261,53 +168,55 @@
       
       <div class="ssg-loading">
         <h3 style="margin-bottom: 1rem; color: #374151;">🎮 게임 엔진 로딩 중...</h3>
-        <p style="color: #6b7280; margin-bottom: 1.5rem;">최고의 게임 경험을 위해 3D 렌더링 시스템을 준비하고 있습니다.</p>
+        <p style="color: #6b7280; margin-bottom: 1.5rem;">3D 렌더링 시스템을 준비하고 있습니다.</p>
         <div style="width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;">
-          <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #4facfe, #00f2fe); transform: translateX(-100%); animation: gameProgress 1.5s infinite;"></div>
-        </div>
-      </div>
-      
-      <div class="ssg-grid">
-        <div class="ssg-card">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏱️</div>
-          <h4 style="margin-bottom: 0.5rem; color: #374151;">플레이 시간</h4>
-          <p style="color: #6b7280; font-size: 0.9rem;">3분</p>
-        </div>
-        
-        <div class="ssg-card">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏆</div>
-          <h4 style="margin-bottom: 0.5rem; color: #374151;">난이도</h4>
-          <p style="color: #6b7280; font-size: 0.9rem;">보통</p>
-        </div>
-        
-        <div class="ssg-card">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
-          <h4 style="margin-bottom: 0.5rem; color: #374151;">참여자</h4>
-          <p style="color: #6b7280; font-size: 0.9rem;">15,000명</p>
+          <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #4facfe, #00f2fe); transform: translateX(-100%); animation: progress 1.5s infinite;"></div>
         </div>
       </div>
       
       <div style="background: linear-gradient(135deg, #1e293b, #334155); color: white; border-radius: 16px; padding: 2rem; margin-top: 2rem;">
         <h4 style="margin-bottom: 1rem;">🎯 게임 특징</h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
-          <div>✨ 실시간 점수 추적</div>
-          <div>🏆 티어 시스템</div>
-          <div>📊 상세 통계</div>
-          <div>🎮 반응형 컨트롤</div>
-        </div>
+        <p>플레이 시간: 3분 | 난이도: 보통 | 참여자: 15,000명</p>
       </div>
     </div>
-    
-    <style>
-      @keyframes gameProgress {
-        to { transform: translateX(100%); }
-      }
-    </style>
   
     </div>
   </div>
   
-  <!-- 구조화된 데이터 (Schema.org) -->
+  <!-- Vite JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PNMENQ28TE"></script>
+  <script type="module" crossorigin src="/assets/index-CWTaPk1M.js"></script>
+  
+  <!-- Progressive Enhancement -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      let attempts = 0;
+      const maxAttempts = 100; // 10초
+      
+      function checkReactApp() {
+        attempts++;
+        const ssgContainer = document.querySelector('.ssg-container');
+        const reactContent = document.querySelector('header, nav, main, [data-testid]');
+        
+        if (reactContent && ssgContainer && reactContent !== ssgContainer) {
+          console.log('✅ React 앱 로드 완료');
+          ssgContainer.style.opacity = '0';
+          setTimeout(() => ssgContainer.style.display = 'none', 300);
+        } else if (attempts < maxAttempts) {
+          setTimeout(checkReactApp, 100);
+        } else {
+          console.log('⚠️ React 앱 타임아웃 - SSG 콘텐츠 유지');
+        }
+      }
+      
+      setTimeout(checkReactApp, 500);
+    });
+  </script>
+  
+  <!-- 구조화된 데이터 -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -317,28 +226,12 @@
     "url": "https://aiverse-phi.vercel.app/interactive/orb-collector",
     "applicationCategory": "GameApplication",
     "operatingSystem": "Any",
-    "browserRequirements": "Requires JavaScript",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "KRW"
-    },
-    "creator": {
-      "@type": "Organization",
-      "name": "AIverse Team",
-      "url": "https://aiverse-phi.vercel.app"
-    },
-    "datePublished": "2024-01-01",
-    "dateModified": "2025-08-21",
-    "inLanguage": "ko-KR",
-    "audience": {
-      "@type": "Audience",
-      "audienceType": "General Public"
     }
   }
   </script>
-  
-  <!-- FAQ 구조화된 데이터 -->
-  
 </body>
 </html>

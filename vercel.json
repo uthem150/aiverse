@@ -19,20 +19,6 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
     },
     {
-      "source": "/test/(.*)/index.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" },
-        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
-      ]
-    },
-    {
-      "source": "/interactive/(.*)/index.html", 
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" },
-        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
-      ]
-    },
-    {
       "source": "/(index.html)?",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
@@ -56,19 +42,6 @@
     { "source": "/favicon.ico", "destination": "/favicon.ico" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/images/(.*)", "destination": "/images/$1" },
-    
-    {
-      "source": "/test/:testId",
-      "destination": "/test/:testId/index.html"
-    },
-    {
-      "source": "/interactive/:gameId", 
-      "destination": "/interactive/:gameId/index.html"
-    },
-    {
-      "source": "/tests/:categoryId",
-      "destination": "/tests/:categoryId/index.html"
-    },
     
     { "source": "/(.*)", "destination": "/" }
   ]
