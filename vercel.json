@@ -43,6 +43,8 @@
     { "source": "/favicon.ico", "destination": "/favicon.ico" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/images/(.*)", "destination": "/images/$1" },
+    { "source": "/test/([^/]+)", "destination": "/test/$1/index.html" },
+    { "source": "/interactive/([^/]+)", "destination": "/interactive/$1/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
