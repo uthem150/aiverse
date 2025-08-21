@@ -9,22 +9,7 @@ const createPerfectHTML = (testId: string, renderedContent: string, isGame = fal
   const siteName = 'AIverse-phi';
   const siteUrl = 'https://aiverse-phi.vercel.app';
   const testUrl = `${siteUrl}${isGame ? '/interactive' : '/test'}/${testId}`;
-  
-  // 실제 테스트 데이터에서 썸네일 가져오기
-  const test = testCategories
-    .flatMap(cat => cat.tests)
-    .find(t => t.id === testId);
-  
-  let imageUrl;
-  if (test && test.thumbnail) {
-    // 상대 경로인 경우 절대 URL로 변환
-    imageUrl = test.thumbnail.startsWith('http') 
-      ? test.thumbnail 
-      : `${siteUrl}${test.thumbnail}`;
-  } else {
-    // 기본 이미지 사용
-    imageUrl = `${siteUrl}/images/aiverse-og-image.png`;
-  }
+  const imageUrl = `${siteUrl}/images/thumbnail/${testId}.jpg`;
   
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -202,9 +187,9 @@ const createPerfectHTML = (testId: string, renderedContent: string, isGame = fal
       .ssg-grid { grid-template-columns: 1fr; }
     }
     
-    /* 기본 전환 애니메이션 */
-    .ssg-container {
-      transition: opacity 0.3s ease-out;
+    /* React 앱이 로드되면 숨김 */
+    .react-loaded .ssg-container {
+      display: none;
     }
   </style>
   
@@ -212,52 +197,20 @@ const createPerfectHTML = (testId: string, renderedContent: string, isGame = fal
   <script>
     // React 앱 로딩 감지 및 부드러운 전환
     window.addEventListener('DOMContentLoaded', function() {
-      let transitionCompleted = false;
-      
       // React 앱이 마운트되었는지 확인
       function checkReactMount() {
         const root = document.getElementById('root');
-        const ssgContainer = document.querySelector('.ssg-container');
-        
-        if (transitionCompleted) return;
-        
-        // React 앱의 실제 콘텐츠가 로드되었는지 확인
-        if (root && root.children.length > 0 && ssgContainer) {
-          // React Router가 로드되고 실제 컴포넌트가 렌더링되었는지 확인
-          const hasReactContent = root.querySelector('[data-react-component], .react-component, header, nav, main');
-          
-          if (hasReactContent && hasReactContent !== ssgContainer) {
-            // React 앱이 완전히 마운트됨 - SSG 콘텐츠 숨기기
-            console.log('✅ React 앱 로드 완료 - SSG에서 전환');
-            ssgContainer.style.opacity = '0';
-            setTimeout(() => {
-              ssgContainer.style.display = 'none';
-              transitionCompleted = true;
-            }, 300);
-            return;
-          }
-        }
-        
-        // 아직 로딩 중이거나 실패한 경우 - 계속 확인 (최대 10초)
-        if (!transitionCompleted && Date.now() - startTime < 10000) {
-          setTimeout(checkReactMount, 200);
-        } else if (!transitionCompleted) {
-          // 10초 후에도 React 앱이 로드되지 않으면 SSG 콘텐츠 유지
-          console.log('⚠️ React 앱 로드 실패 - SSG 콘텐츠 유지');
-          const loadingElement = ssgContainer?.querySelector('.ssg-loading');
-          if (loadingElement) {
-            loadingElement.innerHTML = 
-              '<h3 style="margin-bottom: 1rem; color: #374151;">🔄 페이지 새로고침을 시도해보세요</h3>' +
-              '<p style="color: #6b7280; margin-bottom: 1.5rem;">인터랙티브 기능이 로드되지 않았습니다.</p>' +
-              '<button onclick="window.location.reload()" style="background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer;">새로고침</button>';
-          }
+        if (root && root.children.length > 1) {
+          // React 앱이 마운트됨 - SSG 콘텐츠 숨기기
+          document.body.classList.add('react-loaded');
+        } else {
+          // 아직 로딩 중 - 계속 확인
+          setTimeout(checkReactMount, 100);
         }
       }
       
-      const startTime = Date.now();
-      
-      // React 번들 로딩 시작 (더 빠른 간격으로 체크)
-      setTimeout(checkReactMount, 100);
+      // React 번들 로딩 시작
+      setTimeout(checkReactMount, 500);
     });
     
     // 성능 측정
