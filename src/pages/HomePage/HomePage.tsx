@@ -17,13 +17,27 @@ import Typography from '@/components/common/Typography/Typography';
 import Button from '@/components/common/Button/Button';
 import TestCard from '@/components/features/TestCard/TestCard';
 import { testCategories } from '@/data/tests';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from '@/components/layout/Footer/Footer';
 import SplitText from '@/components/reactBits/SplitText/SplitText';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // redirect 쿼리 파라미터 처리 (정적 HTML에서 전달된 경로)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const redirectPath = urlParams.get('redirect');
+    
+    if (redirectPath) {
+      console.log('Redirect 파라미터 감지:', redirectPath);
+      
+      // redirect 파라미터를 제거하고 해당 경로로 이동
+      navigate(redirectPath, { replace: true });
+    }
+  }, [location.search, navigate]);
 
   // 인기 테스트들 (참여자 수 기준 상위 6개)
   const popularTests = testCategories
