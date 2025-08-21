@@ -85,15 +85,11 @@ function generateSocialHTML(testId: string, type: 'test' | 'interactive'): strin
             console.log('Is Bot:', isBot);
             
             if (!isBot) {
-                // 일반 브라우저는 현재 경로를 유지하면서 React 앱으로 리다이렉트
-                console.log('일반 사용자 감지, 현재 경로 유지하며 React 앱으로 리다이렉트 중...');
+                // 일반 브라우저는 즉시 메인 페이지로 리다이렉트
+                console.log('일반 사용자 감지, 메인 페이지로 리다이렉트 중...');
                 
-                // 현재 경로를 쿼리 파라미터로 전달하여 React Router가 처리하도록 함
-                const currentPath = window.location.pathname;
-                const redirectUrl = '/?redirect=' + encodeURIComponent(currentPath);
-                
-                console.log('Redirecting to:', redirectUrl);
-                window.location.replace(redirectUrl);
+                // 가장 간단하고 확실한 방법: 메인 페이지로 이동
+                window.location.replace('/');
             } else {
                 console.log('소셜 크롤러 감지, 정적 페이지 제공');
             }
