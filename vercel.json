@@ -58,16 +58,16 @@
     { "source": "/images/(.*)", "destination": "/images/$1" },
     
     {
-      "source": "/test/([^/]+)/?$",
-      "destination": "/test/$1/index.html"
+      "source": "/test/:testId",
+      "destination": "/test/:testId/index.html"
     },
     {
-      "source": "/interactive/([^/]+)/?$", 
-      "destination": "/interactive/$1/index.html"
+      "source": "/interactive/:gameId", 
+      "destination": "/interactive/:gameId/index.html"
     },
     {
-      "source": "/tests/([^/]+)/?$",
-      "destination": "/tests/$1/index.html"
+      "source": "/tests/:categoryId",
+      "destination": "/tests/:categoryId/index.html"
     },
     
     { "source": "/(.*)", "destination": "/" }
