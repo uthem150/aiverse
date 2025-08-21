@@ -50,7 +50,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(bot|crawler|spider|facebook|twitter|linkedin|whatsapp|telegram|kakaotalk).*"
+          "value": ".*bot.*|.*crawler.*|.*spider.*|.*facebook.*|.*twitter.*|.*linkedin.*|.*whatsapp.*|.*telegram.*|.*kakaotalk.*"
         }
       ]
     },
@@ -61,7 +61,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(bot|crawler|spider|facebook|twitter|linkedin|whatsapp|telegram|kakaotalk).*"
+          "value": ".*bot.*|.*crawler.*|.*spider.*|.*facebook.*|.*twitter.*|.*linkedin.*|.*whatsapp.*|.*telegram.*|.*kakaotalk.*"
         }
       ]
     },
