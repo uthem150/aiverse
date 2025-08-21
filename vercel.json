@@ -16,13 +16,26 @@
     },
     {
       "source": "/(robots.txt|sitemap.xml)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=300" }]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+    },
+    {
+      "source": "/test/(.*)/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" },
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/interactive/(.*)/index.html", 
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" },
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+      ]
     },
     {
       "source": "/(index.html)?",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
-
     {
       "source": "/(.*)",
       "headers": [
@@ -43,28 +56,20 @@
     { "source": "/favicon.ico", "destination": "/favicon.ico" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/images/(.*)", "destination": "/images/$1" },
+    
     {
-      "source": "/test/(.*)",
-      "destination": "/test/$1/index.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": ".*(bot|crawler|spider|facebook|twitter|linkedin|whatsapp|telegram|kakaotalk).*"
-        }
-      ]
+      "source": "/test/([^/]+)/?$",
+      "destination": "/test/$1/index.html"
     },
     {
-      "source": "/interactive/(.*)",
-      "destination": "/interactive/$1/index.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": ".*(bot|crawler|spider|facebook|twitter|linkedin|whatsapp|telegram|kakaotalk).*"
-        }
-      ]
+      "source": "/interactive/([^/]+)/?$", 
+      "destination": "/interactive/$1/index.html"
     },
+    {
+      "source": "/tests/([^/]+)/?$",
+      "destination": "/tests/$1/index.html"
+    },
+    
     { "source": "/(.*)", "destination": "/" }
   ]
 }

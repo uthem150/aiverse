@@ -1,27 +1,42 @@
 User-agent: *
 Allow: /
 
-# 중요 페이지들
+# SEO-optimized static pages
 Allow: /test/
+Allow: /interactive/
 Allow: /tests/
 
-# 크롤링 제외할 파일들
-Disallow: /api/
-Disallow: /*.json$
-Disallow: /*?*
+# Assets and resources
+Allow: /images/
+Allow: /assets/
+Allow: /favicon.ico
 
-# 사이트맵 위치
+# Block unnecessary paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /dist/
+Disallow: /src/
+
+# Sitemap location
 Sitemap: https://aiverse-phi.vercel.app/sitemap.xml
 
-# 크롤링 속도 조절 (선택사항)
+# Additional crawl delay for respectful crawling
 Crawl-delay: 1
 
-# 검색엔진별 설정
-User-agent: Googlebot
+# Allow all major social media crawlers
+User-agent: facebookexternalhit
 Allow: /
 
-User-agent: Yeti
+User-agent: Twitterbot
 Allow: /
 
-User-agent: NaverBot
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
 Allow: /
