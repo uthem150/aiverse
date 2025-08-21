@@ -52,6 +52,49 @@ function generateSocialHTML(testId: string, type: 'test' | 'interactive'): strin
     <!-- SEO -->
     <link rel="canonical" href="${url}">
     <meta name="robots" content="index,follow">
+    
+    <!-- 일반 브라우저 즉시 리다이렉트 스크립트 -->
+    <script>
+        // 소셜 크롤러 패턴 (더 정확하게)
+        const SOCIAL_BOT_PATTERNS = [
+            /facebookexternalhit/i,
+            /twitterbot/i,
+            /linkedinbot/i,
+            /whatsapp/i,
+            /telegrambot/i,
+            /kakaotalk/i,
+            /googlebot/i,
+            /bingbot/i,
+            /slackbot/i,
+            /discordbot/i,
+            /crawler/i,
+            /spider/i,
+            /bot/i
+        ];
+        
+        function isSocialBot(userAgent) {
+            return SOCIAL_BOT_PATTERNS.some(pattern => pattern.test(userAgent));
+        }
+        
+        // 즐시 브라우저 체크 및 리다이렉트
+        if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+            const userAgent = navigator.userAgent || '';
+            const isBot = isSocialBot(userAgent);
+            
+            console.log('User-Agent:', userAgent);
+            console.log('Is Bot:', isBot);
+            
+            if (!isBot) {
+                // 일반 브라우저는 즉시 메인 페이지로 리다이렉트
+                console.log('일반 사용자 감지, 메인 페이지로 리다이렉트 중...');
+                
+                // 가장 간단하고 확실한 방법: 메인 페이지로 이동
+                window.location.replace('/');
+            } else {
+                console.log('소셜 크롤러 감지, 정적 페이지 제공');
+            }
+        }
+    </script>
 </head>
 <body>
     <!-- 소셜 크롤러를 위한 숨겨진 컨텐츠 (검색엔진 최적화) -->
