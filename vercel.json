@@ -44,15 +44,5 @@
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/images/(.*)", "destination": "/images/$1" },
     { "source": "/(.*)", "destination": "/" }
-  ],
-
-  "functions": {
-    "src/pages/api/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
-
-  "buildCommand": "npm run build:production",
-
-  "outputDirectory": "dist"
+  ]
 }
