@@ -358,52 +358,52 @@ export const testMetaData: Record<string, TestMetaData> = {
   },
 
   // AI 미래예측
-  'ai-fortune': {
-    title: '2025년 AI 신년 운세 - AIverse-phi',
-    description:
-      'AI가 당신의 데이터를 기반으로 2025년 신년 운세를 알려드립니다. 재물운, 연애운, 건강운, 직업운을 모두 확인해보세요.',
-    keywords: '신년 운세, 2025년 운세, AI 운세, 사주, 토정비결',
-    ogTitle: '✨ 2025년 AI 신년 운세',
-    ogDescription: 'AI가 분석한 2025년 나의 운세는? 새해 운세 미리보기!',
-  },
-  'ai-career': {
-    title: 'AI 직업 적성 테스트 - AIverse-phi',
-    description:
-      'AI가 당신의 성향과 잠재력을 분석하여 미래 유망 직업을 포함한 맞춤 직업을 추천해 드립니다.',
-    keywords: '직업 적성, 진로 테스트, 직업 추천, AI 진로, 미래 직업',
-    ogTitle: '💼 AI 직업 적성 테스트',
-    ogDescription: '내게 맞는 직업은 뭘까? AI가 나의 잠재력을 분석해 추천합니다!',
-  },
+  // 'ai-fortune': {
+  //   title: '2025년 AI 신년 운세 - AIverse-phi',
+  //   description:
+  //     'AI가 당신의 데이터를 기반으로 2025년 신년 운세를 알려드립니다. 재물운, 연애운, 건강운, 직업운을 모두 확인해보세요.',
+  //   keywords: '신년 운세, 2025년 운세, AI 운세, 사주, 토정비결',
+  //   ogTitle: '✨ 2025년 AI 신년 운세',
+  //   ogDescription: 'AI가 분석한 2025년 나의 운세는? 새해 운세 미리보기!',
+  // },
+  // 'ai-career': {
+  //   title: 'AI 직업 적성 테스트 - AIverse-phi',
+  //   description:
+  //     'AI가 당신의 성향과 잠재력을 분석하여 미래 유망 직업을 포함한 맞춤 직업을 추천해 드립니다.',
+  //   keywords: '직업 적성, 진로 테스트, 직업 추천, AI 진로, 미래 직업',
+  //   ogTitle: '💼 AI 직업 적성 테스트',
+  //   ogDescription: '내게 맞는 직업은 뭘까? AI가 나의 잠재력을 분석해 추천합니다!',
+  // },
 
   // 기타 MBTI 테스트
-  'mbti-pororo': {
-    title: 'MBTI 뽀로로 캐릭터 테스트 - AIverse-phi',
-    description: '당신과 닮은 뽀로로 캐릭터를 찾아보세요! 16가지 MBTI 유형별 캐릭터 분석.',
-    keywords: 'MBTI 뽀로로, 뽀로로 테스트, MBTI 캐릭터, 성격 테스트',
-    ogTitle: '🐧 MBTI 뽀로로 캐릭터 테스트',
-    ogDescription: '당신은 뽀로로? 크롱? 루피? 85만 명이 참여한 인기 테스트!',
-  },
-  'mbti-jewelry': {
-    title: 'MBTI 보석 테스트 - AIverse-phi',
-    description: '당신의 성격을 나타내는 보석은? 16가지 MBTI 유형별 보석 분석.',
-    keywords: 'MBTI 보석, 성격 보석, MBTI 테스트, 보석 성격',
-    ogTitle: '💎 MBTI 보석 테스트',
-    ogDescription: '당신을 닮은 보석을 찾아보세요! 다이아몬드? 루비? 사파이어?',
-  },
-  'mbti-stone': {
-    title: 'MBTI 돌멩이 테스트 - AIverse-phi',
-    description: '당신의 MBTI를 돌멩이로 표현하면? 재미있는 MBTI 분석.',
-    keywords: 'MBTI 돌멩이, 재미있는 MBTI, MBTI 테스트',
-    ogTitle: '🪨 MBTI 돌멩이 테스트',
-    ogDescription: '당신은 어떤 돌멩이일까요? 68만 명이 웃으며 참여한 테스트!',
-  },
-  'mbti-story-character': {
-    title: 'MBTI 동화 캐릭터 테스트 - AIverse-phi',
-    description: '당신과 닮은 동화 속 캐릭터는? 16가지 MBTI 유형별 동화 캐릭터.',
-    keywords: 'MBTI 동화, 동화 캐릭터, MBTI 테스트, 성격 분석',
-    ogTitle: '📚 MBTI 동화 캐릭터 테스트',
-    ogDescription: '신데렐라? 백설공주? 당신을 닮은 동화 캐릭터를 찾아보세요!',
-  },
+  // 'mbti-pororo': {
+  //   title: 'MBTI 뽀로로 캐릭터 테스트 - AIverse-phi',
+  //   description: '당신과 닮은 뽀로로 캐릭터를 찾아보세요! 16가지 MBTI 유형별 캐릭터 분석.',
+  //   keywords: 'MBTI 뽀로로, 뽀로로 테스트, MBTI 캐릭터, 성격 테스트',
+  //   ogTitle: '🐧 MBTI 뽀로로 캐릭터 테스트',
+  //   ogDescription: '당신은 뽀로로? 크롱? 루피? 85만 명이 참여한 인기 테스트!',
+  // },
+  // 'mbti-jewelry': {
+  //   title: 'MBTI 보석 테스트 - AIverse-phi',
+  //   description: '당신의 성격을 나타내는 보석은? 16가지 MBTI 유형별 보석 분석.',
+  //   keywords: 'MBTI 보석, 성격 보석, MBTI 테스트, 보석 성격',
+  //   ogTitle: '💎 MBTI 보석 테스트',
+  //   ogDescription: '당신을 닮은 보석을 찾아보세요! 다이아몬드? 루비? 사파이어?',
+  // },
+  // 'mbti-stone': {
+  //   title: 'MBTI 돌멩이 테스트 - AIverse-phi',
+  //   description: '당신의 MBTI를 돌멩이로 표현하면? 재미있는 MBTI 분석.',
+  //   keywords: 'MBTI 돌멩이, 재미있는 MBTI, MBTI 테스트',
+  //   ogTitle: '🪨 MBTI 돌멩이 테스트',
+  //   ogDescription: '당신은 어떤 돌멩이일까요? 68만 명이 웃으며 참여한 테스트!',
+  // },
+  // 'mbti-story-character': {
+  //   title: 'MBTI 동화 캐릭터 테스트 - AIverse-phi',
+  //   description: '당신과 닮은 동화 속 캐릭터는? 16가지 MBTI 유형별 동화 캐릭터.',
+  //   keywords: 'MBTI 동화, 동화 캐릭터, MBTI 테스트, 성격 분석',
+  //   ogTitle: '📚 MBTI 동화 캐릭터 테스트',
+  //   ogDescription: '신데렐라? 백설공주? 당신을 닮은 동화 캐릭터를 찾아보세요!',
+  // },
 
   // 인터랙티브 체험관
   'interactive-hub': {
