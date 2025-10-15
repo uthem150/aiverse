@@ -42,6 +42,7 @@
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/favicon.ico", "destination": "/favicon.ico" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
-    { "source": "/images/(.*)", "destination": "/images/$1" }
+    { "source": "/images/(.*)", "destination": "/images/$1" },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
