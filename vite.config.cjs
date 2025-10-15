@@ -37,10 +37,10 @@ console.log(`✨ 총 ${prerenderRoutes.length}개의 페이지를 사전 렌더�
 
 // --- 경로 자동 생성 로직 끝 ---
 
-// 2. chromium.executablePath를 await으로 호출하여 실제 경로(문자열)를 가져옴
+// 1. module.exports를 async 함수로 감싸줌
 module.exports = defineConfig(async () => {
   // 2. chromium.executablePath를 await으로 호출하여 실제 경로(문자열)를 가져옴
-  const executablePath = process.env.VERCEL ? await chromium.executablePath() : undefined;
+  const executablePath = await chromium.executablePath();
 
   // 3. 반환할 설정 객체를 정의
   return {
@@ -61,8 +61,6 @@ module.exports = defineConfig(async () => {
           args: ['--no-sandbox', '--disable-setuid-sandbox'],
           // 한 번에 하나의 페이지만 렌더링하도록 설정
           concurrency: 1,
-          // 타임아웃을 120초(120000ms)로 늘림
-          timeout: 120000,
         }),
 
         postProcess(renderedRoute) {
