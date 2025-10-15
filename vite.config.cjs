@@ -61,11 +61,8 @@ module.exports = defineConfig(async () => {
           args: ['--no-sandbox', '--disable-setuid-sandbox'],
           // 한 번에 하나의 페이지만 렌더링하도록 설정
           concurrency: 1,
-
-          // "각 페이지"를 로드할 때의 대기 시간 늘림
-          navigationOptions: {
-            timeout: 120000, // 120초
-          },
+          // 타임아웃을 120초(120000ms)로 늘림
+          timeout: 120000,
         }),
 
         postProcess(renderedRoute) {
