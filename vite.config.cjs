@@ -7,7 +7,7 @@ const fs = require('fs');
 const prerender = require('vite-plugin-prerender');
 const chromium = require('@sparticuz/chromium');
 
-// --- 경로 자동 생성 로직 ---
+// --- 경로 자동 생성 로직 (기존과 동일) ---
 const getPrerenderRoutes = () => {
   try {
     const routerFilePath = path.join(__dirname, 'src', 'router', 'index.tsx');
@@ -67,6 +67,14 @@ module.exports = defineConfig(async () => {
             timeout: 120000, // 120초
           },
         }),
+
+        postProcess(renderedRoute) {
+          renderedRoute.html = renderedRoute.html.replace(
+            /<script\s*type="module"\s*crossorigin\s*src="\/assets\/index-.*\.js"><\/script>/,
+            ''
+          );
+          return renderedRoute;
+        },
       }),
     ],
     resolve: {
