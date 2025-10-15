@@ -296,7 +296,7 @@ export class ResultImageGenerator {
     this.ctx.fillStyle = '#FFFFFF';
     this.ctx.font = '14px Pretendard, sans-serif';
     this.ctx.textAlign = 'center';
-    this.ctx.fillText('aiverse.netlify.app', this.canvas.width / 2, this.canvas.height - 20);
+    this.ctx.fillText('aiverse-phi.vercel.app', this.canvas.width / 2, this.canvas.height - 20);
     this.ctx.restore();
   }
 
