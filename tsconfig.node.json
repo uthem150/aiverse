@@ -16,10 +16,9 @@
 
     /* Linting */
     "strict": true,
-    "allowJs": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.cjs"]
+  "include": ["vite.config.ts"]
 }
