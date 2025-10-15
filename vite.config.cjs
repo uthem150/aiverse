@@ -37,12 +37,12 @@ console.log(`✨ 총 ${prerenderRoutes.length}개의 페이지를 사전 렌더�
 
 // --- 경로 자동 생성 로직 끝 ---
 
-// 1. module.exports를 async 함수로 감싸줌
+// 👇 1. module.exports를 async 함수로 감싸줍니다.
 module.exports = defineConfig(async () => {
-  // 2. chromium.executablePath를 await으로 호출하여 실제 경로(문자열)를 가져옴
+  // 👇 2. chromium.executablePath를 await으로 호출하여 실제 경로(문자열)를 가져옵니다.
   const executablePath = await chromium.executablePath();
 
-  // 3. 반환할 설정 객체를 정의
+  // 👇 3. 반환할 설정 객체를 정의합니다.
   return {
     plugins: [
       react({
@@ -55,12 +55,10 @@ module.exports = defineConfig(async () => {
         staticDir: path.join(__dirname, 'dist'),
         routes: prerenderRoutes,
 
-        // 가져온 실제 경로(executablePath)를 사용
+        // 👇 4. 가져온 실제 경로(executablePath)를 사용합니다.
         renderer: new prerender.PuppeteerRenderer({
-          executablePath,
+          executablePath, // Vercel 환경과 로컬 모두에서 작동합니다.
           args: ['--no-sandbox', '--disable-setuid-sandbox'],
-          // 한 번에 하나의 페이지만 렌더링하도록 설정
-          concurrency: 1,
         }),
 
         postProcess(renderedRoute) {
